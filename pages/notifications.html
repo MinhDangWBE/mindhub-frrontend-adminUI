@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Thông báo Admin | MindHub Admin</title>
+    <link
+        rel="stylesheet"
+        href="../assets/css/output.css"
+    >
+</head>
+<body class="min-h-screen bg-canvas text-ink">
+    <div class="flex min-h-screen">
+        <aside
+            data-sidebar
+            class="hidden w-64 shrink-0 border-r border-hairline bg-surface-alt p-5 lg:block"
+        >
+            <a
+                href="../index.html"
+                class="text-lg font-semibold"
+            >
+                MindHub
+            </a>
+            <p class="mt-2 text-sm text-mid-gray">
+                Admin Panel
+            </p>
+            <nav class="mt-8">
+                <a
+                    href="./dashboard.html"
+                    class="block rounded-full px-4 py-2 text-sm hover:bg-paper"
+                >
+                    Dashboard
+                </a>
+            </nav>
+        </aside>
+        <div class="min-w-0 flex-1">
+            <header
+                class="flex min-h-16 items-center justify-between border-b border-hairline bg-paper px-5"
+            >
+                <button
+                    type="button"
+                    data-sidebar-toggle
+                    class="rounded-full border border-hairline px-4 py-2 text-sm lg:hidden"
+                >
+                    Menu
+                </button>
+                <span class="text-sm text-mid-gray">
+                    Admin MindHub
+                </span>
+            </header>
+            <main class="p-5 md:p-8">
+                <header class="mb-8">
+                    <p class="text-sm text-mid-gray">
+                        MindHub Admin
+                    </p>
+                    <h1 class="mt-1 text-3xl font-semibold tracking-tight">
+                        Thông báo Admin
+                    </h1>
+                </header>
+                <section
+                    class="rounded-3xl border border-hairline bg-paper p-6 shadow-sm"
+                >
+                    <h2 class="text-lg font-semibold">
+                        Khung trang đã sẵn sàng
+                    </h2>
+                    <p class="mt-2 text-sm text-mid-gray">
+                        Card thống kê, bộ lọc, bảng dữ liệu và modal sẽ được bổ sung sau.
+                    </p>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script
+        type="module"
+        src="../assets/js/app.js"
+    ></script>
+    <script
+        type="module"
+        src="../assets/js/sidebar.js"
+    ></script>
+    <script
+        type="module"
+        src="../assets/js/pages/notifications.js"
+    ></script>
+</body>
+</html>
