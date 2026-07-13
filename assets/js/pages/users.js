@@ -13,21 +13,25 @@ let pageState = {
     date_from: "",
     date_to: "",
     sort_by: "newest",
+    no_login: "", // "true" hoặc ""
     page: 1,
     per_page: 20
 };
+
+// Tập hợp lưu ID người dùng đang được chọn bằng checkbox
+const selectedUserIds = new Set();
 
 // Biến lưu trữ dữ liệu người dùng đang thao tác
 let activeTargetUser = null;
 // Biến lưu trữ hành động xác nhận chung (activate, deactivate, unlock)
 let generalActionCallback = null;
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("Đã tải trang: Quản lý người dùng");
+// Biến theo dõi góc xoay của nút làm mới
+let refreshRotation = 0;
 
-    // Khởi tạo layout nạp động
-    // Đã được app.js thực thi tự động.
-    
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Đã tải trang: Quản lý người dùng (Cải tiến)");
+
     // Đọc trạng thái từ URL query string
     readStateFromUrl();
 
@@ -36,6 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
     initModalEvents();
     initActionEvents();
     initDropdownAutoClose();
+    initRefreshEvent();
+    initAttentionEvents();
+    initQuickTabsEvents();
+    initBulkActionEvents();
 
     // Tải dữ liệu ban đầu
     fetchAndRender();
@@ -59,6 +67,24 @@ function formatDateTime(isoString) {
 }
 
 /**
+ * Cập nhật mốc "Cập nhật lần cuối"
+ */
+function updateLastUpdateTime() {
+    const el = document.getElementById("last-update-time");
+    if (!el) return;
+    
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    el.textContent = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+/**
  * Đọc query params từ URL hiện tại để gán vào state
  */
 function readStateFromUrl() {
@@ -71,6 +97,7 @@ function readStateFromUrl() {
     pageState.date_from = params.get("date_from") || "";
     pageState.date_to = params.get("date_to") || "";
     pageState.sort_by = params.get("sort_by") || "newest";
+    pageState.no_login = params.get("no_login") || "";
     pageState.page = parseInt(params.get("page")) || 1;
     pageState.per_page = parseInt(params.get("per_page")) || 20;
 
@@ -90,17 +117,14 @@ function readStateFromUrl() {
  */
 function writeStateToUrl() {
     const url = new URL(window.location);
-    
-    // Xóa tất cả param cũ
     url.search = "";
 
-    // Set các param mới nếu khác giá trị mặc định/khác rỗng
     Object.keys(pageState).forEach(key => {
         const val = pageState[key];
         if (val !== undefined && val !== null && val !== "") {
-            if (key === "page" && val === 1) return; // Không cần hiển thị page=1
-            if (key === "per_page" && val === 20) return; // Không cần hiển thị per_page=20
-            if (key === "sort_by" && val === "newest") return; // Mặc định newest
+            if (key === "page" && val === 1) return;
+            if (key === "per_page" && val === 20) return;
+            if (key === "sort_by" && val === "newest") return;
             url.searchParams.set(key, val);
         }
     });
@@ -119,12 +143,16 @@ function toggleLoading(isLoading) {
     const tableEmpty = document.getElementById("users-empty-state");
     const tableError = document.getElementById("users-error-state");
     const pagination = document.getElementById("pagination-wrapper");
+    const quickTabs = document.getElementById("quick-tabs-container");
 
-    // Disable các điều khiển lọc khi đang tải dữ liệu
     const filterInputs = document.querySelectorAll("#filter-form input, #filter-form select, #filter-form button");
     filterInputs.forEach(input => {
         input.disabled = isLoading;
     });
+
+    if (quickTabs) {
+        quickTabs.querySelectorAll("button").forEach(btn => btn.disabled = isLoading);
+    }
 
     if (isLoading) {
         kpiLoaded.classList.add("hidden");
@@ -150,6 +178,9 @@ function toggleLoading(isLoading) {
 async function fetchAndRender() {
     toggleLoading(true);
 
+    // Bỏ chọn tất cả checkbox khi fetch dữ liệu mới
+    clearSelection();
+
     try {
         const response = await usersApi.getUsers(pageState);
         
@@ -161,6 +192,9 @@ async function fetchAndRender() {
         renderSummary(response.data.summary);
         renderTable(response.data.items);
         renderPagination(response.meta);
+        renderFilterChips();
+        updateQuickTabsSelection();
+        updateLastUpdateTime();
         
         toggleLoading(false);
     } catch (error) {
@@ -190,53 +224,140 @@ function showErrorState(message) {
 }
 
 /**
- * Render dữ liệu summary lên 6 thẻ thống kê
+ * Render dữ liệu summary lên 6 thẻ thống kê, tiêu đề và tài khoản cần chú ý
  */
 function renderSummary(summary) {
     if (!summary) return;
     
-    // Hàm cập nhật text content an toàn
     const updateText = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.textContent = new Intl.NumberFormat("vi-VN").format(val || 0);
     };
 
+    // 1. Cập nhật Summary KPI Cards
     updateText("kpi-total-users", summary.total_users);
     updateText("kpi-total-learners", summary.total_learners);
     updateText("kpi-total-instructors", summary.total_instructors);
     updateText("kpi-active-users", summary.active_users);
     updateText("kpi-locked-users", summary.locked_users);
     updateText("kpi-unverified-users", summary.unverified_users);
+
+    // 2. Số lượng đăng ký mới ở Card Tổng người dùng
+    const newUsersEl = document.getElementById("kpi-new-users");
+    if (newUsersEl) {
+        newUsersEl.textContent = `+${summary.new_users_in_period || 0} mới`;
+    }
+
+    // 3. Tiêu đề mô tả: Tổng số tài khoản
+    updateText("title-total-users", summary.total_users);
+
+    // 4. Khu vực Tài khoản cần chú ý
+    updateText("notice-locked-count", summary.locked_users);
+    updateText("notice-unverified-count", summary.unverified_users);
+    updateText("notice-no-login-count", summary.no_login_users);
+
+    // 5. Cập nhật số lượng trên Quick Tabs
+    updateQuickTabsCounts(summary);
 }
 
 /**
- * Render danh sách người dùng vào thẻ tbody của table
+ * Cập nhật số lượng hiển thị trên Quick Tabs
+ */
+function updateQuickTabsCounts(summary) {
+    const counts = {
+        all: summary.total_users,
+        learner: summary.total_learners,
+        instructor: summary.total_instructors,
+        locked: summary.locked_users,
+        unverified: summary.unverified_users
+    };
+
+    Object.keys(counts).forEach(tab => {
+        const tabBtn = document.querySelector(`[data-tab="${tab}"]`);
+        if (tabBtn) {
+            const countSpan = tabBtn.querySelector(".tab-count");
+            if (countSpan) {
+                countSpan.textContent = new Intl.NumberFormat("vi-VN").format(counts[tab] || 0);
+            }
+        }
+    });
+}
+
+/**
+ * Cập nhật trạng thái Active trực quan cho Quick Tabs dựa trên filter hiện tại
+ */
+function updateQuickTabsSelection() {
+    const tabs = document.querySelectorAll("[data-tab]");
+    let activeTab = "all";
+
+    if (pageState.role === "learner" && pageState.status === "" && pageState.email_verified === "" && pageState.no_login === "") {
+        activeTab = "learner";
+    } else if (pageState.role === "instructor" && pageState.status === "" && pageState.email_verified === "" && pageState.no_login === "") {
+        activeTab = "instructor";
+    } else if (pageState.status === "locked" && pageState.role === "" && pageState.email_verified === "" && pageState.no_login === "") {
+        activeTab = "locked";
+    } else if (pageState.email_verified === "unverified" && pageState.role === "" && pageState.status === "" && pageState.no_login === "") {
+        activeTab = "unverified";
+    } else if (pageState.role !== "" || pageState.status !== "" || pageState.email_verified !== "" || pageState.no_login !== "") {
+        // Nếu có bộ lọc phức tạp không khớp tab cụ thể nào, gỡ active toàn bộ
+        activeTab = null;
+    }
+
+    tabs.forEach(tab => {
+        const tabType = tab.getAttribute("data-tab");
+        if (tabType === activeTab) {
+            tab.className = "px-5 py-3 text-xs font-semibold border-b-2 border-ink text-ink select-none whitespace-nowrap cursor-pointer transition-all";
+        } else {
+            tab.className = "px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all";
+        }
+    });
+}
+
+/**
+ * Render danh sách người dùng vào table body
  */
 function renderTable(users) {
     const tbody = document.getElementById("users-table-body");
     const emptyState = document.getElementById("users-empty-state");
+    const checkAll = document.getElementById("check-all-users");
     
     tbody.innerHTML = "";
 
     if (!users || users.length === 0) {
         emptyState.classList.remove("hidden");
+        if (checkAll) {
+            checkAll.checked = false;
+            checkAll.disabled = true;
+        }
         return;
     }
     
     emptyState.classList.add("hidden");
+    if (checkAll) checkAll.disabled = false;
 
     users.forEach(user => {
         const tr = document.createElement("tr");
-        tr.className = "hover:bg-canvas/40 transition-colors group cursor-pointer border-b border-hairline/60";
+        tr.className = "hover:bg-canvas/50 transition-colors group cursor-pointer border-b border-hairline/60";
         tr.setAttribute("data-user-id", user.id);
 
-        // 1. Cột Người dùng (Avatar + Họ tên + Email)
         const firstLetter = user.full_name ? user.full_name.charAt(0).toUpperCase() : "U";
-        // Nếu là tài khoản chính mình, gắn nhãn để nhận diện
         const isSelf = user.id === CURRENT_ADMIN_ID;
         const nameBadge = isSelf ? ` <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-canvas text-mid-gray border border-hairline ml-1 select-none">Bạn</span>` : "";
 
-        // 2. Cột Vai trò (Badge)
+        // Checkbox cho từng dòng (Vô hiệu hóa dòng của chính mình)
+        let checkboxTd = "";
+        if (isSelf) {
+            checkboxTd = `<td class="p-3.5 pl-4 w-10 text-center" data-checkbox-td>
+                <input type="checkbox" disabled class="h-3.5 w-3.5 rounded border-hairline text-ink opacity-30 cursor-not-allowed select-none">
+            </td>`;
+        } else {
+            const isChecked = selectedUserIds.has(user.id);
+            checkboxTd = `<td class="p-3.5 pl-4 w-10 text-center" data-checkbox-td>
+                <input type="checkbox" data-user-checkbox="${user.id}" ${isChecked ? "checked" : ""} class="h-3.5 w-3.5 rounded border-hairline text-ink focus:ring-ink focus:ring-offset-0 cursor-pointer accent-ink">
+            </td>`;
+        }
+
+        // Badge Vai trò
         let roleBadge = "";
         if (user.role === "admin") {
             roleBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-ink text-white shadow-sm select-none">Quản trị viên</span>`;
@@ -246,7 +367,7 @@ function renderTable(users) {
             roleBadge = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-canvas text-mid-gray border border-hairline select-none">Học viên</span>`;
         }
 
-        // 3. Cột Trạng thái (effective_status: active / inactive / locked)
+        // Badge Trạng thái
         let statusBadge = "";
         const isLocked = user.locked || user.status === "locked" || user.effective_status === "locked";
         if (isLocked) {
@@ -263,104 +384,113 @@ function renderTable(users) {
             </span>`;
         }
 
-        // 4. Cột Xác minh email
+        // Xác minh email
         const verifiedText = user.email_verified_at 
             ? `<span class="text-success font-medium flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Đã xác minh</span>` 
             : `<span class="text-mid-gray font-normal">Chưa xác minh</span>`;
 
-        // 5. Thao tác Dropdown Menu
-        // Xây dựng các hành động khả dụng dựa trên trạng thái hiện tại và ràng buộc bảo mật
-        let actionItems = "";
-        
-        // Nút "Xem chi tiết" và "Chỉnh sửa" luôn khả dụng
-        actionItems += `
-            <button type="button" data-action="view" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium">Xem chi tiết</button>
-            <button type="button" data-action="edit" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium">Chỉnh sửa</button>
+        // Thao tác nhanh dropdown items
+        let actionItems = `
+            <button type="button" data-action="view" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium cursor-pointer">Xem chi tiết</button>
+            <button type="button" data-action="edit" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium cursor-pointer">Chỉnh sửa</button>
         `;
 
         if (!isSelf) {
-            // Tùy chọn Khóa / Mở khóa
             if (isLocked) {
-                actionItems += `<button type="button" data-action="unlock" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-success">Mở khóa tài khoản</button>`;
+                actionItems += `<button type="button" data-action="unlock" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-success cursor-pointer">Mở khóa tài khoản</button>`;
             } else {
-                actionItems += `<button type="button" data-action="lock" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-danger-brick">Khóa tài khoản</button>`;
+                actionItems += `<button type="button" data-action="lock" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-danger-brick cursor-pointer">Khóa tài khoản</button>`;
             }
 
-            // Tùy chọn hoạt động / không hoạt động (chỉ khi không bị khóa)
             if (!isLocked) {
                 if (user.status === "active") {
-                    actionItems += `<button type="button" data-action="deactivate" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-mid-gray">Đặt thành không hoạt động</button>`;
+                    actionItems += `<button type="button" data-action="deactivate" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-mid-gray cursor-pointer">Vô hiệu hóa</button>`;
                 } else {
-                    actionItems += `<button type="button" data-action="activate" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-success">Đặt thành hoạt động</button>`;
+                    actionItems += `<button type="button" data-action="activate" class="w-full text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-full transition-colors font-medium text-success cursor-pointer">Kích hoạt</button>`;
                 }
             }
 
-            // Thao tác xóa (Không tự xóa mình)
             actionItems += `
                 <div class="h-[1px] bg-hairline my-1 mx-1.5"></div>
-                <button type="button" data-action="delete" class="w-full text-left px-3 py-1.5 text-xs hover:bg-red-50 hover:text-danger-brick rounded-full transition-colors font-semibold text-danger-brick">Xóa người dùng</button>
+                <button type="button" data-action="delete" class="w-full text-left px-3 py-1.5 text-xs hover:bg-red-50 hover:text-danger-brick rounded-full transition-colors font-semibold text-danger-brick cursor-pointer">Xóa người dùng</button>
             `;
         }
 
         tr.innerHTML = `
-            <td class="p-3 pl-4">
+            ${checkboxTd}
+            <td class="p-3.5">
                 <div class="flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-canvas text-mid-gray font-bold text-xs select-none">
                         ${firstLetter}
                     </div>
                     <div class="min-w-0">
-                        <div class="font-bold text-ink leading-snug flex items-center">${user.full_name}${nameBadge}</div>
+                        <div class="font-bold text-ink text-sm sm:text-xs leading-tight flex items-center">${user.full_name}${nameBadge}</div>
                         <div class="text-[10px] text-mid-gray mt-0.5 truncate">${user.email}</div>
                     </div>
                 </div>
             </td>
-            <td class="p-3">${roleBadge}</td>
-            <td class="p-3 text-mid-gray">${user.phone || "---"}</td>
-            <td class="p-3">${statusBadge}</td>
-            <td class="p-3 text-[11px]">${verifiedText}</td>
-            <td class="p-3 text-mid-gray text-[11px]">${user.last_login_at ? formatDateTime(user.last_login_at) : "Chưa đăng nhập"}</td>
-            <td class="p-3 text-mid-gray text-[11px]">${formatDateTime(user.created_at)}</td>
-            <td class="p-3 pr-4 text-right relative" data-action-td>
-                <!-- Nút menu ba chấm -->
-                <button type="button" class="btn-action-menu p-1.5 rounded-full hover:bg-canvas text-mid-gray hover:text-ink transition-colors inline-block select-none" aria-label="Xem menu thao tác">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <td class="p-3.5">${roleBadge}</td>
+            <td class="p-3.5 text-mid-gray font-mono text-[11px]">${user.phone || "---"}</td>
+            <td class="p-3.5">${statusBadge}</td>
+            <td class="p-3.5 text-[11px]">${verifiedText}</td>
+            <td class="p-3.5 text-mid-gray text-[11px]">${user.last_login_at ? formatDateTime(user.last_login_at) : '<span class="text-mid-gray/60 italic">Chưa đăng nhập</span>'}</td>
+            <td class="p-3.5 text-mid-gray text-[11px]">${formatDateTime(user.created_at)}</td>
+            <td class="p-3.5 pr-4 text-right relative" data-action-td>
+                <button type="button" class="btn-action-menu p-1.5 rounded-full hover:bg-canvas text-mid-gray hover:text-ink transition-colors inline-block select-none cursor-pointer" aria-label="Xem menu thao tác">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
                     </svg>
                 </button>
-                <!-- Menu Dropdown -->
                 <div class="action-dropdown absolute right-4 top-10 z-20 hidden w-44 bg-paper border border-hairline rounded-[6px] p-1.5 shadow-subtle flex flex-col text-left">
                     ${actionItems}
                 </div>
             </td>
         `;
 
-        // Sự kiện click cả dòng thì mở Drawer (ngoại trừ khi click vào cột action)
+        // Click dòng mở drawer chi tiết (ngoại trừ khi click checkbox hoặc menu thao tác)
         tr.addEventListener("click", (e) => {
+            const isClickCheckbox = e.target.closest("[data-checkbox-td]");
             const isActionTd = e.target.closest("[data-action-td]") || e.target.closest(".action-dropdown");
+            
+            if (isClickCheckbox) {
+                // Click checkbox thì để trình duyệt tự xử lý sự kiện change checkbox
+                return;
+            }
             if (!isActionTd) {
                 openDetailDrawer(user.id);
             }
         });
 
-        // Tương tác Dropdown của cột Thao tác
+        // Gắn sự kiện checkbox từng dòng
+        const checkbox = tr.querySelector("input[data-user-checkbox]");
+        if (checkbox) {
+            checkbox.addEventListener("change", () => {
+                const uId = user.id;
+                if (checkbox.checked) {
+                    selectedUserIds.add(uId);
+                } else {
+                    selectedUserIds.delete(uId);
+                }
+                updateBulkActionsBar();
+            });
+        }
+
+        // Tương tác Dropdown cột Thao tác
         const btnMenu = tr.querySelector(".btn-action-menu");
         const dropdown = tr.querySelector(".action-dropdown");
         
         btnMenu.addEventListener("click", (e) => {
             e.stopPropagation();
-            // Đóng tất cả dropdown khác đang mở
             document.querySelectorAll(".action-dropdown").forEach(d => {
                 if (d !== dropdown) d.classList.add("hidden");
             });
             dropdown.classList.toggle("hidden");
         });
 
-        // Gắn sự kiện click cho các nút hành động trong dropdown
         dropdown.querySelectorAll("button[data-action]").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 e.stopPropagation();
-                dropdown.classList.add("hidden"); // Ẩn dropdown
-                
+                dropdown.classList.add("hidden");
                 const action = btn.getAttribute("data-action");
                 handleUserAction(action, user);
             });
@@ -368,10 +498,13 @@ function renderTable(users) {
 
         tbody.appendChild(tr);
     });
+
+    // Đồng bộ lại checkbox Header "Chọn tất cả" sau khi render
+    updateCheckAllState();
 }
 
 /**
- * Render nút phân trang và thông tin
+ * Render dải phân trang và nút
  */
 function renderPagination(meta) {
     const infoRange = document.getElementById("pag-showing-range");
@@ -394,17 +527,14 @@ function renderPagination(meta) {
     // Nút "Trang trước"
     const prevBtn = document.createElement("button");
     prevBtn.type = "button";
-    prevBtn.className = `p-1.5 rounded-full border border-hairline transition-colors flex items-center justify-center shrink-0 ${meta.current_page === 1 ? "opacity-40 cursor-not-allowed" : "hover:bg-canvas"}`;
+    prevBtn.className = `p-1.5 rounded-full border border-hairline transition-colors flex items-center justify-center shrink-0 ${meta.current_page === 1 ? "opacity-40 cursor-not-allowed" : "hover:bg-canvas cursor-pointer"}`;
     prevBtn.disabled = meta.current_page === 1;
     prevBtn.innerHTML = `<svg class="w-3.5 h-3.5 text-ink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>`;
     prevBtn.addEventListener("click", () => {
-        if (meta.current_page > 1) {
-            changePage(meta.current_page - 1);
-        }
+        if (meta.current_page > 1) changePage(meta.current_page - 1);
     });
     container.appendChild(prevBtn);
 
-    // Tính toán dải số trang cần hiển thị
     const maxButtons = 5;
     let startPage = Math.max(1, meta.current_page - Math.floor(maxButtons / 2));
     let endPage = startPage + maxButtons - 1;
@@ -418,7 +548,7 @@ function renderPagination(meta) {
         const pageBtn = document.createElement("button");
         pageBtn.type = "button";
         const isCurrent = i === meta.current_page;
-        pageBtn.className = `h-7.5 w-7.5 rounded-full text-xs font-semibold flex items-center justify-center transition-all ${isCurrent ? "bg-ink text-white shadow-sm" : "border border-transparent hover:bg-canvas hover:text-ink text-mid-gray"}`;
+        pageBtn.className = `h-7.5 w-7.5 rounded-full text-xs font-semibold flex items-center justify-center transition-all cursor-pointer ${isCurrent ? "bg-ink text-white shadow-sm" : "border border-transparent hover:bg-canvas hover:text-ink text-mid-gray"}`;
         pageBtn.textContent = i;
         pageBtn.addEventListener("click", () => {
             if (!isCurrent) changePage(i);
@@ -429,15 +559,109 @@ function renderPagination(meta) {
     // Nút "Trang sau"
     const nextBtn = document.createElement("button");
     nextBtn.type = "button";
-    nextBtn.className = `p-1.5 rounded-full border border-hairline transition-colors flex items-center justify-center shrink-0 ${meta.current_page === meta.last_page ? "opacity-40 cursor-not-allowed" : "hover:bg-canvas"}`;
+    nextBtn.className = `p-1.5 rounded-full border border-hairline transition-colors flex items-center justify-center shrink-0 ${meta.current_page === meta.last_page ? "opacity-40 cursor-not-allowed" : "hover:bg-canvas cursor-pointer"}`;
     nextBtn.disabled = meta.current_page === meta.last_page;
     nextBtn.innerHTML = `<svg class="w-3.5 h-3.5 text-ink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>`;
     nextBtn.addEventListener("click", () => {
-        if (meta.current_page < meta.last_page) {
-            changePage(meta.current_page + 1);
-        }
+        if (meta.current_page < meta.last_page) changePage(meta.current_page + 1);
     });
     container.appendChild(nextBtn);
+}
+
+/**
+ * Render các Filter Chips bộ lọc đang áp dụng dưới dạng dải chip
+ */
+function renderFilterChips() {
+    const container = document.getElementById("filter-chips-container");
+    const list = document.getElementById("filter-chips-list");
+    
+    list.innerHTML = "";
+
+    // Mảng lưu trữ các chip cần render
+    const activeChips = [];
+
+    // Chi tiết ánh xạ nhãn tiếng Việt
+    const roleMapping = { learner: "Học viên", instructor: "Giảng viên", admin: "Quản trị viên" };
+    const statusMapping = { active: "Đang hoạt động", inactive: "Không hoạt động", locked: "Đã khóa" };
+
+    if (pageState.search) {
+        activeChips.push({ key: "search", label: `Từ khóa: "${pageState.search}"` });
+    }
+    if (pageState.role) {
+        activeChips.push({ key: "role", label: `Vai trò: ${roleMapping[pageState.role] || pageState.role}` });
+    }
+    if (pageState.status) {
+        activeChips.push({ key: "status", label: `Trạng thái: ${statusMapping[pageState.status] || pageState.status}` });
+    }
+    if (pageState.email_verified) {
+        const verifiedText = pageState.email_verified === "verified" ? "Đã xác minh" : "Chưa xác minh";
+        activeChips.push({ key: "email_verified", label: `Email: ${verifiedText}` });
+    }
+    if (pageState.no_login) {
+        activeChips.push({ key: "no_login", label: "Chưa đăng nhập lần nào" });
+    }
+    if (pageState.date_from) {
+        activeChips.push({ key: "date_from", label: `Từ ngày: ${pageState.date_from}` });
+    }
+    if (pageState.date_to) {
+        activeChips.push({ key: "date_to", label: `Đến ngày: ${pageState.date_to}` });
+    }
+
+    if (activeChips.length === 0) {
+        container.classList.add("hidden");
+        return;
+    }
+
+    // Hiển thị chip container
+    container.classList.remove("hidden");
+
+    // Tạo các phần tử chip
+    activeChips.forEach(chip => {
+        const chipDiv = document.createElement("div");
+        chipDiv.className = "flex items-center gap-1 bg-canvas hover:bg-hairline text-ink rounded-full px-3 py-1 font-medium border border-hairline transition-colors text-[10px]";
+        
+        chipDiv.innerHTML = `
+            <span>${chip.label}</span>
+            <button type="button" class="text-mid-gray hover:text-ink ml-1 p-0.5 rounded-full transition-colors cursor-pointer" aria-label="Xóa bộ lọc ${chip.label}">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        `;
+
+        // Click nút X trên chip để xóa bộ lọc đó
+        chipDiv.querySelector("button").addEventListener("click", () => {
+            removeFilterField(chip.key);
+        });
+
+        list.appendChild(chipDiv);
+    });
+}
+
+/**
+ * Xóa một trường bộ lọc cụ thể và reload dữ liệu
+ */
+function removeFilterField(key) {
+    pageState[key] = "";
+    
+    // Đồng bộ lại form input
+    if (key === "search") {
+        document.getElementById("filter-search").value = "";
+    } else if (key === "role") {
+        document.getElementById("filter-role").value = "";
+    } else if (key === "status") {
+        document.getElementById("filter-status").value = "";
+    } else if (key === "email_verified") {
+        document.getElementById("filter-verified").value = "";
+    } else if (key === "date_from") {
+        document.getElementById("filter-date-from").value = "";
+    } else if (key === "date_to") {
+        document.getElementById("filter-date-to").value = "";
+    }
+
+    pageState.page = 1; // Về trang 1
+    writeStateToUrl();
+    fetchAndRender();
 }
 
 /**
@@ -450,7 +674,7 @@ function changePage(pageNumber) {
 }
 
 /**
- * Khởi tạo các sự kiện submit & reset bộ lọc
+ * Khởi tạo sự kiện submit & reset filter form
  */
 function initFilterEvents() {
     const form = document.getElementById("filter-form");
@@ -458,8 +682,8 @@ function initFilterEvents() {
     const perPageSelect = document.getElementById("pag-per-page");
     const emptyResetBtn = document.getElementById("btn-empty-reset");
     const errorRetryBtn = document.getElementById("btn-error-retry");
+    const clearAllChipsBtn = document.getElementById("btn-clear-all-chips");
 
-    // Xử lý submit form
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const formData = new FormData(form);
@@ -471,13 +695,13 @@ function initFilterEvents() {
         pageState.sort_by = formData.get("sort_by");
         pageState.date_from = formData.get("date_from");
         pageState.date_to = formData.get("date_to");
-        pageState.page = 1; // Reset về trang 1 khi lọc
+        pageState.no_login = ""; // Reset trạng thái no_login khi submit form lọc chung
+        pageState.page = 1;
 
         writeStateToUrl();
         fetchAndRender();
     });
 
-    // Xử lý Reset bộ lọc
     document.getElementById("btn-reset-filters").addEventListener("click", () => {
         form.reset();
         pageState = {
@@ -488,51 +712,270 @@ function initFilterEvents() {
             date_from: "",
             date_to: "",
             sort_by: "newest",
+            no_login: "",
             page: 1,
-            per_page: pageState.per_page // Giữ lại số dòng mỗi trang
+            per_page: pageState.per_page
         };
         writeStateToUrl();
         fetchAndRender();
     });
 
-    // Debounce tìm kiếm khi gõ
+    // Xóa tất cả chips
+    clearAllChipsBtn.addEventListener("click", () => {
+        document.getElementById("btn-reset-filters").click();
+    });
+
+    // Debounce ô tìm kiếm
     let debounceTimer;
     searchInput.addEventListener("input", () => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             pageState.search = searchInput.value;
-            pageState.page = 1; // Về trang 1
+            pageState.no_login = "";
+            pageState.page = 1;
             writeStateToUrl();
             fetchAndRender();
         }, 400);
     });
 
-    // Thay đổi số dòng mỗi trang
     perPageSelect.addEventListener("change", () => {
         pageState.per_page = parseInt(perPageSelect.value) || 20;
-        pageState.page = 1; // Về trang 1
+        pageState.page = 1;
         writeStateToUrl();
         fetchAndRender();
     });
 
-    // Nút đặt lại ở empty state
     emptyResetBtn.addEventListener("click", () => {
         document.getElementById("btn-reset-filters").click();
     });
 
-    // Nút thử lại ở error state
     errorRetryBtn.addEventListener("click", () => {
         fetchAndRender();
     });
 }
 
 /**
- * Xử lý tự động đóng menu thao tác dropdown khi click ngoài
+ * Đăng ký sự kiện click nút làm mới
+ */
+function initRefreshEvent() {
+    const btnRefresh = document.getElementById("btn-refresh-data");
+    const refreshIcon = document.getElementById("refresh-icon");
+
+    btnRefresh.addEventListener("click", async () => {
+        if (btnRefresh.disabled) return;
+
+        // Xoay icon bằng CSS
+        refreshRotation += 360;
+        refreshIcon.style.transform = `rotate(${refreshRotation}deg)`;
+
+        btnRefresh.disabled = true;
+        btnRefresh.classList.add("opacity-50");
+
+        try {
+            await fetchAndRender();
+            showToast({ type: "success", title: "Cập nhật thành công", message: "Đã làm mới dữ liệu hệ thống." });
+        } catch (error) {
+            showToast({ type: "error", title: "Lỗi", message: "Không thể làm mới dữ liệu." });
+        } finally {
+            btnRefresh.disabled = false;
+            btnRefresh.classList.remove("opacity-50");
+        }
+    });
+}
+
+/**
+ * Đăng ký click nút Xem danh sách ở Khu vực chú ý
+ */
+function initAttentionEvents() {
+    const attentionButtons = document.querySelectorAll("[data-attention]");
+    attentionButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const type = btn.getAttribute("data-attention");
+            
+            // Xóa sạch các bộ lọc vai trò, ngày tạo
+            pageState.role = "";
+            pageState.date_from = "";
+            pageState.date_to = "";
+            document.getElementById("filter-role").value = "";
+            document.getElementById("filter-date-from").value = "";
+            document.getElementById("filter-date-to").value = "";
+
+            if (type === "locked") {
+                pageState.status = "locked";
+                pageState.email_verified = "";
+                pageState.no_login = "";
+                
+                document.getElementById("filter-status").value = "locked";
+                document.getElementById("filter-verified").value = "";
+            } else if (type === "unverified") {
+                pageState.status = "";
+                pageState.email_verified = "unverified";
+                pageState.no_login = "";
+                
+                document.getElementById("filter-status").value = "";
+                document.getElementById("filter-verified").value = "unverified";
+            } else if (type === "no_login") {
+                pageState.status = "";
+                pageState.email_verified = "";
+                pageState.no_login = "true";
+                
+                document.getElementById("filter-status").value = "";
+                document.getElementById("filter-verified").value = "";
+            }
+
+            pageState.page = 1;
+            writeStateToUrl();
+            fetchAndRender();
+        });
+    });
+}
+
+/**
+ * Đăng ký click Quick Tabs (Lọc nhanh)
+ */
+function initQuickTabsEvents() {
+    const tabs = document.querySelectorAll("[data-tab]");
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const tabType = tab.getAttribute("data-tab");
+            
+            // Reset các trường lọc no_login
+            pageState.no_login = "";
+
+            if (tabType === "all") {
+                pageState.role = "";
+                pageState.status = "";
+                pageState.email_verified = "";
+            } else if (tabType === "learner") {
+                pageState.role = "learner";
+                pageState.status = "";
+                pageState.email_verified = "";
+            } else if (tabType === "instructor") {
+                pageState.role = "instructor";
+                pageState.status = "";
+                pageState.email_verified = "";
+            } else if (tabType === "locked") {
+                pageState.role = "";
+                pageState.status = "locked";
+                pageState.email_verified = "";
+            } else if (tabType === "unverified") {
+                pageState.role = "";
+                pageState.status = "";
+                pageState.email_verified = "unverified";
+            }
+
+            // Đồng bộ ngược lại các select input của bộ lọc
+            document.getElementById("filter-role").value = pageState.role;
+            document.getElementById("filter-status").value = pageState.status;
+            document.getElementById("filter-verified").value = pageState.email_verified;
+
+            pageState.page = 1;
+            writeStateToUrl();
+            fetchAndRender();
+        });
+    });
+}
+
+/**
+ * Đóng dropdown khi click ngoài
  */
 function initDropdownAutoClose() {
     document.addEventListener("click", () => {
         document.querySelectorAll(".action-dropdown").forEach(d => d.classList.add("hidden"));
     });
+}
+
+/**
+ * Xử lý checkbox chọn dòng và Bulk Actions
+ */
+function initBulkActionEvents() {
+    const checkAll = document.getElementById("check-all-users");
+    const btnDeselect = document.getElementById("btn-bulk-deselect");
+
+    // Chọn tất cả dòng hiển thị trên trang hiện tại
+    if (checkAll) {
+        checkAll.addEventListener("change", () => {
+            // Chỉ lấy các checkbox không bị disabled (không phải Admin login)
+            const rowCheckboxes = document.querySelectorAll("#users-table-body input[data-user-checkbox]");
+            
+            rowCheckboxes.forEach(cb => {
+                if (cb.disabled) return;
+                cb.checked = checkAll.checked;
+                const userId = parseInt(cb.getAttribute("data-user-checkbox"));
+                
+                if (checkAll.checked) {
+                    selectedUserIds.add(userId);
+                } else {
+                    selectedUserIds.delete(userId);
+                }
+            });
+
+            updateBulkActionsBar();
+        });
+    }
+
+    // Nút Bỏ chọn hàng loạt
+    if (btnDeselect) {
+        btnDeselect.addEventListener("click", () => {
+            clearSelection();
+        });
+    }
+}
+
+/**
+ * Xóa sạch lựa chọn checkbox hiện tại
+ */
+function clearSelection() {
+    selectedUserIds.clear();
+    const checkAll = document.getElementById("check-all-users");
+    if (checkAll) checkAll.checked = false;
+
+    const rowCheckboxes = document.querySelectorAll("#users-table-body input[data-user-checkbox]");
+    rowCheckboxes.forEach(cb => cb.checked = false);
+
+    updateBulkActionsBar();
+}
+
+/**
+ * Cập nhật hiển thị thanh Bulk Actions bar và đồng bộ checkbox header
+ */
+function updateBulkActionsBar() {
+    const bar = document.getElementById("bulk-actions-bar");
+    const countEl = document.getElementById("bulk-selected-count");
+
+    const selectedCount = selectedUserIds.size;
+
+    if (selectedCount > 0) {
+        bar.classList.remove("hidden");
+        bar.classList.add("flex");
+        if (countEl) countEl.textContent = selectedCount;
+    } else {
+        bar.classList.add("hidden");
+        bar.classList.remove("flex");
+    }
+
+    updateCheckAllState();
+}
+
+/**
+ * Kiểm tra và cập nhật trạng thái tích chọn của checkbox "Chọn tất cả" ở header
+ */
+function updateCheckAllState() {
+    const checkAll = document.getElementById("check-all-users");
+    if (!checkAll) return;
+
+    const rowCheckboxes = document.querySelectorAll("#users-table-body input[data-user-checkbox]:not(:disabled)");
+    
+    if (rowCheckboxes.length === 0) {
+        checkAll.checked = false;
+        checkAll.disabled = true;
+        return;
+    }
+
+    checkAll.disabled = false;
+    // Tích nếu tất cả các checkbox dòng khả dụng đều đang tích
+    const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
+    checkAll.checked = allChecked;
 }
 
 /**
@@ -583,9 +1026,7 @@ function handleUserAction(action, user) {
  * Khởi tạo các sự kiện mở/đóng Modal & submit forms
  */
 function initModalEvents() {
-    // 1. Mở modal tạo mới
     const openCreateBtn = document.getElementById("btn-open-create-modal");
-    const createModal = document.getElementById("create-user-modal");
     
     openCreateBtn.addEventListener("click", () => {
         clearFormErrors("create-user-form");
@@ -594,7 +1035,6 @@ function initModalEvents() {
         openModalEl("create-user-modal");
     });
 
-    // 2. Tự động ẩn/hiện lý do khóa dựa trên status chọn trong form tạo mới
     const createStatusSelect = document.getElementById("create-status");
     const createLockWrapper = document.getElementById("create-lock-reason-wrapper");
     createStatusSelect.addEventListener("change", () => {
@@ -605,7 +1045,6 @@ function initModalEvents() {
         }
     });
 
-    // 3. Tự động ẩn/hiện lý do khóa trong form chỉnh sửa
     const editStatusSelect = document.getElementById("edit-status");
     const editLockWrapper = document.getElementById("edit-lock-reason-wrapper");
     editStatusSelect.addEventListener("change", () => {
@@ -616,7 +1055,6 @@ function initModalEvents() {
         }
     });
 
-    // 4. Click các nút đóng modal
     const closeButtons = document.querySelectorAll("[data-close-modal]");
     closeButtons.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -625,10 +1063,9 @@ function initModalEvents() {
         });
     });
 
-    // 5. Submit Thêm người dùng
+    // Submit Thêm người dùng
     const btnSubmitCreate = document.getElementById("btn-submit-create");
     btnSubmitCreate.addEventListener("click", async () => {
-        // Chống double click
         if (btnSubmitCreate.disabled) return;
         setButtonLoading(btnSubmitCreate, true, "Đang xử lý...");
 
@@ -644,7 +1081,7 @@ function initModalEvents() {
             if (response.success) {
                 closeModalEl("create-user-modal");
                 showToast({ type: "success", title: "Thành công", message: "Đã thêm người dùng mới thành công." });
-                fetchAndRender(); // Tải lại bảng & summary
+                fetchAndRender();
             } else {
                 if (response.error_code === 422) {
                     showFormErrors("create-user-form", response.errors);
@@ -658,7 +1095,7 @@ function initModalEvents() {
         }
     });
 
-    // 6. Submit Chỉnh sửa người dùng
+    // Submit Chỉnh sửa người dùng
     const btnSubmitEdit = document.getElementById("btn-submit-edit");
     btnSubmitEdit.addEventListener("click", async () => {
         if (btnSubmitEdit.disabled) return;
@@ -669,10 +1106,9 @@ function initModalEvents() {
         const userId = document.getElementById("edit-user-id").value;
         const formData = new FormData(form);
         
-        // Lấy payload, lọc trường password nếu trống
         const payload = {};
         formData.forEach((value, key) => {
-            if (key === "password" && value.trim() === "") return; // Bỏ qua password trống
+            if (key === "password" && value.trim() === "") return;
             payload[key] = value;
         });
 
@@ -684,7 +1120,6 @@ function initModalEvents() {
                 closeModalEl("edit-user-modal");
                 showToast({ type: "success", title: "Thành công", message: "Cập nhật thông tin người dùng thành công." });
                 
-                // Nếu đang mở drawer chi tiết của chính user này, cập nhật lại thông tin drawer
                 const drawer = document.getElementById("user-detail-drawer");
                 if (!drawer.classList.contains("translate-x-full") && activeTargetUser && activeTargetUser.id === parseInt(userId)) {
                     openDetailDrawer(userId);
@@ -709,11 +1144,11 @@ function initModalEvents() {
  * Cài đặt các sự kiện xác nhận hành động (Xóa, Khóa, Action chung)
  */
 function initActionEvents() {
-    // 1. Xác nhận Khóa tài khoản
     const btnSubmitLock = document.getElementById("btn-submit-lock");
     const lockReasonInput = document.getElementById("lock-reason-input");
     const errorLockInput = document.getElementById("error-lock-reason-input");
 
+    // Xác nhận Khóa tài khoản
     btnSubmitLock.addEventListener("click", async () => {
         const reason = lockReasonInput.value.trim();
         if (reason === "") {
@@ -739,7 +1174,6 @@ function initActionEvents() {
             if (response.success) {
                 showToast({ type: "success", title: "Thành công", message: `Đã khóa tài khoản ${activeTargetUser.full_name}.` });
                 
-                // Đồng bộ Drawer chi tiết nếu đang mở
                 const drawer = document.getElementById("user-detail-drawer");
                 if (!drawer.classList.contains("translate-x-full")) {
                     openDetailDrawer(activeTargetUser.id);
@@ -755,7 +1189,7 @@ function initActionEvents() {
         }
     });
 
-    // 2. Xác nhận Action chung (Mở khóa, Kích hoạt, Vô hiệu hóa)
+    // Xác nhận Action chung
     const btnSubmitGeneral = document.getElementById("btn-submit-general");
     btnSubmitGeneral.addEventListener("click", async () => {
         if (!generalActionCallback) return;
@@ -771,7 +1205,6 @@ function initActionEvents() {
             if (response.success) {
                 showToast({ type: "success", title: "Thành công", message: response.message || "Đã cập nhật trạng thái thành công." });
                 
-                // Cập nhật Drawer chi tiết
                 const drawer = document.getElementById("user-detail-drawer");
                 if (!drawer.classList.contains("translate-x-full")) {
                     openDetailDrawer(activeTargetUser.id);
@@ -787,7 +1220,7 @@ function initActionEvents() {
         }
     });
 
-    // 3. Xác nhận Xóa người dùng (Xóa mềm)
+    // Xác nhận Xóa người dùng (Xóa mềm)
     const btnSubmitDelete = document.getElementById("btn-submit-delete");
     btnSubmitDelete.addEventListener("click", async () => {
         if (btnSubmitDelete.disabled) return;
@@ -801,7 +1234,6 @@ function initActionEvents() {
             if (response.success) {
                 showToast({ type: "success", title: "Thành công", message: `Đã xóa tài khoản ${activeTargetUser.full_name} khỏi hệ thống.` });
                 
-                // Đóng Drawer chi tiết nếu đang mở tài khoản vừa xóa
                 const drawer = document.getElementById("user-detail-drawer");
                 if (!drawer.classList.contains("translate-x-full")) {
                     closeDetailDrawer();
@@ -826,8 +1258,7 @@ function showFormErrors(formId, fieldErrors) {
     if (!form || !fieldErrors) return;
 
     Object.keys(fieldErrors).forEach(field => {
-        const errorMsg = fieldErrors[field][0]; // Lấy lỗi đầu tiên
-        // Tìm element input & message lỗi
+        const errorMsg = fieldErrors[field][0];
         const input = form.querySelector(`[name="${field}"]`);
         const errorEl = form.querySelector(`[data-error="${field}"]`);
         
@@ -878,7 +1309,7 @@ function setButtonLoading(button, isLoading, originalText = "") {
 }
 
 /**
- * Mở modal chung (Helper)
+ * Mở modal chung
  */
 function openModalEl(modalId) {
     const modal = document.getElementById(modalId);
@@ -889,7 +1320,7 @@ function openModalEl(modalId) {
 }
 
 /**
- * Đóng modal chung (Helper)
+ * Đóng modal chung
  */
 function closeModalEl(modalId) {
     const modal = document.getElementById(modalId);
@@ -924,7 +1355,7 @@ function openDeleteModal(user) {
 }
 
 /**
- * Mở Modal xác nhận chung (Mở khóa, kích hoạt, vô hiệu hóa)
+ * Mở Modal xác nhận chung
  */
 function openGeneralActionModal(title, message, callback) {
     document.getElementById("confirm-general-title").textContent = title;
@@ -934,7 +1365,7 @@ function openGeneralActionModal(title, message, callback) {
 }
 
 /**
- * Mở Modal Chỉnh sửa người dùng (Đổ dữ liệu và hiển thị)
+ * Mở Modal Chỉnh sửa người dùng
  */
 async function openEditModal(userId) {
     clearFormErrors("edit-user-form");
@@ -952,17 +1383,15 @@ async function openEditModal(userId) {
         document.getElementById("edit-user-id").value = user.id;
         document.getElementById("edit-name").value = user.full_name;
         document.getElementById("edit-email").value = user.email;
-        document.getElementById("edit-password").value = ""; // Luôn để trống
+        document.getElementById("edit-password").value = "";
         document.getElementById("edit-phone").value = user.phone || "";
         document.getElementById("edit-role").value = user.role;
         document.getElementById("edit-status").value = user.status;
 
-        // Quản trị viên chính mình: Disable vai trò và trạng thái
         const isSelf = user.id === CURRENT_ADMIN_ID;
         document.getElementById("edit-role").disabled = isSelf;
         document.getElementById("edit-status").disabled = isSelf;
 
-        // Trạng thái locked lý do
         const isLocked = user.locked || user.status === "locked";
         const editLockWrapper = document.getElementById("edit-lock-reason-wrapper");
         const editLockReason = document.getElementById("edit-lock-reason");
@@ -995,18 +1424,15 @@ async function openDetailDrawer(userId) {
         const user = response.data;
         activeTargetUser = user;
 
-        // Đổ thông tin lên Drawer
         document.getElementById("drawer-name").textContent = user.full_name;
         document.getElementById("drawer-email").textContent = user.email;
         
         const avatarEl = document.getElementById("drawer-avatar");
         avatarEl.textContent = user.full_name ? user.full_name.charAt(0).toUpperCase() : "U";
 
-        // Render Badges vai trò & trạng thái
         const badgesContainer = document.getElementById("drawer-badges");
         badgesContainer.innerHTML = "";
 
-        // Badge Vai trò
         if (user.role === "admin") {
             badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-ink text-white">Quản trị viên</span>`;
         } else if (user.role === "instructor") {
@@ -1015,7 +1441,6 @@ async function openDetailDrawer(userId) {
             badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-canvas text-mid-gray border border-hairline">Học viên</span>`;
         }
 
-        // Badge Trạng thái
         const isLocked = user.locked || user.status === "locked" || user.effective_status === "locked";
         if (isLocked) {
             badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium text-danger-brick bg-danger-brick-soft border border-danger-brick/10">Bị khóa</span>`;
@@ -1025,7 +1450,6 @@ async function openDetailDrawer(userId) {
             badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium text-success bg-success-soft border border-success/10">Đang hoạt động</span>`;
         }
 
-        // Đổ thông tin cơ bản
         document.getElementById("drawer-info-name").textContent = user.full_name;
         document.getElementById("drawer-info-email").textContent = user.email;
         document.getElementById("drawer-info-phone").textContent = user.phone || "---";
@@ -1037,14 +1461,12 @@ async function openDetailDrawer(userId) {
         document.getElementById("drawer-info-status").textContent = statusMapping[user.status] || user.status;
         document.getElementById("drawer-info-eff-status").textContent = isLocked ? "Bị khóa" : (statusMapping[user.status] || user.status);
 
-        // Đổ thông tin tài khoản
         document.getElementById("drawer-info-oauth").textContent = user.oauth_account_login ? "Có (Google/Apple)" : "Không (Mật khẩu)";
         document.getElementById("drawer-info-verified").textContent = user.email_verified_at ? formatDateTime(user.email_verified_at) : "Chưa xác minh";
         document.getElementById("drawer-info-last-login").textContent = user.last_login_at ? formatDateTime(user.last_login_at) : "Chưa đăng nhập";
         document.getElementById("drawer-info-created").textContent = formatDateTime(user.created_at);
         document.getElementById("drawer-info-updated").textContent = formatDateTime(user.updated_at);
 
-        // Đổ thông tin lý do khóa nếu có
         const lockSection = document.getElementById("drawer-lock-section");
         if (isLocked) {
             lockSection.classList.remove("hidden");
@@ -1053,10 +1475,8 @@ async function openDetailDrawer(userId) {
             lockSection.classList.add("hidden");
         }
 
-        // Render chân nút Drawer
         renderDrawerActions(user);
 
-        // Kích hoạt animation trượt ra
         const overlay = document.getElementById("drawer-overlay");
         const drawer = document.getElementById("user-detail-drawer");
         
@@ -1077,7 +1497,7 @@ async function openDetailDrawer(userId) {
 }
 
 /**
- * Render chân nút Drawer tùy chỉnh theo trạng thái và ràng buộc bảo mật
+ * Render chân nút Drawer
  */
 function renderDrawerActions(user) {
     const container = document.getElementById("drawer-actions");
@@ -1086,50 +1506,45 @@ function renderDrawerActions(user) {
     const isSelf = user.id === CURRENT_ADMIN_ID;
     const isLocked = user.locked || user.status === "locked";
 
-    // 1. Nút "Chỉnh sửa" luôn có
     const editBtn = document.createElement("button");
     editBtn.type = "button";
-    editBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity";
+    editBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer";
     editBtn.textContent = "Chỉnh sửa";
     editBtn.addEventListener("click", () => openEditModal(user.id));
     container.appendChild(editBtn);
 
-    // Nếu không phải chính mình, hiện các hành động quản trị nâng cao
     if (!isSelf) {
-        // Nút Khóa / Mở khóa
         const lockBtn = document.createElement("button");
         lockBtn.type = "button";
         if (isLocked) {
-            lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/15 text-success border border-success/20 hover:bg-success/20 transition-colors";
+            lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/15 text-success border border-success/20 hover:bg-success/20 transition-colors cursor-pointer";
             lockBtn.textContent = "Mở khóa";
             lockBtn.addEventListener("click", () => handleUserAction("unlock", user));
         } else {
-            lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick-soft text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/20 transition-colors";
+            lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick-soft text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/20 transition-colors cursor-pointer";
             lockBtn.textContent = "Khóa tài khoản";
             lockBtn.addEventListener("click", () => handleUserAction("lock", user));
         }
         container.appendChild(lockBtn);
 
-        // Nút Vô hiệu hóa / Kích hoạt (khi không bị khóa)
         if (!isLocked) {
             const toggleBtn = document.createElement("button");
             toggleBtn.type = "button";
             if (user.status === "active") {
-                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-mid-gray border border-hairline hover:bg-hairline hover:text-ink transition-colors";
+                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-mid-gray border border-hairline hover:bg-hairline hover:text-ink transition-colors cursor-pointer";
                 toggleBtn.textContent = "Vô hiệu hóa";
                 toggleBtn.addEventListener("click", () => handleUserAction("deactivate", user));
             } else {
-                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/10 text-success border border-success/20 hover:bg-success/15 transition-colors";
+                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/10 text-success border border-success/20 hover:bg-success/15 transition-colors cursor-pointer";
                 toggleBtn.textContent = "Kích hoạt";
                 toggleBtn.addEventListener("click", () => handleUserAction("activate", user));
             }
             container.appendChild(toggleBtn);
         }
 
-        // Nút Xóa (soft delete)
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
-        deleteBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-red-50 text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/10 transition-colors";
+        deleteBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-red-50 text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/10 transition-colors cursor-pointer";
         deleteBtn.textContent = "Xóa";
         deleteBtn.addEventListener("click", () => handleUserAction("delete", user));
         container.appendChild(deleteBtn);
@@ -1167,7 +1582,6 @@ function initActionEventsForDrawer() {
     overlay.addEventListener("click", closeDetailDrawer);
     closeBtn.addEventListener("click", closeDetailDrawer);
 
-    // Bấm phím ESC để đóng Drawer/Modal
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
             closeDetailDrawer();
@@ -1180,5 +1594,4 @@ function initActionEventsForDrawer() {
     });
 }
 
-// Chạy khởi tạo bổ sung
 initActionEventsForDrawer();

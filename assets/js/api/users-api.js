@@ -66,7 +66,8 @@ export async function getUsers(params = {}) {
             inactive_users: activeUsersList.filter(u => u.status === "inactive" && !u.locked).length,
             locked_users: activeUsersList.filter(u => u.locked || u.status === "locked").length,
             unverified_users: activeUsersList.filter(u => u.email_verified_at === null).length,
-            new_users_in_period: 0 // Phục vụ tương thích contract
+            no_login_users: activeUsersList.filter(u => u.last_login_at === null).length,
+            new_users_in_period: 4 // Số đăng ký mới trong giai đoạn (giả lập)
         };
 
         // 2. Lọc dữ liệu theo tham số tìm kiếm
@@ -109,6 +110,11 @@ export async function getUsers(params = {}) {
             } else if (params.email_verified === "unverified") {
                 filtered = filtered.filter(u => u.email_verified_at === null);
             }
+        }
+
+        // Lọc theo chưa đăng nhập lần nào (no_login)
+        if (params.no_login === "true" || params.no_login === true) {
+            filtered = filtered.filter(u => u.last_login_at === null);
         }
 
         // Lọc theo khoảng ngày tạo (date_from, date_to)
