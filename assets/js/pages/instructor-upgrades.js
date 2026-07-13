@@ -19,6 +19,32 @@ let payoutNumberVisible = false;
 // Biến theo dõi góc xoay của nút làm mới
 let refreshRotation = 0;
 
+// Cờ theo dõi tự động cuộn đến danh sách sau khi dữ liệu render xong
+let shouldScrollToListAfterRender = false;
+
+/**
+ * Cuộn mượt đến khu vực danh sách hồ sơ
+ */
+function scrollToUpgradeList() {
+    const target = document.getElementById("upgrade-list-section");
+    if (!target) return;
+
+    // Blur ô tìm kiếm để ẩn bàn phím ảo trên mobile
+    const searchInput = document.getElementById("filter-search");
+    if (searchInput) {
+        searchInput.blur();
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+    });
+}
+
 document.addEventListener("DOMContentLoaded", initInstructorUpgradesPage);
 
 async function initInstructorUpgradesPage() {
@@ -35,11 +61,45 @@ function bindEvents() {
     initModalEvents();
     initDropdownAutoClose();
     
+    // Đăng ký click cho 4 KPI Cards dạng button
+    const kpiTotalCard = document.getElementById("kpi-card-total");
+    if (kpiTotalCard) {
+        kpiTotalCard.addEventListener("click", () => {
+            const tabBtn = document.querySelector('button[data-tab="all"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
+
+    const kpiPendingCard = document.getElementById("kpi-card-pending");
+    if (kpiPendingCard) {
+        kpiPendingCard.addEventListener("click", () => {
+            const tabBtn = document.querySelector('button[data-tab="pending"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
+
+    const kpiApprovedCard = document.getElementById("kpi-card-approved");
+    if (kpiApprovedCard) {
+        kpiApprovedCard.addEventListener("click", () => {
+            const tabBtn = document.querySelector('button[data-tab="approved"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
+
+    const kpiRejectedCard = document.getElementById("kpi-card-rejected");
+    if (kpiRejectedCard) {
+        kpiRejectedCard.addEventListener("click", () => {
+            const tabBtn = document.querySelector('button[data-tab="rejected"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
+
     // Sự kiện click nút "Xem hồ sơ" ở card pending và nút "Xem hồ sơ đang chờ" ở attention panel
     const kpiPendingLink = document.getElementById("kpi-pending-link");
     if (kpiPendingLink) {
         kpiPendingLink.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation(); // Tránh kích hoạt click của kpi-card-pending lần 2
             const tabBtn = document.querySelector('button[data-tab="pending"]');
             if (tabBtn) tabBtn.click();
         });
@@ -209,6 +269,7 @@ async function fetchAndRender() {
         
         if (!response || !response.success || !response.data || !response.data.summary || !response.data.items || !response.meta) {
             showErrorState("Dữ liệu Yêu cầu lên giảng viên không đúng API contract.");
+            shouldScrollToListAfterRender = false;
             return;
         }
 
@@ -223,8 +284,15 @@ async function fetchAndRender() {
         await updateAttentionBox();
 
         toggleLoading(false);
+
+        // Thực hiện tự động cuộn nếu có yêu cầu trực tiếp từ thao tác người dùng
+        if (shouldScrollToListAfterRender) {
+            scrollToUpgradeList();
+            shouldScrollToListAfterRender = false;
+        }
     } catch (error) {
         console.error("Lỗi khi fetch dữ liệu:", error);
+        shouldScrollToListAfterRender = false;
         showErrorState("Không thể kết nối đến máy chủ.");
     }
 }
@@ -379,12 +447,10 @@ function updateQuickTabsSelection() {
 }
 
 /**
- * Cập nhật khối thông tin "Hồ sơ cần xử lý" dựa trên toàn bộ dữ liệu mock
+ * Cập nhật khối thông tin "Tình trạng xử lý hồ sơ" (Quick Insight Bar) dựa trên dữ liệu
  */
 async function updateAttentionBox() {
     try {
-        // Lấy toàn bộ danh sách không phân trang (USE_MOCK = true mới có dữ liệu mock hoàn chỉnh trong db)
-        // Chúng ta fetch với per_page lớn để lấy thống kê toàn bộ hoặc lấy thẳng từ local storage
         const STORAGE_KEY = "mindhub_admin_mock_instructor_upgrades";
         const rawJson = localStorage.getItem(STORAGE_KEY);
         if (!rawJson) return;
@@ -392,21 +458,61 @@ async function updateAttentionBox() {
         const rawRequests = JSON.parse(rawJson);
         const pendingRequests = rawRequests.filter(r => r.application_status === "pending");
 
-        // 1. Số hồ sơ chờ
-        document.getElementById("notice-pending-count").textContent = pendingRequests.length;
+        // 1. Số hồ sơ chờ xử lý
+        document.getElementById("notice-pending-count").textContent = `${pendingRequests.length} hồ sơ`;
 
-        // 2. Hồ sơ chờ lâu nhất (submitted_at nhỏ nhất)
+        // 2. Hồ sơ mới trong vòng 7 ngày gần nhất
+        const now = new Date();
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(now.getDate() - 7);
+        const new7daysRequests = rawRequests.filter(r => new Date(r.submitted_at) >= sevenDaysAgo);
+        document.getElementById("notice-new-7days-count").textContent = `${new7daysRequests.length} hồ sơ`;
+
+        // 3. Hồ sơ chờ lâu nhất (submitted_at cũ nhất)
+        const oldestDateSubEl = document.getElementById("notice-oldest-date-sub");
         if (pendingRequests.length > 0) {
             const sortedPending = [...pendingRequests].sort((a, b) => new Date(a.submitted_at) - new Date(b.submitted_at));
             const oldestRequest = sortedPending[0];
-            document.getElementById("notice-oldest-date").textContent = formatDateOnly(oldestRequest.submitted_at);
+            
+            const diffTime = Math.abs(now - new Date(oldestRequest.submitted_at));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById("notice-oldest-date").textContent = `${diffDays} ngày`;
+            if (oldestDateSubEl) {
+                oldestDateSubEl.textContent = `Gửi ngày ${formatDateOnly(oldestRequest.submitted_at)}`;
+                oldestDateSubEl.classList.remove("text-mid-gray/60", "italic");
+            }
         } else {
-            document.getElementById("notice-oldest-date").textContent = "Không có";
+            document.getElementById("notice-oldest-date").textContent = "0 ngày";
+            if (oldestDateSubEl) {
+                oldestDateSubEl.textContent = "Không có hồ sơ tồn đọng";
+                oldestDateSubEl.classList.add("text-mid-gray/60", "italic");
+            }
         }
 
-        // 3. Thiếu tài khoản nhận tiền hợp lệ
-        const noPayoutRequests = pendingRequests.filter(r => !r.payout_account || r.payout_account.status !== "active");
-        document.getElementById("notice-no-payout-count").textContent = noPayoutRequests.length;
+        // 4. Thời gian xử lý trung bình (reviewed_at - submitted_at)
+        const processedRequests = rawRequests.filter(r => r.application_status !== "pending" && r.reviewed_at && r.submitted_at);
+        if (processedRequests.length > 0) {
+            const totalDuration = processedRequests.reduce((sum, r) => {
+                const duration = new Date(r.reviewed_at) - new Date(r.submitted_at);
+                return sum + duration;
+            }, 0);
+            const avgDurationMs = totalDuration / processedRequests.length;
+            const avgDays = Math.round((avgDurationMs / (1000 * 60 * 60 * 24)) * 10) / 10;
+            document.getElementById("notice-avg-process-time").textContent = `${avgDays.toLocaleString("vi-VN")} ngày`;
+        } else {
+            document.getElementById("notice-avg-process-time").textContent = "Chưa có dữ liệu";
+        }
+
+        // 5. Thiếu tài khoản nhận tiền hợp lệ
+        const noPayoutRequests = pendingRequests.filter(r => 
+            !r.payout_account || 
+            r.payout_account.status !== "active" || 
+            !r.payout_account.account_name || 
+            !r.payout_account.account_number_masked
+        );
+        document.getElementById("notice-no-payout-count").textContent = `${noPayoutRequests.length} hồ sơ`;
+
     } catch (e) {
         console.error("Lỗi khi cập nhật Attention Box:", e);
     }
@@ -447,14 +553,14 @@ function renderTable(items) {
             ? `<span class="text-success font-medium flex items-center gap-0.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>Đã xác minh</span>` 
             : `<span class="text-mid-gray font-normal">Chưa xác minh</span>`;
 
-        // Vai trò hiện tại badge
+        // Vai trò hiện tại badge (tối giản, góc bo 4px)
         let currentRoleBadge = "";
         if (item.user.role === "admin") {
-            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-ink text-white ml-1.5 select-none">Admin</span>`;
+            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold bg-ink text-white ml-1.5 rounded select-none">Admin</span>`;
         } else if (item.user.role === "instructor") {
-            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-medium bg-success-soft text-success border border-success/15 ml-1.5 select-none">Giảng viên</span>`;
+            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 text-[9px] font-medium text-success border border-success/20 bg-success-soft/20 ml-1.5 rounded select-none">Giảng viên</span>`;
         } else {
-            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-medium bg-canvas text-mid-gray border border-hairline ml-1.5 select-none">Học viên</span>`;
+            currentRoleBadge = `<span class="inline-flex items-center px-1.5 py-0.5 text-[9px] font-medium text-mid-gray border border-hairline bg-canvas ml-1.5 rounded select-none">Học viên</span>`;
         }
 
         // Chuyên môn (Expertise) giới hạn ký tự
@@ -470,11 +576,23 @@ function renderTable(items) {
         if (item.payout_account) {
             let payoutStatusBadge = "";
             if (item.payout_account.status === "active") {
-                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-success bg-success-soft px-1.5 py-0.5 rounded-full mt-1 border border-success/10">Đã kích hoạt</span>`;
+                payoutStatusBadge = `
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-medium text-success mt-1 select-none">
+                        <span class="h-1.5 w-1.5 rounded-full bg-success"></span>Đã kích hoạt
+                    </span>
+                `;
             } else if (item.payout_account.status === "pending_verification") {
-                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-warning bg-warning-soft px-1.5 py-0.5 rounded-full mt-1 border border-warning/10">Chờ xác minh</span>`;
+                payoutStatusBadge = `
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-medium text-warning mt-1 select-none">
+                        <span class="h-1.5 w-1.5 rounded-full bg-warning animate-pulse"></span>Chờ xác minh
+                    </span>
+                `;
             } else {
-                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-mid-gray bg-canvas px-1.5 py-0.5 rounded-full mt-1 border border-hairline">Vô hiệu hóa</span>`;
+                payoutStatusBadge = `
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-medium text-mid-gray mt-1 select-none">
+                        <span class="h-1.5 w-1.5 rounded-full bg-mid-gray"></span>Vô hiệu hóa
+                    </span>
+                `;
             }
 
             payoutInfoText = `
@@ -487,23 +605,23 @@ function renderTable(items) {
             payoutInfoText = `<span class="text-mid-gray/50 italic select-none">Chưa liên kết</span>`;
         }
 
-        // Trạng thái hồ sơ badge
+        // Trạng thái hồ sơ badge (dot + text tối giản)
         let statusBadge = "";
         if (item.application_status === "pending") {
             statusBadge = `
-                <span class="inline-flex items-center gap-1 text-[10px] font-medium text-warning bg-warning-soft border border-warning/10 px-2.5 py-0.5 rounded-full select-none">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-warning select-none">
                     <span class="h-1.5 w-1.5 rounded-full bg-warning animate-pulse"></span>Chờ xử lý
                 </span>
             `;
         } else if (item.application_status === "approved") {
             statusBadge = `
-                <span class="inline-flex items-center gap-1 text-[10px] font-medium text-success bg-success-soft border border-success/10 px-2.5 py-0.5 rounded-full select-none">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-success select-none">
                     <span class="h-1.5 w-1.5 rounded-full bg-success"></span>Đã duyệt
                 </span>
             `;
         } else { // rejected
             statusBadge = `
-                <span class="inline-flex items-center gap-1 text-[10px] font-medium text-danger-brick bg-danger-brick-soft border border-danger-brick/10 px-2.5 py-0.5 rounded-full select-none">
+                <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-danger-brick select-none">
                     <span class="h-1.5 w-1.5 rounded-full bg-danger-brick"></span>Đã từ chối
                 </span>
             `;
@@ -728,6 +846,7 @@ function removeFilterField(key) {
     }
 
     pageState.page = 1;
+    shouldScrollToListAfterRender = true;
     writeStateToUrl();
     fetchAndRender();
 }
@@ -737,6 +856,7 @@ function removeFilterField(key) {
  */
 function changePage(pageNumber) {
     pageState.page = pageNumber;
+    shouldScrollToListAfterRender = true;
     writeStateToUrl();
     fetchAndRender();
 }
@@ -763,6 +883,7 @@ function initFilterEvents() {
         pageState.date_to = formData.get("date_to");
         pageState.page = 1;
 
+        shouldScrollToListAfterRender = true;
         writeStateToUrl();
         fetchAndRender();
     });
@@ -778,6 +899,7 @@ function initFilterEvents() {
             page: 1,
             per_page: pageState.per_page
         };
+        shouldScrollToListAfterRender = true;
         writeStateToUrl();
         fetchAndRender();
     });
@@ -793,6 +915,7 @@ function initFilterEvents() {
         debounceTimer = setTimeout(() => {
             pageState.search = searchInput.value;
             pageState.page = 1;
+            shouldScrollToListAfterRender = true;
             writeStateToUrl();
             fetchAndRender();
         }, 400);
@@ -801,6 +924,7 @@ function initFilterEvents() {
     perPageSelect.addEventListener("change", () => {
         pageState.per_page = parseInt(perPageSelect.value) || 20;
         pageState.page = 1;
+        shouldScrollToListAfterRender = true;
         writeStateToUrl();
         fetchAndRender();
     });
@@ -810,6 +934,7 @@ function initFilterEvents() {
     });
 
     errorRetryBtn.addEventListener("click", () => {
+        shouldScrollToListAfterRender = true;
         fetchAndRender();
     });
 }
@@ -828,6 +953,7 @@ function initQuickTabsEvents() {
             document.getElementById("filter-status").value = pageState.status;
 
             pageState.page = 1;
+            shouldScrollToListAfterRender = true;
             writeStateToUrl();
             fetchAndRender();
         });
@@ -840,6 +966,7 @@ function initQuickTabsEvents() {
             pageState.status = "pending";
             document.getElementById("filter-status").value = "pending";
             pageState.page = 1;
+            shouldScrollToListAfterRender = true;
             writeStateToUrl();
             fetchAndRender();
         });
@@ -933,10 +1060,12 @@ function initModalEvents() {
                     openDetailDrawer(activeTargetRequest.user.id);
                 }
 
+                shouldScrollToListAfterRender = true;
                 fetchAndRender();
             } else {
                 if (response.error_code === 409) {
                     showToast({ type: "warning", title: "Xử lý xung đột", message: response.message });
+                    shouldScrollToListAfterRender = true;
                     fetchAndRender();
                 } else {
                     showToast({ type: "error", title: "Thất bại", message: response.message });
@@ -970,10 +1099,12 @@ function initModalEvents() {
                     openDetailDrawer(activeTargetRequest.user.id);
                 }
 
+                shouldScrollToListAfterRender = true;
                 fetchAndRender();
             } else {
                 if (response.error_code === 409) {
                     showToast({ type: "warning", title: "Xử lý xung đột", message: response.message });
+                    shouldScrollToListAfterRender = true;
                     fetchAndRender();
                 } else {
                     showToast({ type: "error", title: "Thất bại", message: response.message });
@@ -1009,22 +1140,22 @@ async function openDetailDrawer(userId) {
         const badgesContainer = document.getElementById("drawer-badges");
         badgesContainer.innerHTML = "";
 
-        // Badge Vai trò hiện tại
+        // Badge Vai trò hiện tại (tối giản, bo góc 4px)
         if (request.user.role === "admin") {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-ink text-white">Quản trị viên</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-bold bg-ink text-white rounded">Quản trị viên</span>`;
         } else if (request.user.role === "instructor") {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-success-soft text-success border border-success/15">Giảng viên</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-medium text-success border border-success/20 bg-success-soft/20 rounded">Giảng viên</span>`;
         } else {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-canvas text-mid-gray border border-hairline">Học viên</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-medium text-mid-gray border border-hairline bg-canvas rounded">Học viên</span>`;
         }
 
-        // Badge Trạng thái hồ sơ
+        // Badge Trạng thái hồ sơ (tối giản, bo góc 4px)
         if (request.application_status === "pending") {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium text-warning bg-warning-soft border border-warning/10">Hồ sơ chờ xử lý</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-semibold text-warning border border-warning/20 bg-warning-soft/20 rounded">Hồ sơ chờ xử lý</span>`;
         } else if (request.application_status === "approved") {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium text-success bg-success-soft border border-success/10">Đã phê duyệt</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-semibold text-success border border-success/20 bg-success-soft/20 rounded">Đã phê duyệt</span>`;
         } else {
-            badgesContainer.innerHTML += `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium text-danger-brick bg-danger-brick-soft border border-danger-brick/10">Bị từ chối</span>`;
+            badgesContainer.innerHTML += `<span class="px-2 py-0.5 text-[10px] font-semibold text-danger-brick border border-danger-brick/20 bg-danger-brick-soft/20 rounded">Bị từ chối</span>`;
         }
 
         // SECTION 1: Người dùng
@@ -1145,7 +1276,7 @@ function renderDrawerActions(request) {
         // Nút Duyệt
         const approveBtn = document.createElement("button");
         approveBtn.type = "button";
-        approveBtn.className = "px-5 py-1.5 text-xs font-semibold rounded-full bg-success text-white hover:opacity-90 transition-opacity cursor-pointer";
+        approveBtn.className = "px-5 py-1.5 text-xs font-semibold rounded-[6px] bg-success text-white hover:opacity-90 transition-opacity cursor-pointer";
         approveBtn.textContent = "Duyệt yêu cầu";
         approveBtn.addEventListener("click", () => openApproveModal(request));
         container.appendChild(approveBtn);
@@ -1153,7 +1284,7 @@ function renderDrawerActions(request) {
         // Nút Từ chối
         const rejectBtn = document.createElement("button");
         rejectBtn.type = "button";
-        rejectBtn.className = "px-5 py-1.5 text-xs font-semibold rounded-full bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer";
+        rejectBtn.className = "px-5 py-1.5 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer";
         rejectBtn.textContent = "Từ chối yêu cầu";
         rejectBtn.addEventListener("click", () => openRejectModal(request));
         container.appendChild(rejectBtn);
@@ -1161,10 +1292,10 @@ function renderDrawerActions(request) {
         // Nhãn hiển thị kết quả
         const label = document.createElement("div");
         if (request.application_status === "approved") {
-            label.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success-soft text-success border border-success/20";
+            label.className = "px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-success-soft text-success border border-success/20 select-none";
             label.textContent = "Yêu cầu đã được phê duyệt thành công";
         } else {
-            label.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick-soft text-danger-brick border border-danger-brick/10";
+            label.className = "px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-danger-brick-soft text-danger-brick border border-danger-brick/10 select-none";
             label.textContent = "Yêu cầu đã bị từ chối";
         }
         container.appendChild(label);
