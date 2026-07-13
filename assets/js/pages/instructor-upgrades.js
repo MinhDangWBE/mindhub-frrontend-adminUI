@@ -19,22 +19,49 @@ let payoutNumberVisible = false;
 // Biến theo dõi góc xoay của nút làm mới
 let refreshRotation = 0;
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("Đã tải trang: Yêu cầu nâng cấp giảng viên (Cải tiến)");
+document.addEventListener("DOMContentLoaded", initInstructorUpgradesPage);
 
-    // Đọc trạng thái từ URL query string
-    readStateFromUrl();
+async function initInstructorUpgradesPage() {
+    console.log("Khởi tạo trang Yêu cầu nâng cấp giảng viên.");
+    bindEvents();
+    restoreQueryState();
+    await loadUpgradeRequests();
+}
 
-    // Khởi tạo các sự kiện tương tác
+function bindEvents() {
     initFilterEvents();
     initQuickTabsEvents();
     initRefreshEvent();
     initModalEvents();
     initDropdownAutoClose();
+    
+    // Sự kiện click nút "Xem hồ sơ" ở card pending và nút "Xem hồ sơ đang chờ" ở attention panel
+    const kpiPendingLink = document.getElementById("kpi-pending-link");
+    if (kpiPendingLink) {
+        kpiPendingLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            const tabBtn = document.querySelector('button[data-tab="pending"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
 
-    // Tải dữ liệu ban đầu
-    fetchAndRender();
-});
+    const btnShowPendingOnly = document.getElementById("btn-show-pending-only");
+    if (btnShowPendingOnly) {
+        btnShowPendingOnly.addEventListener("click", (e) => {
+            e.preventDefault();
+            const tabBtn = document.querySelector('button[data-tab="pending"]');
+            if (tabBtn) tabBtn.click();
+        });
+    }
+}
+
+function restoreQueryState() {
+    readStateFromUrl();
+}
+
+async function loadUpgradeRequests() {
+    await fetchAndRender();
+}
 
 /**
  * Định dạng ngày giờ Việt Nam (DD/MM/YYYY HH:MM)
@@ -180,8 +207,8 @@ async function fetchAndRender() {
     try {
         const response = await upgradesApi.getUpgradeRequests(pageState);
         
-        if (!response || !response.success) {
-            showErrorState(response ? response.message : "Đã xảy ra lỗi không xác định.");
+        if (!response || !response.success || !response.data || !response.data.summary || !response.data.items || !response.meta) {
+            showErrorState("Dữ liệu Yêu cầu lên giảng viên không đúng API contract.");
             return;
         }
 
@@ -226,6 +253,17 @@ function showErrorState(message) {
 /**
  * Render dữ liệu summary lên các KPI cards và Quick Tabs
  */
+/**
+ * Helper tính tỷ lệ phần trăm an toàn
+ */
+function calculatePercentage(value, total) {
+    if (!total || total <= 0) return 0;
+    return Math.round((value / total) * 1000) / 10;
+}
+
+/**
+ * Render dữ liệu summary lên các KPI cards và Quick Tabs
+ */
 function renderSummary(summary) {
     if (!summary) return;
     
@@ -239,6 +277,60 @@ function renderSummary(summary) {
     updateText("kpi-pending", summary.pending);
     updateText("kpi-approved", summary.approved);
     updateText("kpi-rejected", summary.rejected);
+
+    // Cập nhật phân bổ phụ của Card 1
+    updateText("kpi-total-pending-sub", summary.pending);
+    updateText("kpi-total-approved-sub", summary.approved);
+    updateText("kpi-total-rejected-sub", summary.rejected);
+
+    const pendingPercentOfTotal = calculatePercentage(summary.pending, summary.total);
+    const approvedPercentOfTotal = calculatePercentage(summary.approved, summary.total);
+    const rejectedPercentOfTotal = calculatePercentage(summary.rejected, summary.total);
+
+    const pendingBar = document.getElementById("kpi-total-pending-bar");
+    const approvedBar = document.getElementById("kpi-total-approved-bar");
+    const rejectedBar = document.getElementById("kpi-total-rejected-bar");
+
+    if (pendingBar) pendingBar.style.width = `${pendingPercentOfTotal}%`;
+    if (approvedBar) approvedBar.style.width = `${approvedPercentOfTotal}%`;
+    if (rejectedBar) rejectedBar.style.width = `${rejectedPercentOfTotal}%`;
+
+    // Cập nhật tỷ lệ % và Progress Bar của Card 2 (Chờ xử lý)
+    const kpiPendingPercentEl = document.getElementById("kpi-pending-percent");
+    if (kpiPendingPercentEl) {
+        kpiPendingPercentEl.textContent = `${pendingPercentOfTotal.toLocaleString("vi-VN")}% tổng hồ sơ`;
+    }
+    const kpiPendingBarEl = document.getElementById("kpi-pending-bar");
+    if (kpiPendingBarEl) {
+        kpiPendingBarEl.style.width = `${pendingPercentOfTotal}%`;
+    }
+
+    // Cập nhật tỷ lệ % và Progress Bar của Card 3 (Đã duyệt)
+    const processedTotal = summary.approved + summary.rejected;
+    const kpiApprovedPercentEl = document.getElementById("kpi-approved-percent");
+    const kpiApprovedBarEl = document.getElementById("kpi-approved-bar");
+
+    if (processedTotal > 0) {
+        const approvedRate = calculatePercentage(summary.approved, processedTotal);
+        if (kpiApprovedPercentEl) kpiApprovedPercentEl.textContent = `Tỷ lệ duyệt: ${approvedRate.toLocaleString("vi-VN")}%`;
+        if (kpiApprovedBarEl) kpiApprovedBarEl.style.width = `${approvedRate}%`;
+    } else {
+        if (kpiApprovedPercentEl) kpiApprovedPercentEl.textContent = "Chưa có hồ sơ đã xử lý";
+        if (kpiApprovedBarEl) kpiApprovedBarEl.style.width = "0%";
+    }
+
+    // Cập nhật tỷ lệ % và Progress Bar của Card 4 (Đã từ chối)
+    const kpiRejectedPercentEl = document.getElementById("kpi-rejected-percent");
+    const kpiRejectedBarEl = document.getElementById("kpi-rejected-bar");
+
+    if (processedTotal > 0) {
+        const rejectedRate = calculatePercentage(summary.rejected, processedTotal);
+        if (kpiRejectedPercentEl) kpiRejectedPercentEl.textContent = `Tỷ lệ từ chối: ${rejectedRate.toLocaleString("vi-VN")}%`;
+        if (kpiRejectedBarEl) kpiRejectedBarEl.style.width = `${rejectedRate}%`;
+    } else {
+        if (kpiRejectedPercentEl) kpiRejectedPercentEl.textContent = "Chưa có hồ sơ đã xử lý";
+        if (kpiRejectedBarEl) kpiRejectedBarEl.style.width = "0%";
+    }
 
     // 2. Số lượng ở tiêu đề
     updateText("title-total-requests", summary.total);
@@ -376,13 +468,23 @@ function renderTable(items) {
         // Tài khoản nhận tiền
         let payoutInfoText = "";
         if (item.payout_account) {
+            let payoutStatusBadge = "";
+            if (item.payout_account.status === "active") {
+                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-success bg-success-soft px-1.5 py-0.5 rounded-full mt-1 border border-success/10">Đã kích hoạt</span>`;
+            } else if (item.payout_account.status === "pending_verification") {
+                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-warning bg-warning-soft px-1.5 py-0.5 rounded-full mt-1 border border-warning/10">Chờ xác minh</span>`;
+            } else {
+                payoutStatusBadge = `<span class="inline-flex items-center text-[9px] font-medium text-mid-gray bg-canvas px-1.5 py-0.5 rounded-full mt-1 border border-hairline">Vô hiệu hóa</span>`;
+            }
+
             payoutInfoText = `
                 <div class="font-medium text-ink">${item.payout_account.provider}</div>
                 <div class="text-[10px] text-mid-gray mt-0.5">${item.payout_account.account_name}</div>
-                <div class="text-[10px] font-mono text-mid-gray mt-0.5">${item.payout_account.account_number_masked}</div>
+                <div class="text-[10px] font-mono text-mid-gray mt-0.5 font-medium tracking-wide">${item.payout_account.account_number_masked}</div>
+                <div class="mt-0.5">${payoutStatusBadge}</div>
             `;
         } else {
-            payoutInfoText = `<span class="text-danger-brick/80 italic font-medium">Chưa kết nối tài khoản</span>`;
+            payoutInfoText = `<span class="text-mid-gray/50 italic select-none">Chưa liên kết</span>`;
         }
 
         // Trạng thái hồ sơ badge

@@ -1,22 +1,22 @@
-import { instructorUpgradesData } from "../../data/instructor-upgrades.js";
+import { USE_MOCK_DATA } from "../core/config.js";
+import { instructorUpgradesMockData } from "../mocks/instructor-upgrades-mock.js";
 
-// Cấu hình nguồn dữ liệu: true để dùng mock (localStorage), false để gọi API thật
-const USE_MOCK = true;
 const API_BASE_URL = "/api/admin/instructor-upgrade-requests";
 
 // Key lưu trữ dữ liệu mock trong localStorage
 const STORAGE_KEY = "mindhub_admin_mock_instructor_upgrades";
 
 /**
- * Khởi tạo dữ liệu mock ban đầu nếu chưa có trong localStorage
+ * Khởi tạo dữ liệu mock ban đầu nếu chưa có hoặc rỗng trong localStorage
  */
 function initMockDatabase() {
-    if (!localStorage.getItem(STORAGE_KEY)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(instructorUpgradesData));
+    const existing = localStorage.getItem(STORAGE_KEY);
+    if (!existing || existing === "[]" || existing === "null") {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(instructorUpgradesMockData));
     }
 }
 
-if (USE_MOCK) {
+if (USE_MOCK_DATA) {
     initMockDatabase();
 }
 
@@ -38,7 +38,7 @@ function saveRawMockRequests(requests) {
  * Lấy danh sách yêu cầu nâng cấp (hỗ trợ phân trang, lọc, sắp xếp)
  */
 export async function getUpgradeRequests(params = {}) {
-    if (!USE_MOCK) {
+    if (!USE_MOCK_DATA) {
         // Gọi API thật khi sẵn sàng
         const query = new URLSearchParams(params).toString();
         const response = await fetch(`${API_BASE_URL}?${query}`);
@@ -159,7 +159,7 @@ export async function getUpgradeRequests(params = {}) {
  */
 export async function getUpgradeRequest(userId) {
     const uId = parseInt(userId);
-    if (!USE_MOCK) {
+    if (!USE_MOCK_DATA) {
         const response = await fetch(`${API_BASE_URL}/${uId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -191,7 +191,7 @@ export async function getUpgradeRequest(userId) {
  */
 export async function approveUpgradeRequest(userId) {
     const uId = parseInt(userId);
-    if (!USE_MOCK) {
+    if (!USE_MOCK_DATA) {
         const response = await fetch(`${API_BASE_URL}/${uId}/approve`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" }
@@ -258,7 +258,7 @@ export async function approveUpgradeRequest(userId) {
  */
 export async function rejectUpgradeRequest(userId) {
     const uId = parseInt(userId);
-    if (!USE_MOCK) {
+    if (!USE_MOCK_DATA) {
         const response = await fetch(`${API_BASE_URL}/${uId}/reject`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" }
