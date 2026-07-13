@@ -17,6 +17,12 @@ shadcn/ui is a monochromatic design-system workshop: pure white canvas, soft war
 | Mid Gray | `#737373` | `--color-mid-gray` | Muted body text, placeholder text, helper labels, icon fills at rest |
 | Hairline | `#e5e5e5` | `--color-hairline` | Borders, input outlines, card edges, badge outlines |
 | Ember | `#e7000b` | `--color-ember` | Red decorative accent for icons, marks, and small graphic details. Use as a supporting accent, not as a status color |
+| Success | `#15803d` | `--color-success` | Positive/Success status: active, published, paid, approved |
+| Success Soft | `#dcfce7` | `--color-success-soft` | Soft background for positive/success badges/icons |
+| Danger Brick | `#b42318` | `--color-danger-brick` | Negative/Error status: rejected, locked, failed, error, destructive |
+| Danger Brick Soft| `#fee4e2` | `--color-danger-brick-soft`| Soft background for negative/error badges/icons |
+| Warning | `#b7791f` | `--color-warning` | Pending/Warning status: pending, waiting, review |
+| Warning Soft | `#fef3c7` | `--color-warning-soft` | Soft background for pending/warning badges/icons |
 
 ## Tokens — Typography
 
@@ -163,12 +169,13 @@ Text or icon in #e7000b against the monochromatic palette. The red is the only c
 - Use #0a0a0a on #ffffff for filled buttons — the dark inversion is the only primary action treatment.
 - Maintain 18px radius on all buttons, inputs, and badges for perfect pill geometry; use 24px radius only on cards.
 - Set display headlines at 48px/600 with -0.0500em tracking — Geist's geometric weight at this size with aggressive tightening produces the engineered headline voice.
-- Reserve #e7000b exclusively for destructive states; never use it for decoration, branding, or non-error emphasis.
+- Reserve #e7000b/red/danger-brick exclusively for destructive states and errors; never use it for decoration, branding, or non-error emphasis.
+- Use semantic colors (green/success, red/danger-brick, amber/warning, gray/neutral) with strict control: only apply to icons, badges, indicators, or status text. Keep the overall UI monochromatic.
 - Stack card shadows as 1px hairline + 1px + 2px offset — the combined effect is a barely-perceptible elevation that reads as 'card' without drama.
 - Use #f5f5f5 for secondary surfaces and inputs; use #fafafa for sidebar and subtle card variants — the three-tone surface stack (canvas → soft → paper) creates layering without borders.
 
 ### Don't
-- Do not introduce chromatic brand colors beyond #e7000b — the monochromatic palette is the system.
+- Do not introduce chromatic brand colors beyond semantic state indicators — the monochromatic palette is the system.
 - Do not use border-radius values other than 18px (interactive) or 24px (containers); avoid square corners on any element.
 - Do not skip the 1px hairline border on cards — the shadow alone does not define the card edge in this system.
 - Do not set body text below 14px or above #737373 lightness — the type scale is deliberately compact.

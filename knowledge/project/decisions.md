@@ -7,5 +7,5 @@
 5. Coupon do giảng viên quản lý.
 6. Không đưa Credit package vào Admin mới.
 7. Không thêm refund, audit log, role động hoặc system settings.
-8. Giao diện light mode, monochrome.
-9. Bắt đầu với Admin Shell, Sidebar, Topbar và Dashboard.
+8. Giao diện light mode, monochrome. Sử dụng các màu semantic có kiểm soát cho trạng thái khóa học, người dùng và các thông báo Toast.
+9. Bắt đầu với Admin Shell, Sidebar, Topbar và Dashboard. Sử dụng hệ thống thông báo Toast ES Module dùng chung thay cho alert() thông thường.
