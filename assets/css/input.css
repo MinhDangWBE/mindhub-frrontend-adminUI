@@ -15,6 +15,14 @@
     --color-mid-gray: #737373;
     --color-hairline: #e5e5e5;
     --color-ember: #e7000b;
+    
+    /* Semantic Colors */
+    --color-success: #15803d;
+    --color-success-soft: #dcfce7;
+    --color-danger-brick: #b42318;
+    --color-danger-brick-soft: #fee4e2;
+    --color-warning: #b7791f;
+    --color-warning-soft: #fef3c7;
 }
 
 :root {

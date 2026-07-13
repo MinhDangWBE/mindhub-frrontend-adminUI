@@ -52,11 +52,51 @@ const mockDataPresets = {
                 },
                 recent: {
                     latest_orders: [
-                        { id: 1001, course_title: "Lập trình Laravel căn bản", learner_name: "Nguyễn Văn A", amount: "400000.00", status: "paid", paid_at: "2026-07-12T20:30:00Z" },
-                        { id: 1002, course_title: "Làm chủ Vue.js 3 trong 30 ngày", learner_name: "Lê Văn B", amount: "300000.00", status: "paid", paid_at: "2026-07-12T19:15:00Z" },
-                        { id: 1003, course_title: "Thiết kế hệ thống lớn (System Design)", learner_name: "Phạm Minh C", amount: "500000.00", status: "paid", paid_at: "2026-07-11T14:20:00Z" },
-                        { id: 1004, course_title: "Tailwind CSS từ Zero đến Hero", learner_name: "Đỗ Hoàng D", amount: "200000.00", status: "paid", paid_at: "2026-07-11T10:05:00Z" },
-                        { id: 1005, course_title: "HTML/CSS & Javascript cho người mới", learner_name: "Nguyễn Thị E", amount: "150000.00", status: "paid", paid_at: "2026-07-10T16:30:00Z" }
+                        {
+                            id: 1001,
+                            order_code: "ORD1001",
+                            amount: "400000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T20:30:00Z",
+                            user: { id: 301, full_name: "Nguyễn Văn A" },
+                            course: { id: 101, title: "Lập trình Laravel căn bản", slug: "lap-trinh-laravel-can-ban" }
+                        },
+                        {
+                            id: 1002,
+                            order_code: "ORD1002",
+                            amount: "300000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T19:15:00Z",
+                            user: { id: 302, full_name: "Lê Văn B" },
+                            course: { id: 102, title: "Làm chủ Vue.js 3 trong 30 ngày", slug: "lam-chu-vuejs-3-trong-30-ngay" }
+                        },
+                        {
+                            id: 1003,
+                            order_code: "ORD1003",
+                            amount: "500000.00",
+                            status: "paid",
+                            paid_at: "2026-07-11T14:20:00Z",
+                            user: { id: 303, full_name: "Phạm Minh C" },
+                            course: { id: 103, title: "Thiết kế hệ thống lớn (System Design)", slug: "thiet-ke-he-thong-lon-system-design" }
+                        },
+                        {
+                            id: 1004,
+                            order_code: "ORD1004",
+                            amount: "200000.00",
+                            status: "paid",
+                            paid_at: "2026-07-11T10:05:00Z",
+                            user: { id: 304, full_name: "Đỗ Hoàng D" },
+                            course: { id: 104, title: "Tailwind CSS từ Zero đến Hero", slug: "tailwind-css-tu-zero-den-hero" }
+                        },
+                        {
+                            id: 1005,
+                            order_code: "ORD1005",
+                            amount: "150000.00",
+                            status: "paid",
+                            paid_at: "2026-07-10T16:30:00Z",
+                            user: { id: 305, full_name: "Nguyễn Thị E" },
+                            course: { id: 105, title: "HTML/CSS & Javascript cho người mới", slug: "html-css-javascript-cho-nguoi-moi" }
+                        }
                     ],
                     latest_courses: [
                         { id: 201, title: "Lập trình React Native", instructor_name: "Trần Văn Hoàng", status: "published", published_at: "2026-07-12T18:00:00Z" },
@@ -158,8 +198,24 @@ const mockDataPresets = {
                 },
                 recent: {
                     latest_orders: [
-                        { id: 1001, course_title: "Lập trình Laravel căn bản", learner_name: "Nguyễn Văn A", amount: "400000.00", status: "paid", paid_at: "2026-07-12T20:30:00Z" },
-                        { id: 1002, course_title: "Làm chủ Vue.js 3 trong 30 ngày", learner_name: "Lê Văn B", amount: "300000.00", status: "paid", paid_at: "2026-07-12T19:15:00Z" }
+                        {
+                            id: 1001,
+                            order_code: "ORD1001",
+                            amount: "400000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T20:30:00Z",
+                            user: { id: 301, full_name: "Nguyễn Văn A" },
+                            course: { id: 101, title: "Lập trình Laravel căn bản", slug: "lap-trinh-laravel-can-ban" }
+                        },
+                        {
+                            id: 1002,
+                            order_code: "ORD1002",
+                            amount: "300000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T19:15:00Z",
+                            user: { id: 302, full_name: "Lê Văn B" },
+                            course: { id: 102, title: "Làm chủ Vue.js 3 trong 30 ngày", slug: "lam-chu-vuejs-3-trong-30-ngay" }
+                        }
                     ],
                     latest_courses: [
                         { id: 201, title: "Lập trình React Native", instructor_name: "Trần Văn Hoàng", status: "published", published_at: "2026-07-12T18:00:00Z" },
@@ -256,7 +312,15 @@ const mockDataPresets = {
                 },
                 recent: {
                     latest_orders: [
-                        { id: 1001, course_title: "Lập trình Laravel căn bản", learner_name: "Nguyễn Văn A", amount: "400000.00", status: "paid", paid_at: "2026-07-12T20:30:00Z" }
+                        {
+                            id: 1001,
+                            order_code: "ORD1001",
+                            amount: "400000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T20:30:00Z",
+                            user: { id: 301, full_name: "Nguyễn Văn A" },
+                            course: { id: 101, title: "Lập trình Laravel căn bản", slug: "lap-trinh-laravel-can-ban" }
+                        }
                     ],
                     latest_courses: [
                         { id: 201, title: "Lập trình React Native", instructor_name: "Trần Văn Hoàng", status: "published", published_at: "2026-07-12T18:00:00Z" }
@@ -351,7 +415,15 @@ const mockDataPresets = {
                 },
                 recent: {
                     latest_orders: [
-                        { id: 1001, course_title: "Lập trình Laravel căn bản", learner_name: "Nguyễn Văn A", amount: "400000.00", status: "paid", paid_at: "2026-07-12T20:30:00Z" }
+                        {
+                            id: 1001,
+                            order_code: "ORD1001",
+                            amount: "400000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T20:30:00Z",
+                            user: { id: 301, full_name: "Nguyễn Văn A" },
+                            course: { id: 101, title: "Lập trình Laravel căn bản", slug: "lap-trinh-laravel-can-ban" }
+                        }
                     ],
                     latest_courses: [
                         { id: 201, title: "Lập trình React Native", instructor_name: "Trần Văn Hoàng", status: "published", published_at: "2026-07-12T18:00:00Z" }
@@ -455,7 +527,15 @@ const mockDataPresets = {
                 },
                 recent: {
                     latest_orders: [
-                        { id: 1001, course_title: "Lập trình Laravel căn bản", learner_name: "Nguyễn Văn A", amount: "400000.00", status: "paid", paid_at: "2026-07-12T20:30:00Z" }
+                        {
+                            id: 1001,
+                            order_code: "ORD1001",
+                            amount: "400000.00",
+                            status: "paid",
+                            paid_at: "2026-07-12T20:30:00Z",
+                            user: { id: 301, full_name: "Nguyễn Văn A" },
+                            course: { id: 101, title: "Lập trình Laravel căn bản", slug: "lap-trinh-laravel-can-ban" }
+                        }
                     ],
                     latest_courses: [
                         { id: 201, title: "Lập trình React Native", instructor_name: "Trần Văn Hoàng", status: "published", published_at: "2026-07-12T18:00:00Z" }

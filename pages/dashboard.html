@@ -139,7 +139,7 @@
 
           <!-- ==================== WRAPPER 1: LOADED CONTENT ==================== -->
           <div id="dashboard-content-wrapper" class="space-y-4">
-            <!-- 1. KPI chính (Row 1 - 4 Cards, bo góc 6px, padding p-4, gap-3.5) -->
+            <!-- 1. KPI chính (Row 1 - 4 Cards, bo góc 6px, padding p-4, gap-3) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <!-- KPI: Tổng người dùng -->
               <a
@@ -151,11 +151,9 @@
                     class="text-xs font-semibold text-mid-gray uppercase tracking-wider"
                     >Tổng người dùng</span
                   >
-                  <div
-                    class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-canvas text-ink shrink-0"
-                  >
+                  <div class="text-ink shrink-0">
                     <svg
-                      class="w-4 h-4"
+                      class="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.5"
@@ -173,7 +171,12 @@
                     >0</span
                   >
                 </div>
-                <p id="kpi-users-sub" class="mt-1 text-xs text-mid-gray">
+                <!-- Progress Bar học viên / giảng viên -->
+                <div class="w-full bg-canvas h-1 rounded-full mt-2.5 overflow-hidden flex">
+                  <div id="kpi-users-bar-learner" class="bg-ink h-full rounded-l-full" style="width: 0%"></div>
+                  <div id="kpi-users-bar-instructor" class="bg-mid-gray h-full rounded-r-full" style="width: 0%"></div>
+                </div>
+                <p id="kpi-users-sub" class="mt-2 text-xs text-mid-gray">
                   0 học viên • 0 giảng viên
                 </p>
               </a>
@@ -188,34 +191,38 @@
                     class="text-xs font-semibold text-mid-gray uppercase tracking-wider"
                     >Tổng khóa học</span
                   >
-                  <div
-                    class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-canvas text-ink shrink-0"
-                  >
-                    <svg
-                      class="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      viewBox="0 0 24 24"
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span
+                      id="kpi-courses-pending"
+                      class="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-warning-soft text-warning border border-warning/10"
+                      >0 chờ duyệt</span
                     >
-                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                    </svg>
+                    <div class="text-ink">
+                      <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <div class="mt-2.5 flex items-center justify-between">
+                <div class="mt-2.5 flex items-baseline gap-2">
                   <span
                     id="kpi-total-courses"
                     class="text-[28px] lg:text-[30px] font-bold tracking-tight text-ink leading-none font-sans"
                     >0</span
                   >
-                  <span
-                    id="kpi-courses-pending"
-                    class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
-                    >0 chờ duyệt</span
-                  >
                 </div>
-                <p id="kpi-courses-sub" class="mt-1 text-xs text-mid-gray">
+                <!-- Progress Bar đã xuất bản / tổng số -->
+                <div class="w-full bg-canvas h-1 rounded-full mt-2.5 overflow-hidden">
+                  <div id="kpi-courses-bar-published" class="bg-success h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <p id="kpi-courses-sub" class="mt-2 text-xs text-mid-gray">
                   0 đã xuất bản
                 </p>
               </a>
@@ -229,11 +236,9 @@
                     class="text-xs font-semibold text-mid-gray uppercase tracking-wider"
                     >Tổng lượt ghi danh</span
                   >
-                  <div
-                    class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-canvas text-ink shrink-0"
-                  >
+                  <div class="text-ink shrink-0">
                     <svg
-                      class="w-4 h-4"
+                      class="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.5"
@@ -251,7 +256,11 @@
                     >0</span
                   >
                 </div>
-                <p id="kpi-enrollments-sub" class="mt-1 text-xs text-mid-gray">
+                <!-- Progress Bar tỷ lệ hoàn thành -->
+                <div class="w-full bg-canvas h-1 rounded-full mt-2.5 overflow-hidden">
+                  <div id="kpi-enrollments-bar-completed" class="bg-success h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <p id="kpi-enrollments-sub" class="mt-2 text-xs text-mid-gray">
                   0 hoàn thành • Tỉ lệ 0%
                 </p>
               </div>
@@ -266,11 +275,9 @@
                     class="text-xs font-semibold text-mid-gray uppercase tracking-wider"
                     >Tổng đơn hàng</span
                   >
-                  <div
-                    class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-canvas text-ink shrink-0"
-                  >
+                  <div class="text-ink shrink-0">
                     <svg
-                      class="w-4 h-4"
+                      class="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="1.5"
@@ -288,7 +295,11 @@
                     >0</span
                   >
                 </div>
-                <p id="kpi-orders-sub" class="mt-1 text-xs text-mid-gray">
+                <!-- Progress Bar tỷ lệ đơn hàng đã thanh toán -->
+                <div class="w-full bg-canvas h-1 rounded-full mt-2.5 overflow-hidden">
+                  <div id="kpi-orders-bar-paid" class="bg-success h-full rounded-full" style="width: 0%"></div>
+                </div>
+                <p id="kpi-orders-sub" class="mt-2 text-xs text-mid-gray">
                   0 đã thanh toán
                 </p>
               </a>
@@ -298,15 +309,22 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               <!-- Doanh thu gộp -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle"
+                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle flex flex-col justify-between min-h-[96px]"
               >
-                <span
-                  class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                  >Doanh thu gộp</span
-                >
+                <div class="flex items-center justify-between">
+                  <span
+                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
+                    >Doanh thu gộp</span
+                  >
+                  <div class="text-success shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306 8.9-8.91M22.5 9.75V2.25h-7.5" />
+                    </svg>
+                  </div>
+                </div>
                 <p
                   id="kpi-gross-revenue"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
+                  class="text-base md:text-[17px] font-bold text-ink mt-2.5 font-sans"
                 >
                   0 đ
                 </p>
@@ -314,15 +332,22 @@
 
               <!-- Thu nhập giảng viên -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle"
+                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle flex flex-col justify-between min-h-[96px]"
               >
-                <span
-                  class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                  >Thu nhập GV</span
-                >
+                <div class="flex items-center justify-between">
+                  <span
+                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
+                    >Thu nhập giảng viên</span
+                  >
+                  <div class="text-mid-gray shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                  </div>
+                </div>
                 <p
                   id="kpi-instructor-earnings"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
+                  class="text-base md:text-[17px] font-bold text-ink mt-2.5 font-sans"
                 >
                   0 đ
                 </p>
@@ -330,15 +355,22 @@
 
               <!-- Phí nền tảng -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle"
+                class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle flex flex-col justify-between min-h-[96px]"
               >
-                <span
-                  class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                  >Phí nền tảng</span
-                >
+                <div class="flex items-center justify-between">
+                  <span
+                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
+                    >Phí nền tảng</span
+                  >
+                  <div class="text-mid-gray shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3 3m12 12V19.5M15 15h4.5m-4.5 0 6 6" />
+                    </svg>
+                  </div>
+                </div>
                 <p
                   id="kpi-platform-fee"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
+                  class="text-base md:text-[17px] font-bold text-ink mt-2.5 font-sans"
                 >
                   0 đ
                 </p>
@@ -347,63 +379,80 @@
               <!-- Rút tiền chờ duyệt -->
               <a
                 href="withdrawals.html"
-                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group"
+                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group flex flex-col justify-between min-h-[96px]"
               >
                 <div class="flex items-center justify-between">
-                  <span
-                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                    >Chờ duyệt rút</span
-                  >
-                  <span
-                    id="kpi-withdrawal-pending-count"
-                    class="text-[9px] font-medium px-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full shrink-0"
-                    >0</span
-                  >
+                  <h3 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">
+                    Chờ duyệt rút
+                    <span id="kpi-withdrawal-pending-count" class="text-warning font-bold font-sans ml-0.5"></span>
+                  </h3>
+                  <div class="text-warning shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </div>
                 </div>
-                <p
-                  id="kpi-withdrawal-pending-amount"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
-                >
-                  0 đ
-                </p>
+                <div class="mt-2 flex flex-col">
+                  <p
+                    id="kpi-withdrawal-pending-amount"
+                    class="text-base md:text-[17px] font-bold text-ink font-sans leading-tight"
+                  >
+                    0 đ
+                  </p>
+                  <span id="kpi-withdrawal-pending-sub" class="text-[9px] text-warning mt-1 leading-tight font-medium">
+                    0 yêu cầu đang chờ duyệt
+                  </span>
+                </div>
               </a>
 
               <!-- Đã duyệt chờ chi -->
               <a
                 href="withdrawals.html"
-                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group"
+                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group flex flex-col justify-between min-h-[96px]"
               >
                 <div class="flex items-center justify-between">
-                  <span
-                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                    >Chờ thanh toán</span
-                  >
-                  <span
-                    id="kpi-withdrawal-approved-count"
-                    class="text-[9px] font-medium px-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full shrink-0"
-                    >0</span
-                  >
+                  <h3 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">
+                    Chờ thanh toán
+                    <span id="kpi-withdrawal-approved-count" class="text-danger-brick font-bold font-sans ml-0.5"></span>
+                  </h3>
+                  <div class="text-danger-brick shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                    </svg>
+                  </div>
                 </div>
-                <p
-                  id="kpi-withdrawal-approved-amount"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
-                >
-                  0 đ
-                </p>
+                <div class="mt-2 flex flex-col">
+                  <p
+                    id="kpi-withdrawal-approved-amount"
+                    class="text-base md:text-[17px] font-bold text-ink font-sans leading-tight"
+                  >
+                    0 đ
+                  </p>
+                  <span id="kpi-withdrawal-approved-sub" class="text-[9px] text-danger-brick mt-1 leading-tight font-medium">
+                    0 yêu cầu đã duyệt, chờ chi
+                  </span>
+                </div>
               </a>
 
               <!-- Đã thanh toán cho GV -->
               <a
                 href="withdrawals.html"
-                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group"
+                class="block rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle hover:border-mid-gray/40 transition-all group flex flex-col justify-between min-h-[96px]"
               >
-                <span
-                  class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
-                  >Đã chi trả GV</span
-                >
+                <div class="flex items-center justify-between">
+                  <span
+                    class="text-[10px] font-bold text-mid-gray uppercase tracking-wider"
+                    >Đã chi trả giảng viên</span
+                  >
+                  <div class="text-success shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </div>
+                </div>
                 <p
                   id="kpi-withdrawal-paid-amount"
-                  class="text-sm font-bold text-ink mt-0.5 truncate font-sans"
+                  class="text-base md:text-[17px] font-bold text-ink mt-2.5 font-sans"
                 >
                   0 đ
                 </p>
@@ -412,142 +461,20 @@
 
             <!-- 3. Panel Trạng thái khóa học & Trạng thái người dùng -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <!-- Trạng thái khóa học -->
+              <!-- Phân bổ trạng thái khóa học -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle"
+                id="course-status-panel"
+                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col gap-3 min-h-[340px]"
               >
-                <h2
-                  class="text-xs font-bold text-mid-gray uppercase tracking-wider mb-3"
-                >
-                  Phân bổ trạng thái khóa học
-                </h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block"
-                      >Nháp (Draft)</span
-                    >
-                    <span
-                      id="status-course-draft"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block"
-                      >Chờ duyệt</span
-                    >
-                    <span
-                      id="status-course-pending"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block"
-                      >Đã duyệt</span
-                    >
-                    <span
-                      id="status-course-approved"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block"
-                      >Bị từ chối</span
-                    >
-                    <span
-                      id="status-course-rejected"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block"
-                      >Đã xuất bản</span
-                    >
-                    <span
-                      id="status-course-published"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                  <div
-                    class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                  >
-                    <span class="text-[10px] text-mid-gray block">Đã ẩn</span>
-                    <span
-                      id="status-course-hidden"
-                      class="text-base font-bold text-ink font-sans"
-                      >0</span
-                    >
-                  </div>
-                </div>
+                <!-- Nạp động qua JS -->
               </div>
 
               <!-- Trạng thái người dùng -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between"
+                id="user-status-panel"
+                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col gap-3 min-h-[340px]"
               >
-                <div>
-                  <h2
-                    class="text-xs font-bold text-mid-gray uppercase tracking-wider mb-3"
-                  >
-                    Trạng thái tài khoản người dùng
-                  </h2>
-                  <div class="grid grid-cols-3 gap-2.5">
-                    <div
-                      class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                    >
-                      <span class="text-[10px] text-mid-gray block"
-                        >Hoạt động (Active)</span
-                      >
-                      <span
-                        id="status-user-active"
-                        class="text-base font-bold text-ink font-sans"
-                        >0</span
-                      >
-                    </div>
-                    <div
-                      class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                    >
-                      <span class="text-[10px] text-mid-gray block"
-                        >Chưa kích hoạt</span
-                      >
-                      <span
-                        id="status-user-inactive"
-                        class="text-base font-bold text-ink font-sans"
-                        >0</span
-                      >
-                    </div>
-                    <div
-                      class="p-2.5 bg-canvas rounded-[6px] border border-hairline/40"
-                    >
-                      <span class="text-[10px] text-mid-gray block"
-                        >Đang khóa (Locked)</span
-                      >
-                      <span
-                        id="status-user-locked"
-                        class="text-base font-bold text-ink font-sans"
-                        >0</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <p class="text-[10px] text-mid-gray mt-3">
-                  Trạng thái được cập nhật trực tiếp từ hệ thống quản lý định
-                  danh người dùng.
-                </p>
+                <!-- Nạp động qua JS -->
               </div>
             </div>
 
@@ -555,13 +482,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
               <!-- Khung biểu đồ -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle lg:col-span-2 flex flex-col justify-between relative"
+                class="rounded-[6px] border border-border-strong bg-paper p-4 shadow-sm lg:col-span-2 flex flex-col justify-between relative"
               >
-                <div>
-                  <h2 class="text-sm font-bold text-ink">
+                <div class="border-l-3 border-success pl-2.5 mb-2.5">
+                  <h2 class="text-sm font-semibold text-ink leading-snug">
                     Biểu đồ Doanh thu & Phí nền tảng
                   </h2>
-                  <p class="text-[11px] text-mid-gray mt-0.5">
+                  <p class="text-[11px] text-mid-gray mt-0.5 leading-normal">
                     Xu hướng biến động tài chính theo bộ lọc thời gian
                   </p>
                 </div>
@@ -583,12 +510,14 @@
 
               <!-- Khung công việc cần xử lý -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col"
+                class="rounded-[6px] border border-border-strong bg-paper p-4 shadow-sm flex flex-col"
               >
-                <h2 class="text-sm font-bold text-ink">Công việc cần xử lý</h2>
-                <p class="text-[11px] text-mid-gray mt-0.5">
-                  Các nhiệm vụ đang chờ quản trị viên phản hồi
-                </p>
+                <div class="border-l-3 border-warning pl-2.5 mb-2.5">
+                  <h2 class="text-sm font-semibold text-ink leading-snug">Công việc cần xử lý</h2>
+                  <p class="text-[11px] text-mid-gray mt-0.5 leading-normal">
+                    Các nhiệm vụ đang chờ quản trị viên phản hồi
+                  </p>
+                </div>
 
                 <!-- Actions container -->
                 <div
@@ -604,14 +533,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <!-- Cột 1: Xếp hạng khóa học -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col"
+                class="rounded-[6px] border border-border-strong bg-paper p-4 shadow-sm flex flex-col"
               >
-                <h2 class="text-sm font-bold text-ink">
-                  Top khóa học tiêu biểu
-                </h2>
-                <p class="text-[11px] text-mid-gray mt-0.5">
-                  Xếp hạng theo tổng doanh thu bán khóa học
-                </p>
+                <div class="border-l-3 border-success pl-2.5 mb-2.5">
+                  <h2 class="text-sm font-semibold text-ink leading-snug">
+                    Top khóa học tiêu biểu
+                  </h2>
+                  <p class="text-[11px] text-mid-gray mt-0.5 leading-normal">
+                    Xếp hạng theo tổng doanh thu bán khóa học
+                  </p>
+                </div>
                 <div
                   class="mt-2.5 overflow-x-auto flex-1 max-h-80 custom-scrollbar pr-1"
                 >
@@ -620,6 +551,7 @@
                       <tr
                         class="border-b border-hairline text-mid-gray font-medium"
                       >
+                        <th class="pb-1.5 w-6">#</th>
                         <th class="pb-1.5">Khóa học</th>
                         <th class="pb-1.5 text-right">Lượt bán</th>
                         <th class="pb-1.5 text-right">Doanh thu</th>
@@ -637,12 +569,14 @@
 
               <!-- Cột 2: Giảng viên doanh thu cao -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col"
+                class="rounded-[6px] border border-border-strong bg-paper p-4 shadow-sm flex flex-col"
               >
-                <h2 class="text-sm font-bold text-ink">Giảng viên nổi bật</h2>
-                <p class="text-[11px] text-mid-gray mt-0.5">
-                  Xếp hạng theo doanh thu gộp nhận được
-                </p>
+                <div class="border-l-3 border-ink pl-2.5 mb-2.5">
+                  <h2 class="text-sm font-semibold text-ink leading-snug">Giảng viên nổi bật</h2>
+                  <p class="text-[11px] text-mid-gray mt-0.5 leading-normal">
+                    Xếp hạng theo doanh thu gộp nhận được
+                  </p>
+                </div>
                 <div
                   class="mt-2.5 overflow-x-auto flex-1 max-h-80 custom-scrollbar pr-1"
                 >
@@ -652,8 +586,8 @@
                         class="border-b border-hairline text-mid-gray font-medium"
                       >
                         <th class="pb-1.5">Giảng viên</th>
-                        <th class="pb-1.5 text-right">Khóa</th>
-                        <th class="pb-1.5 text-right">Doanh thu</th>
+                        <th class="pb-1.5 text-right">Khóa học</th>
+                        <th class="pb-1.5 text-right">Thu nhập giảng viên</th>
                       </tr>
                     </thead>
                     <tbody
@@ -668,12 +602,15 @@
 
               <!-- Cột 3: Hoạt động gần đây (Tách 2 Tabs) -->
               <div
-                class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col h-full"
+                class="rounded-[6px] border border-border-strong bg-paper p-4 shadow-sm flex flex-col h-full"
               >
                 <div
                   class="flex items-center justify-between border-b border-hairline pb-2 mb-3"
                 >
-                  <h2 class="text-sm font-bold text-ink">Dữ liệu gần đây</h2>
+                  <div class="border-l-3 border-mid-gray pl-2.5">
+                    <h2 class="text-sm font-semibold text-ink leading-snug">Dữ liệu gần đây</h2>
+                    <p class="text-[10px] text-mid-gray mt-0.5 leading-tight">Đơn hàng và khóa học mới</p>
+                  </div>
                   <div
                     class="flex gap-1 p-0.5 bg-canvas rounded-full text-[10px] font-semibold border border-hairline select-none"
                   >
@@ -708,6 +645,49 @@
                   class="space-y-3 flex-1 overflow-y-auto max-h-64 custom-scrollbar pr-1 hidden"
                 >
                   <!-- Nạp qua JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Widget Kiểm tra hệ thống Toast (radius 6px, p-4) -->
+            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <h2 class="text-sm font-bold text-ink">Hệ thống thông báo Toast (Tester)</h2>
+                  <p class="text-[11px] text-mid-gray mt-0.5">
+                    Click vào các nút dưới đây để mô phỏng và kiểm tra hiển thị của Toast thông báo.
+                  </p>
+                </div>
+                <!-- 4 nút test -->
+                <div class="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    id="btn-test-toast-success"
+                    class="px-3 py-1.5 text-xs font-semibold rounded-full bg-success-soft text-success hover:bg-success hover:text-white border border-success/10 transition-all cursor-pointer"
+                  >
+                    Thử Success
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-test-toast-error"
+                    class="px-3 py-1.5 text-xs font-semibold rounded-full bg-danger-brick-soft text-danger-brick hover:bg-danger-brick hover:text-white border border-danger-brick/10 transition-all cursor-pointer"
+                  >
+                    Thử Error
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-test-toast-warning"
+                    class="px-3 py-1.5 text-xs font-semibold rounded-full bg-warning-soft text-warning hover:bg-warning hover:text-white border border-warning/10 transition-all cursor-pointer"
+                  >
+                    Thử Warning
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-test-toast-info"
+                    class="px-3 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-ink hover:text-white border border-hairline transition-all cursor-pointer"
+                  >
+                    Thử Info
+                  </button>
                 </div>
               </div>
             </div>
