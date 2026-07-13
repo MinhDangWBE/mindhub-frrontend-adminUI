@@ -106,23 +106,43 @@ function updateUrlParams(newParams) {
  */
 function initFilters() {
     const filterButtons = document.querySelectorAll("[data-filter]");
+    const customDateContainer = document.getElementById("custom-date-container");
     const params = getQueryParams();
 
-    // Đồng bộ nút active dựa trên URL lúc khởi tạo
+    // Đồng bộ nút active và container hiển thị dựa trên URL lúc khởi tạo
+    let hasActivePreset = false;
+
     filterButtons.forEach(btn => {
         const filterType = btn.getAttribute("data-filter");
         let isActive = false;
 
         if (filterType === "7days" && params.date_from === "2026-07-06" && params.date_to === "2026-07-12") {
             isActive = true;
+            hasActivePreset = true;
         } else if (filterType === "30days" && params.date_from === "2026-06-13" && params.date_to === "2026-07-12") {
             isActive = true;
+            hasActivePreset = true;
         } else if (filterType === "thisMonth" && params.month === 7 && params.year === 2026) {
             isActive = true;
+            hasActivePreset = true;
         } else if (filterType === "thisYear" && params.year === 2026 && !params.month) {
             isActive = true;
-        } else if (filterType === "7days" && !params.date_from && !params.month && !params.year) {
-            // Mặc định
+            hasActivePreset = true;
+        } else if (filterType === "custom" && params.date_from && params.date_to) {
+            // Kiểm tra nếu là khoảng ngày tự do (không trùng preset 7 hay 30 ngày)
+            const isPreset7 = (params.date_from === "2026-07-06" && params.date_to === "2026-07-12");
+            const isPreset30 = (params.date_from === "2026-06-13" && params.date_to === "2026-07-12");
+            if (!isPreset7 && !isPreset30) {
+                isActive = true;
+                hasActivePreset = true;
+                if (customDateContainer) {
+                    customDateContainer.classList.remove("hidden");
+                }
+            }
+        }
+
+        // Mặc định ban đầu nếu không có param nào khớp thì active 7 ngày qua
+        if (!hasActivePreset && filterType === "7days" && !params.date_from && !params.month && !params.year) {
             isActive = true;
         }
 
@@ -138,21 +158,31 @@ function initFilters() {
             });
             btn.className = "px-3.5 py-1.5 text-xs font-medium rounded-full bg-ink text-white transition-colors shadow-sm";
 
-            // Reset input date tùy chọn khi bấm preset
-            const fromInput = document.getElementById("custom-date-from");
-            const toInput = document.getElementById("custom-date-to");
-            if (fromInput) fromInput.value = "";
-            if (toInput) toInput.value = "";
+            // Xử lý ẩn hiện thanh lọc ngày tùy chọn
+            if (filterType === "custom") {
+                if (customDateContainer) {
+                    customDateContainer.classList.remove("hidden");
+                }
+            } else {
+                if (customDateContainer) {
+                    customDateContainer.classList.add("hidden");
+                }
+                // Reset input date
+                const fromInput = document.getElementById("custom-date-from");
+                const toInput = document.getElementById("custom-date-to");
+                if (fromInput) fromInput.value = "";
+                if (toInput) toInput.value = "";
 
-            // Cập nhật params tương ứng
-            if (filterType === "7days") {
-                updateUrlParams({ date_from: "2026-07-06", date_to: "2026-07-12" });
-            } else if (filterType === "30days") {
-                updateUrlParams({ date_from: "2026-06-13", date_to: "2026-07-12" });
-            } else if (filterType === "thisMonth") {
-                updateUrlParams({ month: 7, year: 2026 });
-            } else if (filterType === "thisYear") {
-                updateUrlParams({ year: 2026 });
+                // Cập nhật params và tải dữ liệu cho các preset
+                if (filterType === "7days") {
+                    updateUrlParams({ date_from: "2026-07-06", date_to: "2026-07-12" });
+                } else if (filterType === "30days") {
+                    updateUrlParams({ date_from: "2026-06-13", date_to: "2026-07-12" });
+                } else if (filterType === "thisMonth") {
+                    updateUrlParams({ month: 7, year: 2026 });
+                } else if (filterType === "thisYear") {
+                    updateUrlParams({ year: 2026 });
+                }
             }
         });
     });
@@ -169,7 +199,6 @@ function initCustomDateFilter() {
 
     // Đồng bộ giá trị input lúc khởi tạo nếu URL có khoảng ngày
     if (params.date_from && params.date_to) {
-        // Chỉ điền vào input nếu không trùng với presets
         const isPreset7 = (params.date_from === "2026-07-06" && params.date_to === "2026-07-12");
         const isPreset30 = (params.date_from === "2026-06-13" && params.date_to === "2026-07-12");
         if (!isPreset7 && !isPreset30) {
@@ -193,14 +222,34 @@ function initCustomDateFilter() {
                 return;
             }
 
-            // Hủy active của các nút preset
+            // Đồng bộ trạng thái nút lọc "Tùy chọn" được active
             const filterButtons = document.querySelectorAll("[data-filter]");
             filterButtons.forEach(b => {
-                b.className = "px-3.5 py-1.5 text-xs font-medium rounded-full text-mid-gray hover:text-ink transition-colors bg-transparent";
+                const type = b.getAttribute("data-filter");
+                if (type === "custom") {
+                    b.className = "px-3.5 py-1.5 text-xs font-medium rounded-full bg-ink text-white transition-colors shadow-sm";
+                } else {
+                    b.className = "px-3.5 py-1.5 text-xs font-medium rounded-full text-mid-gray hover:text-ink transition-colors bg-transparent";
+                }
             });
 
-            // Cập nhật URL
+            // Cập nhật URL và lấy dữ liệu
             updateUrlParams({ date_from: dateFrom, date_to: dateTo });
+        });
+    }
+
+    const closeBtn = document.getElementById("close-custom-date");
+    const customDateContainer = document.getElementById("custom-date-container");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            if (customDateContainer) {
+                customDateContainer.classList.add("hidden");
+            }
+            // Giả lập click nút 7 ngày qua để khôi phục mặc định
+            const btn7Days = document.querySelector('[data-filter="7days"]');
+            if (btn7Days) {
+                btn7Days.click();
+            }
         });
     }
 }
