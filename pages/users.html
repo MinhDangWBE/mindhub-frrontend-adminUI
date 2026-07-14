@@ -223,8 +223,8 @@
                             <div class="lg:col-span-2">
                                 <label for="filter-search" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Tìm kiếm</label>
                                 <div class="relative">
-                                    <input type="text" id="filter-search" name="search" placeholder="Tìm theo tên, email hoặc số điện thoại..." class="w-full h-9 pl-8 pr-3 text-xs bg-canvas focus:bg-paper border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink placeholder-mid-gray/70 transition-all">
-                                    <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <input type="text" id="filter-search" name="search" placeholder="Tìm theo tên, email hoặc số điện thoại..." class="w-full h-10 pl-8 pr-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink placeholder-mid-gray/70 transition-all">
+                                    <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-3 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
                                     </svg>
                                 </div>
@@ -232,7 +232,7 @@
                             <!-- Vai trò -->
                             <div>
                                 <label for="filter-role" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Vai trò</label>
-                                <select id="filter-role" name="role" class="w-full h-9 px-3 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                <select id="filter-role" name="role" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
                                     <option value="">Tất cả vai trò</option>
                                     <option value="learner">Học viên</option>
                                     <option value="instructor">Giảng viên</option>
@@ -242,7 +242,7 @@
                             <!-- Trạng thái -->
                             <div>
                                 <label for="filter-status" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Trạng thái</label>
-                                <select id="filter-status" name="status" class="w-full h-9 px-3 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                <select id="filter-status" name="status" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
                                     <option value="">Tất cả trạng thái</option>
                                     <option value="active">Đang hoạt động</option>
                                     <option value="inactive">Không hoạt động</option>
@@ -252,7 +252,7 @@
                             <!-- Xác minh email -->
                             <div>
                                 <label for="filter-verified" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Xác minh email</label>
-                                <select id="filter-verified" name="email_verified" class="w-full h-9 px-3 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                <select id="filter-verified" name="email_verified" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
                                     <option value="">Tất cả</option>
                                     <option value="verified">Đã xác minh</option>
                                     <option value="unverified">Chưa xác minh</option>
@@ -261,7 +261,7 @@
                             <!-- Sắp xếp -->
                             <div>
                                 <label for="filter-sort" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Sắp xếp</label>
-                                <select id="filter-sort" name="sort_by" class="w-full h-9 px-3 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                <select id="filter-sort" name="sort_by" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
                                     <option value="newest">Mới nhất</option>
                                     <option value="oldest">Cũ nhất</option>
                                     <option value="name_asc">Tên A–Z</option>
@@ -277,19 +277,19 @@
                             <div class="flex items-center gap-2">
                                 <div class="flex items-center gap-1">
                                     <span class="text-[10px] text-mid-gray font-medium">Từ:</span>
-                                    <input type="date" id="filter-date-from" name="date_from" aria-label="Từ ngày" class="h-8 px-2.5 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                                    <input type="date" id="filter-date-from" name="date_from" aria-label="Từ ngày" class="h-10 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <span class="text-[10px] text-mid-gray font-medium">Đến:</span>
-                                    <input type="date" id="filter-date-to" name="date_to" aria-label="Đến ngày" class="h-8 px-2.5 text-xs bg-canvas border-none rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                                    <input type="date" id="filter-date-to" name="date_to" aria-label="Đến ngày" class="h-10 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                                 </div>
                             </div>
                             <!-- Action Buttons -->
                             <div class="flex items-center gap-2 shrink-0">
-                                <button type="button" id="btn-reset-filters" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                                <button type="button" id="btn-reset-filters" class="px-4 py-2 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
                                     Đặt lại
                                 </button>
-                                <button type="submit" class="px-5 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                                <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
                                     Áp dụng
                                 </button>
                             </div>
@@ -326,7 +326,7 @@
                         <div id="filter-chips-list" class="flex flex-wrap gap-1.5">
                             <!-- Chèn filter chip tại đây -->
                         </div>
-                        <button type="button" id="btn-clear-all-chips" class="text-[10px] text-mid-gray hover:text-danger-brick underline font-semibold ml-2 transition-colors cursor-pointer">Xóa tất cả</button>
+                        <button type="button" id="btn-clear-all-chips" class="btn-clear-chips-red text-[10px] font-semibold ml-2 transition-all cursor-pointer">Xóa tất cả</button>
                     </div>
 
                     <!-- Table Wrapper (Cuộn ngang trên màn hình nhỏ, sticky header) -->
@@ -432,7 +432,7 @@
                             <span>Đang hiển thị <span id="pag-showing-range" class="font-semibold text-ink">0-0</span> trong tổng số <span id="pag-total-records" class="font-semibold text-ink">0</span> người dùng</span>
                             <div class="flex items-center gap-1.5">
                                 <span>Mỗi trang:</span>
-                                <select id="pag-per-page" class="bg-paper border border-hairline rounded-full px-2 py-0.5 text-xs text-ink outline-none">
+                                <select id="pag-per-page" data-custom-select class="bg-paper border border-hairline rounded-[6px] px-2 py-0.5 text-xs text-ink outline-none">
                                     <option value="10">10</option>
                                     <option value="20" selected>20</option>
                                     <option value="50">50</option>
@@ -553,31 +553,31 @@
                     <!-- Họ và tên -->
                     <div>
                         <label for="create-name" class="block text-xs font-semibold text-ink mb-1.5">Họ và tên *</label>
-                        <input type="text" id="create-name" name="full_name" placeholder="Ví dụ: Nguyễn Văn A" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="text" id="create-name" name="full_name" placeholder="Ví dụ: Nguyễn Văn A" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="full_name"></p>
                     </div>
                     <!-- Email -->
                     <div>
                         <label for="create-email" class="block text-xs font-semibold text-ink mb-1.5">Email *</label>
-                        <input type="email" id="create-email" name="email" placeholder="example@gmail.com" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="email" id="create-email" name="email" placeholder="example@gmail.com" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="email"></p>
                     </div>
                     <!-- Mật khẩu -->
                     <div>
                         <label for="create-password" class="block text-xs font-semibold text-ink mb-1.5">Mật khẩu *</label>
-                        <input type="password" id="create-password" name="password" placeholder="Tối thiểu 6 ký tự" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="password" id="create-password" name="password" placeholder="Tối thiểu 6 ký tự" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="password"></p>
                     </div>
                     <!-- Số điện thoại -->
                     <div>
                         <label for="create-phone" class="block text-xs font-semibold text-ink mb-1.5">Số điện thoại</label>
-                        <input type="text" id="create-phone" name="phone" placeholder="Ví dụ: 0901234567" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="text" id="create-phone" name="phone" placeholder="Ví dụ: 0901234567" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="phone"></p>
                     </div>
                     <!-- Vai trò -->
                     <div>
                         <label for="create-role" class="block text-xs font-semibold text-ink mb-1.5">Vai trò *</label>
-                        <select id="create-role" name="role" class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <select id="create-role" name="role" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                             <option value="learner">Học viên</option>
                             <option value="instructor">Giảng viên</option>
                             <option value="admin">Quản trị viên</option>
@@ -587,7 +587,7 @@
                     <!-- Trạng thái -->
                     <div>
                         <label for="create-status" class="block text-xs font-semibold text-ink mb-1.5">Trạng thái ban đầu</label>
-                        <select id="create-status" name="status" class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <select id="create-status" name="status" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                             <option value="active">Đang hoạt động</option>
                             <option value="inactive">Không hoạt động</option>
                             <option value="locked">Đã khóa</option>
@@ -633,31 +633,31 @@
                     <!-- Họ và tên -->
                     <div>
                         <label for="edit-name" class="block text-xs font-semibold text-ink mb-1.5">Họ và tên *</label>
-                        <input type="text" id="edit-name" name="full_name" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="text" id="edit-name" name="full_name" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="full_name"></p>
                     </div>
                     <!-- Email -->
                     <div>
                         <label for="edit-email" class="block text-xs font-semibold text-ink mb-1.5">Email *</label>
-                        <input type="email" id="edit-email" name="email" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="email" id="edit-email" name="email" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="email"></p>
                     </div>
                     <!-- Mật khẩu (Không bắt buộc) -->
                     <div>
                         <label for="edit-password" class="block text-xs font-semibold text-ink mb-1.5">Mật khẩu mới (Để trống nếu không đổi)</label>
-                        <input type="password" id="edit-password" name="password" placeholder="Nhập mật khẩu mới" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="password" id="edit-password" name="password" placeholder="Nhập mật khẩu mới" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="password"></p>
                     </div>
                     <!-- Số điện thoại -->
                     <div>
                         <label for="edit-phone" class="block text-xs font-semibold text-ink mb-1.5">Số điện thoại</label>
-                        <input type="text" id="edit-phone" name="phone" class="w-full h-9 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <input type="text" id="edit-phone" name="phone" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                         <p class="text-[10px] text-danger-brick mt-1 hidden" data-error="phone"></p>
                     </div>
                     <!-- Vai trò -->
                     <div>
                         <label for="edit-role" class="block text-xs font-semibold text-ink mb-1.5">Vai trò *</label>
-                        <select id="edit-role" name="role" class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <select id="edit-role" name="role" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                             <option value="learner">Học viên</option>
                             <option value="instructor">Giảng viên</option>
                             <option value="admin">Quản trị viên</option>
@@ -667,7 +667,7 @@
                     <!-- Trạng thái -->
                     <div>
                         <label for="edit-status" class="block text-xs font-semibold text-ink mb-1.5">Trạng thái</label>
-                        <select id="edit-status" name="status" class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                        <select id="edit-status" name="status" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
                             <option value="active">Đang hoạt động</option>
                             <option value="inactive">Không hoạt động</option>
                             <option value="locked">Đã khóa</option>
@@ -712,10 +712,10 @@
                 <p class="text-[10px] text-danger-brick mt-1 hidden" id="error-lock-reason-input"></p>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
-                <button type="button" data-close-modal="confirm-lock-modal" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                <button type="button" data-close-modal="confirm-lock-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
                     Bỏ qua
                 </button>
-                <button type="button" id="btn-submit-lock" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer">
+                <button type="button" id="btn-submit-lock" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer">
                     Xác nhận khóa
                 </button>
             </div>
@@ -732,10 +732,10 @@
                 </p>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
-                <button type="button" data-close-modal="confirm-general-modal" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                <button type="button" data-close-modal="confirm-general-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
                     Hủy bỏ
                 </button>
-                <button type="button" id="btn-submit-general" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                <button type="button" id="btn-submit-general" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
                     Xác nhận
                 </button>
             </div>
@@ -760,10 +760,10 @@
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
-                <button type="button" data-close-modal="confirm-delete-modal" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                <button type="button" data-close-modal="confirm-delete-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
                     Hủy bỏ
                 </button>
-                <button type="button" id="btn-submit-delete" class="px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer">
+                <button type="button" id="btn-submit-delete" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer">
                     Xác nhận xóa
                 </button>
             </div>

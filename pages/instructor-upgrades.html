@@ -658,10 +658,10 @@
                       id="filter-search"
                       name="search"
                       placeholder="Tên, email, số điện thoại..."
-                      class="w-full h-8 pl-8 pr-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
+                      class="w-full h-10 pl-8 pr-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
                     />
                     <svg
-                      class="w-3.5 h-3.5 text-mid-gray/60 absolute left-3 top-2.5"
+                      class="w-3.5 h-3.5 text-mid-gray/60 absolute left-3 top-3.5"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="2"
@@ -683,7 +683,8 @@
                   <select
                     id="filter-status"
                     name="status"
-                    class="w-full h-8 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
+                    data-custom-select
+                    class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
                   >
                     <option value="">Tất cả trạng thái</option>
                     <option value="pending">Chờ xử lý</option>
@@ -703,7 +704,7 @@
                     type="date"
                     id="filter-date-from"
                     name="date_from"
-                    class="w-full h-8 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-mid-gray"
+                    class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-mid-gray"
                   />
                 </div>
 
@@ -718,7 +719,7 @@
                     type="date"
                     id="filter-date-to"
                     name="date_to"
-                    class="w-full h-8 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-mid-gray"
+                    class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-mid-gray"
                   />
                 </div>
 
@@ -732,7 +733,8 @@
                   <select
                     id="filter-sort"
                     name="sort_by"
-                    class="w-full h-8 px-3 text-xs bg-canvas border border-hairline rounded-full focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
+                    data-custom-select
+                    class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
                   >
                     <option value="newest">Mới gửi gần đây</option>
                     <option value="oldest">Cũ nhất</option>
@@ -748,13 +750,13 @@
                 <button
                   type="button"
                   id="btn-reset-filters"
-                  class="px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-ink hover:bg-hairline transition-all border border-hairline/60 cursor-pointer"
+                  class="px-4 py-2 text-xs font-semibold rounded-[6px] bg-canvas text-ink hover:bg-hairline transition-all border border-hairline cursor-pointer h-10"
                 >
                   Đặt lại
                 </button>
                 <button
                   type="submit"
-                  class="px-5 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer"
+                  class="px-5 py-2 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer h-10"
                 >
                   Áp dụng bộ lọc
                 </button>
@@ -778,7 +780,7 @@
               <button
                 type="button"
                 id="btn-clear-all-chips"
-                class="text-[10px] font-semibold text-danger-brick hover:underline shrink-0 cursor-pointer"
+                class="btn-clear-chips-red text-[10px] font-semibold shrink-0 cursor-pointer"
               >
                 Xóa tất cả
               </button>
@@ -964,6 +966,7 @@
                   <span class="text-mid-gray">Hiển thị</span>
                   <select
                     id="pag-per-page"
+                    data-custom-select
                     class="h-7 px-2 bg-canvas border border-hairline rounded focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink"
                   >
                     <option value="10">10</option>
@@ -1370,14 +1373,14 @@
           <button
             type="button"
             data-close-modal="confirm-approve-modal"
-            class="px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer"
+            class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer"
           >
             Hủy bỏ
           </button>
           <button
             type="button"
             id="btn-submit-approve"
-            class="px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-success text-white hover:opacity-90 transition-opacity cursor-pointer"
+            class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-success text-white hover:opacity-90 transition-opacity cursor-pointer"
           >
             Xác nhận duyệt
           </button>
@@ -1451,14 +1454,14 @@
           <button
             type="button"
             data-close-modal="confirm-reject-modal"
-            class="px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer"
+            class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer"
           >
             Hủy bỏ
           </button>
           <button
             type="button"
             id="btn-submit-reject"
-            class="px-4 py-1.5 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer"
+            class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer"
           >
             Xác nhận từ chối
           </button>

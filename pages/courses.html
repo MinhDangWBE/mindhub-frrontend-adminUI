@@ -1,89 +1,858 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý khóa học | MindHub Admin</title>
-    <link
-        rel="stylesheet"
-        href="../assets/css/output.css"
-    >
+    <!-- CSS Output chính -->
+    <link rel="stylesheet" href="../assets/css/output.css">
+    <style>
+        /* CSS bổ trợ cho các animation trôi nổi và tab ẩn scrollbar */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+        .animate-slide-up {
+            animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        #course-list-section {
+            scroll-margin-top: 80px;
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-canvas text-ink">
-    <div class="flex min-h-screen">
-        <aside
-            data-sidebar
-            class="hidden w-64 shrink-0 border-r border-hairline bg-surface-alt p-5 lg:block"
-        >
-            <a
-                href="../index.html"
-                class="text-lg font-semibold"
-            >
-                MindHub
-            </a>
-            <p class="mt-2 text-sm text-mid-gray">
-                Admin Panel
-            </p>
-            <nav class="mt-8">
-                <a
-                    href="./dashboard.html"
-                    class="block rounded-full px-4 py-2 text-sm hover:bg-paper"
-                >
-                    Dashboard
-                </a>
-            </nav>
-        </aside>
-        <div class="min-w-0 flex-1">
-            <header
-                class="flex min-h-16 items-center justify-between border-b border-hairline bg-paper px-5"
-            >
-                <button
-                    type="button"
-                    data-sidebar-toggle
-                    class="rounded-full border border-hairline px-4 py-2 text-sm lg:hidden"
-                >
-                    Menu
-                </button>
-                <span class="text-sm text-mid-gray">
-                    Admin MindHub
-                </span>
-            </header>
-            <main class="p-5 md:p-8">
-                <header class="mb-8">
-                    <p class="text-sm text-mid-gray">
-                        MindHub Admin
-                    </p>
-                    <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                        Quản lý khóa học
-                    </h1>
-                </header>
-                <section
-                    class="rounded-3xl border border-hairline bg-paper p-6 shadow-sm"
-                >
-                    <h2 class="text-lg font-semibold">
-                        Khung trang đã sẵn sàng
-                    </h2>
-                    <p class="mt-2 text-sm text-mid-gray">
-                        Card thống kê, bộ lọc, bảng dữ liệu và modal sẽ được bổ sung sau.
-                    </p>
+<body class="min-h-screen bg-canvas text-ink overflow-hidden">
+    <!-- Toàn bộ Admin Shell cao 100vh, cuộn độc lập -->
+    <div class="flex h-screen w-screen overflow-hidden bg-canvas" data-source="mock">
+        <!-- Sidebar Placeholder (Nạp động từ components/sidebar.html) -->
+        <aside data-sidebar class="hidden lg:block shrink-0 w-[248px] border-r border-hairline bg-surface-alt h-full"></aside>
+
+        <!-- Main content area wrapper -->
+        <div class="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+            <!-- Topbar (Sticky ở đầu) -->
+            <header class="h-16 shrink-0 bg-paper border-b border-hairline"></header>
+
+            <!-- Page scrollable content (Vùng cuộn riêng) -->
+            <main data-page="courses" data-source="mock" class="flex-grow overflow-y-auto p-3 md:p-4 lg:p-5 space-y-4 max-w-[1280px] w-full mx-auto custom-scrollbar">
+                
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between shrink-0">
+                    <div>
+                        <!-- Breadcrumbs -->
+                        <div class="flex items-center gap-1.5 text-[10px] text-mid-gray uppercase tracking-wider mb-1 font-semibold">
+                            <span>Dashboard</span>
+                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                            </svg>
+                            <span>Khóa học</span>
+                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                            </svg>
+                            <span class="text-ink">Quản lý khóa học</span>
+                        </div>
+                        <h1 class="text-[28px] lg:text-[30px] font-bold tracking-tight text-ink leading-tight">
+                            Quản lý khóa học
+                        </h1>
+                        <p class="text-xs text-mid-gray mt-0.5" id="page-description">
+                            Theo dõi và quản lý toàn bộ khóa học đang có trên hệ thống. Tổng số: <span id="title-total-courses" class="font-bold text-ink">0</span> khóa học.
+                        </p>
+                        <p class="text-[10px] text-mid-gray/80 mt-1">
+                            Cập nhật lần cuối: <span id="last-update-time" class="font-medium text-mid-gray">---</span>
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                        <!-- Nút làm mới dữ liệu -->
+                        <button type="button" id="btn-refresh-data" class="h-9 w-9 flex items-center justify-center rounded-full border border-hairline hover:bg-canvas text-ink shrink-0 transition-colors shadow-sm cursor-pointer" aria-label="Làm mới dữ liệu">
+                            <svg class="w-4 h-4 transition-transform duration-500" id="refresh-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 1. KPI Thống kê (6 cards, bo góc 6px, padding p-4, gap-3) -->
+                <!-- State: Loaded KPI -->
+                <div id="kpi-content-wrapper" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" data-source="mock">
+                    <!-- KPI: Tổng khóa học -->
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider">Tổng khóa học</span>
+                            <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                                <path d="M6 6h10M6 10h10"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-total-courses" class="text-xl lg:text-2xl font-bold text-ink leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1">Toàn bộ hệ thống</p>
+                        </div>
+                    </div>
+
+                    <!-- KPI: Đã xuất bản -->
+                    <div class="rounded-[6px] border border-hairline border-t-2 border-t-success bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-success">Đã xuất bản</span>
+                            <span class="flex h-1.5 w-1.5 rounded-full bg-success"></span>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-published-courses" class="text-xl lg:text-2xl font-bold text-success leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1">Công khai học tập</p>
+                        </div>
+                    </div>
+
+                    <!-- KPI: Chờ duyệt -->
+                    <div class="rounded-[6px] border border-hairline border-t-2 border-t-warning bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors cursor-pointer" id="kpi-card-pending">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-warning">Chờ duyệt</span>
+                            <svg class="w-4 h-4 text-warning/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-pending-courses" class="text-xl lg:text-2xl font-bold text-warning leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1 flex items-center gap-1">
+                                Cần kiểm duyệt <span class="underline text-[8px] hover:text-ink font-semibold">Xem</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- KPI: Bản nháp -->
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider">Bản nháp</span>
+                            <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-draft-courses" class="text-xl lg:text-2xl font-bold text-ink leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1">Đang hoàn thiện</p>
+                        </div>
+                    </div>
+
+                    <!-- KPI: Đã bị ẩn -->
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider">Đã bị ẩn</span>
+                            <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61M2 2l20 20"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-hidden-courses" class="text-xl lg:text-2xl font-bold text-ink leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1">Không hiển thị công khai</p>
+                        </div>
+                    </div>
+
+                    <!-- KPI: Bị từ chối -->
+                    <div class="rounded-[6px] border border-hairline border-t-2 border-t-danger-brick bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+                        <div class="flex items-center justify-between text-mid-gray">
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-danger-brick">Bị từ chối</span>
+                            <svg class="w-4 h-4 text-danger-brick/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2">
+                            <span id="kpi-rejected-courses" class="text-xl lg:text-2xl font-bold text-danger-brick leading-none">0</span>
+                            <p class="text-[9px] text-mid-gray mt-1">Cần giảng viên sửa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State: Loading KPI Skeleton -->
+                <div id="kpi-loading-wrapper" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]" v-for="i in 6">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3 min-h-[96px]">
+                        <div class="h-3 w-16 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-6 w-10 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                </div>
+
+                <!-- 2. Thanh thông tin nhanh (Quick Insight Bar) -->
+                <!-- State: Loaded Insights -->
+                <div id="insight-content-wrapper" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 rounded-[6px] border border-hairline bg-surface-alt p-3.5" data-source="mock">
+                    <div class="flex flex-col gap-0.5 border-r border-hairline/60 last:border-none pr-3">
+                        <span class="text-[9px] font-bold text-mid-gray uppercase tracking-wider">Khóa mới (30 ngày)</span>
+                        <span id="insight-new-courses" class="text-base font-bold text-ink leading-tight font-sans">0</span>
+                    </div>
+                    <div class="flex flex-col gap-0.5 border-r border-hairline/60 last:border-none pr-3">
+                        <span class="text-[9px] font-bold text-mid-gray uppercase tracking-wider">Tổng lượt ghi danh</span>
+                        <span id="insight-total-enrollments" class="text-base font-bold text-ink leading-tight font-sans">0</span>
+                    </div>
+                    <div class="flex flex-col gap-0.5 border-r border-hairline/60 last:border-none pr-3">
+                        <span class="text-[9px] font-bold text-mid-gray uppercase tracking-wider">Đơn đã thanh toán</span>
+                        <span id="insight-paid-orders" class="text-base font-bold text-ink leading-tight font-sans">0</span>
+                    </div>
+                    <div class="flex flex-col gap-0.5 border-r border-hairline/60 last:border-none pr-3">
+                        <span class="text-[9px] font-bold text-mid-gray uppercase tracking-wider">Doanh thu gộp</span>
+                        <span id="insight-gross-revenue" class="text-base font-bold text-ink leading-tight font-sans">0đ</span>
+                    </div>
+                    <div class="flex flex-col gap-0.5 last:border-none">
+                        <span class="text-[9px] font-bold text-mid-gray uppercase tracking-wider">Đánh giá trung bình</span>
+                        <span id="insight-avg-rating" class="text-base font-bold text-warning leading-tight flex items-center gap-1 font-sans">
+                            0.0 <svg class="w-3.5 h-3.5 fill-current text-warning inline" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- State: Loading Insights Skeleton -->
+                <div id="insight-loading-wrapper" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 rounded-[6px] border border-hairline bg-surface-alt p-3.5">
+                    <div class="space-y-1.5" v-for="i in 5">
+                        <div class="h-2 w-14 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-4 w-12 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="h-2 w-14 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-4 w-12 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="h-2 w-14 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-4 w-12 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="h-2 w-14 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-4 w-12 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <div class="h-2 w-14 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-4 w-12 bg-canvas rounded-full skeleton"></div>
+                    </div>
+                </div>
+
+                <!-- 3. Bộ lọc (Filter bar, bo góc 6px, padding p-4) -->
+                <section class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle">
+                    <form id="filter-form" class="space-y-4">
+                        <!-- Hàng 1: Search & Common Inputs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                            <!-- Search -->
+                            <div class="sm:col-span-2">
+                                <label for="filter-search" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Tìm kiếm</label>
+                                <div class="relative">
+                                    <input type="text" id="filter-search" name="search" placeholder="Tìm theo tên khóa học, slug hoặc giảng viên..." class="w-full h-10 pl-8 pr-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink placeholder-mid-gray/70 transition-all">
+                                    <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-3 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Trạng thái -->
+                            <div>
+                                <label for="filter-status" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Trạng thái</label>
+                                <select id="filter-status" name="status" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option value="draft">Bản nháp</option>
+                                    <option value="pending_review">Chờ duyệt</option>
+                                    <option value="approved">Đã duyệt</option>
+                                    <option value="published">Đã xuất bản</option>
+                                    <option value="rejected">Bị từ chối</option>
+                                    <option value="hidden">Đã ẩn</option>
+                                </select>
+                            </div>
+                            <!-- Giảng viên -->
+                            <div>
+                                <label for="filter-instructor" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Giảng viên</label>
+                                <select id="filter-instructor" name="instructor_id" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="">Tất cả giảng viên</option>
+                                    <!-- Options chèn động từ mock -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Hàng 2: Additional Filters -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                            <!-- Danh mục -->
+                            <div>
+                                <label for="filter-category" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Danh mục</label>
+                                <select id="filter-category" name="category_id" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="">Tất cả danh mục</option>
+                                    <!-- Options chèn động từ mock -->
+                                </select>
+                            </div>
+                            <!-- Trình độ -->
+                            <div>
+                                <label for="filter-level" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Trình độ</label>
+                                <select id="filter-level" name="level" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="">Tất cả trình độ</option>
+                                    <option value="beginner">Cơ bản</option>
+                                    <option value="intermediate">Trung cấp</option>
+                                    <option value="advanced">Nâng cao</option>
+                                    <option value="all_levels">Mọi trình độ</option>
+                                </select>
+                            </div>
+                            <!-- Nổi bật -->
+                            <div>
+                                <label for="filter-featured" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Nổi bật</label>
+                                <select id="filter-featured" name="is_featured" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="">Tất cả</option>
+                                    <option value="true">Đang nổi bật</option>
+                                    <option value="false">Không nổi bật</option>
+                                </select>
+                            </div>
+                            <!-- Khoảng thời gian Preset -->
+                            <div>
+                                <label for="filter-period" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Thời gian cập nhật</label>
+                                <select id="filter-period" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="all" selected>Tất cả thời gian</option>
+                                    <option value="7">7 ngày gần nhất</option>
+                                    <option value="30">30 ngày gần nhất</option>
+                                    <option value="90">90 ngày gần nhất</option>
+                                    <option value="365">1 năm gần nhất</option>
+                                    <option value="custom">Tùy chọn khoảng thời gian</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Hàng 3: Date Picker (Hiện khi chọn Tùy chọn) & Sắp xếp / Nút -->
+                        <div class="flex flex-col md:flex-row md:items-end md:justify-between pt-3 border-t border-hairline/60 gap-3">
+                            <!-- Custom Date Inputs (Ẩn mặc định) -->
+                            <div id="custom-date-container" class="hidden flex items-center gap-3">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-[10px] text-mid-gray font-medium">Từ:</span>
+                                    <input type="date" id="filter-date-from" name="date_from" aria-label="Từ ngày" class="h-10 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-[10px] text-mid-gray font-medium">Đến:</span>
+                                    <input type="date" id="filter-date-to" name="date_to" aria-label="Đến ngày" class="h-10 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink">
+                                </div>
+                            </div>
+                            
+                            <!-- Sắp xếp (Sort options) -->
+                            <div class="flex-1 md:max-w-xs md:ml-auto md:mr-3">
+                                <label for="filter-sort" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Sắp xếp theo</label>
+                                <select id="filter-sort" name="sort_by" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="updated_at">Cập nhật gần nhất</option>
+                                    <option value="created_at">Cũ nhất</option>
+                                    <option value="title">Tên A–Z</option>
+                                    <option value="enrollment_count">Nhiều học viên nhất</option>
+                                    <option value="gross_revenue">Doanh thu cao nhất</option>
+                                    <option value="average_rating">Đánh giá cao nhất</option>
+                                    <option value="price">Giá cao nhất</option>
+                                </select>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex items-center gap-2 shrink-0 self-end md:self-auto">
+                                <button type="button" id="btn-reset-filters" class="px-4 py-2 h-10 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                                    Đặt lại
+                                </button>
+                                <button type="submit" class="px-5 py-2 h-10 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                                    Áp dụng bộ lọc
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- 4. Quick Tabs (Lọc nhanh) & Bảng Dữ liệu (bo góc 6px) -->
+                <section id="course-list-section" class="rounded-[6px] border border-hairline bg-paper shadow-subtle overflow-hidden flex flex-col min-h-[400px]">
+                    <!-- Quick Tabs Header -->
+                    <div class="flex items-center justify-between border-b border-hairline/60 bg-paper shrink-0 overflow-x-auto scrollbar-none">
+                        <div class="flex" id="quick-tabs-container">
+                            <button type="button" data-tab="all" class="px-5 py-3 text-xs font-semibold border-b-2 border-ink text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Tất cả (<span class="tab-count">0</span>)
+                            </button>
+                            <button type="button" data-tab="published" class="px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Đã xuất bản (<span class="tab-count">0</span>)
+                            </button>
+                            <button type="button" data-tab="pending_review" class="px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Chờ duyệt (<span class="tab-count">0</span>)
+                            </button>
+                            <button type="button" data-tab="draft" class="px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Bản nháp (<span class="tab-count">0</span>)
+                            </button>
+                            <button type="button" data-tab="hidden" class="px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Đã bị ẩn (<span class="tab-count">0</span>)
+                            </button>
+                            <button type="button" data-tab="rejected" class="px-5 py-3 text-xs font-medium border-b-2 border-transparent text-mid-gray hover:text-ink select-none whitespace-nowrap cursor-pointer transition-all">
+                                Bị từ chối (<span class="tab-count">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 5. Filter Chips Section (Ẩn theo mặc định, chèn động từ JS) -->
+                    <div id="filter-chips-container" class="hidden flex flex-wrap items-center gap-2 p-3 bg-canvas/35 border-b border-hairline text-xs select-none">
+                        <span class="text-mid-gray text-[10px] font-semibold uppercase tracking-wider mr-1">Bộ lọc đang dùng:</span>
+                        <div id="filter-chips-list" class="flex flex-wrap gap-1.5">
+                            <!-- Chèn filter chip tại đây -->
+                        </div>
+                        <button type="button" id="btn-clear-all-chips" class="btn-clear-chips-red text-[10px] font-semibold ml-2 transition-all cursor-pointer">Xóa tất cả</button>
+                    </div>
+
+                    <!-- Table Wrapper (Cuộn ngang, sticky header) -->
+                    <div class="flex-grow overflow-y-auto overflow-x-auto custom-scrollbar relative max-h-[560px]">
+                        <table class="w-full text-left border-collapse table-auto min-w-[1720px]">
+                            <thead class="sticky top-0 bg-surface-alt border-b border-hairline z-10 select-none">
+                                <tr class="text-[10px] font-bold text-mid-gray uppercase tracking-wider h-10">
+                                    <th class="p-3 pl-4 w-[310px]">Khóa học</th>
+                                    <th class="p-3 w-[200px]">Giảng viên</th>
+                                    <th class="p-3 w-[180px]">Danh mục</th>
+                                    <th class="p-3 w-[120px]">Trình độ</th>
+                                    <th class="p-3 w-[140px]">Giá bán</th>
+                                    <th class="p-3 w-[100px]">Học viên</th>
+                                    <th class="p-3 w-[125px]">Đơn hàng</th>
+                                    <th class="p-3 w-[150px]">Doanh thu</th>
+                                    <th class="p-3 w-[130px]">Đánh giá</th>
+                                    <th class="p-3 w-[125px]">Trạng thái</th>
+                                    <th class="p-3 w-[95px] text-center">Nổi bật</th>
+                                    <th class="p-3 w-[130px]">Cập nhật</th>
+                                    <th class="p-3 pr-4 w-[65px] text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <!-- Table Body Loaded -->
+                            <tbody id="courses-table-body" class="divide-y divide-hairline text-xs">
+                                <!-- Dòng dữ liệu được Javascript chèn tại đây -->
+                            </tbody>
+                        </table>
+
+                        <!-- Empty State (No Filter / Has Filter) -->
+                        <div id="courses-empty-state" class="hidden flex flex-col items-center justify-center p-8 text-center space-y-3 my-12">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-canvas text-mid-gray">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 id="empty-title" class="text-sm font-semibold text-ink">Chưa có khóa học nào</h3>
+                                <p id="empty-desc" class="text-xs text-mid-gray mt-1">Các khóa học mới của giảng viên sẽ xuất hiện tại đây.</p>
+                            </div>
+                            <button type="button" id="btn-empty-reset" class="px-4 py-2 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                                Đặt lại bộ lọc
+                            </button>
+                        </div>
+
+                        <!-- Loading State Row Skeletons -->
+                        <div id="courses-loading-state" class="hidden divide-y divide-hairline">
+                            <div class="flex items-center p-4 space-x-6 w-full" v-for="i in 6">
+                                <div class="h-10 w-16 bg-canvas rounded skeleton shrink-0"></div>
+                                <div class="space-y-2 flex-1 max-w-[240px]">
+                                    <div class="h-3 w-3/4 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2 w-1/2 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="space-y-1.5 w-[160px]">
+                                    <div class="h-3 w-2/3 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2.5 w-1/3 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[110px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4.5 w-10 bg-canvas rounded-full skeleton"></div>
+                            </div>
+                            <!-- Row 2 -->
+                            <div class="flex items-center p-4 space-x-6 w-full">
+                                <div class="h-10 w-16 bg-canvas rounded skeleton shrink-0"></div>
+                                <div class="space-y-2 flex-1 max-w-[240px]">
+                                    <div class="h-3 w-3/4 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2 w-1/2 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="space-y-1.5 w-[160px]">
+                                    <div class="h-3 w-2/3 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2.5 w-1/3 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[110px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4.5 w-10 bg-canvas rounded-full skeleton"></div>
+                            </div>
+                            <!-- Row 3 -->
+                            <div class="flex items-center p-4 space-x-6 w-full">
+                                <div class="h-10 w-16 bg-canvas rounded skeleton shrink-0"></div>
+                                <div class="space-y-2 flex-1 max-w-[240px]">
+                                    <div class="h-3 w-3/4 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2 w-1/2 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="space-y-1.5 w-[160px]">
+                                    <div class="h-3 w-2/3 bg-canvas rounded-full skeleton"></div>
+                                    <div class="h-2.5 w-1/3 bg-canvas rounded-full skeleton"></div>
+                                </div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[110px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[80px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4 w-[120px] bg-canvas rounded-full skeleton"></div>
+                                <div class="h-4.5 w-10 bg-canvas rounded-full skeleton"></div>
+                            </div>
+                        </div>
+
+                        <!-- Error State -->
+                        <div id="courses-error-state" class="hidden flex flex-col items-center justify-center p-8 text-center space-y-3 my-12">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-danger-brick-soft text-danger-brick">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0zm-9 3.75h.008v.008H12v-.008z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-semibold text-ink" id="error-title">Lỗi tải dữ liệu</h3>
+                                <p class="text-xs text-mid-gray mt-1" id="error-desc">Đã có lỗi xảy ra trong quá trình kết nối dữ liệu. Vui lòng thử lại.</p>
+                            </div>
+                            <button type="button" id="btn-error-retry" class="px-4 py-2 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                                Thử lại
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Footer: Pagination (Bo góc dưới) -->
+                    <div id="pagination-wrapper" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 bg-surface-alt border-t border-hairline text-xs text-mid-gray select-none">
+                        <!-- Records Info & Page Size Select -->
+                        <div class="flex items-center gap-4">
+                            <span>Đang hiển thị <span id="pag-showing-range" class="font-semibold text-ink">0-0</span> trong tổng số <span id="pag-total-records" class="font-semibold text-ink">0</span> khóa học</span>
+                            <div class="flex items-center gap-1.5">
+                                <span>Mỗi trang:</span>
+                                <select id="pag-per-page" data-custom-select class="bg-paper border border-hairline rounded-[6px] px-2 py-0.5 text-xs text-ink outline-none">
+                                    <option value="10">10</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Navigation Buttons -->
+                        <div class="flex items-center gap-1.5" id="pagination-buttons">
+                            <!-- Nạp động bằng Javascript -->
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>
     </div>
-    <script
-        type="module"
-        src="../assets/js/app.js"
-    ></script>
-    <script
-        type="module"
-        src="../assets/js/sidebar.js"
-    ></script>
-    <script
-        type="module"
-        src="../assets/js/pages/courses.js"
-    ></script>
+
+    <!-- ========================================== -->
+    <!-- DRAWER CHI TIẾT KHÓA HỌC (Slide in bên phải) -->
+    <!-- ========================================== -->
+    <div id="course-detail-drawer" class="fixed inset-0 z-50 overflow-hidden hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/40 transition-opacity duration-300 pointer-events-auto" id="drawer-backdrop"></div>
+        
+        <div class="absolute inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
+            <!-- Content Panel (Rộng 600px - 720px) -->
+            <div class="w-screen max-w-2xl bg-paper border-l border-hairline flex flex-col h-full shadow-2xl transition-transform duration-300 transform translate-x-full" id="drawer-panel">
+                
+                <!-- Drawer Header -->
+                <div class="px-5 py-4 border-b border-hairline flex items-center justify-between shrink-0">
+                    <div>
+                        <h2 class="text-base font-semibold text-ink">Chi tiết khóa học</h2>
+                        <p class="text-[10px] text-mid-gray mt-0.5">ID: <span id="detail-course-id" class="font-medium">---</span></p>
+                    </div>
+                    <button type="button" id="btn-close-drawer" class="rounded-[6px] border border-hairline p-1.5 hover:bg-canvas text-ink transition-colors cursor-pointer" aria-label="Đóng Drawer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Drawer Scrollable Content -->
+                <div class="flex-grow overflow-y-auto p-5 space-y-6 custom-scrollbar" id="drawer-content-body">
+                    <!-- LOADING STATE TRONG DRAWER -->
+                    <div id="drawer-loading" class="space-y-4">
+                        <div class="aspect-video w-full bg-canvas rounded-[6px] skeleton"></div>
+                        <div class="h-5 w-3/4 bg-canvas rounded-full skeleton"></div>
+                        <div class="h-3 w-1/2 bg-canvas rounded-full skeleton"></div>
+                        <div class="space-y-2 pt-4">
+                            <div class="h-3 w-full bg-canvas rounded-full skeleton"></div>
+                            <div class="h-3 w-full bg-canvas rounded-full skeleton"></div>
+                            <div class="h-3 w-5/6 bg-canvas rounded-full skeleton"></div>
+                        </div>
+                    </div>
+
+                    <!-- DATA LOADED TRONG DRAWER -->
+                    <div id="drawer-loaded" class="hidden space-y-6">
+                        <!-- PHẦN 1 – TỔNG QUAN -->
+                        <section class="space-y-3">
+                            <div class="aspect-video w-full rounded-[6px] bg-canvas overflow-hidden border border-hairline relative">
+                                <img id="detail-thumbnail" src="" alt="Thumbnail khóa học" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&auto=format&fit=crop&q=80'">
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span id="detail-status-dot" class="course-status text-[10px] font-semibold"></span>
+                                    <span id="detail-featured-badge" class="hidden text-[10px] font-semibold text-warning bg-warning-soft px-2 py-0.5 rounded-[4px] border border-warning/10">Nổi bật</span>
+                                </div>
+                                <h3 id="detail-title" class="text-lg font-bold text-ink leading-tight">---</h3>
+                                <p id="detail-slug" class="text-[10px] text-mid-gray font-mono break-all">---</p>
+                            </div>
+                            <p id="detail-short-desc" class="text-xs text-mid-gray leading-relaxed italic">---</p>
+                        </section>
+
+                        <!-- PHẦN 8 – LÝ DO TỪ CHỐI (Hiện khi rejected) -->
+                        <section id="detail-reject-reason-section" class="hidden rounded-[6px] bg-danger-brick-soft/15 border border-danger-brick/10 p-3 space-y-1.5 text-xs text-danger-brick">
+                            <div class="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[10px]">
+                                <svg class="w-4 h-4 shrink-0 text-danger-brick" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+                                </svg>
+                                Lý do từ chối kiểm duyệt:
+                            </div>
+                            <p id="detail-reject-reason" class="leading-normal font-medium">---</p>
+                        </section>
+
+                        <!-- PHẦN 2 – GIẢNG VIÊN -->
+                        <section class="border-t border-hairline/60 pt-4 space-y-2">
+                            <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Giảng viên sở hữu</h4>
+                            <div class="rounded-[6px] bg-surface-alt p-3 flex justify-between items-center gap-3 text-xs border border-hairline/40">
+                                <div>
+                                    <p id="detail-instructor-name" class="font-bold text-ink">---</p>
+                                    <p id="detail-instructor-email" class="text-[10px] text-mid-gray mt-0.5">---</p>
+                                </div>
+                                <span id="detail-instructor-status" class="text-[10px] font-semibold text-mid-gray">---</span>
+                            </div>
+                        </section>
+
+                        <!-- PHẦN 5 – DANH MỤC -->
+                        <section class="border-t border-hairline/60 pt-4 space-y-2">
+                            <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Danh mục</h4>
+                            <div id="detail-categories-list" class="flex flex-wrap gap-1.5">
+                                <!-- Render tags danh mục -->
+                            </div>
+                        </section>
+
+                        <!-- PHẦN 3 – THÔNG TIN KHÓA HỌC -->
+                        <section class="border-t border-hairline/60 pt-4 space-y-2.5 text-xs">
+                            <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Thông tin chung</h4>
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-2">
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Trình độ:</span>
+                                    <span id="detail-level" class="font-semibold text-ink">---</span>
+                                </div>
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Ngôn ngữ:</span>
+                                    <span id="detail-language" class="font-medium text-ink">---</span>
+                                </div>
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Giá bán gốc:</span>
+                                    <span id="detail-original-price" class="font-semibold text-ink">---</span>
+                                </div>
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Giá khuyến mãi:</span>
+                                    <span id="detail-sale-price" class="font-semibold text-ink">---</span>
+                                </div>
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Tổng thời lượng:</span>
+                                    <span id="detail-duration" class="font-medium text-ink">---</span>
+                                </div>
+                                <div class="flex justify-between border-b border-hairline/40 pb-1.5">
+                                    <span class="text-mid-gray">Video giới thiệu:</span>
+                                    <span id="detail-video-url" class="font-medium text-ink">---</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- PHẦN 4 – MÔ TẢ & YÊU CẦU & KẾT QUẢ -->
+                        <section class="border-t border-hairline/60 pt-4 space-y-3 text-xs">
+                            <div class="space-y-1.5">
+                                <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Mô tả đầy đủ</h4>
+                                <p id="detail-desc" class="text-ink leading-relaxed whitespace-pre-line text-justify">---</p>
+                            </div>
+                            <div class="space-y-1.5 pt-2">
+                                <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Yêu cầu tham gia</h4>
+                                <ul id="detail-requirements" class="list-disc pl-4 space-y-1 text-mid-gray leading-relaxed">
+                                    <!-- Render requirements -->
+                                </ul>
+                            </div>
+                            <div class="space-y-1.5 pt-2">
+                                <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Kết quả đạt được</h4>
+                                <ul id="detail-outcomes" class="list-disc pl-4 space-y-1 text-mid-gray leading-relaxed">
+                                    <!-- Render outcomes -->
+                                </ul>
+                            </div>
+                        </section>
+
+                        <!-- PHẦN 6 & 7 – CHỈ SỐ NỘI DUNG & KINH DOANH -->
+                        <section class="border-t border-hairline/60 pt-4 space-y-3">
+                            <h4 class="text-[10px] font-bold text-mid-gray uppercase tracking-wider">Chỉ số thống kê</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Chương / Bài</p>
+                                    <p class="text-sm font-bold text-ink mt-1"><span id="detail-stat-sections">0</span> / <span id="detail-stat-lessons">0</span></p>
+                                </div>
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Tài liệu học</p>
+                                    <p class="text-sm font-bold text-ink mt-1" id="detail-stat-assets">0</p>
+                                </div>
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Tổng ghi danh</p>
+                                    <p class="text-sm font-bold text-ink mt-1" id="detail-stat-enrollments">0</p>
+                                </div>
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Đơn hàng paid</p>
+                                    <p class="text-sm font-bold text-ink mt-1" id="detail-stat-paid-orders">0</p>
+                                </div>
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center col-span-2 sm:col-span-1">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Doanh thu gộp</p>
+                                    <p class="text-sm font-bold text-ink mt-1" id="detail-stat-revenue">0đ</p>
+                                </div>
+                                <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 text-center col-span-2 sm:col-span-1">
+                                    <p class="text-[9px] font-semibold text-mid-gray uppercase tracking-wider">Đánh giá trung bình</p>
+                                    <p class="text-sm font-bold text-warning mt-1 flex items-center justify-center gap-1">
+                                        <span id="detail-stat-rating">0.0</span>
+                                        <svg class="w-3.5 h-3.5 fill-current text-warning inline" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Drawer Action Footer (PHẦN 9 – HÀNH ĐỘNG) -->
+                <div class="px-5 py-4 border-t border-hairline bg-surface-alt shrink-0 flex gap-2 justify-end" id="drawer-actions-footer">
+                    <!-- Các nút hành động được Javascript hiển thị theo trạng thái -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL XÁC NHẬN NỔI BẬT                     -->
+    <!-- ========================================== -->
+    <div id="confirm-featured-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/45 cursor-pointer" data-close-modal="confirm-featured-modal"></div>
+        <!-- Panel -->
+        <div class="relative w-full max-w-[420px] bg-paper border border-hairline rounded-[6px] shadow-2xl p-5 mx-4 space-y-4 animate-slide-up">
+            <h3 class="text-sm font-bold text-ink" id="featured-modal-title">Đánh dấu khóa học nổi bật?</h3>
+            
+            <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 flex gap-3 items-center">
+                <div class="h-10 w-16 rounded-[4px] bg-canvas overflow-hidden shrink-0 border border-hairline">
+                    <img id="featured-modal-img" src="" alt="Thumbnail" class="w-full h-full object-cover">
+                </div>
+                <div class="min-w-0">
+                    <h4 class="text-xs font-bold text-ink truncate" id="featured-modal-course-title">---</h4>
+                    <p class="text-[10px] text-mid-gray mt-0.5 truncate">Giảng viên: <span id="featured-modal-instructor">---</span></p>
+                </div>
+            </div>
+
+            <p class="text-xs text-mid-gray leading-normal">
+                Khóa học sẽ được ưu tiên hiển thị tại các khu vực nổi bật của hệ thống.
+            </p>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
+                <button type="button" data-close-modal="confirm-featured-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                    Hủy bỏ
+                </button>
+                <button type="button" id="btn-submit-featured" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                    Xác nhận
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL ẨN KHÓA HỌC                          -->
+    <!-- ========================================== -->
+    <div id="confirm-hide-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/45 cursor-pointer" data-close-modal="confirm-hide-modal"></div>
+        <!-- Panel -->
+        <div class="relative w-full max-w-[420px] bg-paper border border-hairline rounded-[6px] shadow-2xl p-5 mx-4 space-y-4 animate-slide-up">
+            <h3 class="text-sm font-bold text-ink">Ẩn khóa học?</h3>
+
+            <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 space-y-2 text-xs">
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Khóa học:</span>
+                    <span class="font-bold text-ink truncate max-w-[200px]" id="hide-modal-title">---</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Giảng viên:</span>
+                    <span class="font-semibold text-ink" id="hide-modal-instructor">---</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Học viên:</span>
+                    <span class="font-medium text-ink" id="hide-modal-enrollments">---</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Doanh thu:</span>
+                    <span class="font-medium text-ink" id="hide-modal-revenue">---</span>
+                </div>
+            </div>
+
+            <div class="rounded-[6px] bg-danger-brick-soft/10 border border-danger-brick/10 p-3 text-[10px] text-danger-brick flex gap-2">
+                <svg class="w-4 h-4 text-danger-brick shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
+                </svg>
+                <p class="leading-normal">
+                    <strong>Cảnh báo:</strong> Khóa học sẽ không còn hiển thị công khai nhưng dữ liệu khóa học và học viên không bị xóa.
+                </p>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
+                <button type="button" data-close-modal="confirm-hide-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                    Hủy bỏ
+                </button>
+                <button type="button" id="btn-submit-hide" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer">
+                    Xác nhận ẩn
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL HIỂN THỊ LẠI KHÓA HỌC               -->
+    <!-- ========================================== -->
+    <div id="confirm-show-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/45 cursor-pointer" data-close-modal="confirm-show-modal"></div>
+        <!-- Panel -->
+        <div class="relative w-full max-w-[420px] bg-paper border border-hairline rounded-[6px] shadow-2xl p-5 mx-4 space-y-4 animate-slide-up">
+            <h3 class="text-sm font-bold text-ink">Hiển thị lại khóa học?</h3>
+
+            <div class="rounded-[6px] border border-hairline bg-surface-alt p-3 space-y-1.5 text-xs">
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Khóa học:</span>
+                    <span class="font-bold text-ink truncate max-w-[200px]" id="show-modal-title">---</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-mid-gray">Giảng viên:</span>
+                    <span class="font-semibold text-ink" id="show-modal-instructor">---</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-mid-gray leading-normal">
+                Khóa học sẽ chuyển lại trạng thái hoạt động công khai trên hệ thống.
+            </p>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-hairline">
+                <button type="button" data-close-modal="confirm-show-modal" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                    Hủy bỏ
+                </button>
+                <button type="button" id="btn-submit-show" class="px-4 py-1.5 h-9 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
+                    Xác nhận hiển thị
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core & Page Scripts -->
+    <script type="module" src="../assets/js/app.js"></script>
+    <script type="module" src="../assets/js/pages/courses.js"></script>
 </body>
 </html>

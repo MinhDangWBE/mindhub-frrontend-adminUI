@@ -141,3 +141,241 @@ body {
         background-position: -200% 0;
     }
 }
+
+/* Custom Select CSS Component */
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-hairline);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+    text-align: left;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-select-wrapper-sm .custom-select-trigger {
+    height: 28px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
+    border-radius: 4px !important;
+}
+
+.custom-select-wrapper-sm .custom-select-trigger svg {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+
+.custom-select-trigger:hover:not(:disabled) {
+    border-color: var(--color-mid-gray);
+}
+
+.custom-select-trigger:focus:not(:disabled),
+.custom-select-trigger.is-active {
+    outline: none;
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 1px var(--color-ink);
+}
+
+.custom-select-trigger:disabled {
+    background-color: var(--color-canvas);
+    color: var(--color-mid-gray);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Custom Dropdown Panel (Portal) */
+.custom-select-dropdown {
+    position: absolute;
+    z-index: 1050;
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-hairline);
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-height: 280px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Dropdown Search Box */
+.custom-select-search-container {
+    padding: 8px;
+    border-b: 1px solid var(--color-hairline);
+    background-color: var(--color-surface-alt);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.custom-select-search-input {
+    width: 100%;
+    height: 32px;
+    padding-left: 28px;
+    padding-right: 10px;
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-hairline);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.custom-select-search-input:focus {
+    border-color: var(--color-ink);
+}
+
+/* Options list scroll area */
+.custom-select-options-list {
+    overflow-y: auto;
+    max-height: 240px;
+    padding: 4px 0;
+}
+
+.custom-select-options-list::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-select-options-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-select-options-list::-webkit-scrollbar-thumb {
+    background: var(--color-hairline);
+    border-radius: 9999px;
+}
+
+/* Custom Option Item */
+.custom-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: var(--color-ink);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s;
+    user-select: none;
+}
+
+.custom-option:hover:not(.is-disabled) {
+    background-color: var(--color-canvas);
+}
+
+.custom-option.is-selected {
+    background-color: var(--color-surface-alt);
+    font-weight: 600;
+}
+
+.custom-option.is-disabled {
+    color: var(--color-mid-gray);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Status dots within custom options */
+.status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.status-dot-pending { background-color: var(--color-warning); }
+.status-dot-success { background-color: var(--color-success); }
+.status-dot-danger { background-color: var(--color-danger-brick); }
+.status-dot-gray { background-color: rgba(115, 115, 115, 0.45); }
+.status-dot-dark-gray { background-color: var(--color-mid-gray); }
+
+/* Standardized Form Control overrides to match h-10 and rounded-6px */
+.form-input-std {
+    height: 40px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--color-hairline) !important;
+    background-color: var(--color-paper) !important;
+    font-size: 13px !important;
+    color: var(--color-ink) !important;
+    transition: all 0.2s !important;
+}
+
+.form-input-std:hover {
+    border-color: var(--color-mid-gray) !important;
+}
+
+.form-input-std:focus {
+    border-color: var(--color-ink) !important;
+    box-shadow: 0 0 0 1px var(--color-ink) !important;
+    outline: none !important;
+}
+
+.btn-std {
+    height: 40px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+}
+
+/* Destructive actions in filter chips section */
+.btn-clear-chips-red {
+    color: var(--color-danger-brick) !important;
+    background-color: transparent !important;
+    font-weight: 500 !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s !important;
+    cursor: pointer;
+}
+
+.btn-clear-chips-red:hover {
+    color: #9e1c14 !important;
+    background-color: var(--color-danger-brick-soft) !important;
+}
+
+/* Standardized Filter Chip */
+.filter-chip-std {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+.filter-chip-std .chip-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-mid-gray);
+    transition: color 0.15s;
+    cursor: pointer;
+}
+
+.filter-chip-std .chip-remove-btn:hover {
+    color: var(--color-danger-brick) !important;
+}
+
