@@ -137,8 +137,8 @@ function readStateFromUrl() {
         periodSelect.value = "custom";
         document.getElementById("custom-date-container").classList.remove("hidden");
     } else {
-        periodSelect.value = "30"; // Mặc định 30 ngày
-        setPresetDates("30");
+        periodSelect.value = "all"; // Mặc định tất cả thời gian
+        setPresetDates("all");
     }
 }
 
@@ -345,6 +345,12 @@ async function initDynamicFilterOptions() {
         }
         
         hasInitializedOptions = true;
+        
+        // Refresh custom selects sau khi nạp động options thành công
+        if (typeof window.refreshCustomSelect === "function") {
+            window.refreshCustomSelect(instructorSelect);
+            window.refreshCustomSelect(categorySelect);
+        }
     } catch (e) {
         console.error("Lỗi khi khởi tạo options lọc động:", e);
     }
@@ -1114,6 +1120,14 @@ function initFilterEvents() {
         resetAllFilters();
     });
 
+    // Nút xóa tất cả chips lọc
+    const clearAllChipsBtn = document.getElementById("btn-clear-all-chips");
+    if (clearAllChipsBtn) {
+        clearAllChipsBtn.addEventListener("click", () => {
+            resetAllFilters();
+        });
+    }
+
     // Nút đặt lại tại empty state
     document.getElementById("btn-empty-reset").addEventListener("click", () => {
         resetAllFilters();
@@ -1138,6 +1152,8 @@ function setPresetDates(preset) {
     if (preset === "all" || preset === "custom") {
         pageState.date_from = "";
         pageState.date_to = "";
+        if (dateFromInput) dateFromInput.value = "";
+        if (dateToInput) dateToInput.value = "";
         return;
     }
 
@@ -1191,8 +1207,10 @@ function resetAllFilters() {
     document.getElementById("filter-sort").value = "updated_at";
     
     const periodSelect = document.getElementById("filter-period");
-    periodSelect.value = "30";
-    setPresetDates("30");
+    if (periodSelect) {
+        periodSelect.value = "all";
+        setPresetDates("all");
+    }
     
     document.getElementById("custom-date-container").classList.add("hidden");
     document.getElementById("pag-per-page").value = 20;

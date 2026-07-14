@@ -973,6 +973,10 @@ function initFilterEvents() {
 
   document.getElementById("btn-reset-filters").addEventListener("click", () => {
     form.reset();
+    // Đồng bộ lại Custom Select sau khi form reset
+    form.querySelectorAll("select[data-custom-select]").forEach(sel => {
+        sel.value = sel.value;
+    });
     pageState = {
       search: "",
       status: "",
