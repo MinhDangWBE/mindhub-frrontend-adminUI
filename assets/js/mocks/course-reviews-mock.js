@@ -771,6 +771,23 @@ let mockSummary = {
 };
 
 /**
+ * Helper lấy ngày gửi kiểm duyệt chính thức của khóa học (Ưu tiên submitted_at, created_at, updated_at)
+ */
+export function getCourseReviewSubmittedDate(item) {
+    if (!item) return null;
+    const value = item.submitted_at ?? item.created_at ?? item.updated_at ?? null;
+    if (!value) return null;
+    if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
+    const strVal = String(value).trim().replace(" ", "T");
+    const date = new Date(strVal);
+    if (isNaN(date.getTime())) {
+        console.warn(`[getCourseReviewSubmittedDate] Ngày gửi không hợp lệ cho khóa học ID ${item.id}:`, value);
+        return null;
+    }
+    return date;
+}
+
+/**
  * Lấy danh sách khóa học chờ duyệt (Mock)
  */
 export function getMockCourseReviews(params = {}) {
@@ -778,6 +795,9 @@ export function getMockCourseReviews(params = {}) {
     const per_page = parseInt(params.per_page) || 20;
     const search = (params.search || "").toLowerCase().trim();
     const sort = params.sort || "submitted_desc";
+    const date_preset = params.date_preset || params.review_date_preset || "";
+    const date_from = params.date_from || params.review_date_from || "";
+    const date_to = params.date_to || params.review_date_to || "";
 
     // 1. Chỉ lọc các khóa pending_review
     let items = mockStore.filter(c => c.status === "pending_review");
@@ -792,12 +812,62 @@ export function getMockCourseReviews(params = {}) {
         });
     }
 
-    // 3. Sort
+    // 3. Lọc theo Khoảng thời gian gửi
+    if (date_from || date_to || (date_preset && date_preset !== "all")) {
+        let fromTimestamp = null;
+        let toTimestamp = null;
+
+        if (date_preset && date_preset !== "custom" && date_preset !== "all") {
+            const now = new Date();
+            // Đảm bảo mốc tham chiếu cho dữ liệu mock năm 2026 nếu trình duyệt client ở năm khác
+            let anchorDate = now;
+            if (now.getFullYear() < 2026) {
+                anchorDate = new Date(2026, 6, 14, 23, 59, 59, 999);
+            }
+            const todayEnd = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), anchorDate.getDate(), 23, 59, 59, 999);
+            toTimestamp = todayEnd.getTime();
+
+            let daysToSubtract = 0;
+            if (date_preset === "last_7_days") daysToSubtract = 6;
+            else if (date_preset === "last_30_days") daysToSubtract = 29;
+            else if (date_preset === "last_90_days") daysToSubtract = 89;
+            else if (date_preset === "last_1_year") daysToSubtract = 365;
+
+            const fromDate = new Date(anchorDate.getFullYear(), anchorDate.getMonth(), anchorDate.getDate() - daysToSubtract, 0, 0, 0, 0);
+            fromTimestamp = fromDate.getTime();
+        } else {
+            if (date_from) {
+                const parts = date_from.split("-");
+                if (parts.length === 3) {
+                    fromTimestamp = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), 0, 0, 0, 0).getTime();
+                }
+            }
+            if (date_to) {
+                const parts = date_to.split("-");
+                if (parts.length === 3) {
+                    toTimestamp = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]), 23, 59, 59, 999).getTime();
+                }
+            }
+        }
+
+        items = items.filter(item => {
+            const itemDate = getCourseReviewSubmittedDate(item);
+            if (!itemDate) return false;
+            const itemTime = itemDate.getTime();
+            if (fromTimestamp && itemTime < fromTimestamp) return false;
+            if (toTimestamp && itemTime > toTimestamp) return false;
+            return true;
+        });
+    }
+
+    // 4. Sort
     items.sort((a, b) => {
+        const dateA = getCourseReviewSubmittedDate(a);
+        const dateB = getCourseReviewSubmittedDate(b);
         switch (sort) {
             case "submitted_asc":
             case "created_at_asc":
-                return new Date(a.created_at) - new Date(b.created_at);
+                return (dateA ? dateA.getTime() : 0) - (dateB ? dateB.getTime() : 0);
             case "title_asc":
                 return a.title.localeCompare(b.title);
             case "title_desc":
@@ -811,7 +881,7 @@ export function getMockCourseReviews(params = {}) {
             case "submitted_desc":
             case "created_at_desc":
             default:
-                return new Date(b.created_at) - new Date(a.created_at);
+                return (dateB ? dateB.getTime() : 0) - (dateA ? dateA.getTime() : 0);
         }
     });
 

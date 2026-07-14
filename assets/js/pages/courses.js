@@ -1,5 +1,6 @@
 import * as coursesApi from "../api/courses-api.js";
 import { showToast } from "../toast.js";
+import { enableTableRowClick } from "../core/table-row-click.js";
 import { openModal, closeModal } from "../modal.js";
 
 // Biến lưu trữ trạng thái hiện tại của trang
@@ -483,7 +484,11 @@ function renderTable(courses) {
     courses.forEach(c => {
         const tr = document.createElement("tr");
         tr.className = "hover:bg-surface-alt/55 transition-colors align-middle h-[70px]";
+        tr.setAttribute("data-course-row", "true");
+        tr.setAttribute("data-course-id", c.id);
         tr.setAttribute("data-row-id", c.id);
+        tr.setAttribute("tabindex", "0");
+        tr.setAttribute("aria-label", `Xem chi tiết khóa học ${c.title}`);
 
         // 1. Cột Khóa học
         const tdCourse = document.createElement("td");
@@ -683,6 +688,7 @@ function renderTable(courses) {
             `;
         }
 
+        featuredBtn.setAttribute("data-no-row-click", "true");
         featuredBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             openConfirmFeaturedModal(c.id, !c.is_featured);
@@ -801,6 +807,7 @@ function renderTable(courses) {
             window.location.href = `revenues.html?course_id=${c.id}`;
         });
 
+        actionBtn.setAttribute("data-no-row-click", "true");
         actionBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             // Đóng tất cả dropdown khác
@@ -816,6 +823,28 @@ function renderTable(courses) {
 
         tableBody.appendChild(tr);
     });
+
+    // Đăng ký sự kiện Delegated Row Click
+    enableTableRowClick({
+        tbody: "#courses-table-body",
+        rowSelector: "[data-course-row]",
+        idAttribute: "data-course-id",
+        onRowClick: (id) => {
+            highlightSelectedRow(id);
+            showDetailDrawer(id);
+        }
+    });
+}
+
+/**
+ * Đánh dấu dòng đang được xem chi tiết
+ */
+function highlightSelectedRow(courseId) {
+    document.querySelectorAll("#courses-table-body tr.is-selected").forEach(r => r.classList.remove("is-selected"));
+    if (courseId) {
+        const activeRow = document.querySelector(`#courses-table-body tr[data-course-id="${courseId}"]`);
+        if (activeRow) activeRow.classList.add("is-selected");
+    }
 }
 
 /**
@@ -1699,6 +1728,7 @@ function closeCourseDetailDrawer() {
 
         const finishClose = () => {
             drawer.classList.add("hidden");
+            highlightSelectedRow(null);
             const activeModal = document.querySelector(".modal-dialog:not(.hidden), div[role='dialog']:not(.hidden)");
             if (!activeModal) {
                 document.body.classList.remove("overflow-hidden");

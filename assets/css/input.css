@@ -394,3 +394,22 @@ body {
     animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Table Row Click Hover & Selected State */
+tbody tr[data-course-row],
+tbody tr[data-course-review-row],
+tbody tr[data-row-clickable] {
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+tbody tr[data-course-row]:hover,
+tbody tr[data-course-review-row]:hover,
+tbody tr[data-row-clickable]:hover {
+    background-color: var(--color-surface-alt);
+}
+
+tbody tr.is-selected {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+    box-shadow: inset 3px 0 0 0 var(--color-ink) !important;
+}
+

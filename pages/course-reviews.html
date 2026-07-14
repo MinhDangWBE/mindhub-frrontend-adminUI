@@ -192,9 +192,9 @@
                 <!-- 3. Bộ lọc (Filter bar đúng contract) -->
                 <section class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle">
                     <form id="filter-form" class="space-y-3">
-                        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 items-end">
-                            <!-- Search (Search theo title, slug, instructor) -->
-                            <div class="sm:col-span-2">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+                            <!-- 1. Search (Search theo title, slug, instructor) -->
+                            <div class="md:col-span-4">
                                 <label for="filter-search" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Tìm kiếm</label>
                                 <div class="relative">
                                     <input type="text" id="filter-search" name="search" placeholder="Tìm theo tên khóa học, slug hoặc giảng viên..." class="w-full h-10 pl-8 pr-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink placeholder-mid-gray/70 transition-all">
@@ -204,11 +204,27 @@
                                 </div>
                             </div>
 
-                            <!-- Sắp xếp (Sort) -->
-                            <div>
+                            <!-- 2. Khoảng thời gian gửi (Custom select - UI mock filter) -->
+                            <div class="md:col-span-3" data-source="mock">
+                                <label for="filter-date-preset" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                                    <span>Khoảng thời gian gửi</span>
+                                    <span class="text-[9px] text-mid-gray/70 font-normal lowercase">(chế độ mock)</span>
+                                </label>
+                                <select id="filter-date-preset" name="date_preset" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
+                                    <option value="last_30_days" selected>30 ngày gần nhất</option>
+                                    <option value="last_7_days">7 ngày gần nhất</option>
+                                    <option value="last_90_days">90 ngày gần nhất</option>
+                                    <option value="last_1_year">1 năm gần nhất</option>
+                                    <option value="all">Tất cả thời gian</option>
+                                    <option value="custom">Tùy chọn khoảng thời gian</option>
+                                </select>
+                            </div>
+
+                            <!-- 3. Sắp xếp (Sort) -->
+                            <div class="md:col-span-3">
                                 <label for="filter-sort" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1.5">Sắp xếp theo</label>
                                 <select id="filter-sort" name="sort" data-custom-select class="w-full h-10 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink transition-all">
-                                    <option value="submitted_desc">Gửi gần nhất</option>
+                                    <option value="submitted_desc" selected>Gửi gần nhất</option>
                                     <option value="submitted_asc">Chờ lâu nhất</option>
                                     <option value="title_asc">Tên A–Z</option>
                                     <option value="title_desc">Tên Z–A</option>
@@ -218,15 +234,36 @@
                                 </select>
                             </div>
 
-                            <!-- Action Buttons -->
-                            <div class="flex items-center gap-2 shrink-0 self-end">
-                                <button type="button" id="btn-reset-filters" class="px-4 py-2 h-10 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer">
+                            <!-- 4. Action Buttons -->
+                            <div class="md:col-span-2 flex items-center gap-2 shrink-0 justify-end">
+                                <button type="button" id="btn-reset-filters" class="px-3.5 py-2 h-10 text-xs font-semibold rounded-[6px] border border-hairline bg-canvas text-ink hover:bg-hairline transition-colors cursor-pointer shrink-0">
                                     Đặt lại
                                 </button>
-                                <button type="submit" class="px-5 py-2 h-10 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer">
-                                    Áp dụng bộ lọc
+                                <button type="submit" class="px-4 py-2 h-10 text-xs font-semibold rounded-[6px] bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer shrink-0">
+                                    Áp dụng
                                 </button>
                             </div>
+                        </div>
+
+                        <!-- Hàng bổ sung cho Tùy chọn khoảng thời gian (Custom Date Range) -->
+                        <div id="custom-date-container" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2.5 border-t border-hairline/60" data-source="mock">
+                            <div>
+                                <label for="filter-date-from" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1">Từ ngày</label>
+                                <input type="date" id="filter-date-from" name="date_from" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] outline-none text-ink transition-all">
+                                <p id="date-from-error" class="hidden text-[10px] text-danger-brick mt-1 font-medium"></p>
+                            </div>
+                            <div>
+                                <label for="filter-date-to" class="block text-[10px] font-semibold text-mid-gray uppercase tracking-wider mb-1">Đến ngày</label>
+                                <input type="date" id="filter-date-to" name="date_to" class="w-full h-10 px-3 text-xs bg-canvas focus:bg-paper border border-hairline rounded-[6px] outline-none text-ink transition-all">
+                                <p id="date-to-error" class="hidden text-[10px] text-danger-brick mt-1 font-medium"></p>
+                            </div>
+                        </div>
+
+                        <!-- Vùng Filter Chips đang dùng -->
+                        <div id="active-filter-chips" class="hidden flex flex-wrap items-center gap-1.5 pt-2.5 border-t border-hairline/60">
+                            <span class="text-[10px] font-semibold text-mid-gray uppercase tracking-wider mr-1">Bộ lọc đang dùng:</span>
+                            <div id="chips-container" class="flex flex-wrap items-center gap-1.5"></div>
+                            <button type="button" id="btn-clear-all-chips" class="btn-clear-chips-red text-[10px] font-semibold ml-2 transition-all cursor-pointer">Xóa tất cả</button>
                         </div>
                     </form>
                 </section>

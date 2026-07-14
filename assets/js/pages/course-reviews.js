@@ -9,14 +9,19 @@ import {
     approveCourse,
     rejectCourse
 } from "../api/course-reviews-api.js";
+import { getCourseReviewSubmittedDate } from "../mocks/course-reviews-mock.js";
 import { showToast } from "../toast.js";
+import { enableTableRowClick } from "../core/table-row-click.js";
 
 // Page Global State
 let pageState = {
     page: 1,
     per_page: 20,
     search: "",
-    sort: "submitted_desc"
+    sort: "submitted_desc",
+    date_preset: "last_30_days", // Mặc định 30 ngày gần nhất
+    date_from: "",
+    date_to: ""
 };
 
 let currentItemsData = [];
@@ -64,11 +69,26 @@ function bindEvents() {
         });
     }
 
-    // 2. Bộ lọc Form (Search & Sort)
+    // 2. Bộ lọc Form (Search, Date Preset, Sort)
     const form = document.getElementById("filter-form");
     const searchInput = document.getElementById("filter-search");
     const sortSelect = document.getElementById("filter-sort");
+    const datePresetSelect = document.getElementById("filter-date-preset");
     const resetBtn = document.getElementById("btn-reset-filters");
+
+    if (datePresetSelect) {
+        datePresetSelect.addEventListener("change", (e) => {
+            pageState.date_preset = e.target.value;
+            toggleCustomDateVisibility();
+            if (pageState.date_preset !== "custom") {
+                pageState.date_from = "";
+                pageState.date_to = "";
+                pageState.page = 1;
+                writeStateToUrl();
+                fetchAndRender(true);
+            }
+        });
+    }
 
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
@@ -87,6 +107,19 @@ function bindEvents() {
             e.preventDefault();
             if (searchInput) pageState.search = searchInput.value.trim();
             if (sortSelect) pageState.sort = sortSelect.value;
+            if (datePresetSelect) pageState.date_preset = datePresetSelect.value;
+
+            if (pageState.date_preset === "custom") {
+                const fromInput = document.getElementById("filter-date-from");
+                const toInput = document.getElementById("filter-date-to");
+                pageState.date_from = fromInput ? fromInput.value.trim() : "";
+                pageState.date_to = toInput ? toInput.value.trim() : "";
+
+                if (!validateCustomDateRange()) {
+                    return;
+                }
+            }
+
             pageState.page = 1;
             writeStateToUrl();
             fetchAndRender(true);
@@ -103,7 +136,7 @@ function bindEvents() {
     const emptyResetBtn = document.getElementById("btn-empty-reset");
     if (emptyResetBtn) {
         emptyResetBtn.addEventListener("click", () => {
-            resetFilters();
+            resetFiltersToAll();
         });
     }
 
@@ -114,11 +147,11 @@ function bindEvents() {
         });
     }
 
-    // Nút Xóa tất cả chips
+    // Nút Xóa tất cả chips (về Tất cả thời gian)
     const clearAllChipsBtn = document.getElementById("btn-clear-all-chips");
     if (clearAllChipsBtn) {
         clearAllChipsBtn.addEventListener("click", () => {
-            resetFilters();
+            clearAllChips();
         });
     }
 
@@ -150,14 +183,44 @@ function readStateFromUrl() {
     pageState.page = parseInt(params.get("page")) || 1;
     pageState.per_page = parseInt(params.get("per_page")) || 20;
 
+    const urlPreset = params.get("review_date_preset") || params.get("date_preset");
+    const urlFrom = params.get("review_date_from") || params.get("date_from");
+    const urlTo = params.get("review_date_to") || params.get("date_to");
+
+    if (urlPreset) {
+        pageState.date_preset = urlPreset;
+    } else {
+        pageState.date_preset = "last_30_days";
+    }
+
+    pageState.date_from = urlFrom || "";
+    pageState.date_to = urlTo || "";
+
     const searchInput = document.getElementById("filter-search");
     if (searchInput) searchInput.value = pageState.search;
 
     const sortSelect = document.getElementById("filter-sort");
-    if (sortSelect) sortSelect.value = pageState.sort;
+    if (sortSelect) {
+        sortSelect.value = pageState.sort;
+        sortSelect.value = sortSelect.value;
+    }
+
+    const datePresetSelect = document.getElementById("filter-date-preset");
+    if (datePresetSelect) {
+        datePresetSelect.value = pageState.date_preset;
+        datePresetSelect.value = datePresetSelect.value;
+    }
+
+    const dateFromInput = document.getElementById("filter-date-from");
+    if (dateFromInput) dateFromInput.value = pageState.date_from;
+
+    const dateToInput = document.getElementById("filter-date-to");
+    if (dateToInput) dateToInput.value = pageState.date_to;
 
     const perPageSelect = document.getElementById("pag-per-page");
     if (perPageSelect) perPageSelect.value = pageState.per_page;
+
+    toggleCustomDateVisibility();
 }
 
 /**
@@ -172,67 +235,84 @@ function writeStateToUrl() {
     if (pageState.page && pageState.page !== 1) url.searchParams.set("page", pageState.page);
     if (pageState.per_page && pageState.per_page !== 20) url.searchParams.set("per_page", pageState.per_page);
 
+    if (pageState.date_preset && pageState.date_preset !== "last_30_days") {
+        url.searchParams.set("review_date_preset", pageState.date_preset);
+    }
+    if (pageState.date_preset === "custom") {
+        if (pageState.date_from) url.searchParams.set("review_date_from", pageState.date_from);
+        if (pageState.date_to) url.searchParams.set("review_date_to", pageState.date_to);
+    }
+
     window.history.pushState({}, "", url);
 }
 
 /**
- * Tự động cuộn mượt đến đầu phần danh sách
+ * Điều khiển ẩn/hiện Hàng Custom Date Range
  */
-function scrollToCourseReviewList() {
-    const target = document.getElementById("course-review-list-section");
-    if (!target) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    target.scrollIntoView({
-        behavior: prefersReducedMotion ? "auto" : "smooth",
-        block: "start"
-    });
-}
-
-/**
- * Tải dữ liệu và render giao diện
- */
-async function fetchAndRender(shouldScroll = false) {
-    showLoadingState();
-
-    try {
-        const res = await getCourseReviews(pageState);
-        updateLastUpdateTime();
-
-        if (res.success && res.data) {
-            currentItemsData = res.data.items || [];
-            renderSummary(res.data.summary);
-            renderQuickInsights(currentItemsData);
-            renderFilterChips();
-
-            if (currentItemsData.length === 0) {
-                showEmptyState();
-            } else {
-                renderTable(currentItemsData);
-                showTableState();
-            }
-
-            renderPagination(res.meta);
-
-            if (shouldScroll) {
-                scrollToCourseReviewList();
-            }
-        } else {
-            showErrorState(res.message || "Dữ liệu Kiểm duyệt khóa học không đúng API contract.");
-        }
-    } catch (err) {
-        console.error("Lỗi khi tải dữ liệu kiểm duyệt khóa học:", err);
-        const errMsg = err?.data?.message || "Không thể tải danh sách kiểm duyệt. Vui lòng kiểm tra kết nối.";
-        showErrorState(errMsg);
+function toggleCustomDateVisibility() {
+    const container = document.getElementById("custom-date-container");
+    if (!container) return;
+    if (pageState.date_preset === "custom") {
+        container.classList.remove("hidden");
+    } else {
+        container.classList.add("hidden");
+        clearDateErrors();
     }
 }
 
 /**
- * Reset mọi bộ lọc
+ * Xóa thông báo lỗi validation khoảng ngày
+ */
+function clearDateErrors() {
+    const errFrom = document.getElementById("date-from-error");
+    const errTo = document.getElementById("date-to-error");
+    if (errFrom) { errFrom.textContent = ""; errFrom.classList.add("hidden"); }
+    if (errTo) { errTo.textContent = ""; errTo.classList.add("hidden"); }
+}
+
+/**
+ * Validate khoảng ngày tùy chọn (custom date)
+ */
+function validateCustomDateRange() {
+    clearDateErrors();
+    if (pageState.date_preset !== "custom") return true;
+
+    const dateFromInput = document.getElementById("filter-date-from");
+    const dateToInput = document.getElementById("filter-date-to");
+    const errFrom = document.getElementById("date-from-error");
+    const errTo = document.getElementById("date-to-error");
+
+    const fromVal = (dateFromInput?.value || "").trim();
+    const toVal = (dateToInput?.value || "").trim();
+
+    let isValid = true;
+
+    if (!fromVal) {
+        if (errFrom) { errFrom.textContent = "Vui lòng chọn ngày bắt đầu."; errFrom.classList.remove("hidden"); }
+        isValid = false;
+    }
+    if (!toVal) {
+        if (errTo) { errTo.textContent = "Vui lòng chọn ngày kết thúc."; errTo.classList.remove("hidden"); }
+        isValid = false;
+    }
+
+    if (fromVal && toVal && fromVal > toVal) {
+        if (errFrom) { errFrom.textContent = "Ngày bắt đầu không được lớn hơn ngày kết thúc."; errFrom.classList.remove("hidden"); }
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+/**
+ * Reset bộ lọc về mặc định (30 ngày gần nhất)
  */
 function resetFilters() {
     pageState.search = "";
     pageState.sort = "submitted_desc";
+    pageState.date_preset = "last_30_days";
+    pageState.date_from = "";
+    pageState.date_to = "";
     pageState.page = 1;
 
     const searchInput = document.getElementById("filter-search");
@@ -241,10 +321,85 @@ function resetFilters() {
     const sortSelect = document.getElementById("filter-sort");
     if (sortSelect) {
         sortSelect.value = "submitted_desc";
-        // Trigger descriptor setter để cập nhật nhãn custom select
         sortSelect.value = sortSelect.value;
     }
 
+    const datePresetSelect = document.getElementById("filter-date-preset");
+    if (datePresetSelect) {
+        datePresetSelect.value = "last_30_days";
+        datePresetSelect.value = datePresetSelect.value;
+    }
+
+    const fromInput = document.getElementById("filter-date-from");
+    if (fromInput) fromInput.value = "";
+    const toInput = document.getElementById("filter-date-to");
+    if (toInput) toInput.value = "";
+
+    clearDateErrors();
+    toggleCustomDateVisibility();
+    writeStateToUrl();
+    fetchAndRender(true);
+}
+
+/**
+ * Chuyển bộ lọc về "Tất cả thời gian"
+ */
+function resetFiltersToAll() {
+    pageState.date_preset = "all";
+    pageState.date_from = "";
+    pageState.date_to = "";
+    pageState.page = 1;
+
+    const datePresetSelect = document.getElementById("filter-date-preset");
+    if (datePresetSelect) {
+        datePresetSelect.value = "all";
+        datePresetSelect.value = datePresetSelect.value;
+    }
+
+    const fromInput = document.getElementById("filter-date-from");
+    if (fromInput) fromInput.value = "";
+    const toInput = document.getElementById("filter-date-to");
+    if (toInput) toInput.value = "";
+
+    clearDateErrors();
+    toggleCustomDateVisibility();
+    writeStateToUrl();
+    fetchAndRender(true);
+}
+
+/**
+ * Nút Xóa tất cả Chips
+ */
+function clearAllChips() {
+    pageState.search = "";
+    pageState.sort = "submitted_desc";
+    pageState.date_preset = "all";
+    pageState.date_from = "";
+    pageState.date_to = "";
+    pageState.page = 1;
+
+    const searchInput = document.getElementById("filter-search");
+    if (searchInput) searchInput.value = "";
+
+    const sortSelect = document.getElementById("filter-sort");
+    if (sortSelect) {
+        sortSelect.value = "submitted_desc";
+        sortSelect.value = sortSelect.value;
+    }
+
+    const datePresetSelect = document.getElementById("filter-date-preset");
+    if (datePresetSelect) {
+        datePresetSelect.value = "all";
+        datePresetSelect.value = datePresetSelect.value;
+    }
+
+    const fromInput = document.getElementById("filter-date-from");
+    if (fromInput) fromInput.value = "";
+    const toInput = document.getElementById("filter-date-to");
+    if (toInput) toInput.value = "";
+
+    clearDateErrors();
+    toggleCustomDateVisibility();
     writeStateToUrl();
     fetchAndRender(true);
 }
@@ -286,14 +441,19 @@ function renderQuickInsights(items) {
     // 1. Khóa mới 7 ngày
     const now = new Date();
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const newIn7Days = items.filter(i => new Date(i.created_at || i.updated_at) >= sevenDaysAgo).length;
+    const newIn7Days = items.filter(i => {
+        const d = getCourseReviewSubmittedDate(i);
+        return d && d >= sevenDaysAgo;
+    }).length;
 
-    // 2. Khóa chờ lâu nhất (tính từ created_at)
+    // 2. Khóa chờ lâu nhất (tính từ created_at qua helper)
     let maxWaitingDays = 0;
     items.forEach(i => {
-        const createdDate = new Date(i.created_at || i.updated_at);
-        const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-        if (diffDays > maxWaitingDays) maxWaitingDays = diffDays;
+        const createdDate = getCourseReviewSubmittedDate(i);
+        if (createdDate) {
+            const diffDays = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+            if (diffDays > maxWaitingDays) maxWaitingDays = diffDays;
+        }
     });
 
     // 3. Giá bán trung bình
@@ -326,68 +486,101 @@ function renderQuickInsights(items) {
  * Render Filter Chips
  */
 function renderFilterChips() {
-    const container = document.getElementById("filter-chips-container");
-    const list = document.getElementById("filter-chips-list");
-    if (!container || !list) return;
+    const chipsSection = document.getElementById("active-filter-chips");
+    const container = document.getElementById("chips-container");
+    if (!chipsSection || !container) return;
 
-    list.innerHTML = "";
-    const chips = [];
+    container.innerHTML = "";
+    let hasActiveFilter = false;
 
+    // 1. Search Chip
     if (pageState.search) {
-        chips.push({ key: "search", label: `Tìm kiếm: "${pageState.search}"` });
-    }
-
-    if (pageState.sort && pageState.sort !== "submitted_desc") {
-        const sortLabels = {
-            submitted_asc: "Sắp xếp: Chờ lâu nhất",
-            title_asc: "Sắp xếp: Tên A–Z",
-            title_desc: "Sắp xếp: Tên Z–A",
-            price_desc: "Sắp xếp: Giá cao nhất",
-            price_asc: "Sắp xếp: Giá thấp nhất",
-            duration_desc: "Sắp xếp: Thời lượng dài nhất"
-        };
-        chips.push({ key: "sort", label: sortLabels[pageState.sort] || `Sắp xếp: ${pageState.sort}` });
-    }
-
-    if (chips.length === 0) {
-        container.classList.add("hidden");
-        return;
-    }
-
-    container.classList.remove("hidden");
-
-    chips.forEach(chip => {
-        const div = document.createElement("div");
-        div.className = "flex items-center gap-1 bg-paper border border-hairline px-2.5 py-0.5 rounded-[4px] font-medium text-ink";
-        div.innerHTML = `
-            <span>${chip.label}</span>
-            <button type="button" class="text-mid-gray hover:text-danger-brick p-0.5 rounded transition-colors cursor-pointer" aria-label="Xóa bộ lọc ${chip.label}">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        `;
-
-        div.querySelector("button").addEventListener("click", () => {
-            if (chip.key === "search") {
-                pageState.search = "";
-                const input = document.getElementById("filter-search");
-                if (input) input.value = "";
-            } else if (chip.key === "sort") {
-                pageState.sort = "submitted_desc";
-                const select = document.getElementById("filter-sort");
-                if (select) {
-                    select.value = "submitted_desc";
-                    select.value = select.value;
-                }
-            }
+        hasActiveFilter = true;
+        container.appendChild(createChipElement(`Tìm kiếm: "${pageState.search}"`, () => {
+            pageState.search = "";
+            const input = document.getElementById("filter-search");
+            if (input) input.value = "";
             pageState.page = 1;
             writeStateToUrl();
             fetchAndRender(true);
-        });
+        }));
+    }
 
-        list.appendChild(div);
-    });
+    // 2. Time Range Preset / Custom Chips
+    if (pageState.date_preset && pageState.date_preset !== "all") {
+        hasActiveFilter = true;
+        if (pageState.date_preset === "custom") {
+            if (pageState.date_from) {
+                container.appendChild(createChipElement(`Từ ngày: ${formatDateDisplay(pageState.date_from)}`, () => {
+                    resetFiltersToAll();
+                }));
+            }
+            if (pageState.date_to) {
+                container.appendChild(createChipElement(`Đến ngày: ${formatDateDisplay(pageState.date_to)}`, () => {
+                    resetFiltersToAll();
+                }));
+            }
+        } else {
+            const presetLabelMapping = {
+                "last_7_days": "7 ngày gần nhất",
+                "last_30_days": "30 ngày gần nhất",
+                "last_90_days": "90 ngày gần nhất",
+                "last_1_year": "1 năm gần nhất"
+            };
+            const label = presetLabelMapping[pageState.date_preset] || pageState.date_preset;
+            container.appendChild(createChipElement(`Thời gian: ${label}`, () => {
+                resetFiltersToAll();
+            }));
+        }
+    }
+
+    // 3. Sort Chip
+    if (pageState.sort && pageState.sort !== "submitted_desc") {
+        hasActiveFilter = true;
+        const sortMapping = {
+            "submitted_asc": "Sắp xếp: Chờ lâu nhất",
+            "title_asc": "Sắp xếp: Tên A–Z",
+            "title_desc": "Sắp xếp: Tên Z–A",
+            "price_desc": "Sắp xếp: Giá cao nhất",
+            "price_asc": "Sắp xếp: Giá thấp nhất",
+            "duration_desc": "Sắp xếp: Thời lượng dài nhất"
+        };
+        const label = sortMapping[pageState.sort] || pageState.sort;
+        container.appendChild(createChipElement(label, () => {
+            pageState.sort = "submitted_desc";
+            const select = document.getElementById("filter-sort");
+            if (select) { select.value = "submitted_desc"; select.value = select.value; }
+            pageState.page = 1;
+            writeStateToUrl();
+            fetchAndRender(true);
+        }));
+    }
+
+    if (hasActiveFilter) {
+        chipsSection.classList.remove("hidden");
+    } else {
+        chipsSection.classList.add("hidden");
+    }
+}
+
+function formatDateDisplay(dateStr) {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-");
+    if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    return dateStr;
+}
+
+function createChipElement(label, onRemove) {
+    const span = document.createElement("span");
+    span.className = "filter-chip-std inline-flex items-center gap-1 bg-canvas border border-hairline rounded px-2 py-0.5 text-[11px] font-medium text-ink select-none";
+    span.innerHTML = `
+        <span>${escapeHtml(label)}</span>
+        <button type="button" class="chip-remove-btn text-mid-gray hover:text-danger-brick transition-colors cursor-pointer" aria-label="Xóa bộ lọc">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    `;
+    span.querySelector(".chip-remove-btn").addEventListener("click", onRemove);
+    return span;
 }
 
 /**
@@ -403,7 +596,7 @@ function renderTable(items) {
         const displayPrice = isSale ? item.sale_price : item.price;
 
         return `
-            <tr class="hover:bg-surface-alt/60 transition-colors">
+            <tr class="hover:bg-surface-alt/60 transition-colors" data-course-review-row="true" data-course-id="${item.id}" tabindex="0" aria-label="Xem chi tiết kiểm duyệt khóa học ${escapeHtml(item.title)}">
                 <!-- 1. Khóa học -->
                 <td class="p-3 pl-4">
                     <div class="flex items-center gap-3">
@@ -460,13 +653,13 @@ function renderTable(items) {
                 <!-- 9. Thao tác -->
                 <td class="p-3 pr-4 text-right whitespace-nowrap">
                     <div class="flex items-center justify-end gap-1">
-                        <button type="button" class="btn-open-drawer p-1.5 rounded-[4px] hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer" data-course-id="${item.id}" title="Xem chi tiết kiểm duyệt">
+                        <button type="button" class="btn-open-drawer p-1.5 rounded-[4px] hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer" data-course-id="${item.id}" data-no-row-click="true" title="Xem chi tiết kiểm duyệt">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2.036 12c2.018-4.575 6.071-8 11.964-8 5.892 0 9.946 3.425 11.964 8-2.018 4.575-6.071 8-11.964 8-5.892 0-9.946-3.425-11.964-8z"/><circle cx="14" cy="12" r="3"/></svg>
                         </button>
-                        <button type="button" class="btn-trigger-approve p-1.5 rounded-[4px] hover:bg-canvas text-success transition-colors cursor-pointer" data-course-id="${item.id}" title="Duyệt khóa học">
+                        <button type="button" class="btn-trigger-approve p-1.5 rounded-[4px] hover:bg-canvas text-success transition-colors cursor-pointer" data-course-id="${item.id}" data-no-row-click="true" title="Duyệt khóa học">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
                         </button>
-                        <button type="button" class="btn-trigger-reject p-1.5 rounded-[4px] hover:bg-canvas text-danger-brick transition-colors cursor-pointer" data-course-id="${item.id}" title="Từ chối khóa học">
+                        <button type="button" class="btn-trigger-reject p-1.5 rounded-[4px] hover:bg-canvas text-danger-brick transition-colors cursor-pointer" data-course-id="${item.id}" data-no-row-click="true" title="Từ chối khóa học">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
                     </div>
@@ -496,6 +689,28 @@ function renderTable(items) {
             if (id) openRejectModal(id);
         });
     });
+
+    // Đăng ký sự kiện Delegated Row Click
+    enableTableRowClick({
+        tbody: "#course-reviews-table-body",
+        rowSelector: "[data-course-review-row]",
+        idAttribute: "data-course-id",
+        onRowClick: (id) => {
+            highlightSelectedRow(id);
+            openDrawer(id);
+        }
+    });
+}
+
+/**
+ * Đánh dấu dòng đang mở kiểm duyệt
+ */
+function highlightSelectedRow(courseId) {
+    document.querySelectorAll("#course-reviews-table-body tr.is-selected").forEach(r => r.classList.remove("is-selected"));
+    if (courseId) {
+        const activeRow = document.querySelector(`#course-reviews-table-body tr[data-course-id="${courseId}"]`);
+        if (activeRow) activeRow.classList.add("is-selected");
+    }
 }
 
 /**
@@ -627,9 +842,9 @@ function showEmptyState() {
     const emptyTitle = document.getElementById("empty-title");
     const emptyDesc = document.getElementById("empty-desc");
 
-    if (pageState.search) {
-        if (emptyTitle) emptyTitle.textContent = "Không tìm thấy khóa học phù hợp";
-        if (emptyDesc) emptyDesc.textContent = `Không tìm thấy khóa học nào phù hợp với từ khóa "${pageState.search}".`;
+    if (pageState.search || (pageState.date_preset && pageState.date_preset !== "all")) {
+        if (emptyTitle) emptyTitle.textContent = "Không tìm thấy khóa học trong khoảng thời gian đã chọn";
+        if (emptyDesc) emptyDesc.textContent = "Không có khóa học nào gửi kiểm duyệt đáp ứng các điều kiện tìm kiếm và thời gian hiện tại.";
     } else {
         if (emptyTitle) emptyTitle.textContent = "Không có khóa học chờ duyệt";
         if (emptyDesc) emptyDesc.textContent = "Tất cả yêu cầu kiểm duyệt hiện đã được xử lý xong.";
@@ -759,6 +974,7 @@ function closeDrawer() {
 
         const finishClose = () => {
             drawer.classList.add("hidden");
+            highlightSelectedRow(null);
             resolve();
         };
 

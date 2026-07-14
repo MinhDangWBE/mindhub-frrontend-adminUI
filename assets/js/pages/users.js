@@ -1536,8 +1536,6 @@ function renderDrawerActions(user) {
         }
         container.appendChild(lockBtn);
 
-        }
-
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
         deleteBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-red-50 text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/10 transition-colors cursor-pointer";
