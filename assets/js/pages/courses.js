@@ -1304,8 +1304,10 @@ function initModalEvents() {
                 closeModal("confirm-featured-modal");
                 showToast({
                     type: "success",
-                    title: activeTargetCourse.isFeaturedTarget ? "Đánh dấu nổi bật" : "Bỏ nổi bật",
-                    message: `Đã cập nhật trạng thái nổi bật cho khóa học: "${response.data.title}".`
+                    title: activeTargetCourse.isFeaturedTarget ? "Đã đánh dấu nổi bật" : "Đã bỏ nổi bật",
+                    message: activeTargetCourse.isFeaturedTarget
+                        ? `Khóa học "${response.data.title}" đã được thêm vào danh sách nổi bật.`
+                        : `Khóa học "${response.data.title}" đã được bỏ khỏi danh sách nổi bật.`
                 });
 
                 // Cập nhật lại UI row trong table
@@ -1668,23 +1670,52 @@ function initDrawerEvents() {
     const closeBtn = document.getElementById("btn-close-drawer");
     const panel = document.getElementById("drawer-panel");
 
-    const closeDrawer = () => {
-        panel.classList.add("translate-x-full");
-        backdrop.classList.add("opacity-0");
-        document.body.classList.remove("overflow-hidden");
-        setTimeout(() => {
-            drawer.classList.add("hidden");
-        }, 300);
-    };
-
-    closeBtn.addEventListener("click", closeDrawer);
-    backdrop.addEventListener("click", closeDrawer);
+    closeBtn.addEventListener("click", () => closeCourseDetailDrawer());
+    backdrop.addEventListener("click", () => closeCourseDetailDrawer());
     
     // Phím ESC đóng drawer
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && !drawer.classList.contains("hidden")) {
-            closeDrawer();
+            closeCourseDetailDrawer();
         }
+    });
+}
+
+/**
+ * Đóng Drawer chi tiết khóa học và trả về Promise đợi animation hoàn tất
+ */
+function closeCourseDetailDrawer() {
+    const drawer = document.getElementById("course-detail-drawer");
+    const backdrop = document.getElementById("drawer-backdrop");
+    const panel = document.getElementById("drawer-panel");
+
+    if (!drawer || drawer.classList.contains("hidden")) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+        if (panel) panel.classList.add("translate-x-full");
+        if (backdrop) backdrop.classList.add("opacity-0");
+
+        const finishClose = () => {
+            drawer.classList.add("hidden");
+            const activeModal = document.querySelector(".modal-dialog:not(.hidden), div[role='dialog']:not(.hidden)");
+            if (!activeModal) {
+                document.body.classList.remove("overflow-hidden");
+            }
+            resolve();
+        };
+
+        let handled = false;
+        const handler = () => {
+            if (handled) return;
+            handled = true;
+            if (panel) panel.removeEventListener("transitionend", handler);
+            finishClose();
+        };
+
+        if (panel) panel.addEventListener("transitionend", handler);
+        setTimeout(handler, 250);
     });
 }
 
@@ -1882,17 +1913,30 @@ function renderDrawerDetails(course) {
         footer.appendChild(btn);
     };
 
-    // Lọc trạng thái
+    // Lọc trạng thái & gán sự kiện mở Modal từ Drawer (phải đóng Drawer hoàn toàn trước)
+    const executeDrawerActionAndOpenModal = async (actionFn) => {
+        await closeCourseDetailDrawer();
+        actionFn();
+    };
+
     if (course.is_featured) {
-        addFooterBtn("Bỏ nổi bật", "bg-canvas text-ink hover:bg-hairline border border-hairline", () => openConfirmFeaturedModal(course.id, false));
+        addFooterBtn("Bỏ nổi bật", "bg-canvas text-ink hover:bg-hairline border border-hairline", () => {
+            executeDrawerActionAndOpenModal(() => openConfirmFeaturedModal(course.id, false));
+        });
     } else {
-        addFooterBtn("Đánh dấu nổi bật", "bg-canvas text-warning hover:bg-warning-soft/20 border border-warning/20", () => openConfirmFeaturedModal(course.id, true));
+        addFooterBtn("Đánh dấu nổi bật", "bg-canvas text-warning hover:bg-warning-soft/20 border border-warning/20", () => {
+            executeDrawerActionAndOpenModal(() => openConfirmFeaturedModal(course.id, true));
+        });
     }
 
     if (course.status === "published") {
-        addFooterBtn("Ẩn khóa học", "bg-danger-brick text-white hover:opacity-90", () => openConfirmHideModal(course.id));
+        addFooterBtn("Ẩn khóa học", "bg-danger-brick text-white hover:opacity-90", () => {
+            executeDrawerActionAndOpenModal(() => openConfirmHideModal(course.id));
+        });
     } else if (course.status === "hidden") {
-        addFooterBtn("Hiển thị lại", "bg-ink text-white hover:opacity-90", () => openConfirmShowModal(course.id));
+        addFooterBtn("Hiển thị lại", "bg-ink text-white hover:opacity-90", () => {
+            executeDrawerActionAndOpenModal(() => openConfirmShowModal(course.id));
+        });
     } else if (course.status === "pending_review") {
         addFooterBtn("Đi tới kiểm duyệt", "bg-ink text-white hover:opacity-90", () => {
             window.location.href = `course-reviews.html?id=${course.id}`;

@@ -1510,11 +1510,16 @@ function renderDrawerActions(user) {
     const isSelf = user.id === CURRENT_ADMIN_ID;
     const isLocked = user.locked || user.status === "locked";
 
+    const executeActionFromDrawer = async (actionFn) => {
+        await closeDetailDrawer();
+        actionFn();
+    };
+
     const editBtn = document.createElement("button");
     editBtn.type = "button";
     editBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer";
     editBtn.textContent = "Chỉnh sửa";
-    editBtn.addEventListener("click", () => openEditModal(user.id));
+    editBtn.addEventListener("click", () => executeActionFromDrawer(() => openEditModal(user.id)));
     container.appendChild(editBtn);
 
     if (!isSelf) {
@@ -1523,27 +1528,14 @@ function renderDrawerActions(user) {
         if (isLocked) {
             lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/15 text-success border border-success/20 hover:bg-success/20 transition-colors cursor-pointer";
             lockBtn.textContent = "Mở khóa";
-            lockBtn.addEventListener("click", () => handleUserAction("unlock", user));
+            lockBtn.addEventListener("click", () => executeActionFromDrawer(() => handleUserAction("unlock", user)));
         } else {
             lockBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-danger-brick-soft text-danger-brick border border-danger-brick/10 hover:bg-danger-brick/20 transition-colors cursor-pointer";
             lockBtn.textContent = "Khóa tài khoản";
-            lockBtn.addEventListener("click", () => handleUserAction("lock", user));
+            lockBtn.addEventListener("click", () => executeActionFromDrawer(() => handleUserAction("lock", user)));
         }
         container.appendChild(lockBtn);
 
-        if (!isLocked) {
-            const toggleBtn = document.createElement("button");
-            toggleBtn.type = "button";
-            if (user.status === "active") {
-                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-canvas text-mid-gray border border-hairline hover:bg-hairline hover:text-ink transition-colors cursor-pointer";
-                toggleBtn.textContent = "Vô hiệu hóa";
-                toggleBtn.addEventListener("click", () => handleUserAction("deactivate", user));
-            } else {
-                toggleBtn.className = "px-4 py-1.5 text-xs font-semibold rounded-full bg-success/10 text-success border border-success/20 hover:bg-success/15 transition-colors cursor-pointer";
-                toggleBtn.textContent = "Kích hoạt";
-                toggleBtn.addEventListener("click", () => handleUserAction("activate", user));
-            }
-            container.appendChild(toggleBtn);
         }
 
         const deleteBtn = document.createElement("button");

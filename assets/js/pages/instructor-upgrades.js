@@ -1464,6 +1464,11 @@ function renderDrawerActions(request) {
   const container = document.getElementById("drawer-actions");
   container.innerHTML = "";
 
+  const executeActionFromDrawer = async (actionFn) => {
+    await closeDetailDrawer();
+    actionFn();
+  };
+
   if (request.application_status === "pending") {
     // Nút Duyệt
     const approveBtn = document.createElement("button");
@@ -1471,7 +1476,7 @@ function renderDrawerActions(request) {
     approveBtn.className =
       "px-5 py-1.5 text-xs font-semibold rounded-[6px] bg-success text-white hover:opacity-90 transition-opacity cursor-pointer";
     approveBtn.textContent = "Duyệt yêu cầu";
-    approveBtn.addEventListener("click", () => openApproveModal(request));
+    approveBtn.addEventListener("click", () => executeActionFromDrawer(() => openApproveModal(request)));
     container.appendChild(approveBtn);
 
     // Nút Từ chối
@@ -1480,7 +1485,7 @@ function renderDrawerActions(request) {
     rejectBtn.className =
       "px-5 py-1.5 text-xs font-semibold rounded-[6px] bg-danger-brick text-white hover:opacity-90 transition-opacity cursor-pointer";
     rejectBtn.textContent = "Từ chối yêu cầu";
-    rejectBtn.addEventListener("click", () => openRejectModal(request));
+    rejectBtn.addEventListener("click", () => executeActionFromDrawer(() => openRejectModal(request)));
     container.appendChild(rejectBtn);
   } else {
     // Nhãn hiển thị kết quả
@@ -1499,24 +1504,43 @@ function renderDrawerActions(request) {
 }
 
 /**
- * Đóng Drawer xem chi tiết
+ * Đóng Drawer xem chi tiết và trả về Promise chờ animation kết thúc
  */
 function closeDetailDrawer() {
   const overlay = document.getElementById("drawer-overlay");
   const drawer = document.getElementById("upgrade-detail-drawer");
 
-  if (drawer.classList.contains("translate-x-full")) return;
+  if (!drawer || drawer.classList.contains("hidden") || drawer.classList.contains("translate-x-full")) {
+    return Promise.resolve();
+  }
 
-  overlay.classList.remove("opacity-100");
-  overlay.classList.add("opacity-0", "pointer-events-none");
+  return new Promise((resolve) => {
+    if (overlay) {
+      overlay.classList.remove("opacity-100");
+      overlay.classList.add("opacity-0", "pointer-events-none");
+    }
+    if (drawer) {
+      drawer.classList.remove("translate-x-0");
+      drawer.classList.add("translate-x-full");
+    }
 
-  drawer.classList.remove("translate-x-0");
-  drawer.classList.add("translate-x-full");
+    const finishClose = () => {
+      if (overlay) overlay.classList.add("hidden");
+      if (drawer) drawer.classList.add("hidden");
+      resolve();
+    };
 
-  setTimeout(() => {
-    overlay.classList.add("hidden");
-    drawer.classList.add("hidden");
-  }, 300);
+    let handled = false;
+    const handler = () => {
+      if (handled) return;
+      handled = true;
+      if (drawer) drawer.removeEventListener("transitionend", handler);
+      finishClose();
+    };
+
+    if (drawer) drawer.addEventListener("transitionend", handler);
+    setTimeout(handler, 250);
+  });
 }
 
 /**
