@@ -1,37 +1,21 @@
-import { usersData } from "../../../data/users.js";
+import { getUsers as getRepoUsers, saveUsers as saveRepoUsers } from "../mocks/mock-repository.js";
 
 // Cấu hình nguồn dữ liệu: true để dùng mock (localStorage), false để gọi API thật
 const USE_MOCK = true;
 const API_BASE_URL = "/api/admin/users";
 
-// Key lưu trữ dữ liệu mock trong localStorage
-const STORAGE_KEY = "mindhub_admin_mock_users";
-
-/**
- * Khởi tạo dữ liệu mock ban đầu nếu chưa có trong localStorage
- */
-function initMockDatabase() {
-    if (!localStorage.getItem(STORAGE_KEY)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(usersData));
-    }
-}
-
-if (USE_MOCK) {
-    initMockDatabase();
-}
-
 /**
  * Lấy toàn bộ danh sách từ localStorage (chỉ dùng nội bộ cho Mock)
  */
 function getRawMockUsers() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return getRepoUsers();
 }
 
 /**
  * Lưu danh sách vào localStorage (chỉ dùng nội bộ cho Mock)
  */
 function saveRawMockUsers(users) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+    saveRepoUsers(users);
 }
 
 /**

@@ -1,37 +1,25 @@
-import { coursesMockData } from "../mocks/courses-mock.js";
+import { getCourses as getRepoCourses, saveCourses as saveRepoCourses, populateCourse } from "../mocks/mock-repository.js";
 
 // Cấu hình nguồn dữ liệu: true để dùng mock (localStorage), false để gọi API thật
 const USE_MOCK = true;
 const API_BASE_URL = "/api/admin/courses";
 
-// Key lưu trữ dữ liệu mock trong localStorage
-const STORAGE_KEY = "mindhub_admin_mock_courses";
-
-/**
- * Khởi tạo dữ liệu mock ban đầu nếu chưa có trong localStorage
- */
-function initMockDatabase() {
-    if (!localStorage.getItem(STORAGE_KEY)) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(coursesMockData));
-    }
-}
-
-if (USE_MOCK) {
-    initMockDatabase();
-}
-
 /**
  * Lấy toàn bộ danh sách từ localStorage (chỉ dùng nội bộ cho Mock)
  */
 function getRawMockCourses() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return getRepoCourses().map(populateCourse);
 }
 
 /**
  * Lưu danh sách vào localStorage (chỉ dùng nội bộ cho Mock)
  */
 function saveRawMockCourses(courses) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(courses));
+    const raw = courses.map(c => {
+        const { instructor, categories, ...rest } = c;
+        return rest;
+    });
+    saveRepoCourses(raw);
 }
 
 /**

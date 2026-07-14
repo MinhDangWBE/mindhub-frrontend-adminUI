@@ -1,3 +1,13 @@
+import {
+    getUsers,
+    getCourses,
+    getOrders,
+    getEnrollments,
+    getRevenues,
+    getWithdrawals,
+    getInstructorUpgrades
+} from "../assets/js/mocks/mock-repository.js";
+
 /**
  * Dữ liệu giả lập (mock data) cho trang Dashboard Admin MindHub tuân thủ API Contract V2.
  * Hỗ trợ 4 khoảng thời gian mặc định và lọc theo khoảng ngày tùy chọn.
@@ -582,114 +592,153 @@ const mockDataPresets = {
  * @returns {Object} Dữ liệu mock tương ứng
  */
 export function getDashboardMockData({ date_from, date_to, month, year } = {}) {
+    let result;
     // 1. Phân loại theo tham số để chọn preset
     if (date_from && date_to) {
         if (date_from === "2026-07-06" && date_to === "2026-07-12") {
-            return JSON.parse(JSON.stringify(mockDataPresets["7days"]));
-        }
-        if (date_from === "2026-06-13" && date_to === "2026-07-12") {
-            return JSON.parse(JSON.stringify(mockDataPresets["30days"]));
-        }
+            result = JSON.parse(JSON.stringify(mockDataPresets["7days"]));
+        } else if (date_from === "2026-06-13" && date_to === "2026-07-12") {
+            result = JSON.parse(JSON.stringify(mockDataPresets["30days"]));
+        } else {
+            // Tùy chọn khoảng ngày tùy chỉnh
+            const customData = JSON.parse(JSON.stringify(mockDataPresets["custom"]));
+            const start = new Date(date_from);
+            const end = new Date(date_to);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            const labels = [];
+            const gross = [];
+            const instructor = [];
+            const platform = [];
+            const steps = Math.min(diffDays, 10);
+            const interval = Math.max(1, Math.floor(diffDays / steps));
 
-        // Tùy chọn khoảng ngày tùy chỉnh: Tạo nhãn và dữ liệu biến thiên theo khoảng ngày thực tế
-        const customData = JSON.parse(JSON.stringify(mockDataPresets["custom"]));
-        
-        // Tạo nhãn biểu đồ linh hoạt dựa trên khoảng ngày
-        const start = new Date(date_from);
-        const end = new Date(date_to);
-        const diffTime = Math.abs(end - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-        const labels = [];
-        const gross = [];
-        const instructor = [];
-        const platform = [];
-
-        // Giới hạn tối đa hiển thị 10 điểm dữ liệu trên chart để tránh chen chúc
-        const steps = Math.min(diffDays, 10);
-        const interval = Math.max(1, Math.floor(diffDays / steps));
-
-        for (let i = 0; i < steps; i++) {
-            const currentDate = new Date(start);
-            currentDate.setDate(start.getDate() + i * interval);
-            const dateStr = currentDate.toISOString().split("T")[0];
-            labels.push(dateStr);
-
-            // Sinh dữ liệu tài chính giả lập biến thiên quanh 10-30 triệu mỗi bước
-            const stepGross = Math.floor(10 + Math.random() * 20) * 1000000;
-            const stepInst = Math.floor(stepGross * 0.7);
-            const stepPlatform = stepGross - stepInst;
-
-            gross.push(stepGross);
-            instructor.push(stepInst);
-            platform.push(stepPlatform);
-        }
-
-        customData.revenue_report.data.items = labels.map((date, idx) => ({
-            date,
-            gross_amount: gross[idx].toFixed(2),
-            instructor_amount: instructor[idx].toFixed(2),
-            platform_fee_amount: platform[idx].toFixed(2)
-        }));
-
-        const totalGross = gross.reduce((a, b) => a + b, 0);
-        const totalInst = instructor.reduce((a, b) => a + b, 0);
-        const totalPlatform = platform.reduce((a, b) => a + b, 0);
-
-        customData.revenue_report.data.summary = {
-            total_gross_amount: totalGross.toFixed(2),
-            total_instructor_amount: totalInst.toFixed(2),
-            total_platform_fee_amount: totalPlatform.toFixed(2)
-        };
-
-        customData.dashboard.data.revenue = {
-            gross_amount: totalGross.toFixed(2),
-            instructor_amount: totalInst.toFixed(2),
-            platform_fee_amount: totalPlatform.toFixed(2)
-        };
-
-        // Điều chỉnh KPI theo quy mô số ngày
-        const factor = Math.max(0.5, Math.min(diffDays / 7, 5));
-        const summary = customData.dashboard.data.summary;
-        summary.total_users = Math.floor(1200 + factor * 20);
-        summary.total_learners = Math.floor(1000 + factor * 18);
-        summary.total_instructors = summary.total_users - summary.total_learners;
-        summary.total_orders = Math.floor(200 + factor * 15);
-        summary.paid_orders = Math.floor(summary.total_orders * 0.9);
-        summary.total_enrollments = Math.floor(2500 + factor * 120);
-
-        return customData;
-    }
-
-    if (month && year) {
-        if (parseInt(month) === 7 && parseInt(year) === 2026) {
-            return JSON.parse(JSON.stringify(mockDataPresets["thisMonth"]));
-        }
-        
-        // Tạo giả lập cho tháng khác
-        const monthData = JSON.parse(JSON.stringify(mockDataPresets["thisMonth"]));
-        monthData.revenue_report.data.items.forEach((item, idx) => {
-            item.date = `Tuần ${idx + 1} (${month}/${year})`;
-        });
-        return monthData;
-    }
-
-    if (year) {
-        if (parseInt(year) === 2026) {
-            return JSON.parse(JSON.stringify(mockDataPresets["thisYear"]));
-        }
-
-        // Tạo giả lập cho năm khác
-        const yearData = JSON.parse(JSON.stringify(mockDataPresets["thisYear"]));
-        yearData.revenue_report.data.items.forEach(item => {
-            const parts = item.date.split(" ");
-            if (parts.length === 2) {
-                item.date = `${parts[0]} ${parts[1]}/${year}`;
+            for (let i = 0; i < steps; i++) {
+                const currentDate = new Date(start);
+                currentDate.setDate(start.getDate() + i * interval);
+                const dateStr = currentDate.toISOString().split("T")[0];
+                labels.push(dateStr);
+                const stepGross = Math.floor(10 + Math.random() * 20) * 1000000;
+                const stepInst = Math.floor(stepGross * 0.7);
+                const stepPlatform = stepGross - stepInst;
+                gross.push(stepGross);
+                instructor.push(stepInst);
+                platform.push(stepPlatform);
             }
-        });
-        return yearData;
+
+            customData.revenue_report.data.items = labels.map((date, idx) => ({
+                date,
+                gross_amount: gross[idx].toFixed(2),
+                instructor_amount: instructor[idx].toFixed(2),
+                platform_fee_amount: platform[idx].toFixed(2)
+            }));
+
+            const totalGross = gross.reduce((a, b) => a + b, 0);
+            const totalInst = instructor.reduce((a, b) => a + b, 0);
+            const totalPlatform = platform.reduce((a, b) => a + b, 0);
+
+            customData.revenue_report.data.summary = {
+                total_gross_amount: totalGross.toFixed(2),
+                total_instructor_amount: totalInst.toFixed(2),
+                total_platform_fee_amount: totalPlatform.toFixed(2)
+            };
+
+            result = customData;
+        }
+    } else if (month && year) {
+        if (parseInt(month) === 7 && parseInt(year) === 2026) {
+            result = JSON.parse(JSON.stringify(mockDataPresets["thisMonth"]));
+        } else {
+            const monthData = JSON.parse(JSON.stringify(mockDataPresets["thisMonth"]));
+            monthData.revenue_report.data.items.forEach((item, idx) => {
+                item.date = `Tuần ${idx + 1} (${month}/${year})`;
+            });
+            result = monthData;
+        }
+    } else if (year) {
+        if (parseInt(year) === 2026) {
+            result = JSON.parse(JSON.stringify(mockDataPresets["thisYear"]));
+        } else {
+            const yearData = JSON.parse(JSON.stringify(mockDataPresets["thisYear"]));
+            yearData.revenue_report.data.items.forEach(item => {
+                const parts = item.date.split(" ");
+                if (parts.length === 2) {
+                    item.date = `${parts[0]} ${parts[1]}/${year}`;
+                }
+            });
+            result = yearData;
+        }
+    } else {
+        result = JSON.parse(JSON.stringify(mockDataPresets["7days"]));
     }
 
-    // Mặc định
-    return JSON.parse(JSON.stringify(mockDataPresets["7days"]));
+    // 2. Tính toán và ghi đè thống kê động từ repository
+    const activeUsersList = getUsers().filter(u => u.deleted_at === null);
+    const activeCoursesList = getCourses();
+    const activeOrdersList = getOrders();
+    const activeRevenuesList = getRevenues();
+    const activeWithdrawalsList = getWithdrawals();
+    const activeUpgradesList = getInstructorUpgrades();
+    const activeEnrollmentsList = getEnrollments();
+
+    const summary = {
+        total_users: activeUsersList.length,
+        total_learners: activeUsersList.filter(u => u.role === "learner").length,
+        total_instructors: activeUsersList.filter(u => u.role === "instructor").length,
+        total_courses: activeCoursesList.length,
+        total_published_courses: activeCoursesList.filter(c => c.status === "published").length,
+        total_orders: activeOrdersList.length,
+        paid_orders: activeOrdersList.filter(o => o.payment_status === "paid").length,
+        total_enrollments: activeEnrollmentsList.length,
+        completed_enrollments: activeEnrollmentsList.filter(e => e.status === "completed").length,
+        completion_rate: activeEnrollmentsList.length > 0 
+            ? parseFloat(((activeEnrollmentsList.filter(e => e.status === "completed").length / activeEnrollmentsList.length) * 100).toFixed(1))
+            : 0
+    };
+
+    const revenue = {
+        gross_amount: activeRevenuesList.reduce((sum, r) => sum + r.gross_amount, 0).toFixed(2),
+        instructor_amount: activeRevenuesList.reduce((sum, r) => sum + r.instructor_amount, 0).toFixed(2),
+        platform_fee_amount: activeRevenuesList.reduce((sum, r) => sum + r.platform_fee_amount, 0).toFixed(2)
+    };
+
+    const course_status = {
+        draft: activeCoursesList.filter(c => c.status === "draft").length,
+        pending_review: activeCoursesList.filter(c => c.status === "pending_review").length,
+        approved: activeCoursesList.filter(c => c.status === "approved").length,
+        rejected: activeCoursesList.filter(c => c.status === "rejected").length,
+        published: activeCoursesList.filter(c => c.status === "published").length,
+        hidden: activeCoursesList.filter(c => c.status === "hidden").length
+    };
+
+    const user_status = {
+        active: activeUsersList.filter(u => u.status === "active" && !u.locked).length,
+        inactive: activeUsersList.filter(u => u.status === "inactive" && !u.locked).length,
+        locked: activeUsersList.filter(u => u.locked || u.status === "locked").length
+    };
+
+    const withdrawal_summary = {
+        pending_count: activeWithdrawalsList.filter(w => w.status === "pending").length,
+        approved_count: activeWithdrawalsList.filter(w => w.status === "approved").length,
+        pending_amount: activeWithdrawalsList.filter(w => w.status === "pending").reduce((sum, w) => sum + w.amount, 0).toFixed(2),
+        approved_amount: activeWithdrawalsList.filter(w => w.status === "approved").reduce((sum, w) => sum + w.amount, 0).toFixed(2),
+        paid_amount: activeWithdrawalsList.filter(w => w.status === "paid").reduce((sum, w) => sum + w.amount, 0).toFixed(2)
+    };
+
+    const action_required = {
+        pending_course_reviews: course_status.pending_review,
+        pending_instructor_upgrades: activeUpgradesList.filter(a => a.application_status === "pending").length,
+        pending_withdrawals: withdrawal_summary.pending_count,
+        system_alerts: 0
+    };
+
+    // Override statistics
+    result.dashboard.data.summary = summary;
+    result.dashboard.data.revenue = revenue;
+    result.dashboard.data.course_status = course_status;
+    result.dashboard.data.user_status = user_status;
+    result.dashboard.data.withdrawal_summary = withdrawal_summary;
+    result.dashboard.data.action_required = action_required;
+
+    return result;
 }

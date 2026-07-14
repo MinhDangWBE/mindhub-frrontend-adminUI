@@ -1,37 +1,77 @@
 import { USE_MOCK_DATA } from "../core/config.js";
-import { instructorUpgradesMockData } from "../mocks/instructor-upgrades-mock.js";
+import {
+    getInstructorUpgrades,
+    saveInstructorUpgrades,
+    getUserById,
+    updateUser as updateRepoUser
+} from "../mocks/mock-repository.js";
 
 const API_BASE_URL = "/api/admin/instructor-upgrade-requests";
-
-// Key lưu trữ dữ liệu mock trong localStorage
-const STORAGE_KEY = "mindhub_admin_mock_instructor_upgrades";
-
-/**
- * Khởi tạo dữ liệu mock ban đầu nếu chưa có hoặc rỗng trong localStorage
- */
-function initMockDatabase() {
-    const existing = localStorage.getItem(STORAGE_KEY);
-    if (!existing || existing === "[]" || existing === "null") {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(instructorUpgradesMockData));
-    }
-}
-
-if (USE_MOCK_DATA) {
-    initMockDatabase();
-}
 
 /**
  * Lấy toàn bộ danh sách từ localStorage (chỉ dùng nội bộ cho Mock)
  */
 function getRawMockRequests() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const raw = getInstructorUpgrades();
+    return raw.map(app => {
+        const user = getUserById(app.user_id);
+        return {
+            application_status: app.application_status,
+            submitted_at: app.submitted_at,
+            reviewed_at: app.reviewed_at,
+            review_note: app.review_note,
+            user: user ? {
+                id: user.id,
+                full_name: user.full_name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role,
+                status: user.status,
+                email_verified_at: user.email_verified_at
+            } : null,
+            instructor_profile: {
+                bio: app.bio,
+                expertise: app.expertise,
+                experience_years: app.experience_years,
+                level: app.level
+            },
+            payout_account: app.payout_account ? {
+                id: 6000 + app.user_id,
+                provider: app.payout_account.provider,
+                account_name: app.payout_account.account_name,
+                account_number: app.payout_account.account_number,
+                account_number_masked: app.payout_account.account_number.slice(0, 3) + "******" + app.payout_account.account_number.slice(-2),
+                status: app.payout_account.status,
+                connected_at: app.submitted_at
+            } : null
+        };
+    });
 }
 
 /**
  * Lưu danh sách vào localStorage (chỉ dùng nội bộ cho Mock)
  */
 function saveRawMockRequests(requests) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(requests));
+    const raw = requests.map(app => {
+        return {
+            user_id: app.user.id,
+            application_status: app.application_status,
+            submitted_at: app.submitted_at,
+            reviewed_at: app.reviewed_at,
+            review_note: app.review_note,
+            bio: app.instructor_profile.bio,
+            expertise: app.instructor_profile.expertise,
+            experience_years: app.instructor_profile.experience_years,
+            level: app.instructor_profile.level,
+            payout_account: app.payout_account ? {
+                provider: app.payout_account.provider,
+                account_name: app.payout_account.account_name,
+                account_number: app.payout_account.account_number,
+                status: app.payout_account.status
+            } : null
+        };
+    });
+    saveInstructorUpgrades(raw);
 }
 
 /**
@@ -235,17 +275,8 @@ export async function approveUpgradeRequest(userId) {
     // Đồng bộ lại database mock
     saveRawMockRequests(rawRequests);
 
-    // Đồng bộ ngược lại localStorage của usersData nếu có (để role đồng bộ)
-    const USERS_STORAGE_KEY = "mindhub_admin_mock_users";
-    const rawUsersJson = localStorage.getItem(USERS_STORAGE_KEY);
-    if (rawUsersJson) {
-        const rawUsers = JSON.parse(rawUsersJson);
-        const uIdx = rawUsers.findIndex(u => u.id === uId);
-        if (uIdx !== -1) {
-            rawUsers[uIdx].role = "instructor";
-            localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(rawUsers));
-        }
-    }
+    // Đồng bộ ngược lại bảng users qua repository (để role đồng bộ)
+    updateRepoUser(uId, { role: "instructor" });
 
     return {
         success: true,
