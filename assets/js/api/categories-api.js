@@ -77,10 +77,15 @@ export async function getCategories(params = {}) {
       empty_categories: activeRepoCategories.filter(c => (courseCounts[c.id] || 0) === 0).length
     };
 
-    // 2. Lọc dữ liệu: Nếu status là "deleted", lấy các bản ghi có deleted_at !== null
-    let filtered = params.status === "deleted" 
-      ? rawCategories.filter(c => c.deleted_at !== null) 
-      : [...activeRepoCategories];
+    // 2. Lọc dữ liệu
+    let filtered = [];
+    if (params.status === "deleted") {
+      filtered = rawCategories.filter(c => c.deleted_at !== null);
+    } else if (params.status === "all_with_deleted") {
+      filtered = [...rawCategories];
+    } else {
+      filtered = [...activeRepoCategories];
+    }
 
     // Lọc theo search (Tên hoặc slug)
     if (params.search) {
@@ -91,8 +96,8 @@ export async function getCategories(params = {}) {
       );
     }
 
-    // Lọc theo trạng thái status (nếu không phải deleted)
-    if (params.status && params.status !== "" && params.status !== "all" && params.status !== "deleted") {
+    // Lọc theo trạng thái status (nếu không phải deleted hay all_with_deleted)
+    if (params.status && params.status !== "" && params.status !== "all" && params.status !== "deleted" && params.status !== "all_with_deleted") {
       filtered = filtered.filter(c => c.status === params.status);
     }
 

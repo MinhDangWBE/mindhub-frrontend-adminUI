@@ -123,10 +123,10 @@ function toggleLoading(isLoading) {
  */
 async function fetchAllCategoriesForCache() {
     try {
-        const response = await categoriesApi.getCategories({ page: 1, per_page: 99999 });
+        const response = await categoriesApi.getCategories({ page: 1, per_page: 99999, status: "all_with_deleted" });
         if (response && response.success) {
             cachedAllCategories = response.data.items || [];
-            // Nạp dropdown lọc danh mục cha dựa trên toàn bộ danh mục gốc
+            // Nạp dropdown lọc danh mục cha dựa trên các danh mục gốc chưa bị xóa
             populateParentFilterOptions(cachedAllCategories);
         }
     } catch (error) {
@@ -219,8 +219,8 @@ function populateParentFilterOptions(categories) {
 
     const currentVal = parentSelect.value;
     
-    // Chỉ lấy các danh mục gốc làm cha để hiển thị đơn giản
-    const rootCats = categories.filter(c => c.parent_id === null);
+    // Chỉ lấy các danh mục gốc chưa bị xóa làm cha để hiển thị đơn giản
+    const rootCats = categories.filter(c => c.parent_id === null && c.deleted_at === null);
 
     let html = '<option value="">Tất cả cha</option>';
     rootCats.forEach(c => {
@@ -239,6 +239,7 @@ function populateParentFilterOptions(categories) {
  * Render bảng danh sách
  */
 function renderTable(items) {
+    window.currentRenderedItems = items || [];
     const tableBody = document.getElementById("categories-table-body");
     const emptyState = document.getElementById("categories-empty-state");
     const filterEmptyState = document.getElementById("categories-filter-empty-state");
@@ -848,7 +849,11 @@ function initActionEvents() {
         if (btnAction) {
             e.stopPropagation();
             const id = Number(btnAction.getAttribute("data-id"));
-            const category = cachedAllCategories.find(cat => cat.id === id);
+            let category = cachedAllCategories.find(cat => Number(cat.id) === id);
+            if (!category) {
+                // Fallback nếu cache chưa có bản ghi
+                category = (window.currentRenderedItems || []).find(cat => Number(cat.id) === id);
+            }
             if (category) {
                 openActionMenu(btnAction, category);
             }
@@ -1470,21 +1475,25 @@ async function openDetailDrawer(id) {
  * Mở modal xác nhận đổi trạng thái
  */
 function openConfirmStatusModal(id, newStatus) {
-    const cat = cachedAllCategories.find(c => c.id === Number(id));
+    const cat = cachedAllCategories.find(c => Number(c.id) === Number(id)) || (window.currentRenderedItems || []).find(c => Number(c.id) === Number(id));
     if (!cat) return;
 
     activeCategory = cat;
     activeCategory.target_status = newStatus;
 
+    const titleEl = document.getElementById("confirm-status-title");
     const messageEl = document.getElementById("confirm-status-message");
-    const catNameSpan = document.getElementById("confirm-status-cat-name");
     
-    catNameSpan.textContent = cat.name;
+    if (titleEl) {
+        titleEl.textContent = newStatus === "inactive" ? "Xác nhận ngừng hoạt động" : "Xác nhận kích hoạt lại";
+    }
 
-    if (newStatus === "inactive") {
-        messageEl.innerHTML = `Bạn có chắc muốn **ngừng hoạt động** danh mục “<span id="confirm-status-cat-name" class="font-semibold text-ink">${escapeHTML(cat.name)}</span>” không?<br><br><span class="text-[10px] text-mid-gray mt-2 block leading-relaxed bg-surface-alt p-2 rounded border border-hairline">Các khóa học hiện có vẫn được giữ nguyên, nhưng danh mục sẽ không còn được ưu tiên hiển thị cho người dùng.</span>`;
-    } else {
-        messageEl.innerHTML = `Bạn có chắc muốn **kích hoạt** hoạt động lại cho danh mục “<span id="confirm-status-cat-name" class="font-semibold text-ink">${escapeHTML(cat.name)}</span>” không?<br><br><span class="text-[10px] text-mid-gray mt-2 block leading-relaxed bg-surface-alt p-2 rounded border border-hairline">Danh mục sẽ được hiển thị công khai trên trang chủ và bộ lọc của người dùng.</span>`;
+    if (messageEl) {
+        if (newStatus === "inactive") {
+            messageEl.innerHTML = `Bạn có chắc muốn **ngừng hoạt động** danh mục “<span class="font-semibold text-ink">${escapeHTML(cat.name)}</span>” không?<br><br><span class="text-[10px] text-mid-gray mt-2 block leading-relaxed bg-surface-alt p-2 rounded border border-hairline">Các khóa học hiện có vẫn được giữ nguyên, nhưng danh mục sẽ không còn được ưu tiên hiển thị cho người dùng.</span>`;
+        } else {
+            messageEl.innerHTML = `Bạn có chắc muốn **kích hoạt lại** danh mục “<span class="font-semibold text-ink">${escapeHTML(cat.name)}</span>” không?<br><br><span class="text-[10px] text-mid-gray mt-2 block leading-relaxed bg-surface-alt p-2 rounded border border-hairline">Danh mục sẽ được hiển thị công khai trên trang chủ và bộ lọc của người dùng.</span>`;
+        }
     }
 
     openModal("confirm-status-modal");
