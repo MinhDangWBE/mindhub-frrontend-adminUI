@@ -119,12 +119,31 @@ function toggleLoading(isLoading) {
 }
 
 /**
+ * Tải toàn bộ danh mục (không phân trang) để làm cache
+ */
+async function fetchAllCategoriesForCache() {
+    try {
+        const response = await categoriesApi.getCategories({ page: 1, per_page: 99999 });
+        if (response && response.success) {
+            cachedAllCategories = response.data.items || [];
+            // Nạp dropdown lọc danh mục cha dựa trên toàn bộ danh mục gốc
+            populateParentFilterOptions(cachedAllCategories);
+        }
+    } catch (error) {
+        console.error("Lỗi tải cache danh mục:", error);
+    }
+}
+
+/**
  * Fetch danh sách danh mục từ API và kết xuất lên giao diện
  */
 async function fetchAndRender() {
     toggleLoading(true);
 
     try {
+        // Tải toàn bộ danh mục làm cache trước để kiểm tra quan hệ cha con chính xác
+        await fetchAllCategoriesForCache();
+
         const response = await categoriesApi.getCategories(pageState);
         
         if (!response || !response.success) {
@@ -134,12 +153,6 @@ async function fetchAndRender() {
 
         // Cập nhật thống kê, danh sách lọc và bảng dữ liệu
         renderSummary(response.data.summary);
-        
-        // Lưu cache toàn bộ danh mục để làm cha
-        cachedAllCategories = response.data.items || [];
-        
-        // Nạp dropdown lọc danh mục cha
-        populateParentFilterOptions(response.data.items || []);
         
         // Render bảng danh mục
         renderTable(response.data.items);
@@ -255,48 +268,46 @@ function renderTable(items) {
             parentBadge = `<span class="font-medium text-ink">${escapeHTML(c.parent.name)}</span>`;
         }
 
-        // Course Count Clickable
-        let coursesCol = `<span class="text-mid-gray italic">Chưa có khóa học</span>`;
-        if (c.course_count > 0) {
-            coursesCol = `<a href="courses.html?category_id=${c.id}" class="underline text-mid-gray hover:text-ink font-semibold transition-colors">${c.course_count} khóa học</a>`;
-        }
-
         // Status Badge
-        const statusBadge = c.status === "active" 
-            ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-success-soft text-success border border-success/10">Đang hoạt động</span>`
-            : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-canvas text-mid-gray border border-hairline">Ngừng hoạt động</span>`;
-
-        // Action menu constraints
-        // 1. Kiểm tra xem có chứa danh mục con hay không
-        const hasChildren = cachedAllCategories.some(cat => cat.parent_id === c.id);
-        const hasCourses = c.course_count > 0;
-        const canDelete = !hasChildren && !hasCourses;
-        
-        let deleteBtnClass = "btn-delete-cat text-danger-brick hover:bg-danger-brick-soft/30";
-        let deleteTitle = "Xóa danh mục này";
-        let deleteAttr = `data-id="${c.id}"`;
-
-        if (!canDelete) {
-            deleteBtnClass = "opacity-40 cursor-not-allowed text-mid-gray";
-            deleteTitle = hasChildren 
-                ? "Không thể xóa: Danh mục đang có danh mục con trực thuộc." 
-                : `Không thể xóa: Danh mục đang được liên kết với ${c.course_count} khóa học.`;
-            deleteAttr = `disabled title="${deleteTitle}"`;
+        const isDeleted = c.deleted_at !== null;
+        let statusBadge = "";
+        if (isDeleted) {
+            statusBadge = `
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium text-danger-brick bg-danger-brick/10 border border-danger-brick/20 select-none">
+                    <span class="h-1.5 w-1.5 rounded-full bg-danger-brick"></span>Đã xóa
+                </span>
+            `;
+        } else if (c.status === "active") {
+            statusBadge = `
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium text-success bg-success-soft border border-success/15 select-none">
+                    <span class="h-1.5 w-1.5 rounded-full bg-success"></span>Đang hoạt động
+                </span>
+            `;
+        } else {
+            statusBadge = `
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium text-mid-gray bg-canvas border border-hairline select-none">
+                    <span class="h-1.5 w-1.5 rounded-full bg-mid-gray"></span>Ngừng hoạt động
+                </span>
+            `;
         }
 
-        const dateStr = formatDateTime(c.updated_at || c.created_at);
+        // Định dạng ngày cập nhật
+        const dateObj = new Date(c.updated_at || c.created_at);
+        const dateStr = isNaN(dateObj.getTime()) ? "---" : `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
+
+        // Cột Khóa học
+        const coursesCol = `
+            <a href="courses.html?category_id=${c.id}" class="hover:text-ink font-bold text-mid-gray hover:underline">
+                ${c.course_count || 0}
+            </a>
+        `;
 
         html += `
-        <tr class="hover:bg-canvas/40 transition-colors h-12" data-row-id="${c.id}">
-            <td class="py-2.5 ${indentClass} font-medium text-ink select-text">
-                <div class="flex items-center gap-1">
+        <tr class="hover:bg-canvas/50 transition-colors border-b border-hairline/60 ${isDeleted ? 'opacity-75 bg-canvas/30' : ''}" data-id="${c.id}">
+            <td class="${indentClass} py-2.5 font-bold text-ink select-text">
+                <div class="flex items-center">
                     ${indentIcon}
-                    <div class="truncate">
-                        <span class="font-semibold text-ink">${escapeHTML(c.name)}</span>
-                        <p class="text-[10px] text-mid-gray/80 truncate max-w-[280px] font-normal" title="${escapeHTML(c.description || 'Chưa có mô tả.')}">
-                            ${escapeHTML(c.description || 'Chưa có mô tả.')}
-                        </p>
-                    </div>
+                    <span class="truncate max-w-[180px]">${escapeHTML(c.name)}</span>
                 </div>
             </td>
             <td class="px-3 py-2.5 whitespace-nowrap text-mid-gray select-text">
@@ -307,7 +318,7 @@ function renderTable(items) {
                     <span class="truncate max-w-[120px] bg-canvas/60 px-1.5 py-0.5 rounded border border-hairline">${escapeHTML(c.slug)}</span>
                     <button type="button" class="btn-copy-slug text-mid-gray hover:text-ink p-0.5 hover:bg-canvas rounded transition-colors cursor-pointer" data-slug="${escapeHTML(c.slug)}" title="Sao chép slug">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664"/>
                         </svg>
                     </button>
                 </div>
@@ -317,14 +328,14 @@ function renderTable(items) {
             </td>
             <td class="px-3 py-2.5 text-center whitespace-nowrap">
                 <div class="flex items-center justify-center gap-1.5">
-                    <div class="flex items-center h-8 border border-hairline rounded-[6px] bg-canvas overflow-hidden w-24 focus-within:border-ink transition-colors">
-                        <button type="button" class="btn-sort-dec flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}">
+                    <div title="Giá trị 0 nghĩa là chưa thiết lập ưu tiên và sẽ được xếp sau các danh mục đã có thứ tự." class="flex items-center h-8 border border-hairline rounded-[6px] bg-canvas overflow-hidden w-28 focus-within:border-ink transition-colors">
+                        <button type="button" class="btn-sort-dec flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" ${isDeleted ? 'disabled' : ''}>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
                             </svg>
                         </button>
-                        <input type="number" value="${c.sort_order}" min="0" step="1" data-id="${c.id}" data-old-value="${c.sort_order}" class="sort-order-input w-10 h-full text-center bg-transparent border-0 outline-none text-ink text-xs font-semibold focus:ring-0 focus:outline-none disabled:opacity-50">
-                        <button type="button" class="btn-sort-inc flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}">
+                        <input type="text" value="${c.sort_order === 0 ? 'Chưa xếp' : c.sort_order}" data-id="${c.id}" data-old-value="${c.sort_order}" class="sort-order-input w-14 h-full text-center bg-transparent border-0 outline-none text-ink text-xs font-semibold focus:ring-0 focus:outline-none disabled:opacity-50 select-all" ${isDeleted ? 'disabled' : ''}>
+                        <button type="button" class="btn-sort-inc flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" ${isDeleted ? 'disabled' : ''}>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -332,12 +343,12 @@ function renderTable(items) {
                     </div>
                     <div class="flex items-center gap-1 hidden sort-order-actions" data-id="${c.id}">
                         <button type="button" class="btn-sort-save p-1 rounded bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" title="Lưu thay đổi">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
                         </button>
                         <button type="button" class="btn-sort-cancel p-1 rounded border border-hairline hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" title="Hủy bỏ">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </button>
@@ -347,41 +358,20 @@ function renderTable(items) {
             <td class="px-3 py-2.5 text-center">
                 ${statusBadge}
             </td>
-            <td class="px-3 py-2.5 whitespace-nowrap text-mid-gray">
+            <td class="px-3 py-2.5 whitespace-nowrap text-mid-gray text-xs">
                 ${dateStr}
             </td>
             <td class="pr-4 py-2.5 text-right relative">
-                <div class="inline-block text-left dropdown-wrapper">
-                    <button type="button" class="btn-toggle-dropdown p-1 hover:bg-canvas rounded-full text-mid-gray hover:text-ink transition-colors cursor-pointer" data-id="${c.id}">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
-                        </svg>
-                    </button>
-                    <!-- Dropdown Panel -->
-                    <div class="dropdown-menu absolute right-0 mt-1 w-36 bg-paper border border-hairline rounded-[6px] shadow-lg z-10 hidden py-1 select-none">
-                        <button type="button" class="btn-view-cat w-full text-left px-3 py-1.5 text-xs text-ink hover:bg-canvas transition-colors cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
-                            Xem chi tiết
-                        </button>
-                        <button type="button" class="btn-edit-cat w-full text-left px-3 py-1.5 text-xs text-ink hover:bg-canvas transition-colors cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
-                            Chỉnh sửa
-                        </button>
-                        ${
-                            c.status === "active"
-                            ? `<button type="button" class="btn-status-cat w-full text-left px-3 py-1.5 text-xs text-warning hover:bg-warning-soft/30 transition-colors cursor-pointer" data-id="${c.id}" data-action="inactive">Vô hiệu hóa</button>`
-                            : `<button type="button" class="btn-status-cat w-full text-left px-3 py-1.5 text-xs text-success hover:bg-success-soft/30 transition-colors cursor-pointer" data-id="${c.id}" data-action="active">Kích hoạt</button>`
-                        }
-                        <div class="h-px bg-hairline my-0.5"></div>
-                        <button type="button" class="w-full text-left px-3 py-1.5 text-xs cursor-pointer ${deleteBtnClass}" ${deleteAttr}>
-                            Xóa danh mục
-                        </button>
-                    </div>
-                </div>
+                <button type="button" class="btn-action-menu p-1 hover:bg-canvas rounded-full text-mid-gray hover:text-ink transition-colors cursor-pointer inline-block" data-id="${c.id}" aria-label="Xem menu thao tác">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
+                    </svg>
+                </button>
             </td>
         </tr>`;
     });
 
     tableBody.innerHTML = html;
-    initDropdownToggler();
 }
 
 /**
@@ -491,7 +481,9 @@ function renderFilterChips() {
         chips.push({ key: "search", label: `Từ khóa: "${pageState.search}"` });
     }
     if (pageState.status) {
-        const label = pageState.status === "active" ? "Đang hoạt động" : "Ngừng hoạt động";
+        let label = "Ngừng hoạt động";
+        if (pageState.status === "active") label = "Đang hoạt động";
+        else if (pageState.status === "deleted") label = "Đã xóa";
         chips.push({ key: "status", label: `Trạng thái: ${label}` });
     }
     if (pageState.type) {
@@ -645,8 +637,193 @@ function initFilterEvents() {
 }
 
 /**
- * Khởi tạo sự kiện sao chép slug và action buttons trong table
+ * Đóng menu thao tác nổi toàn cục
  */
+function closeActionMenu() {
+    const existing = document.getElementById("global-action-menu");
+    if (existing) {
+        existing.remove();
+    }
+}
+
+/**
+ * Mở menu thao tác nổi fixed theo vị trí nút ba chấm
+ */
+function openActionMenu(buttonEl, c) {
+    closeActionMenu();
+
+    const menu = document.createElement("div");
+    menu.id = "global-action-menu";
+    menu.className = "fixed z-50 bg-paper border border-hairline rounded-[6px] p-1.5 shadow-subtle flex flex-col text-left transition-opacity duration-150 select-none";
+
+    const isDeleted = c.deleted_at !== null;
+    const hasChildren = cachedAllCategories.some(cat => cat.parent_id === c.id && cat.deleted_at === null);
+    const canDelete = c.course_count === 0 && !hasChildren;
+
+    let deleteTooltip = "";
+    if (!canDelete) {
+        if (c.course_count > 0 && hasChildren) {
+            deleteTooltip = "Không thể xóa vì danh mục đang có danh mục con và khóa học.";
+        } else if (c.course_count > 0) {
+            deleteTooltip = "Không thể xóa vì danh mục đang có khóa học.";
+        } else {
+            deleteTooltip = "Không thể xóa vì danh mục đang có danh mục con.";
+        }
+    }
+
+    if (isDeleted) {
+        // Danh mục đã xóa: Xem chi tiết & Khôi phục
+        menu.innerHTML = `
+            <button type="button" class="btn-view-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
+                <svg class="w-3.5 h-3.5 text-mid-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                Xem chi tiết
+            </button>
+            <button type="button" class="btn-restore-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium text-success cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
+                <svg class="w-3.5 h-3.5 text-success" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
+                </svg>
+                Khôi phục
+            </button>
+        `;
+    } else {
+        let statusBtnHtml = "";
+        let deleteBtnHtml = "";
+
+        if (c.status === "active") {
+            // Active: Ngừng hoạt động (Không hiển thị nút Xóa)
+            statusBtnHtml = `
+                <button type="button" class="btn-status-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium text-mid-gray cursor-pointer flex items-center gap-1.5" data-id="${c.id}" data-action="inactive">
+                    <svg class="w-3.5 h-3.5 text-mid-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    Ngừng hoạt động
+                </button>
+            `;
+        } else {
+            // Inactive: Kích hoạt lại & Xóa danh mục
+            statusBtnHtml = `
+                <button type="button" class="btn-status-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium text-success cursor-pointer flex items-center gap-1.5" data-id="${c.id}" data-action="active">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Kích hoạt lại
+                </button>
+            `;
+            deleteBtnHtml = `
+                <div class="h-[1px] bg-hairline my-1 mx-1"></div>
+                <button type="button" class="btn-delete-cat text-left px-3 py-1.5 text-xs hover:bg-red-50 hover:text-danger-brick rounded-[4px] transition-colors font-semibold text-danger-brick flex items-center gap-1.5 disabled:opacity-40 disabled:bg-transparent disabled:text-mid-gray disabled:cursor-not-allowed cursor-pointer" data-id="${c.id}" ${!canDelete ? 'disabled' : ''} title="${deleteTooltip}">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>
+                    Xóa danh mục
+                </button>
+            `;
+        }
+
+        menu.innerHTML = `
+            <button type="button" class="btn-view-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
+                <svg class="w-3.5 h-3.5 text-mid-gray" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                Xem chi tiết
+            </button>
+            <button type="button" class="btn-edit-cat text-left px-3 py-1.5 text-xs hover:bg-canvas rounded-[4px] transition-colors font-medium cursor-pointer flex items-center gap-1.5" data-id="${c.id}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
+                Chỉnh sửa
+            </button>
+            ${statusBtnHtml}
+            ${deleteBtnHtml}
+        `;
+    }
+
+    document.body.appendChild(menu);
+
+    const rect = buttonEl.getBoundingClientRect();
+    const menuWidth = 160;
+    
+    menu.style.position = 'fixed';
+    menu.style.width = `${menuWidth}px`;
+    menu.style.visibility = 'hidden';
+    menu.style.display = 'flex';
+    
+    const menuHeight = menu.offsetHeight;
+    
+    let top = rect.bottom + 4;
+    let left = rect.right - menuWidth;
+    
+    if (rect.bottom + 4 + menuHeight > window.innerHeight) {
+        top = rect.top - menuHeight - 4;
+    }
+    
+    menu.style.top = `${top}px`;
+    menu.style.left = `${left}px`;
+    menu.style.visibility = 'visible';
+
+    // Xử lý click các button
+    menu.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            closeActionMenu();
+            const id = btn.getAttribute("data-id");
+            if (btn.classList.contains("btn-view-cat")) {
+                openDetailDrawer(id);
+            } else if (btn.classList.contains("btn-edit-cat")) {
+                openEditModal(id);
+            } else if (btn.classList.contains("btn-status-cat")) {
+                const action = btn.getAttribute("data-action");
+                openConfirmStatusModal(id, action);
+            } else if (btn.classList.contains("btn-delete-cat")) {
+                openConfirmDeleteModal(id);
+            } else if (btn.classList.contains("btn-restore-cat")) {
+                const catId = Number(id);
+                try {
+                    const res = await categoriesApi.restoreCategory(catId);
+                    if (res && res.success) {
+                        await fetchAndRender();
+                        showToast({
+                            type: "success",
+                            title: "Khôi phục thành công",
+                            message: `Đã khôi phục danh mục “${escapeHTML(c.name)}”.`
+                        });
+                    } else {
+                        showToast({
+                            type: "error",
+                            title: "Không thể khôi phục",
+                            message: res ? res.message : "Đã xảy ra lỗi khi khôi phục danh mục."
+                        });
+                    }
+                } catch (err) {
+                    console.error("Lỗi khi khôi phục danh mục:", err);
+                    showToast({ type: "error", title: "Lỗi kết nối", message: "Đã xảy ra lỗi khi kết nối dữ liệu." });
+                }
+            }
+        });
+    });
+}
+
+// Khởi tạo sự kiện đóng menu nổi toàn cục
+document.addEventListener("click", (e) => {
+    const menu = document.getElementById("global-action-menu");
+    if (menu && !menu.contains(e.target) && !e.target.closest(".btn-action-menu")) {
+        closeActionMenu();
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeActionMenu();
+    }
+});
+
+window.addEventListener("scroll", closeActionMenu, { passive: true });
+document.addEventListener("scroll", closeActionMenu, { capture: true, passive: true });
+window.addEventListener("resize", closeActionMenu);
+
 function initActionEvents() {
     const tableBody = document.getElementById("categories-table-body");
 
@@ -666,46 +843,19 @@ function initActionEvents() {
             return;
         }
 
-        // 2. Xem chi tiết
-        const btnView = e.target.closest(".btn-view-cat");
-        if (btnView) {
+        // 2. Mở menu thao tác nổi fixed
+        const btnAction = e.target.closest(".btn-action-menu");
+        if (btnAction) {
             e.stopPropagation();
-            const id = btnView.getAttribute("data-id");
-            openDetailDrawer(id);
-            return;
-        }
-
-        // 3. Chỉnh sửa
-        const btnEdit = e.target.closest(".btn-edit-cat");
-        if (btnEdit) {
-            e.stopPropagation();
-            const id = btnEdit.getAttribute("data-id");
-            openEditModal(id);
-            return;
-        }
-
-        // 4. Đổi trạng thái
-        const btnStatus = e.target.closest(".btn-status-cat");
-        if (btnStatus) {
-            e.stopPropagation();
-            const id = btnStatus.getAttribute("data-id");
-            const newStatus = btnStatus.getAttribute("data-action");
-            openConfirmStatusModal(id, newStatus);
-            return;
-        }
-
-        // 5. Xóa mềm
-        const btnDelete = e.target.closest(".btn-delete-cat");
-        if (btnDelete) {
-            e.stopPropagation();
-            if (btnDelete.hasAttribute("disabled")) return;
-            const id = btnDelete.getAttribute("data-id");
-            openConfirmDeleteModal(id);
+            const id = Number(btnAction.getAttribute("data-id"));
+            const category = cachedAllCategories.find(cat => cat.id === id);
+            if (category) {
+                openActionMenu(btnAction, category);
+            }
             return;
         }
     });
 
-    // Button tạo ở trạng thái trống
     const btnEmptyCreate = document.getElementById("btn-empty-create");
     if (btnEmptyCreate) {
         btnEmptyCreate.addEventListener("click", () => {
@@ -722,7 +872,9 @@ function initSortOrderInputEvents() {
 
     function checkChanged(input, actions) {
         const oldVal = parseInt(input.getAttribute("data-old-value") || "0");
-        const newVal = parseInt(input.value) || 0;
+        const valStr = input.value.trim();
+        const newVal = (valStr === "" || valStr.toLowerCase() === "chưa xếp") ? 0 : (parseInt(valStr) || 0);
+        
         if (newVal !== oldVal) {
             actions.classList.remove("hidden");
         } else {
@@ -731,8 +883,8 @@ function initSortOrderInputEvents() {
     }
 
     function rollbackValue(input, actions) {
-        const oldVal = input.getAttribute("data-old-value") || "0";
-        input.value = oldVal;
+        const oldVal = parseInt(input.getAttribute("data-old-value") || "0");
+        input.value = oldVal === 0 ? "Chưa xếp" : oldVal;
         if (actions) actions.classList.add("hidden");
     }
 
@@ -750,12 +902,17 @@ function initSortOrderInputEvents() {
             const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
             const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
 
-            let val = parseInt(input.value) || 0;
-            if (val > 0) {
+            const valStr = input.value.trim();
+            let val = (valStr === "" || valStr.toLowerCase() === "chưa xếp") ? 0 : (parseInt(valStr) || 0);
+            
+            if (val > 1) {
                 val--;
                 input.value = val;
-                checkChanged(input, actions);
+            } else if (val === 1) {
+                val = 0;
+                input.value = "Chưa xếp";
             }
+            checkChanged(input, actions);
             return;
         }
 
@@ -767,7 +924,9 @@ function initSortOrderInputEvents() {
             const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
             const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
 
-            let val = parseInt(input.value) || 0;
+            const valStr = input.value.trim();
+            let val = (valStr === "" || valStr.toLowerCase() === "chưa xếp") ? 0 : (parseInt(valStr) || 0);
+            
             val++;
             input.value = val;
             checkChanged(input, actions);
@@ -797,12 +956,16 @@ function initSortOrderInputEvents() {
             const inc = row.querySelector(`.btn-sort-inc[data-id="${id}"]`);
             const cancel = row.querySelector(`.btn-sort-cancel[data-id="${id}"]`);
 
-            let val = parseFloat(input.value);
-            // Kiểm tra số nguyên không âm
-            if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
-                showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm." });
-                rollbackValue(input, actions);
-                return;
+            const valStr = input.value.trim();
+            
+            let val = 0;
+            if (valStr !== "" && valStr.toLowerCase() !== "chưa xếp") {
+                val = parseFloat(valStr);
+                if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
+                    showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm hoặc 'Chưa xếp'." });
+                    rollbackValue(input, actions);
+                    return;
+                }
             }
 
             // Đóng băng toàn bộ control
@@ -815,7 +978,7 @@ function initSortOrderInputEvents() {
             try {
                 const response = await categoriesApi.updateCategory(id, { sort_order: val });
                 if (response && response.success) {
-                    showToast({ type: "success", title: "Cập nhật thành công", message: `Đã đổi thứ tự hiển thị thành ${val}.` });
+                    showToast({ type: "success", title: "Cập nhật thành công", message: `Đã đổi thứ tự hiển thị thành ${val === 0 ? "Chưa xếp" : val}.` });
                     // Cập nhật giá trị gốc
                     input.setAttribute("data-old-value", val);
                     // Đồng bộ dữ liệu local cache
@@ -864,11 +1027,14 @@ function initSortOrderInputEvents() {
         const row = input.closest("tr");
         const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
 
-        let val = parseFloat(input.value);
-        if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
-            showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm." });
-            rollbackValue(input, actions);
-            return;
+        const valStr = input.value.trim();
+        if (valStr !== "" && valStr.toLowerCase() !== "chưa xếp") {
+            const val = parseFloat(valStr);
+            if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
+                showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm hoặc 'Chưa xếp'." });
+                rollbackValue(input, actions);
+                return;
+            }
         }
 
         checkChanged(input, actions);
@@ -1380,18 +1546,57 @@ async function submitDeleteCategory() {
     if (!activeCategory) return;
 
     const id = activeCategory.id;
+    const catName = activeCategory.name;
     const btn = document.getElementById("btn-submit-delete");
     btn.disabled = true;
     const originalText = btn.textContent;
     btn.textContent = "Đang xóa...";
 
     try {
-        const response = await categoriesApi.deleteCategory(id);
+        const response = await categoriesApi.softDeleteCategory(id);
         
         if (response && response.success) {
-            showToast({ type: "success", title: "Xóa thành công", message: `Đã xóa mềm danh mục "${activeCategory.name}" khỏi hệ thống.` });
             closeModal("confirm-delete-modal");
-            fetchAndRender();
+            await fetchAndRender();
+
+            showToast({
+                type: "success",
+                title: "Thao tác thành công",
+                message: `Đã xóa danh mục “${escapeHTML(catName)}”. <button type="button" class="btn-toast-action ml-2 px-2 py-0.5 rounded bg-ink text-white font-semibold hover:opacity-90 transition-opacity text-[10px] cursor-pointer inline-flex items-center gap-1">Khôi phục</button>`,
+                duration: 8000,
+                allowHtml: true,
+                onAction: async (closeToast, e) => {
+                    const actionBtn = e.currentTarget;
+                    if (actionBtn.disabled) return;
+                    actionBtn.disabled = true;
+                    actionBtn.textContent = "Đang khôi phục...";
+
+                    try {
+                        const res = await categoriesApi.restoreCategory(id);
+                        if (res && res.success) {
+                            closeToast();
+                            await fetchAndRender();
+                            showToast({
+                                type: "success",
+                                title: "Khôi phục thành công",
+                                message: `Đã khôi phục danh mục “${escapeHTML(catName)}”.`
+                            });
+                        } else {
+                            actionBtn.disabled = false;
+                            actionBtn.textContent = "Khôi phục";
+                            showToast({
+                                type: "error",
+                                title: "Lỗi khôi phục",
+                                message: res ? res.message : "Không thể khôi phục danh mục."
+                            });
+                        }
+                    } catch (err) {
+                        actionBtn.disabled = false;
+                        actionBtn.textContent = "Khôi phục";
+                        console.error("Lỗi khi khôi phục từ toast:", err);
+                    }
+                }
+            });
         } else {
             showToast({ type: "error", title: "Xóa thất bại", message: response.message || "Không thể thực hiện xóa danh mục." });
         }

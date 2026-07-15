@@ -131,11 +131,14 @@ export function showToast(options, typeParam, titleParam, durationParam) {
 
     toast.classList.add(borderAccentClass);
 
+    const allowHtml = typeof options === "object" && options !== null && options.allowHtml;
+    const messageContent = allowHtml ? message : escapeHtml(message);
+
     toast.innerHTML = `
         ${iconSvg}
         <div class="flex-1 min-w-0 pr-1">
             <h4 class="text-xs font-semibold text-ink leading-tight">${escapeHtml(title)}</h4>
-            <p class="text-[11px] text-mid-gray mt-0.5 leading-snug break-words">${escapeHtml(message)}</p>
+            <p class="text-[11px] text-mid-gray mt-0.5 leading-snug break-words">${messageContent}</p>
         </div>
         <button type="button" class="close-toast text-mid-gray hover:text-ink shrink-0 p-0.5 hover:bg-canvas rounded transition-colors cursor-pointer" aria-label="Đóng thông báo">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -145,6 +148,15 @@ export function showToast(options, typeParam, titleParam, durationParam) {
     `;
 
     toastContainer.appendChild(toast);
+
+    if (typeof options === "object" && options !== null && typeof options.onAction === "function") {
+        const actionBtn = toast.querySelector(".btn-toast-action");
+        if (actionBtn) {
+            actionBtn.addEventListener("click", (e) => {
+                options.onAction(closeToast, e);
+            });
+        }
+    }
 
     // Kích hoạt hiệu ứng xuất hiện từ dưới lên (Slide up fade in)
     setTimeout(() => {
@@ -187,6 +199,11 @@ export function showToast(options, typeParam, titleParam, durationParam) {
     toast.addEventListener("mouseleave", startTimer);
 
     startTimer();
+
+    return {
+        close: closeToast,
+        toastElement: toast
+    };
 }
 
 /**

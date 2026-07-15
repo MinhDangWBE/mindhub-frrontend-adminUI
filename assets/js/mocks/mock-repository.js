@@ -135,6 +135,21 @@ export function deleteCategory(id) {
   return false;
 }
 
+export function restoreCategory(id) {
+  const db = getDB();
+  const categories = db.categories || [];
+  const parsedId = Number(id);
+  const index = categories.findIndex((c) => c.id === parsedId);
+  if (index !== -1) {
+    categories[index].deleted_at = null;
+    categories[index].updated_at = new Date().toISOString();
+    db.categories = categories;
+    saveDB(db);
+    return true;
+  }
+  return false;
+}
+
 // === COURSES ===
 export function getCourses() {
   const db = getDB();

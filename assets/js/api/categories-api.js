@@ -10,6 +10,7 @@ import {
   createCategory as createRepoCategory,
   updateCategory as updateRepoCategory,
   deleteCategory as deleteRepoCategory,
+  restoreCategory as restoreRepoCategory,
   getCourses
 } from "../mocks/mock-repository.js";
 
@@ -63,20 +64,23 @@ export async function getCategories(params = {}) {
   await new Promise(resolve => setTimeout(resolve, 350));
 
   try {
-    const rawCategories = getRepoCategories(); // Trả về categories có deleted_at === null
+    const rawCategories = getRawCategories();
+    const activeRepoCategories = rawCategories.filter(c => c.deleted_at === null);
     const courseCounts = getCategoryCourseCounts();
 
     // 1. Tính toán các chỉ số thống kê (Summary) trên toàn bộ danh sách chưa bị xóa
     const summary = {
-      total_categories: rawCategories.length,
-      active_categories: rawCategories.filter(c => c.status === "active").length,
-      inactive_categories: rawCategories.filter(c => c.status === "inactive").length,
-      root_categories: rawCategories.filter(c => c.parent_id === null).length,
-      empty_categories: rawCategories.filter(c => (courseCounts[c.id] || 0) === 0).length
+      total_categories: activeRepoCategories.length,
+      active_categories: activeRepoCategories.filter(c => c.status === "active").length,
+      inactive_categories: activeRepoCategories.filter(c => c.status === "inactive").length,
+      root_categories: activeRepoCategories.filter(c => c.parent_id === null).length,
+      empty_categories: activeRepoCategories.filter(c => (courseCounts[c.id] || 0) === 0).length
     };
 
-    // 2. Lọc dữ liệu
-    let filtered = [...rawCategories];
+    // 2. Lọc dữ liệu: Nếu status là "deleted", lấy các bản ghi có deleted_at !== null
+    let filtered = params.status === "deleted" 
+      ? rawCategories.filter(c => c.deleted_at !== null) 
+      : [...activeRepoCategories];
 
     // Lọc theo search (Tên hoặc slug)
     if (params.search) {
@@ -87,8 +91,8 @@ export async function getCategories(params = {}) {
       );
     }
 
-    // Lọc theo trạng thái status
-    if (params.status && params.status !== "" && params.status !== "all") {
+    // Lọc theo trạng thái status (nếu không phải deleted)
+    if (params.status && params.status !== "" && params.status !== "all" && params.status !== "deleted") {
       filtered = filtered.filter(c => c.status === params.status);
     }
 
@@ -117,9 +121,25 @@ export async function getCategories(params = {}) {
       } else if (sortBy === "name_desc") {
         return (b.name || "").localeCompare(a.name || "", "vi");
       } else if (sortBy === "sort_order_asc") {
-        return (a.sort_order || 0) - (b.sort_order || 0);
+        const sa = a.sort_order || 0;
+        const sb = b.sort_order || 0;
+        if (sa > 0 && sb > 0) {
+          if (sa !== sb) return sa - sb;
+          return (a.name || "").localeCompare(b.name || "", "vi");
+        }
+        if (sa > 0 && sb === 0) return -1;
+        if (sa === 0 && sb > 0) return 1;
+        return (a.name || "").localeCompare(b.name || "", "vi");
       } else if (sortBy === "sort_order_desc") {
-        return (b.sort_order || 0) - (a.sort_order || 0);
+        const sa = a.sort_order || 0;
+        const sb = b.sort_order || 0;
+        if (sa > 0 && sb > 0) {
+          if (sa !== sb) return sb - sa;
+          return (a.name || "").localeCompare(b.name || "", "vi");
+        }
+        if (sa > 0 && sb === 0) return -1;
+        if (sa === 0 && sb > 0) return 1;
+        return (a.name || "").localeCompare(b.name || "", "vi");
       } else if (sortBy === "courses_desc") {
         const countA = courseCounts[a.id] || 0;
         const countB = courseCounts[b.id] || 0;
@@ -131,8 +151,8 @@ export async function getCategories(params = {}) {
     // 4. Nhúng thông tin quan hệ (parent, course_count)
     const items = filtered.map(c => {
       let parentObj = null;
-      if (c.parent_id !== null) {
-        const parent = rawCategories.find(p => p.id === c.parent_id);
+      if (c.parent_id !== null && c.parent_id !== undefined) {
+        const parent = rawCategories.find(p => Number(p.id) === Number(c.parent_id));
         if (parent) {
           parentObj = { id: parent.id, name: parent.name };
         }
@@ -445,5 +465,43 @@ export async function deleteCategory(id) {
     success: false,
     message: "Lỗi hệ thống khi xóa danh mục.",
     error_code: 500
+  };
+}
+
+/**
+ * Tách hàm softDeleteCategory để chuẩn bị cho việc kết nối API thật
+ */
+export const softDeleteCategory = deleteCategory;
+
+/**
+ * Khôi phục danh mục đã xóa mềm
+ */
+export async function restoreCategory(id) {
+  const catId = Number(id);
+  if (!USE_MOCK) {
+    const response = await fetch(`${API_BASE_URL}/${catId}/restore`, {
+      method: "POST"
+    });
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      return { success: false, message: errData.message || "Không thể khôi phục danh mục.", error_code: response.status };
+    }
+    return await response.json();
+  }
+
+  await new Promise(resolve => setTimeout(resolve, 250));
+
+  const success = restoreRepoCategory(catId);
+  if (success) {
+    return {
+      success: true,
+      message: "Khôi phục danh mục thành công."
+    };
+  }
+
+  return {
+    success: false,
+    message: "Không tìm thấy danh mục để khôi phục hoặc lỗi hệ thống.",
+    error_code: 404
   };
 }

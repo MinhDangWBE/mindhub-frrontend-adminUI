@@ -961,6 +961,30 @@ export const MOCK_DB = {
       "created_at": "2026-07-01T08:00:00Z",
       "updated_at": "2026-07-01T08:00:00Z",
       "deleted_at": null
+    },
+    {
+      "id": 2014,
+      "parent_id": null,
+      "name": "Bảo mật & Hacking đạo đức (Đã xóa)",
+      "slug": "bao-mat-hacking-dao-duc-da-xoa",
+      "status": "inactive",
+      "sort_order": 9,
+      "description": "Danh mục đã bị xóa mềm trước đó.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-10T10:00:00Z",
+      "deleted_at": "2026-07-10T10:00:00Z"
+    },
+    {
+      "id": 2015,
+      "parent_id": 2001,
+      "name": "VueJS & NuxtJS (Đã xóa)",
+      "slug": "vuejs-nuxtjs-da-xoa",
+      "status": "inactive",
+      "sort_order": 3,
+      "description": "Danh mục con thuộc Lập trình Web đã bị xóa mềm.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-11T14:30:00Z",
+      "deleted_at": "2026-07-11T14:30:00Z"
     }
   ],
   "courses": [
