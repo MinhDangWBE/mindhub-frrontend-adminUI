@@ -58,13 +58,15 @@ body {
 [data-sidebar] {
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: 248px; /* Khớp đúng yêu cầu thiết kế: 248px */
+    overflow: visible !important;
 }
 
 [data-sidebar].sidebar-collapsed {
     width: 72px !important; /* Khớp đúng yêu cầu thiết kế: 72px */
 }
 
-[data-sidebar].sidebar-collapsed .sidebar-text {
+[data-sidebar].sidebar-collapsed .sidebar-text,
+[data-sidebar].sidebar-collapsed .sidebar-footer-text {
     display: none !important;
 }
 

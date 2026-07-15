@@ -14,7 +14,7 @@
 </head>
 <body class="min-h-screen bg-canvas text-ink">
     <div class="flex min-h-screen">
-        <aside data-sidebar class="fixed inset-y-0 left-0 z-50 flex flex-col w-[248px] border-r border-hairline bg-surface-alt transition-all duration-300 ease-in-out -translate-x-full lg:sticky lg:top-0 lg:translate-x-0 lg:flex shrink-0 h-screen">
+        <aside id="admin-sidebar" data-sidebar class="fixed inset-y-0 left-0 z-50 flex flex-col w-[248px] border-r border-hairline bg-surface-alt transition-all duration-300 ease-in-out -translate-x-full lg:sticky lg:top-0 lg:translate-x-0 lg:flex shrink-0 h-screen">
     <!-- Sidebar Header (Logo) -->
     <div class="flex h-16 shrink-0 items-center justify-between px-5 border-b border-hairline sidebar-logo-container">
         <a href="dashboard.html" class="flex items-center gap-2 group">
@@ -205,7 +205,14 @@
             <span>Hệ thống ổn định (v1.0.0)</span>
         </div>
     </div>
-</aside>
+
+        <!-- Nút Đóng/Mở Sidebar (Nằm giữa cạnh phải Sidebar - Desktop Only) -->
+        <button type="button" id="sidebar-collapse-toggle" class="absolute top-1/2 -right-4 -translate-y-1/2 z-50 h-8 w-8 rounded-full border border-hairline bg-paper text-ink shadow-sm flex items-center justify-center cursor-pointer hover:bg-canvas transition-colors hidden lg:flex" aria-label="Thu gọn sidebar" aria-expanded="true">
+            <svg id="sidebar-toggle-icon" class="w-4 h-4 text-ink transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+            </svg>
+        </button>
+    </aside>
         <div class="min-w-0 flex-1">
             <header
                 class="flex min-h-16 items-center justify-between border-b border-hairline bg-paper px-5"
@@ -256,5 +263,6 @@
         src="../assets/js/pages/banners.js"
     ></script>
     <script type="module" src="../assets/js/sidebar-scroll.js"></script>
+    <script src="../assets/js/sidebar-toggle.js"></script>
 </body>
 </html>
