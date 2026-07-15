@@ -1109,18 +1109,20 @@ function bindDrawerEvents() {
 
   if (drawerApproveBtn) {
     drawerApproveBtn.addEventListener("click", async () => {
-      if (activeCourseIdForAction) {
+      const courseId = activeCourseIdForAction;
+      if (courseId) {
         await closeDrawer();
-        openApproveModal(activeCourseIdForAction);
+        openApproveModal(courseId);
       }
     });
   }
 
   if (drawerRejectBtn) {
     drawerRejectBtn.addEventListener("click", async () => {
-      if (activeCourseIdForAction) {
+      const courseId = activeCourseIdForAction;
+      if (courseId) {
         await closeDrawer();
-        openRejectModal(activeCourseIdForAction);
+        openRejectModal(courseId);
       }
     });
   }
