@@ -315,9 +315,33 @@ function renderTable(items) {
             <td class="px-3 py-2.5 text-center select-text">
                 ${coursesCol}
             </td>
-            <td class="px-3 py-2.5 text-center">
-                <div class="flex items-center justify-center gap-1">
-                    <input type="number" value="${c.sort_order}" min="0" data-id="${c.id}" class="sort-order-input w-12 h-7 px-1 text-center bg-canvas focus:bg-paper border border-hairline rounded-[6px] focus:ring-1 focus:ring-mid-gray/40 outline-none text-ink text-xs inline-block">
+            <td class="px-3 py-2.5 text-center whitespace-nowrap">
+                <div class="flex items-center justify-center gap-1.5">
+                    <div class="flex items-center h-8 border border-hairline rounded-[6px] bg-canvas overflow-hidden w-24 focus-within:border-ink transition-colors">
+                        <button type="button" class="btn-sort-dec flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                            </svg>
+                        </button>
+                        <input type="number" value="${c.sort_order}" min="0" step="1" data-id="${c.id}" data-old-value="${c.sort_order}" class="sort-order-input w-10 h-full text-center bg-transparent border-0 outline-none text-ink text-xs font-semibold focus:ring-0 focus:outline-none disabled:opacity-50">
+                        <button type="button" class="btn-sort-inc flex items-center justify-center w-7 h-full hover:bg-hairline text-mid-gray hover:text-ink transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1 hidden sort-order-actions" data-id="${c.id}">
+                        <button type="button" class="btn-sort-save p-1 rounded bg-ink text-white hover:opacity-90 transition-opacity cursor-pointer flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" title="Lưu thay đổi">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                        </button>
+                        <button type="button" class="btn-sort-cancel p-1 rounded border border-hairline hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed" data-id="${c.id}" title="Hủy bỏ">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </td>
             <td class="px-3 py-2.5 text-center">
@@ -696,40 +720,158 @@ function initActionEvents() {
 function initSortOrderInputEvents() {
     const tableBody = document.getElementById("categories-table-body");
 
-    // Click liên tục và lưu trực tiếp khi thay đổi
-    let sortSaveTimeouts = {};
+    function checkChanged(input, actions) {
+        const oldVal = parseInt(input.getAttribute("data-old-value") || "0");
+        const newVal = parseInt(input.value) || 0;
+        if (newVal !== oldVal) {
+            actions.classList.remove("hidden");
+        } else {
+            actions.classList.add("hidden");
+        }
+    }
+
+    function rollbackValue(input, actions) {
+        const oldVal = input.getAttribute("data-old-value") || "0";
+        input.value = oldVal;
+        if (actions) actions.classList.add("hidden");
+    }
+
+    tableBody.addEventListener("click", async (e) => {
+        const decBtn = e.target.closest(".btn-sort-dec");
+        const incBtn = e.target.closest(".btn-sort-inc");
+        const saveBtn = e.target.closest(".btn-sort-save");
+        const cancelBtn = e.target.closest(".btn-sort-cancel");
+
+        if (decBtn) {
+            e.stopPropagation();
+            if (decBtn.disabled) return;
+            const id = decBtn.getAttribute("data-id");
+            const row = decBtn.closest("tr");
+            const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
+            const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+
+            let val = parseInt(input.value) || 0;
+            if (val > 0) {
+                val--;
+                input.value = val;
+                checkChanged(input, actions);
+            }
+            return;
+        }
+
+        if (incBtn) {
+            e.stopPropagation();
+            if (incBtn.disabled) return;
+            const id = incBtn.getAttribute("data-id");
+            const row = incBtn.closest("tr");
+            const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
+            const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+
+            let val = parseInt(input.value) || 0;
+            val++;
+            input.value = val;
+            checkChanged(input, actions);
+            return;
+        }
+
+        if (cancelBtn) {
+            e.stopPropagation();
+            if (cancelBtn.disabled) return;
+            const id = cancelBtn.getAttribute("data-id");
+            const row = cancelBtn.closest("tr");
+            const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
+            const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+
+            rollbackValue(input, actions);
+            return;
+        }
+
+        if (saveBtn) {
+            e.stopPropagation();
+            if (saveBtn.disabled) return;
+            const id = saveBtn.getAttribute("data-id");
+            const row = saveBtn.closest("tr");
+            const input = row.querySelector(`.sort-order-input[data-id="${id}"]`);
+            const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+            const dec = row.querySelector(`.btn-sort-dec[data-id="${id}"]`);
+            const inc = row.querySelector(`.btn-sort-inc[data-id="${id}"]`);
+            const cancel = row.querySelector(`.btn-sort-cancel[data-id="${id}"]`);
+
+            let val = parseFloat(input.value);
+            // Kiểm tra số nguyên không âm
+            if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
+                showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm." });
+                rollbackValue(input, actions);
+                return;
+            }
+
+            // Đóng băng toàn bộ control
+            input.disabled = true;
+            dec.disabled = true;
+            inc.disabled = true;
+            saveBtn.disabled = true;
+            cancel.disabled = true;
+
+            try {
+                const response = await categoriesApi.updateCategory(id, { sort_order: val });
+                if (response && response.success) {
+                    showToast({ type: "success", title: "Cập nhật thành công", message: `Đã đổi thứ tự hiển thị thành ${val}.` });
+                    // Cập nhật giá trị gốc
+                    input.setAttribute("data-old-value", val);
+                    // Đồng bộ dữ liệu local cache
+                    const catIdNum = Number(id);
+                    const localCat = cachedAllCategories.find(c => c.id === catIdNum);
+                    if (localCat) {
+                        localCat.sort_order = val;
+                    }
+                    // Ẩn cụm nút Lưu/Hủy
+                    actions.classList.add("hidden");
+                } else {
+                    showToast({ type: "error", title: "Thất bại", message: response.message || "Không thể cập nhật thứ tự." });
+                    rollbackValue(input, actions);
+                }
+            } catch (err) {
+                console.error("Lỗi cập nhật sort order:", err);
+                showToast({ type: "error", title: "Lỗi kết nối", message: "Đã xảy ra sự cố khi lưu thứ tự hiển thị." });
+                rollbackValue(input, actions);
+            } finally {
+                input.disabled = false;
+                dec.disabled = false;
+                inc.disabled = false;
+                saveBtn.disabled = false;
+                cancel.disabled = false;
+            }
+            return;
+        }
+    });
+
+    tableBody.addEventListener("input", (e) => {
+        const input = e.target.closest(".sort-order-input");
+        if (!input) return;
+
+        const id = input.getAttribute("data-id");
+        const row = input.closest("tr");
+        const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+
+        checkChanged(input, actions);
+    });
 
     tableBody.addEventListener("change", (e) => {
         const input = e.target.closest(".sort-order-input");
         if (!input) return;
 
         const id = input.getAttribute("data-id");
-        const val = parseInt(input.value);
-        if (isNaN(val) || val < 0) {
-            input.value = 0;
+        const row = input.closest("tr");
+        const actions = row.querySelector(`.sort-order-actions[data-id="${id}"]`);
+
+        let val = parseFloat(input.value);
+        if (isNaN(val) || val < 0 || !Number.isInteger(val)) {
+            showToast({ type: "warning", title: "Giá trị không hợp lệ", message: "Thứ tự phải là số nguyên không âm." });
+            rollbackValue(input, actions);
             return;
         }
 
-        // Đóng băng input
-        input.disabled = true;
-
-        clearTimeout(sortSaveTimeouts[id]);
-        sortSaveTimeouts[id] = setTimeout(async () => {
-            try {
-                const response = await categoriesApi.updateCategory(id, { sort_order: val });
-                if (response && response.success) {
-                    showToast({ type: "success", title: "Cập nhật thành công", message: `Đã đổi thứ tự hiển thị thành ${val}.` });
-                    fetchAndRender();
-                } else {
-                    showToast({ type: "error", title: "Thất bại", message: response.message || "Không thể cập nhật thứ tự." });
-                    input.disabled = false;
-                }
-            } catch (err) {
-                console.error("Lỗi cập nhật sort order:", err);
-                showToast({ type: "error", title: "Lỗi kết nối", message: "Đã xảy ra sự cố khi lưu thứ tự hiển thị." });
-                input.disabled = false;
-            }
-        }, 300);
+        checkChanged(input, actions);
     });
 }
 
