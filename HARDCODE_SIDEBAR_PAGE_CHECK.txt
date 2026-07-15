@@ -1,0 +1,101 @@
+﻿
+PAGE: course-reviews.html
+doctype=1 html=1 head=1 body=0 aside=1
+css-link-correct=False
+aside-inside-body=False
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: courses.html
+doctype=1 html=1 head=1 body=0 aside=1
+css-link-correct=False
+aside-inside-body=False
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: users.html
+doctype=1 html=1 head=1 body=0 aside=1
+css-link-correct=False
+aside-inside-body=False
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: instructor-upgrades.html
+doctype=1 html=1 head=1 body=0 aside=1
+css-link-correct=False
+aside-inside-body=False
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: categories.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: orders.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: revenues.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: withdrawals.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: payout-accounts.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: moderation.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: reports.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: banners.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: faqs.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+PAGE: notifications.html
+doctype=1 html=1 head=1 body=1 aside=1
+css-link-correct=True
+aside-inside-body=True
+old-mount-left=True
+old-dynamic-loader-left=False
+
+OUTPUT CSS:
+exists=yes size=67278 bytes

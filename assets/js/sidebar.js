@@ -51,41 +51,7 @@ export function initializeInteractions() {
         overlay.addEventListener("click", closeMobileSidebar);
     }
     
-    // 2. Quản lý Thu gọn Sidebar trên Desktop
-    const toggleDesktopBtn = document.querySelector("[data-sidebar-toggle-desktop]");
-    
-    function setSidebarCollapsedState(isCollapsed) {
-        if (!sidebar) return;
-        
-        const toggleIcon = toggleDesktopBtn ? toggleDesktopBtn.querySelector("svg") : null;
-        
-        if (isCollapsed) {
-            sidebar.classList.add("sidebar-collapsed");
-            localStorage.setItem("sidebar-collapsed", "true");
-            // Quay mũi tên trên nút toggle sang phải
-            if (toggleIcon) {
-                toggleIcon.style.transform = "rotate(180deg)";
-            }
-        } else {
-            sidebar.classList.remove("sidebar-collapsed");
-            localStorage.setItem("sidebar-collapsed", "false");
-            // Quay mũi tên trên nút toggle về bình thường
-            if (toggleIcon) {
-                toggleIcon.style.transform = "none";
-            }
-        }
-    }
-    
-    // Đọc trạng thái lưu trữ và cấu hình lập tức
-    const isSavedCollapsed = localStorage.getItem("sidebar-collapsed") === "true";
-    setSidebarCollapsedState(isSavedCollapsed);
-    
-    if (toggleDesktopBtn) {
-        toggleDesktopBtn.addEventListener("click", () => {
-            const isCurrentCollapsed = sidebar.classList.contains("sidebar-collapsed");
-            setSidebarCollapsedState(!isCurrentCollapsed);
-        });
-    }
+    // 2. Quản lý Thu gọn Sidebar trên Desktop đã được gỡ bỏ theo yêu cầu 11.
     
     // 3. Quản lý Dropdown tài khoản Admin
     const profileTrigger = document.getElementById("admin-profile-trigger");
