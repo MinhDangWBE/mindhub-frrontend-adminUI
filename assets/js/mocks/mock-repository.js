@@ -54,12 +54,100 @@ export function updateUser(id, updates) {
 // === CATEGORIES ===
 export function getCategories() {
   const db = getDB();
+  return (db.categories || []).filter((c) => c.deleted_at === null);
+}
+
+export function getRawCategories() {
+  const db = getDB();
   return db.categories || [];
 }
 
 export function getCategoryById(id) {
   const parsedId = Number(id);
   return getCategories().find((c) => c.id === parsedId) || null;
+}
+
+export function saveCategories(categories) {
+  const db = getDB();
+  db.categories = categories;
+  saveDB(db);
+}
+
+export function createCategory(payload) {
+  const db = getDB();
+  const categories = db.categories || [];
+  const maxId = categories.reduce((max, c) => c.id > max ? c.id : max, 2000);
+  const newId = maxId + 1;
+  const nowStr = new Date().toISOString();
+  
+  const newCat = {
+    id: newId,
+    parent_id: payload.parent_id ? Number(payload.parent_id) : null,
+    name: payload.name.trim(),
+    slug: payload.slug.trim(),
+    description: payload.description ? payload.description.trim() : "",
+    sort_order: payload.sort_order !== undefined ? Number(payload.sort_order) : 0,
+    status: payload.status || "active",
+    created_at: nowStr,
+    updated_at: nowStr,
+    deleted_at: null
+  };
+  
+  categories.push(newCat);
+  db.categories = categories;
+  saveDB(db);
+  return newCat;
+}
+
+export function updateCategory(id, updates) {
+  const db = getDB();
+  const categories = db.categories || [];
+  const parsedId = Number(id);
+  const index = categories.findIndex((c) => c.id === parsedId);
+  if (index !== -1) {
+    const original = categories[index];
+    const updated = {
+      ...original,
+      ...updates,
+      parent_id: updates.parent_id !== undefined ? (updates.parent_id ? Number(updates.parent_id) : null) : original.parent_id,
+      sort_order: updates.sort_order !== undefined ? Number(updates.sort_order) : original.sort_order,
+      updated_at: new Date().toISOString()
+    };
+    categories[index] = updated;
+    db.categories = categories;
+    saveDB(db);
+    return updated;
+  }
+  return null;
+}
+
+export function deleteCategory(id) {
+  const db = getDB();
+  const categories = db.categories || [];
+  const parsedId = Number(id);
+  const index = categories.findIndex((c) => c.id === parsedId);
+  if (index !== -1) {
+    categories[index].deleted_at = new Date().toISOString();
+    db.categories = categories;
+    saveDB(db);
+    return true;
+  }
+  return false;
+}
+
+export function restoreCategory(id) {
+  const db = getDB();
+  const categories = db.categories || [];
+  const parsedId = Number(id);
+  const index = categories.findIndex((c) => c.id === parsedId);
+  if (index !== -1) {
+    categories[index].deleted_at = null;
+    categories[index].updated_at = new Date().toISOString();
+    db.categories = categories;
+    saveDB(db);
+    return true;
+  }
+  return false;
 }
 
 // === COURSES ===

@@ -812,7 +812,11 @@ export const MOCK_DB = {
       "name": "Lập trình Web",
       "slug": "lap-trinh-web",
       "status": "active",
-      "sort_order": 1
+      "sort_order": 1,
+      "description": "Học phát triển ứng dụng web từ cơ bản đến nâng cao.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
     },
     {
       "id": 2002,
@@ -820,7 +824,11 @@ export const MOCK_DB = {
       "name": "Lập trình Mobile",
       "slug": "lap-trinh-mobile",
       "status": "active",
-      "sort_order": 2
+      "sort_order": 2,
+      "description": "Thiết kế và phát triển ứng dụng di động đa nền tảng.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
     },
     {
       "id": 2003,
@@ -828,7 +836,11 @@ export const MOCK_DB = {
       "name": "Thiết kế Đồ họa / UI-UX",
       "slug": "thiet-ke-ui-ux",
       "status": "active",
-      "sort_order": 3
+      "sort_order": 3,
+      "description": "Học thiết kế đồ họa chuyên nghiệp và giao diện UI/UX.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
     },
     {
       "id": 2004,
@@ -836,7 +848,11 @@ export const MOCK_DB = {
       "name": "Phân tích dữ liệu & AI",
       "slug": "phan-tich-du-lieu-ai",
       "status": "active",
-      "sort_order": 4
+      "sort_order": 4,
+      "description": "Khám phá khoa học dữ liệu và các mô hình trí tuệ nhân tạo.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
     },
     {
       "id": 2005,
@@ -844,7 +860,131 @@ export const MOCK_DB = {
       "name": "Marketing số & SEO",
       "slug": "marketing-so-seo",
       "status": "active",
-      "sort_order": 5
+      "sort_order": 5,
+      "description": "Tối ưu hóa tìm kiếm và các chiến dịch quảng cáo kỹ thuật số.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2006,
+      "parent_id": 2001,
+      "name": "Frontend",
+      "slug": "frontend",
+      "status": "active",
+      "sort_order": 1,
+      "description": "Học HTML, CSS, JavaScript, ReactJS, TailwindCSS.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2007,
+      "parent_id": 2001,
+      "name": "Backend",
+      "slug": "backend",
+      "status": "active",
+      "sort_order": 2,
+      "description": "Xây dựng hệ thống backend với NodeJS, Laravel, Python.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2008,
+      "parent_id": 2002,
+      "name": "React Native",
+      "slug": "react-native",
+      "status": "active",
+      "sort_order": 1,
+      "description": "Phát triển app mobile bằng React Native.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2009,
+      "parent_id": 2002,
+      "name": "Flutter",
+      "slug": "flutter",
+      "status": "active",
+      "sort_order": 2,
+      "description": "Xây dựng ứng dụng di động với Flutter và Dart.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2010,
+      "parent_id": null,
+      "name": "Danh mục rỗng ngừng hoạt động",
+      "slug": "danh-muc-rong-ngung-hoat-dong",
+      "status": "inactive",
+      "sort_order": 6,
+      "description": "Danh mục cũ không còn được sử dụng, không có khóa học và không có danh mục con. Được phép xóa.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2011,
+      "parent_id": null,
+      "name": "Danh mục có con ngừng hoạt động",
+      "slug": "danh-muc-co-con-ngung-hoat-dong",
+      "status": "inactive",
+      "sort_order": 7,
+      "description": "Danh mục gốc đã ngừng hoạt động nhưng chứa danh mục con bên dưới.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2012,
+      "parent_id": 2011,
+      "name": "Danh mục con ngừng hoạt động",
+      "slug": "danh-muc-con-ngung-hoat-dong",
+      "status": "inactive",
+      "sort_order": 1,
+      "description": "Danh mục con thuộc danh mục đã ngừng hoạt động.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2013,
+      "parent_id": null,
+      "name": "Danh mục có khóa học ngừng hoạt động",
+      "slug": "danh-muc-co-khoa-hoc-ngung-hoat-dong",
+      "status": "inactive",
+      "sort_order": 8,
+      "description": "Danh mục đã ngừng hoạt động nhưng vẫn có khóa học liên kết.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-01T08:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 2014,
+      "parent_id": null,
+      "name": "Bảo mật & Hacking đạo đức (Đã xóa)",
+      "slug": "bao-mat-hacking-dao-duc-da-xoa",
+      "status": "inactive",
+      "sort_order": 9,
+      "description": "Danh mục đã bị xóa mềm trước đó.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-10T10:00:00Z",
+      "deleted_at": "2026-07-10T10:00:00Z"
+    },
+    {
+      "id": 2015,
+      "parent_id": 2001,
+      "name": "VueJS & NuxtJS (Đã xóa)",
+      "slug": "vuejs-nuxtjs-da-xoa",
+      "status": "inactive",
+      "sort_order": 3,
+      "description": "Danh mục con thuộc Lập trình Web đã bị xóa mềm.",
+      "created_at": "2026-07-01T08:00:00Z",
+      "updated_at": "2026-07-11T14:30:00Z",
+      "deleted_at": "2026-07-11T14:30:00Z"
     }
   ],
   "courses": [
@@ -1110,7 +1250,8 @@ export const MOCK_DB = {
       "total_duration_seconds": 25200,
       "instructor_id": 205,
       "category_ids": [
-        2005
+        2005,
+        2013
       ]
     },
     {

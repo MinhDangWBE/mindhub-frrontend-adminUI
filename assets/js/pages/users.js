@@ -793,7 +793,7 @@ function initRefreshEvent() {
 function initAttentionEvents() {
     const attentionButtons = document.querySelectorAll("[data-attention]");
     attentionButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
             const type = btn.getAttribute("data-attention");
             
             // Xóa sạch các bộ lọc vai trò, ngày tạo
@@ -829,7 +829,13 @@ function initAttentionEvents() {
 
             pageState.page = 1;
             writeStateToUrl();
-            fetchAndRender();
+            await fetchAndRender();
+
+            // Cuộn mượt đến bảng danh sách người dùng sau khi dữ liệu render xong
+            document.getElementById("users-list-section")?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
         });
     });
 }
