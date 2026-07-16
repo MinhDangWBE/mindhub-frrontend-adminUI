@@ -43,10 +43,22 @@ const COURSE_STATUS_ENUM = ["draft", "pending_review", "approved", "rejected", "
 const USER_STATUS_ENUM = ["active", "inactive", "locked"];
 const USER_ROLE_ENUM = ["admin", "instructor", "learner"];
 const APPLICATION_STATUS_ENUM = ["pending", "approved", "rejected"];
-const PAYMENT_STATUS_ENUM = ["paid", "pending", "failed", "cancelled", "expired"];
+const ORDER_STATUS_ENUM = ["pending", "paid", "failed", "cancelled", "expired"];
+const PAYMENT_STATUS_ENUM = ["unpaid", "processing", "paid", "failed"];
 const ENROLLMENT_STATUS_ENUM = ["ongoing", "completed"];
 const REVENUE_STATUS_ENUM = ["available", "withdrawn", "cancelled"];
 const WITHDRAWAL_STATUS_ENUM = ["pending", "approved", "rejected", "paid", "cancelled"];
+
+function isValidOrderPaymentPair(orderStatus, paymentStatus) {
+  const allowedPairs = {
+    pending: ["unpaid", "processing"],
+    paid: ["paid"],
+    failed: ["failed"],
+    cancelled: ["unpaid", "failed"],
+    expired: ["unpaid"]
+  };
+  return Boolean(allowedPairs[orderStatus]?.includes(paymentStatus));
+}
 
 // Helpers for checks
 function isValidISO(dateStr) {
@@ -145,9 +157,6 @@ courseReviews.forEach(r => {
     const course = courses.find(c => c.id === r.course_id);
     if (!course) {
         addError(`Course review references non-existent course_id: ${r.course_id}`);
-    } else if (course.status !== 'pending_review') {
-        // Warning or error? The instruction says: "Pending course without review detail: 0. Review detail without course: 0."
-        // We will raise error if course doesn't exist.
     }
 });
 
@@ -187,16 +196,65 @@ orders.forEach(o => {
     if (!course) {
         addError(`Order ID ${o.id} references non-existent course_id: ${o.course_id}`);
     }
+    if (!ORDER_STATUS_ENUM.includes(o.status)) {
+        addError(`Order ID ${o.id} has invalid status: ${o.status}`);
+    }
     if (!PAYMENT_STATUS_ENUM.includes(o.payment_status)) {
         addError(`Order ID ${o.id} has invalid payment_status: ${o.payment_status}`);
+    }
+    if (!o.is_intentional_anomaly && !isValidOrderPaymentPair(o.status, o.payment_status)) {
+        addError(`Order ID ${o.id} has invalid status/payment_status pair: (${o.status}, ${o.payment_status})`);
     }
     if (o.created_at && !isValidISO(o.created_at)) {
         addError(`Order ID ${o.id} created_at is not valid ISO: ${o.created_at}`);
     }
-    if (o.payment_status === 'paid' && !o.paid_at) {
-        addError(`Order ID ${o.id} is paid but has null paid_at`);
+    if (o.paid_at && !isValidISO(o.paid_at)) {
+        addError(`Order ID ${o.id} paid_at is not valid ISO: ${o.paid_at}`);
+    }
+    if (o.status === 'paid' && o.payment_status === 'paid') {
+        if (!o.paid_at) {
+            addError(`Order ID ${o.id} is paid but has null paid_at`);
+        }
+        const enrollment = enrollments.find(e => e.order_id === o.id);
+        if (!enrollment) {
+            addError(`Canonical Paid Order ID ${o.id} is missing enrollment record!`);
+        }
+        const revenue = revenues.find(r => r.order_id === o.id);
+        if (!revenue) {
+            addError(`Canonical Paid Order ID ${o.id} is missing revenue record!`);
+        } else {
+            if (Number(revenue.gross_amount) !== Number(o.amount)) {
+                addError(`Paid Order ID ${o.id} amount (${o.amount}) does not match revenue gross_amount (${revenue.gross_amount})`);
+            }
+        }
+    } else {
+        const revenue = revenues.find(r => r.order_id === o.id);
+        if (revenue) {
+            addError(`Non-paid Order ID ${o.id} (status: ${o.status}) should NOT have a revenue record!`);
+        }
     }
 });
+
+// Summary Verification
+const paidOrders = orders.filter(o => o.status === "paid" && o.payment_status === "paid");
+const pendingOrders = orders.filter(o => o.status === "pending");
+const failedOrders = orders.filter(o => o.status === "failed");
+const cancelledOrders = orders.filter(o => o.status === "cancelled");
+const expiredOrders = orders.filter(o => o.status === "expired");
+
+const totalCalculated = paidOrders.length + pendingOrders.length + failedOrders.length + cancelledOrders.length + expiredOrders.length;
+
+if (totalCalculated !== orders.length) {
+    addError(`Orders status breakdown count (${totalCalculated}) does not equal total orders count (${orders.length})`);
+}
+
+const paidSum = paidOrders.reduce((sum, o) => sum + (Number(o.amount) || 0), 0);
+const avgValue = paidOrders.length > 0 ? paidSum / paidOrders.length : 0;
+const successRate = orders.length > 0 ? (paidOrders.length / orders.length) * 100 : 0;
+
+if (isNaN(paidSum) || !isFinite(paidSum)) addError("Calculated paid_amount is NaN or Infinity!");
+if (isNaN(avgValue) || !isFinite(avgValue)) addError("Calculated average_order_value is NaN or Infinity!");
+if (isNaN(successRate) || !isFinite(successRate)) addError("Calculated payment_success_rate is NaN or Infinity!");
 
 // 7. Validate Enrollments
 enrollments.forEach(e => {

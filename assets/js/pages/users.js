@@ -46,7 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
     initBulkActionEvents();
 
     // Tải dữ liệu ban đầu
-    fetchAndRender();
+    fetchAndRender().then(() => {
+        if (pageState.open_user_id) {
+            openDetailDrawer(Number(pageState.open_user_id));
+        }
+    });
 });
 
 /**
@@ -98,6 +102,7 @@ function readStateFromUrl() {
     pageState.date_to = params.get("date_to") || "";
     pageState.sort_by = params.get("sort_by") || "newest";
     pageState.no_login = params.get("no_login") || "";
+    pageState.open_user_id = params.get("open_user_id") || null;
     pageState.page = parseInt(params.get("page")) || 1;
     pageState.per_page = parseInt(params.get("per_page")) || 20;
 
@@ -1569,6 +1574,10 @@ function closeDetailDrawer() {
     setTimeout(() => {
         overlay.classList.add("hidden");
         drawer.classList.add("hidden");
+        if (pageState.open_user_id) {
+            pageState.open_user_id = null;
+            writeStateToUrl();
+        }
     }, 300);
 }
 
