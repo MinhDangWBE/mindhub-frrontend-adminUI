@@ -1,4 +1,4 @@
-import { getOrders as getRepoOrders, getOrderById as getRepoOrderById, populateOrder } from "../mocks/mock-repository.js";
+import { getOrders as getRepoOrders, getOrderById as getRepoOrderById, populateOrder, isValidOrderPaymentPair } from "../mocks/mock-repository.js";
 
 const USE_MOCK = true;
 const API_BASE_URL = "/api/admin/orders";
@@ -8,6 +8,84 @@ const API_BASE_URL = "/api/admin/orders";
  */
 function normalizeSearchText(val) {
   return String(val ?? "").trim().toLocaleLowerCase("vi-VN");
+}
+
+/**
+ * Helper parse số tiền an toàn từ string hoặc number decimal
+ */
+
+function parseMoney(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
+
+/**
+ * Helper format decimal source dạng chuỗi "0.00"
+ */
+
+function formatDecimalSource(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number.toFixed(2) : "0.00";
+}
+
+/**
+ * Tính toán summary trên TOÀN BỘ dataset gốc đơn hàng trước pagination/filtering
+ */
+
+export function calculateOrdersSummary(orders) {
+  const totalOrders = orders.length;
+
+  const paidOrders = orders.filter(
+    (order) => order.status === "paid" && order.payment_status === "paid"
+  );
+
+  const pendingOrders = orders.filter(
+    (order) => order.status === "pending"
+  );
+
+  const failedOrders = orders.filter(
+    (order) => order.status === "failed"
+  );
+
+  const cancelledOrders = orders.filter(
+    (order) => order.status === "cancelled"
+  );
+
+  const expiredOrders = orders.filter(
+    (order) => order.status === "expired"
+  );
+
+  const paidAmount = paidOrders.reduce(
+    (sum, order) => sum + parseMoney(order.amount),
+    0
+  );
+
+  const averageOrderValue =
+    paidOrders.length > 0 ? paidAmount / paidOrders.length : 0;
+
+  const paymentSuccessRate =
+    totalOrders > 0 ? (paidOrders.length / totalOrders) * 100 : 0;
+
+  const incompleteOrders =
+    failedOrders.length + cancelledOrders.length + expiredOrders.length;
+
+  const anomalyCount = orders.filter(
+    (order) => !isValidOrderPaymentPair(order.status, order.payment_status)
+  ).length;
+
+  return {
+    total_orders: totalOrders,
+    paid_orders: paidOrders.length,
+    pending_orders: pendingOrders.length,
+    failed_orders: failedOrders.length,
+    cancelled_orders: cancelledOrders.length,
+    expired_orders: expiredOrders.length,
+    paid_amount: formatDecimalSource(paidAmount),
+    average_order_value: formatDecimalSource(averageOrderValue),
+    payment_success_rate: Number(paymentSuccessRate.toFixed(1)),
+    incomplete_orders: incompleteOrders,
+    anomaly_count: anomalyCount
+  };
 }
 
 /**
@@ -31,54 +109,8 @@ export async function getOrders(params = {}) {
     const rawOrders = getRepoOrders();
     const allPopulatedOrders = rawOrders.map(populateOrder).filter(Boolean);
 
-    // 1. Tính toán summary trên TOÀN BỘ dataset gốc bằng quy tắc status chuẩn
-    let totalPaidSum = 0;
-    let paidCount = 0;
-    let pendingCount = 0;
-    let failedCount = 0;
-    let cancelledCount = 0;
-    let expiredCount = 0;
-    let anomalyCount = 0;
-
-    allPopulatedOrders.forEach((o) => {
-      const st = o.status;
-
-      if (st === "paid") {
-        paidCount++;
-        totalPaidSum += Number(o.amount) || 0;
-      } else if (st === "pending") {
-        pendingCount++;
-      } else if (st === "failed") {
-        failedCount++;
-      } else if (st === "cancelled") {
-        cancelledCount++;
-      } else if (st === "expired") {
-        expiredCount++;
-      }
-
-      if (o.consistency) {
-        if (!o.consistency.paid_has_enrollment || !o.consistency.paid_has_revenue || !o.consistency.amounts_match) {
-          anomalyCount++;
-        }
-      }
-    });
-
-    const totalOrdersCount = allPopulatedOrders.length;
-    const avgOrderValue = paidCount > 0 ? (totalPaidSum / paidCount).toFixed(2) : "0.00";
-    const successRate = totalOrdersCount > 0 ? parseFloat(((paidCount / totalOrdersCount) * 100).toFixed(1)) : 0;
-
-    const summary = {
-      total_orders: totalOrdersCount,
-      pending_orders: pendingCount,
-      paid_orders: paidCount,
-      failed_orders: failedCount,
-      cancelled_orders: cancelledCount,
-      expired_orders: expiredCount,
-      paid_amount: totalPaidSum.toFixed(2),
-      average_order_value: avgOrderValue,
-      payment_success_rate: successRate,
-      anomaly_count: anomalyCount
-    };
+    // 1. Tính toán summary trên TOÀN BỘ dataset gốc bằng helper chuẩn
+    const summary = calculateOrdersSummary(allPopulatedOrders);
 
     // 2. Lọc danh sách từ mảng clone mới
     let filtered = [...allPopulatedOrders];

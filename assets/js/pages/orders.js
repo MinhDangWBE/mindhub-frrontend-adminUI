@@ -340,18 +340,15 @@ function renderSummaryCards(summary) {
     if (el) el.textContent = val;
   };
 
-  setTxt("title-total-orders", summary.total_orders || 0);
-  setTxt("kpi-total-orders", summary.total_orders || 0);
-  setTxt("kpi-paid-orders", summary.paid_orders || 0);
-  setTxt("kpi-pending-orders", summary.pending_orders || 0);
-  setTxt("kpi-failed-orders", summary.failed_orders || 0);
-  setTxt("kpi-cancelled-orders", summary.cancelled_orders || 0);
-  setTxt("kpi-expired-orders", summary.expired_orders || 0);
+  setTxt("title-total-orders", summary.total_orders ?? 0);
+  setTxt("kpi-total-orders", summary.total_orders ?? 0);
+  setTxt("kpi-paid-orders", summary.paid_orders ?? 0);
+  setTxt("kpi-pending-orders", summary.pending_orders ?? 0);
+  setTxt("kpi-failed-orders", summary.failed_orders ?? 0);
+  setTxt("kpi-cancelled-orders", summary.cancelled_orders ?? 0);
+  setTxt("kpi-expired-orders", summary.expired_orders ?? 0);
 
-  const paidRate =
-    summary.total_orders > 0
-      ? ((summary.paid_orders / summary.total_orders) * 100).toFixed(1)
-      : "0";
+  const paidRate = summary.payment_success_rate ?? 0;
   setTxt("kpi-paid-rate", `${paidRate}%`);
 }
 
@@ -366,14 +363,9 @@ function renderQuickInsightBar(summary) {
 
   setTxt("insight-paid-amount", formatVND(summary.paid_amount));
   setTxt("insight-avg-order-value", formatVND(summary.average_order_value));
-  setTxt("insight-success-rate", `${summary.payment_success_rate || 0}%`);
-
-  const uncompleted =
-    (summary.failed_orders || 0) +
-    (summary.cancelled_orders || 0) +
-    (summary.expired_orders || 0);
-  setTxt("insight-uncompleted-orders", `${uncompleted} đơn`);
-  setTxt("insight-anomaly-count", `${summary.anomaly_count || 0} trường hợp`);
+  setTxt("insight-success-rate", `${summary.payment_success_rate ?? 0}%`);
+  setTxt("insight-uncompleted-orders", `${summary.incomplete_orders ?? 0} đơn`);
+  setTxt("insight-anomaly-count", `${summary.anomaly_count ?? 0} trường hợp`);
 }
 
 /**
