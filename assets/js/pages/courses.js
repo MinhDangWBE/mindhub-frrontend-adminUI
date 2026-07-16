@@ -41,7 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initDropdownCloseEvents();
 
   // Tải dữ liệu ban đầu
-  fetchAndRender(false); // Vừa mở trang: không cuộn
+  fetchAndRender(false).then(() => {
+    const params = new URLSearchParams(window.location.search);
+    const openCourseId = Number(params.get("open_course_id"));
+    if (Number.isInteger(openCourseId) && openCourseId > 0) {
+      showDetailDrawer(openCourseId);
+    }
+  });
 });
 
 /**
@@ -1995,6 +2001,11 @@ function closeCourseDetailDrawer() {
       );
       if (!activeModal) {
         document.body.classList.remove("overflow-hidden");
+      }
+      const url = new URL(window.location.href);
+      if (url.searchParams.has("open_course_id")) {
+        url.searchParams.delete("open_course_id");
+        history.replaceState({}, "", url);
       }
       resolve();
     };

@@ -4,6 +4,13 @@ const USE_MOCK = true;
 const API_BASE_URL = "/api/admin/orders";
 
 /**
+ * Helper chuẩn hóa chuỗi tìm kiếm không phân biệt hoa/thường
+ */
+function normalizeSearchText(val) {
+  return String(val ?? "").trim().toLocaleLowerCase("vi-VN");
+}
+
+/**
  * Lấy danh sách đơn hàng (hỗ trợ phân trang, lọc, summary)
  * API Contract Query List: page, per_page, status, payment_status, user_id, course_id, order_code, date_from, date_to
  */
@@ -24,7 +31,7 @@ export async function getOrders(params = {}) {
     const rawOrders = getRepoOrders();
     const allPopulatedOrders = rawOrders.map(populateOrder).filter(Boolean);
 
-    // 1. Tính toán summary trên TOÀN BỘ dataset gốc
+    // 1. Tính toán summary trên TOÀN BỘ dataset gốc bằng quy tắc status chuẩn
     let totalPaidSum = 0;
     let paidCount = 0;
     let pendingCount = 0;
@@ -35,14 +42,11 @@ export async function getOrders(params = {}) {
 
     allPopulatedOrders.forEach((o) => {
       const st = o.status;
-      const pst = o.payment_status;
 
-      if (st === "paid" || pst === "paid") {
+      if (st === "paid") {
         paidCount++;
         totalPaidSum += Number(o.amount) || 0;
-      }
-      
-      if (st === "pending") {
+      } else if (st === "pending") {
         pendingCount++;
       } else if (st === "failed") {
         failedCount++;
@@ -76,25 +80,32 @@ export async function getOrders(params = {}) {
       anomaly_count: anomalyCount
     };
 
-    // 2. Lọc danh sách theo tham số API contract trên clone dataset mới
+    // 2. Lọc danh sách từ mảng clone mới
     let filtered = [...allPopulatedOrders];
 
-    // Lọc theo mã đơn (order_code)
-    if (params.order_code && params.order_code.trim() !== "") {
-      const codeKeyword = params.order_code.toLowerCase().trim();
-      filtered = filtered.filter(
-        (o) =>
-          (o.order_code && o.order_code.toLowerCase().includes(codeKeyword)) ||
-          (o.provider_transaction_id && o.provider_transaction_id.toLowerCase().includes(codeKeyword))
-      );
+    // Lọc theo tìm kiếm tổng hợp (Unified Search) hoặc order_code
+    const searchKeyword = normalizeSearchText(params.search || params.order_code);
+    if (searchKeyword) {
+      filtered = filtered.filter((o) => {
+        const searchableFields = [
+          o.order_code,
+          o.provider_transaction_id,
+          o.user?.full_name,
+          o.user?.email,
+          o.course?.title,
+          o.course?.slug
+        ].map(normalizeSearchText).join(" ");
+        
+        return searchableFields.includes(searchKeyword);
+      });
     }
 
-    // Lọc theo status
+    // Lọc theo status (raw order status)
     if (params.status && params.status !== "" && params.status !== "all") {
       filtered = filtered.filter((o) => o.status === params.status);
     }
 
-    // Lọc theo payment_status
+    // Lọc theo payment_status (raw payment status)
     if (params.payment_status && params.payment_status !== "" && params.payment_status !== "all") {
       filtered = filtered.filter((o) => o.payment_status === params.payment_status);
     }

@@ -316,6 +316,17 @@ export function saveRevenues(revenues) {
   saveDB(db);
 }
 
+export function isValidOrderPaymentPair(orderStatus, paymentStatus) {
+  const allowedPairs = {
+    pending: ["unpaid", "processing"],
+    paid: ["paid"],
+    failed: ["failed"],
+    cancelled: ["unpaid", "failed"],
+    expired: ["unpaid"]
+  };
+  return Boolean(allowedPairs[orderStatus]?.includes(paymentStatus));
+}
+
 // Helper to populate an order object with user, course, coupon, enrollment, revenue, consistency, timeline
 export function populateOrder(order) {
   if (!order) return null;
@@ -326,10 +337,11 @@ export function populateOrder(order) {
   const enrollment = getEnrollmentByOrderId(order.id);
   const revenue = getRevenueByOrderId(order.id);
 
-  const isPaid = order.payment_status === "paid" || order.status === "paid";
-  const paidHasEnrollment = isPaid ? !!enrollment : true;
-  const paidHasRevenue = isPaid ? !!revenue : true;
-  const amountsMatch = isPaid && revenue ? Number(revenue.gross_amount) === Number(order.amount) : true;
+  const isCanonicalPaid = order.status === "paid" && order.payment_status === "paid";
+  const isValidPair = isValidOrderPaymentPair(order.status, order.payment_status);
+  const paidHasEnrollment = isCanonicalPaid ? !!enrollment : true;
+  const paidHasRevenue = isCanonicalPaid ? !!revenue : true;
+  const amountsMatch = isCanonicalPaid && revenue ? Number(revenue.gross_amount) === Number(order.amount) : true;
 
   const timeline = [
     {
@@ -340,14 +352,14 @@ export function populateOrder(order) {
     }
   ];
 
-  if (order.status === "pending" || order.payment_status === "pending") {
+  if (order.status === "pending" || order.payment_status === "processing") {
     timeline.push({
       timestamp: order.created_at,
       title: "Chờ thanh toán",
       description: "Chuyển hướng đến cổng thanh toán, đang chờ xác nhận từ phía nhà cung cấp.",
       status: "warning"
     });
-  } else if (isPaid) {
+  } else if (isCanonicalPaid) {
     timeline.push({
       timestamp: order.paid_at || order.created_at,
       title: "Thanh toán thành công",
