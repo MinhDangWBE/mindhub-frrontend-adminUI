@@ -32,10 +32,11 @@
       }
     </style>
   </head>
-  <body class="min-h-screen bg-canvas text-ink">
+  <body class="min-h-screen bg-canvas text-ink overflow-hidden">
     <!-- Toàn bộ Admin Shell cao 100vh, cuộn độc lập -->
-    <div class="flex min-h-screen">
-      <!-- Sidebar Placeholder -->
+    <div class="flex h-screen w-screen overflow-hidden bg-canvas" data-source="mock">
+      
+      <!-- Sidebar Admin Shell (Đồng bộ chuẩn dự án) -->
       <aside id="admin-sidebar" data-sidebar class="fixed inset-y-0 left-0 z-50 flex flex-col w-[248px] border-r border-hairline bg-surface-alt transition-all duration-300 ease-in-out -translate-x-full lg:sticky lg:top-0 lg:translate-x-0 lg:flex shrink-0 h-screen">
         <!-- Sidebar Header (Logo) -->
         <div class="flex h-16 shrink-0 items-center justify-between px-5 border-b border-hairline sidebar-logo-container">
@@ -55,11 +56,11 @@
           </button>
         </div>
 
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar Navigation (Cuộn độc lập) -->
         <div data-sidebar-scroll class="min-h-0 flex-1 overflow-y-auto px-3 py-4 custom-scrollbar space-y-3">
           <!-- Nhóm: Tổng quan -->
           <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray">Tổng quan</div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Tổng quan</div>
             <div class="space-y-0.5">
               <a href="dashboard.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="dashboard">
                 <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -75,7 +76,7 @@
 
           <!-- Nhóm: Người dùng -->
           <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray">Người dùng</div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Người dùng</div>
             <div class="space-y-0.5">
               <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
                 <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -99,7 +100,7 @@
 
           <!-- Nhóm: Khóa học -->
           <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray">Khóa học</div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Khóa học</div>
             <div class="space-y-0.5">
               <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
                 <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -124,9 +125,9 @@
             </div>
           </div>
 
-          <!-- Nhóm: Đơn hàng và tài chính -->
+          <!-- Nhóm: Kinh doanh -->
           <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray">Đơn hàng và tài chính</div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Kinh doanh</div>
             <div class="space-y-0.5">
               <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="orders" aria-current="page">
                 <svg class="w-4.5 h-4.5 shrink-0 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -141,7 +142,69 @@
                   <line x1="12" x2="12" y1="20" y2="4"/>
                   <line x1="6" x2="6" y1="20" y2="14"/>
                 </svg>
-                <span class="sidebar-text truncate">Doanh thu / Chia lợi nhuận</span>
+                <span class="sidebar-text truncate">Doanh thu / Chia sẻ</span>
+              </a>
+              <a href="withdrawals.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="withdrawals">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <rect width="20" height="14" x="2" y="5" rx="2"/>
+                  <path d="M12 17V9"/>
+                  <path d="m9 12 3-3 3 3"/>
+                </svg>
+                <span class="sidebar-text truncate">Yêu cầu rút tiền</span>
+              </a>
+              <a href="payout-accounts.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="payout-accounts">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M3 21h18"/>
+                  <path d="M3 10h18"/>
+                  <path d="M5 6h14"/>
+                  <path d="M4 10v11"/>
+                  <path d="M20 10v11"/>
+                </svg>
+                <span class="sidebar-text truncate">Tài khoản nhận tiền</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Nội dung và Báo cáo -->
+          <div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Nội dung</div>
+            <div class="space-y-0.5">
+              <a href="moderation.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="moderation">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  <path d="m10 8.5 2 1.5 4-4"/>
+                </svg>
+                <span class="sidebar-text truncate">Kiểm duyệt bình luận / Đánh giá</span>
+              </a>
+              <a href="banners.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="banners">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                  <circle cx="9" cy="9" r="2"/>
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                </svg>
+                <span class="sidebar-text truncate">Banner / Trang chủ</span>
+              </a>
+              <a href="faqs.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="faqs">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" x2="12.01" y1="17" y2="17"/>
+                </svg>
+                <span class="sidebar-text truncate">FAQ</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Báo cáo -->
+          <div>
+            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Báo cáo</div>
+            <div class="space-y-0.5">
+              <a href="reports.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="reports">
+                <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+                  <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+                </svg>
+                <span class="sidebar-text truncate">Báo cáo và thống kê</span>
               </a>
             </div>
           </div>
@@ -155,32 +218,18 @@
           </div>
         </div>
 
-        <button type="button" id="sidebar-collapse-toggle" class="absolute top-1/2 -right-4 -translate-y-1/2 z-50 h-8 w-8 rounded-full border border-hairline bg-paper text-ink shadow-sm flex items-center justify-center cursor-pointer hover:bg-canvas transition-colors hidden lg:flex" aria-label="Thu gọn sidebar">
+        <!-- Nút Thu gọn Sidebar (Desktop) -->
+        <button type="button" id="sidebar-collapse-toggle" class="absolute top-1/2 -right-4 -translate-y-1/2 z-50 h-8 w-8 rounded-full border border-hairline bg-paper text-ink shadow-sm flex items-center justify-center cursor-pointer hover:bg-canvas transition-colors hidden lg:flex" aria-label="Thu gọn sidebar" aria-expanded="true">
           <svg id="sidebar-toggle-icon" class="w-4 h-4 text-ink transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
           </svg>
         </button>
       </aside>
 
-      <!-- Main Content Area -->
+      <!-- Main Content Area Wrapper -->
       <div class="min-w-0 flex-1 flex flex-col">
-        <!-- Topbar -->
-        <header class="h-16 shrink-0 bg-paper border-b border-hairline flex items-center justify-between px-4 lg:px-6 sticky top-0 z-40">
-          <div class="flex items-center gap-3">
-            <button type="button" data-sidebar-toggle class="lg:hidden p-2 rounded-lg border border-hairline text-ink hover:bg-canvas transition-colors" aria-label="Mở Menu">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-              </svg>
-            </button>
-            <span class="text-sm font-medium text-mid-gray hidden sm:inline-block">MindHub Administration</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-hairline bg-canvas text-xs text-mid-gray">
-              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-              <span class="font-medium text-ink">Admin Root</span>
-            </div>
-          </div>
-        </header>
+        <!-- Topbar Dynamic Placeholder -->
+        <header class="h-16 shrink-0 bg-paper border-b border-hairline"></header>
 
         <!-- Page scrollable main container -->
         <main data-page="orders" data-source="mock" class="flex-grow overflow-y-auto p-3 md:p-4 lg:p-5 space-y-4 max-w-[1280px] w-full mx-auto custom-scrollbar">
@@ -211,20 +260,20 @@
               </p>
             </div>
             <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-              <!-- Nút Làm mới -->
+              <!-- Nút Làm mới nét mảnh -->
               <button type="button" id="btn-refresh-data" class="h-9 w-9 flex items-center justify-center rounded-full border border-hairline hover:bg-canvas text-ink shrink-0 transition-colors shadow-sm cursor-pointer" aria-label="Làm mới dữ liệu">
-                <svg class="w-4 h-4 transition-transform duration-500" id="refresh-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 transition-transform duration-500" id="refresh-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
                 </svg>
               </button>
             </div>
           </div>
 
-          <!-- 1. SUMMARY CARDS (6 Cards) -->
+          <!-- 1. SUMMARY CARDS (6 Cards - Hỗ trợ click lọc & tự cuộn) -->
           <div id="kpi-content-wrapper" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            <!-- Summary 1: Tổng đơn hàng -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
-              <div class="flex items-center justify-between text-mid-gray">
+            <!-- Card 1: Tổng đơn hàng -->
+            <div data-kpi-card="all" tabindex="0" role="button" aria-label="Lọc tất cả đơn hàng" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-ink">
+              <div class="flex items-center justify-between text-mid-gray group-hover:text-ink">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Tổng đơn hàng</span>
                 <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                   <rect width="20" height="14" x="2" y="5" rx="2"/>
@@ -233,12 +282,12 @@
               </div>
               <div class="mt-2">
                 <span id="kpi-total-orders" class="text-xl lg:text-2xl font-bold text-ink leading-none">0</span>
-                <p class="text-[9px] text-mid-gray mt-1">Toàn bộ đơn phát sinh</p>
+                <p class="text-[9px] text-mid-gray mt-1">Bấm để xem tất cả</p>
               </div>
             </div>
 
-            <!-- Summary 2: Đã thanh toán -->
-            <div class="rounded-[6px] border border-hairline border-t-2 border-t-emerald-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+            <!-- Card 2: Đã thanh toán -->
+            <div data-kpi-card="paid" tabindex="0" role="button" aria-label="Lọc đơn đã thanh toán" class="rounded-[6px] border border-hairline border-t-2 border-t-emerald-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-emerald-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">Đã thanh toán</span>
                 <span class="flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
@@ -249,8 +298,8 @@
               </div>
             </div>
 
-            <!-- Summary 3: Chờ thanh toán -->
-            <div class="rounded-[6px] border border-hairline border-t-2 border-t-amber-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+            <!-- Card 3: Chờ thanh toán -->
+            <div data-kpi-card="pending" tabindex="0" role="button" aria-label="Lọc đơn chờ thanh toán" class="rounded-[6px] border border-hairline border-t-2 border-t-amber-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-amber-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-600">Chờ thanh toán</span>
                 <svg class="w-4 h-4 text-amber-500/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -264,8 +313,8 @@
               </div>
             </div>
 
-            <!-- Summary 4: Thanh toán thất bại -->
-            <div class="rounded-[6px] border border-hairline border-t-2 border-t-rose-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
+            <!-- Card 4: Thanh toán thất bại -->
+            <div data-kpi-card="failed" tabindex="0" role="button" aria-label="Lọc đơn thanh toán thất bại" class="rounded-[6px] border border-hairline border-t-2 border-t-rose-500 bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-rose-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-rose-600">Thất bại</span>
                 <svg class="w-4 h-4 text-rose-500/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -280,9 +329,9 @@
               </div>
             </div>
 
-            <!-- Summary 5: Đã hủy -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
-              <div class="flex items-center justify-between text-mid-gray">
+            <!-- Card 5: Đã hủy -->
+            <div data-kpi-card="cancelled" tabindex="0" role="button" aria-label="Lọc đơn đã hủy" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-ink">
+              <div class="flex items-center justify-between text-mid-gray group-hover:text-ink">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Đã hủy</span>
                 <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                   <path d="M18 6 6 18M6 6l12 12"/>
@@ -294,9 +343,9 @@
               </div>
             </div>
 
-            <!-- Summary 6: Đã hết hạn -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/40 transition-colors">
-              <div class="flex items-center justify-between text-mid-gray">
+            <!-- Card 6: Đã hết hạn -->
+            <div data-kpi-card="expired" tabindex="0" role="button" aria-label="Lọc đơn đã hết hạn" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between min-h-[96px] hover:border-mid-gray/50 transition-all cursor-pointer group focus:outline-none focus:ring-1 focus:ring-ink">
+              <div class="flex items-center justify-between text-mid-gray group-hover:text-ink">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Đã hết hạn</span>
                 <svg class="w-4 h-4 text-mid-gray/80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                   <path d="M10 2h4M12 14v-4M4 10a8 8 0 1 0 16 0 8 8 0 0 0-16 0z"/>
@@ -322,7 +371,7 @@
                 </div>
                 <div class="mt-1">
                   <span id="insight-paid-amount" class="text-base font-bold text-ink">0đ</span>
-                  <p class="text-[10px] text-mid-gray mt-0.5">Từ các đơn payment_status = paid</p>
+                  <p class="text-[10px] text-mid-gray mt-0.5">Từ các đơn status/payment_status = paid</p>
                 </div>
               </div>
 
@@ -352,7 +401,7 @@
                 </div>
                 <div class="mt-1">
                   <span id="insight-success-rate" class="text-base font-bold text-emerald-600">0%</span>
-                  <p class="text-[10px] text-mid-gray mt-0.5">Paid trên tổng giao dịch hợp lệ</p>
+                  <p class="text-[10px] text-mid-gray mt-0.5">Paid trên tổng đơn phát sinh</p>
                 </div>
               </div>
 
@@ -383,7 +432,7 @@
                 </div>
                 <div class="mt-1">
                   <span id="insight-anomaly-count" class="text-base font-bold text-ink">0 trường hợp</span>
-                  <p class="text-[10px] text-mid-gray mt-0.5">Enrollment và revenue khớp</p>
+                  <p class="text-[10px] text-mid-gray mt-0.5">Ghi danh và đối soát tương ứng</p>
                 </div>
               </div>
             </div>
@@ -415,17 +464,49 @@
 
           <!-- 4. BỘ LỌC CHI TIẾT (Filter Component) -->
           <div class="rounded-[6px] border border-hairline bg-paper p-3.5 lg:p-4 shadow-subtle space-y-3">
-            <form id="order-filter-form" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+            <form id="order-filter-form" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               
-              <!-- Filter: Mã đơn hàng -->
+              <!-- 1. Tìm Mã đơn hàng -->
               <div>
                 <label for="filter-order-code" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Mã đơn hàng</label>
                 <div class="relative">
-                  <input type="text" id="filter-order-code" placeholder="Nhập mã đơn, ví dụ ORD-2026-0001..." class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60" />
+                  <input type="text" id="filter-order-code" placeholder="Tìm theo mã đơn, ví dụ ORD-2026-0001..." class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60" />
                 </div>
               </div>
 
-              <!-- Filter: Trạng thái đơn -->
+              <!-- 2. Người mua (Searchable Autocomplete) -->
+              <div class="relative" id="buyer-autocomplete-wrapper">
+                <label for="filter-user-search" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Người mua</label>
+                <div class="relative">
+                  <input type="text" id="filter-user-search" placeholder="Tìm theo tên hoặc email người mua..." autocomplete="off" class="w-full h-9 pl-3 pr-7 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60" />
+                  <input type="hidden" id="filter-user-id" value="all" />
+                  <button type="button" id="btn-clear-user-search" class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-mid-gray hover:text-ink cursor-pointer" aria-label="Xóa chọn người mua">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <!-- Dropdown danh sách kết quả -->
+                <div id="buyer-autocomplete-options" class="absolute left-0 right-0 top-full mt-1 bg-paper border border-hairline rounded-[6px] shadow-lg z-50 hidden py-1 text-xs max-h-60 overflow-y-auto custom-scrollbar">
+                  <!-- JS nạp options -->
+                </div>
+              </div>
+
+              <!-- 3. Khóa học (Searchable Autocomplete) -->
+              <div class="relative" id="course-autocomplete-wrapper">
+                <label for="filter-course-search" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Khóa học</label>
+                <div class="relative">
+                  <input type="text" id="filter-course-search" placeholder="Tìm theo tên hoặc slug khóa học..." autocomplete="off" class="w-full h-9 pl-3 pr-7 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60" />
+                  <input type="hidden" id="filter-course-id" value="all" />
+                  <button type="button" id="btn-clear-course-search" class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-mid-gray hover:text-ink cursor-pointer" aria-label="Xóa chọn khóa học">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <!-- Dropdown danh sách kết quả -->
+                <div id="course-autocomplete-options" class="absolute left-0 right-0 top-full mt-1 bg-paper border border-hairline rounded-[6px] shadow-lg z-50 hidden py-1 text-xs max-h-60 overflow-y-auto custom-scrollbar">
+                  <!-- JS nạp options -->
+                </div>
+              </div>
+
+              <!-- 4. Trạng thái đơn -->
               <div>
                 <label class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Trạng thái đơn</label>
                 <div class="relative custom-select-wrapper" id="select-status-wrapper">
@@ -439,14 +520,14 @@
                     <div data-option data-value="all" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between font-semibold">Tất cả trạng thái</div>
                     <div data-option data-value="pending" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Chờ thanh toán</div>
                     <div data-option data-value="paid" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Đã thanh toán</div>
-                    <div data-option data-value="failed" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Thanh toán thất bại</div>
+                    <div data-option data-value="failed" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Thất bại</div>
                     <div data-option data-value="cancelled" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Đã hủy</div>
                     <div data-option data-value="expired" class="px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between">Đã hết hạn</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Filter: Trạng thái thanh toán -->
+              <!-- 5. Trạng thái thanh toán -->
               <div>
                 <label class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Trạng thái thanh toán</label>
                 <div class="relative custom-select-wrapper" id="select-payment-status-wrapper">
@@ -466,49 +547,7 @@
                 </div>
               </div>
 
-              <!-- Filter: Người mua -->
-              <div>
-                <label class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Người mua</label>
-                <div class="relative custom-select-wrapper" id="select-user-wrapper">
-                  <button type="button" data-select-trigger class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] flex items-center justify-between text-ink transition-colors cursor-pointer">
-                    <span data-select-label class="truncate">Tất cả người mua</span>
-                    <svg class="w-3.5 h-3.5 text-mid-gray shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                    </svg>
-                  </button>
-                  <div data-select-dropdown class="absolute left-0 right-0 top-full mt-1 bg-paper border border-hairline rounded-[6px] shadow-lg z-50 hidden p-1 text-xs max-h-60 overflow-y-auto custom-scrollbar">
-                    <div class="p-1 sticky top-0 bg-paper">
-                      <input type="text" data-select-search placeholder="Tìm người mua..." class="w-full h-7 px-2 text-xs bg-canvas border border-hairline rounded-[4px] focus:outline-none" />
-                    </div>
-                    <div data-select-options class="py-1">
-                      <div data-option data-value="all" class="px-3 py-2 hover:bg-canvas cursor-pointer font-semibold">Tất cả người mua</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Filter: Khóa học -->
-              <div>
-                <label class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Khóa học</label>
-                <div class="relative custom-select-wrapper" id="select-course-wrapper">
-                  <button type="button" data-select-trigger class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] flex items-center justify-between text-ink transition-colors cursor-pointer">
-                    <span data-select-label class="truncate">Tất cả khóa học</span>
-                    <svg class="w-3.5 h-3.5 text-mid-gray shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                    </svg>
-                  </button>
-                  <div data-select-dropdown class="absolute left-0 right-0 top-full mt-1 bg-paper border border-hairline rounded-[6px] shadow-lg z-50 hidden p-1 text-xs max-h-60 overflow-y-auto custom-scrollbar">
-                    <div class="p-1 sticky top-0 bg-paper">
-                      <input type="text" data-select-search placeholder="Tìm khóa học..." class="w-full h-7 px-2 text-xs bg-canvas border border-hairline rounded-[4px] focus:outline-none" />
-                    </div>
-                    <div data-select-options class="py-1">
-                      <div data-option data-value="all" class="px-3 py-2 hover:bg-canvas cursor-pointer font-semibold">Tất cả khóa học</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Filter: Khoảng thời gian -->
+              <!-- 6. Khoảng thời gian -->
               <div>
                 <label class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">Khoảng thời gian</label>
                 <div class="relative custom-select-wrapper" id="select-date-preset-wrapper">
@@ -562,37 +601,32 @@
           <section id="orders-list-section" class="space-y-3">
             <div class="rounded-[6px] border border-hairline bg-paper shadow-subtle overflow-hidden">
               
-              <!-- Horizontal Scroll Table Container -->
+              <!-- Horizontal Scroll Table Container (11 Columns - Gộp Cột Giá Thanh Toán) -->
               <div class="overflow-x-auto custom-scrollbar">
-                <table class="min-w-[1700px] w-full text-left border-collapse text-xs">
+                <table class="min-w-[1500px] w-full text-left border-collapse text-xs">
                   <thead>
                     <tr class="border-b border-hairline bg-surface-alt text-[10px] font-bold uppercase tracking-wider text-mid-gray">
                       <th class="py-3 px-4 w-[170px]">Mã đơn</th>
                       <th class="py-3 px-4 w-[210px]">Người mua</th>
                       <th class="py-3 px-4 w-[260px]">Khóa học</th>
-                      <th class="py-3 px-4 w-[120px] text-right">Giá gốc</th>
-                      <th class="py-3 px-4 w-[120px] text-right">Giảm giá</th>
-                      <th class="py-3 px-4 w-[130px] text-right">Thực trả</th>
+                      <th class="py-3 px-4 w-[150px]">Giá thanh toán</th>
                       <th class="py-3 px-4 w-[120px]">Phương thức</th>
-                      <th class="py-3 px-4 w-[135px]">Trạng thái đơn</th>
-                      <th class="py-3 px-4 w-[145px]">Thanh toán</th>
-                      <th class="py-3 px-4 w-[135px]">Thời gian TT</th>
+                      <th class="py-3 px-4 w-[140px]">Trạng thái đơn</th>
+                      <th class="py-3 px-4 w-[150px]">Trạng thái thanh toán</th>
+                      <th class="py-3 px-4 w-[135px]">Thanh toán lúc</th>
                       <th class="py-3 px-4 w-[135px]">Ngày tạo</th>
-                      <th class="py-3 px-4 w-[120px]">Kiểm tra</th>
+                      <th class="py-3 px-4 w-[125px]">Kiểm tra</th>
                       <th class="py-3 px-4 w-[64px] text-center" data-no-row-click>Thao tác</th>
                     </tr>
                   </thead>
                   
                   <!-- Table Body Skeletons (Khi loading) -->
                   <tbody id="orders-tbody-skeleton">
-                    <!-- 6 Skeleton rows -->
                     <tr class="border-b border-hairline animate-pulse">
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-24"></div><div class="h-2.5 bg-hairline/40 rounded w-16 mt-1.5"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-28"></div><div class="h-2.5 bg-hairline/40 rounded w-32 mt-1.5"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-44"></div><div class="h-2.5 bg-hairline/40 rounded w-24 mt-1.5"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-16 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-14 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-20 ml-auto"></div></td>
+                      <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-16"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
@@ -605,9 +639,7 @@
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-24"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-28"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-44"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-16 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-14 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-20 ml-auto"></div></td>
+                      <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-16"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
@@ -620,9 +652,7 @@
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-24"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-28"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-44"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-16 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-14 ml-auto"></div></td>
-                      <td class="py-3.5 px-4 text-right"><div class="h-3.5 bg-hairline/60 rounded w-20 ml-auto"></div></td>
+                      <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-16"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
                       <td class="py-3.5 px-4"><div class="h-3.5 bg-hairline/60 rounded w-20"></div></td>
@@ -635,7 +665,7 @@
 
                   <!-- Table Data Rows -->
                   <tbody id="orders-tbody" class="hidden">
-                    <!-- Rows rendered dynamically via JS -->
+                    <!-- Dynamic Rows JS -->
                   </tbody>
                 </table>
               </div>
@@ -659,8 +689,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
                   </svg>
                 </div>
-                <h3 class="text-sm font-semibold text-ink">Không tìm thấy đơn hàng phù hợp</h3>
-                <p class="text-xs text-mid-gray mt-1 max-w-sm mx-auto">Thử điều chỉnh lại từ khóa hoặc các bộ lọc đang áp dụng.</p>
+                <h3 class="text-sm font-semibold text-ink">Không tìm thấy đơn hàng phù hợp với bộ lọc</h3>
+                <p class="text-xs text-mid-gray mt-1 max-w-sm mx-auto">Thử điều chỉnh lại từ khóa hoặc xóa bớt các điều kiện lọc đang áp dụng.</p>
                 <div class="mt-4">
                   <button type="button" id="btn-reset-filters-empty" class="h-8 px-4 text-xs font-semibold rounded-[6px] bg-ink text-white hover:bg-ink/90 transition-colors shadow-sm cursor-pointer">
                     Đặt lại bộ lọc
@@ -701,7 +731,7 @@
                     </select>
                   </div>
                   <div id="pagination-buttons" class="flex items-center gap-1">
-                    <!-- Pagination buttons rendered dynamically via JS -->
+                    <!-- Pagination buttons dynamic JS -->
                   </div>
                 </div>
               </div>
@@ -756,7 +786,7 @@
 
           <!-- Drawer Scrollable Content Body -->
           <div class="flex-1 overflow-y-auto p-5 space-y-5 custom-scrollbar" id="drawer-content-body">
-            <!-- Content populated by JS -->
+            <!-- Content dynamic JS -->
           </div>
 
           <!-- Drawer Footer -->

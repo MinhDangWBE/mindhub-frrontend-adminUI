@@ -1,6 +1,7 @@
 import { getOrders, getOrder } from "../api/orders-api.js";
 import { getUsers, getCourses } from "../mocks/mock-repository.js";
 import { showToast } from "../toast.js";
+import { initializeLayout } from "../layout.js";
 
 // Global State
 const state = {
@@ -18,9 +19,6 @@ const state = {
   isLoading: false,
   shouldAutoScroll: false
 };
-
-// Elements cache
-let dom = {};
 
 /**
  * Format tiền tệ VND
@@ -186,6 +184,11 @@ async function fetchAndRenderOrders() {
     const { summary, items } = response.data;
     const meta = response.meta;
 
+    // Cập nhật lại state.page nếu API tự cân chỉnh
+    if (meta && meta.current_page) {
+      state.page = meta.current_page;
+    }
+
     // Render Summary Cards
     renderSummaryCards(summary);
 
@@ -204,7 +207,10 @@ async function fetchAndRenderOrders() {
 
     // Cập nhật timestamp lần cuối
     const now = new Date();
-    document.getElementById("last-update-time").textContent = `${formatDateTime(now.toISOString())}`;
+    const lastUpdateEl = document.getElementById("last-update-time");
+    if (lastUpdateEl) {
+      lastUpdateEl.textContent = `${formatDateTime(now.toISOString())}`;
+    }
 
     // Đã render xong -> Nếu có cờ tự cuộn thì cuộn xuống danh sách
     if (state.shouldAutoScroll) {
@@ -238,7 +244,7 @@ function showSkeletons() {
 }
 
 /**
- * Ân Loading Skeletons
+ * Ẩn Loading Skeletons
  */
 function hideSkeletons() {
   document.getElementById("orders-tbody-skeleton")?.classList.add("hidden");
@@ -248,29 +254,39 @@ function hideSkeletons() {
  * Render KPI Summary Cards
  */
 function renderSummaryCards(summary) {
-  document.getElementById("title-total-orders").textContent = summary.total_orders || 0;
-  document.getElementById("kpi-total-orders").textContent = summary.total_orders || 0;
-  document.getElementById("kpi-paid-orders").textContent = summary.paid_orders || 0;
-  document.getElementById("kpi-pending-orders").textContent = summary.pending_orders || 0;
-  document.getElementById("kpi-failed-orders").textContent = summary.failed_orders || 0;
-  document.getElementById("kpi-cancelled-orders").textContent = summary.cancelled_orders || 0;
-  document.getElementById("kpi-expired-orders").textContent = summary.expired_orders || 0;
+  const setTxt = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setTxt("title-total-orders", summary.total_orders || 0);
+  setTxt("kpi-total-orders", summary.total_orders || 0);
+  setTxt("kpi-paid-orders", summary.paid_orders || 0);
+  setTxt("kpi-pending-orders", summary.pending_orders || 0);
+  setTxt("kpi-failed-orders", summary.failed_orders || 0);
+  setTxt("kpi-cancelled-orders", summary.cancelled_orders || 0);
+  setTxt("kpi-expired-orders", summary.expired_orders || 0);
 
   const paidRate = summary.total_orders > 0 ? ((summary.paid_orders / summary.total_orders) * 100).toFixed(1) : "0";
-  document.getElementById("kpi-paid-rate").textContent = `${paidRate}%`;
+  setTxt("kpi-paid-rate", `${paidRate}%`);
 }
 
 /**
  * Render Quick Insight Bar
  */
 function renderQuickInsightBar(summary) {
-  document.getElementById("insight-paid-amount").textContent = formatVND(summary.paid_amount);
-  document.getElementById("insight-avg-order-value").textContent = formatVND(summary.average_order_value);
-  document.getElementById("insight-success-rate").textContent = `${summary.payment_success_rate || 0}%`;
+  const setTxt = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setTxt("insight-paid-amount", formatVND(summary.paid_amount));
+  setTxt("insight-avg-order-value", formatVND(summary.average_order_value));
+  setTxt("insight-success-rate", `${summary.payment_success_rate || 0}%`);
 
   const uncompleted = (summary.failed_orders || 0) + (summary.cancelled_orders || 0) + (summary.expired_orders || 0);
-  document.getElementById("insight-uncompleted-orders").textContent = `${uncompleted} đơn`;
-  document.getElementById("insight-anomaly-count").textContent = `${summary.anomaly_count || 0} trường hợp`;
+  setTxt("insight-uncompleted-orders", `${uncompleted} đơn`);
+  setTxt("insight-anomaly-count", `${summary.anomaly_count || 0} trường hợp`);
 }
 
 /**
@@ -306,16 +322,18 @@ function renderStatusTabs(summary) {
 }
 
 /**
- * Render Bảng Danh Sách Đơn Hàng
+ * Render Bảng Danh Sách Đơn Hàng (11 Cột - Gộp Cột Giá Thanh Toán)
  */
 function renderTable(items) {
   const tbody = document.getElementById("orders-tbody");
   const emptyState = document.getElementById("orders-empty-state");
   const filterEmptyState = document.getElementById("orders-filter-empty-state");
 
+  if (!tbody) return;
+
   tbody.innerHTML = "";
 
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     tbody.classList.add("hidden");
     const hasFilter =
       state.status !== "all" ||
@@ -327,17 +345,17 @@ function renderTable(items) {
       state.date_to !== "";
 
     if (hasFilter) {
-      filterEmptyState.classList.remove("hidden");
-      emptyState.classList.add("hidden");
+      filterEmptyState?.classList.remove("hidden");
+      emptyState?.classList.add("hidden");
     } else {
-      emptyState.classList.remove("hidden");
-      filterEmptyState.classList.add("hidden");
+      emptyState?.classList.remove("hidden");
+      filterEmptyState?.classList.add("hidden");
     }
     return;
   }
 
-  emptyState.classList.add("hidden");
-  filterEmptyState.classList.add("hidden");
+  emptyState?.classList.add("hidden");
+  filterEmptyState?.classList.add("hidden");
   tbody.classList.remove("hidden");
 
   items.forEach((item) => {
@@ -348,26 +366,26 @@ function renderTable(items) {
     tr.setAttribute("tabindex", "0");
     tr.setAttribute("aria-label", `Xem chi tiết đơn hàng ${item.order_code}`);
 
-    // Order status badge text
-    let statusDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray"></span>Đã hủy</span>`;
+    // Order status badge text (dot + text)
+    let statusDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray shrink-0"></span>Đã hủy</span>`;
     if (item.status === "paid") {
-      statusDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Đã thanh toán</span>`;
+      statusDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0"></span>Đã thanh toán</span>`;
     } else if (item.status === "pending") {
-      statusDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600"><span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>Chờ thanh toán</span>`;
+      statusDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600"><span class="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0"></span>Chờ thanh toán</span>`;
     } else if (item.status === "failed") {
-      statusDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-rose-600"><span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>Thất bại</span>`;
+      statusDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-rose-600"><span class="h-1.5 w-1.5 rounded-full bg-rose-500 shrink-0"></span>Thất bại</span>`;
     } else if (item.status === "expired") {
-      statusDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray"></span>Hết hạn</span>`;
+      statusDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray shrink-0"></span>Hết hạn</span>`;
     }
 
-    // Payment status badge text
-    let paymentDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray"></span>Chưa thanh toán</span>`;
+    // Payment status badge text (dot + text)
+    let paymentDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-mid-gray"><span class="h-1.5 w-1.5 rounded-full bg-mid-gray shrink-0"></span>Chưa thanh toán</span>`;
     if (item.payment_status === "paid") {
-      paymentDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Đã thanh toán</span>`;
+      paymentDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0"></span>Đã thanh toán</span>`;
     } else if (item.payment_status === "processing") {
-      paymentDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600"><span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>Đang xử lý</span>`;
+      paymentDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600"><span class="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0"></span>Đang xử lý</span>`;
     } else if (item.payment_status === "failed") {
-      paymentDot = `<span class="flex items-center gap-1.5 whitespace-nowrap font-medium text-rose-600"><span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>Thất bại</span>`;
+      paymentDot = `<span class="inline-flex items-center gap-1.5 whitespace-nowrap font-medium text-rose-600"><span class="h-1.5 w-1.5 rounded-full bg-rose-500 shrink-0"></span>Thất bại</span>`;
     }
 
     // Payment method mapping
@@ -379,81 +397,86 @@ function renderTable(items) {
     else if (item.payment_method === "free") methodText = "Miễn phí";
 
     // Consistency badge
-    let consistencyBadge = `<span class="flex items-center gap-1.5 font-medium text-emerald-600"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Bình thường</span>`;
+    let consistencyBadge = `<span class="inline-flex items-center gap-1.5 font-medium text-emerald-600 whitespace-nowrap"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0"></span>Bình thường</span>`;
     if (item.consistency) {
       if (!item.consistency.paid_has_enrollment || !item.consistency.paid_has_revenue || !item.consistency.amounts_match) {
-        consistencyBadge = `<span class="flex items-center gap-1.5 font-semibold text-rose-600"><span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>Cần kiểm tra</span>`;
+        consistencyBadge = `<span class="inline-flex items-center gap-1.5 font-semibold text-rose-600 whitespace-nowrap"><span class="h-1.5 w-1.5 rounded-full bg-rose-500 shrink-0"></span>Cần kiểm tra</span>`;
       }
     }
 
-    const discountDisplay = Number(item.discount_amount) > 0 ? formatVND(item.discount_amount) : '<span class="text-mid-gray/70">Không giảm</span>';
+    // Gộp Cột Giá Thanh Toán (GIÁ THANH TOÁN)
+    let priceCellHtml = "";
+    const hasDiscount = Number(item.discount_amount) > 0 && Number(item.price_snapshot) !== Number(item.amount);
+    if (hasDiscount) {
+      priceCellHtml = `
+        <div class="space-y-0.5">
+          <div class="font-bold text-ink text-sm leading-tight">${formatVND(item.amount)}</div>
+          <div class="text-[11px] text-mid-gray/80 line-through">${formatVND(item.price_snapshot)}</div>
+          <div class="text-[10px] text-emerald-600 font-medium">Giảm ${formatVND(item.discount_amount)}</div>
+          ${item.coupon ? `<div class="text-[9px] font-mono font-semibold text-ink uppercase mt-0.5">${item.coupon.code}</div>` : ''}
+        </div>
+      `;
+    } else {
+      priceCellHtml = `
+        <div class="font-bold text-ink text-sm leading-tight">${formatVND(item.amount)}</div>
+      `;
+    }
 
     tr.innerHTML = `
-      <!-- Mã đơn -->
+      <!-- 1. Mã đơn -->
       <td class="py-3.5 px-4">
         <div class="font-mono font-bold text-ink leading-tight">${item.order_code}</div>
         ${item.provider_transaction_id ? `<div class="text-[10px] text-mid-gray font-mono mt-0.5 truncate max-w-[150px]" title="Mã GD: ${item.provider_transaction_id}">${item.provider_transaction_id}</div>` : ''}
       </td>
 
-      <!-- Người mua -->
+      <!-- 2. Người mua -->
       <td class="py-3.5 px-4">
         <div class="font-medium text-ink truncate max-w-[190px]" title="${item.user ? item.user.full_name : ''}">${item.user ? item.user.full_name : '---'}</div>
         <div class="text-[10px] text-mid-gray truncate max-w-[190px]" title="${item.user ? item.user.email : ''}">${item.user ? item.user.email : '---'}</div>
       </td>
 
-      <!-- Khóa học -->
+      <!-- 3. Khóa học -->
       <td class="py-3.5 px-4">
         <div class="font-medium text-ink line-clamp-1 max-w-[240px]" title="${item.course ? item.course.title : ''}">${item.course ? item.course.title : '---'}</div>
         <div class="text-[10px] text-mid-gray font-mono truncate max-w-[240px] mt-0.5">${item.course ? item.course.slug : '---'}</div>
       </td>
 
-      <!-- Giá gốc -->
-      <td class="py-3.5 px-4 text-right font-medium text-mid-gray">
-        ${formatVND(item.price_snapshot)}
+      <!-- 4. Giá thanh toán (Gộp Cột) -->
+      <td class="py-3.5 px-4">
+        ${priceCellHtml}
       </td>
 
-      <!-- Giảm giá -->
-      <td class="py-3.5 px-4 text-right">
-        <div class="text-mid-gray">${discountDisplay}</div>
-        ${item.coupon ? `<div class="text-[9px] font-mono font-semibold text-ink uppercase mt-0.5">${item.coupon.code}</div>` : ''}
-      </td>
-
-      <!-- Thực trả -->
-      <td class="py-3.5 px-4 text-right font-bold text-ink text-sm">
-        ${formatVND(item.amount)}
-      </td>
-
-      <!-- Phương thức -->
+      <!-- 5. Phương thức -->
       <td class="py-3.5 px-4">
         <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-canvas border border-hairline text-ink">${methodText}</span>
       </td>
 
-      <!-- Trạng thái đơn -->
+      <!-- 6. Trạng thái đơn -->
       <td class="py-3.5 px-4">
         ${statusDot}
       </td>
 
-      <!-- Trạng thái thanh toán -->
+      <!-- 7. Trạng thái thanh toán -->
       <td class="py-3.5 px-4">
         ${paymentDot}
       </td>
 
-      <!-- Thời gian thanh toán -->
+      <!-- 8. Thời gian thanh toán -->
       <td class="py-3.5 px-4 text-mid-gray whitespace-nowrap">
         ${formatDateTime(item.paid_at)}
       </td>
 
-      <!-- Ngày tạo -->
+      <!-- 9. Ngày tạo -->
       <td class="py-3.5 px-4 text-mid-gray whitespace-nowrap">
         ${formatDateTime(item.created_at)}
       </td>
 
-      <!-- Kiểm tra dữ liệu -->
+      <!-- 10. Kiểm tra dữ liệu -->
       <td class="py-3.5 px-4">
         ${consistencyBadge}
       </td>
 
-      <!-- Thao tác (3 dots menu) -->
+      <!-- 11. Thao tác (3 dots menu) -->
       <td class="py-3.5 px-4 text-center relative" data-no-row-click>
         <button type="button" data-menu-trigger class="p-1 rounded-md hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer" aria-label="Menu thao tác">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -663,8 +686,14 @@ function removeSingleFilter(filterKey) {
   if (filterKey === "order_code") state.order_code = "";
   if (filterKey === "status") state.status = "all";
   if (filterKey === "payment_status") state.payment_status = "all";
-  if (filterKey === "user_id") state.user_id = "all";
-  if (filterKey === "course_id") state.course_id = "all";
+  if (filterKey === "user_id") {
+    state.user_id = "all";
+    clearBuyerSelection();
+  }
+  if (filterKey === "course_id") {
+    state.course_id = "all";
+    clearCourseSelection();
+  }
   if (filterKey === "date_preset") {
     state.date_preset = "all";
     state.date_from = "";
@@ -693,9 +722,39 @@ function resetAllFilters() {
   state.page = 1;
   state.shouldAutoScroll = true;
 
+  clearBuyerSelection();
+  clearCourseSelection();
   syncFilterInputsUI();
   updateUrlParams();
   fetchAndRenderOrders();
+}
+
+/**
+ * Xóa chọn người mua
+ */
+function clearBuyerSelection() {
+  const searchInput = document.getElementById("filter-user-search");
+  const hiddenId = document.getElementById("filter-user-id");
+  const btnClear = document.getElementById("btn-clear-user-search");
+
+  if (searchInput) searchInput.value = "";
+  if (hiddenId) hiddenId.value = "all";
+  if (btnClear) btnClear.classList.add("hidden");
+  state.user_id = "all";
+}
+
+/**
+ * Xóa chọn khóa học
+ */
+function clearCourseSelection() {
+  const searchInput = document.getElementById("filter-course-search");
+  const hiddenId = document.getElementById("filter-course-id");
+  const btnClear = document.getElementById("btn-clear-course-search");
+
+  if (searchInput) searchInput.value = "";
+  if (hiddenId) hiddenId.value = "all";
+  if (btnClear) btnClear.classList.add("hidden");
+  state.course_id = "all";
 }
 
 /**
@@ -705,12 +764,40 @@ function syncFilterInputsUI() {
   const codeInput = document.getElementById("filter-order-code");
   if (codeInput) codeInput.value = state.order_code;
 
+  // Sync Autocomplete Buyer
+  if (state.user_id !== "all") {
+    const users = getUsers();
+    const found = users.find((u) => u.id === Number(state.user_id));
+    if (found) {
+      const searchInput = document.getElementById("filter-user-search");
+      const btnClear = document.getElementById("btn-clear-user-search");
+      if (searchInput) searchInput.value = found.full_name;
+      if (btnClear) btnClear.classList.remove("hidden");
+    }
+  } else {
+    clearBuyerSelection();
+  }
+
+  // Sync Autocomplete Course
+  if (state.course_id !== "all") {
+    const courses = getCourses();
+    const found = courses.find((c) => c.id === Number(state.course_id));
+    if (found) {
+      const searchInput = document.getElementById("filter-course-search");
+      const btnClear = document.getElementById("btn-clear-course-search");
+      if (searchInput) searchInput.value = found.title;
+      if (btnClear) btnClear.classList.remove("hidden");
+    }
+  } else {
+    clearCourseSelection();
+  }
+
   // Custom Select Status
   setCustomSelectValue("select-status-wrapper", state.status, {
     all: "Tất cả trạng thái",
     pending: "Chờ thanh toán",
     paid: "Đã thanh toán",
-    failed: "Thanh toán thất bại",
+    failed: "Thất bại",
     cancelled: "Đã hủy",
     expired: "Đã hết hạn"
   });
@@ -756,7 +843,7 @@ function setCustomSelectValue(wrapperId, value, labelMap) {
   if (!wrapper) return;
   const labelEl = wrapper.querySelector("[data-select-label]");
   if (labelEl) {
-    labelEl.textContent = labelMap[value] || labelEl.getAttribute("data-default-label") || "Chọn...";
+    labelEl.textContent = labelMap[value] || "Tất cả";
   }
 }
 
@@ -777,35 +864,214 @@ function showErrorState(msg) {
 }
 
 /**
- * Khởi tạo Custom Selects (Buyer, Course, Status, Payment Status, Date Preset)
+ * Khởi tạo Component Autocomplete Người mua (Searchable Combobox)
+ */
+function initBuyerAutocomplete() {
+  const wrapper = document.getElementById("buyer-autocomplete-wrapper");
+  const input = document.getElementById("filter-user-search");
+  const hiddenId = document.getElementById("filter-user-id");
+  const dropdown = document.getElementById("buyer-autocomplete-options");
+  const btnClear = document.getElementById("btn-clear-user-search");
+
+  if (!wrapper || !input || !dropdown) return;
+
+  const users = getUsers();
+  const learners = users.filter((u) => u.role === "learner" || u.role === "instructor");
+
+  function renderOptions(keyword = "") {
+    const kw = keyword.toLowerCase().trim();
+    dropdown.innerHTML = "";
+
+    // Default option: Tất cả người mua
+    const defaultOpt = document.createElement("div");
+    defaultOpt.className = "px-3 py-2 hover:bg-canvas cursor-pointer font-semibold border-b border-hairline/60 text-ink";
+    defaultOpt.textContent = "Tất cả người mua";
+    defaultOpt.addEventListener("click", () => {
+      selectBuyer("all", "");
+    });
+    dropdown.appendChild(defaultOpt);
+
+    const filtered = learners.filter(
+      (u) => u.full_name.toLowerCase().includes(kw) || u.email.toLowerCase().includes(kw)
+    );
+
+    if (filtered.length === 0) {
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "px-3 py-2.5 text-mid-gray italic text-[11px]";
+      emptyDiv.textContent = "Không tìm thấy người mua phù hợp";
+      dropdown.appendChild(emptyDiv);
+      return;
+    }
+
+    filtered.forEach((u) => {
+      const opt = document.createElement("div");
+      opt.className = "px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between transition-colors";
+      opt.innerHTML = `
+        <span class="font-medium text-ink truncate max-w-[140px]">${u.full_name}</span>
+        <span class="text-[10px] text-mid-gray truncate max-w-[130px]">${u.email}</span>
+      `;
+      opt.addEventListener("click", () => {
+        selectBuyer(u.id, u.full_name);
+      });
+      dropdown.appendChild(opt);
+    });
+  }
+
+  function selectBuyer(id, name) {
+    if (id === "all") {
+      state.user_id = "all";
+      input.value = "";
+      hiddenId.value = "all";
+      btnClear?.classList.add("hidden");
+    } else {
+      state.user_id = String(id);
+      input.value = name;
+      hiddenId.value = String(id);
+      btnClear?.classList.remove("hidden");
+    }
+    dropdown.classList.add("hidden");
+  }
+
+  input.addEventListener("focus", () => {
+    renderOptions(input.value);
+    dropdown.classList.remove("hidden");
+  });
+
+  input.addEventListener("input", (e) => {
+    renderOptions(e.target.value);
+    dropdown.classList.remove("hidden");
+  });
+
+  btnClear?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    clearBuyerSelection();
+    state.page = 1;
+    state.shouldAutoScroll = true;
+    updateUrlParams();
+    fetchAndRenderOrders();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      dropdown.classList.add("hidden");
+    }
+  });
+}
+
+/**
+ * Khởi tạo Component Autocomplete Khóa học (Searchable Combobox)
+ */
+function initCourseAutocomplete() {
+  const wrapper = document.getElementById("course-autocomplete-wrapper");
+  const input = document.getElementById("filter-course-search");
+  const hiddenId = document.getElementById("filter-course-id");
+  const dropdown = document.getElementById("course-autocomplete-options");
+  const btnClear = document.getElementById("btn-clear-course-search");
+
+  if (!wrapper || !input || !dropdown) return;
+
+  const courses = getCourses();
+
+  function renderOptions(keyword = "") {
+    const kw = keyword.toLowerCase().trim();
+    dropdown.innerHTML = "";
+
+    // Default option: Tất cả khóa học
+    const defaultOpt = document.createElement("div");
+    defaultOpt.className = "px-3 py-2 hover:bg-canvas cursor-pointer font-semibold border-b border-hairline/60 text-ink";
+    defaultOpt.textContent = "Tất cả khóa học";
+    defaultOpt.addEventListener("click", () => {
+      selectCourse("all", "");
+    });
+    dropdown.appendChild(defaultOpt);
+
+    const filtered = courses.filter(
+      (c) => c.title.toLowerCase().includes(kw) || (c.slug && c.slug.toLowerCase().includes(kw))
+    );
+
+    if (filtered.length === 0) {
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "px-3 py-2.5 text-mid-gray italic text-[11px]";
+      emptyDiv.textContent = "Không tìm thấy khóa học phù hợp";
+      dropdown.appendChild(emptyDiv);
+      return;
+    }
+
+    filtered.forEach((c) => {
+      const opt = document.createElement("div");
+      opt.className = "px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between transition-colors";
+      opt.innerHTML = `
+        <span class="font-medium text-ink truncate max-w-[160px]" title="${c.title}">${c.title}</span>
+        <span class="text-[10px] text-mid-gray font-mono">ID:${c.id}</span>
+      `;
+      opt.addEventListener("click", () => {
+        selectCourse(c.id, c.title);
+      });
+      dropdown.appendChild(opt);
+    });
+  }
+
+  function selectCourse(id, title) {
+    if (id === "all") {
+      state.course_id = "all";
+      input.value = "";
+      hiddenId.value = "all";
+      btnClear?.classList.add("hidden");
+    } else {
+      state.course_id = String(id);
+      input.value = title;
+      hiddenId.value = String(id);
+      btnClear?.classList.remove("hidden");
+    }
+    dropdown.classList.add("hidden");
+  }
+
+  input.addEventListener("focus", () => {
+    renderOptions(input.value);
+    dropdown.classList.remove("hidden");
+  });
+
+  input.addEventListener("input", (e) => {
+    renderOptions(e.target.value);
+    dropdown.classList.remove("hidden");
+  });
+
+  btnClear?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    clearCourseSelection();
+    state.page = 1;
+    state.shouldAutoScroll = true;
+    updateUrlParams();
+    fetchAndRenderOrders();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      dropdown.classList.add("hidden");
+    }
+  });
+}
+
+/**
+ * Khởi tạo Custom Selects (Status, Payment Status, Date Preset)
  */
 function initCustomSelects() {
-  // Populate options cho Buyer & Course
-  populateBuyerOptions();
-  populateCourseOptions();
-
   const wrappers = document.querySelectorAll(".custom-select-wrapper");
 
   wrappers.forEach((wrapper) => {
     const trigger = wrapper.querySelector("[data-select-trigger]");
     const dropdown = wrapper.querySelector("[data-select-dropdown]");
-    const searchInput = wrapper.querySelector("[data-select-search]");
 
     if (!trigger || !dropdown) return;
 
     trigger.addEventListener("click", (e) => {
       e.stopPropagation();
-      // Close other dropdowns
       wrappers.forEach((w) => {
         if (w !== wrapper) w.querySelector("[data-select-dropdown]")?.classList.add("hidden");
       });
       dropdown.classList.toggle("hidden");
-      if (!dropdown.classList.contains("hidden") && searchInput) {
-        searchInput.focus();
-      }
     });
 
-    // Handling option selection inside dropdown
     dropdown.addEventListener("click", (e) => {
       const option = e.target.closest("[data-option]");
       if (!option) return;
@@ -818,15 +1084,10 @@ function initCustomSelects() {
 
       dropdown.classList.add("hidden");
 
-      // Direct actions for specific selects
       if (wrapper.id === "select-status-wrapper") {
         state.status = value;
       } else if (wrapper.id === "select-payment-status-wrapper") {
         state.payment_status = value;
-      } else if (wrapper.id === "select-user-wrapper") {
-        state.user_id = value;
-      } else if (wrapper.id === "select-course-wrapper") {
-        state.course_id = value;
       } else if (wrapper.id === "select-date-preset-wrapper") {
         applyDatePreset(value);
         const customContainer = document.getElementById("custom-date-container");
@@ -839,25 +1100,8 @@ function initCustomSelects() {
         }
       }
     });
-
-    // Dynamic search inside dropdown options
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        const kw = e.target.value.toLowerCase().trim();
-        const optionEls = dropdown.querySelectorAll("[data-option]");
-        optionEls.forEach((opt) => {
-          const txt = opt.textContent.toLowerCase();
-          if (txt.includes(kw)) {
-            opt.classList.remove("hidden");
-          } else {
-            opt.classList.add("hidden");
-          }
-        });
-      });
-    }
   });
 
-  // Global document click closes custom select dropdowns
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".custom-select-wrapper")) {
       wrappers.forEach((w) => w.querySelector("[data-select-dropdown]")?.classList.add("hidden"));
@@ -866,47 +1110,31 @@ function initCustomSelects() {
 }
 
 /**
- * Nạp danh sách Người mua vào Custom Select
+ * Khởi tạo Sự Kiện Lọc Khi Bấm Vào Các Card KPI Tổng Quan
  */
-function populateBuyerOptions() {
-  const container = document.querySelector("#select-user-wrapper [data-select-options]");
-  if (!container) return;
+function initSummaryCardEvents() {
+  const cards = document.querySelectorAll("[data-kpi-card]");
 
-  const users = getUsers();
-  const learners = users.filter((u) => u.role === "learner" || u.role === "instructor");
+  cards.forEach((card) => {
+    const filterStatus = card.getAttribute("data-kpi-card");
 
-  learners.forEach((u) => {
-    const div = document.createElement("div");
-    div.setAttribute("data-option", "");
-    div.setAttribute("data-value", u.id);
-    div.className = "px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between";
-    div.innerHTML = `
-      <span class="font-medium text-ink">${u.full_name}</span>
-      <span class="text-[10px] text-mid-gray">${u.email}</span>
-    `;
-    container.appendChild(div);
-  });
-}
+    const triggerCardFilter = () => {
+      state.status = filterStatus;
+      state.page = 1;
+      state.shouldAutoScroll = true;
 
-/**
- * Nạp danh sách Khóa học vào Custom Select
- */
-function populateCourseOptions() {
-  const container = document.querySelector("#select-course-wrapper [data-select-options]");
-  if (!container) return;
+      syncFilterInputsUI();
+      updateUrlParams();
+      fetchAndRenderOrders();
+    };
 
-  const courses = getCourses();
-
-  courses.forEach((c) => {
-    const div = document.createElement("div");
-    div.setAttribute("data-option", "");
-    div.setAttribute("data-value", c.id);
-    div.className = "px-3 py-2 hover:bg-canvas cursor-pointer flex items-center justify-between";
-    div.innerHTML = `
-      <span class="font-medium text-ink truncate max-w-[200px]" title="${c.title}">${c.title}</span>
-      <span class="text-[10px] text-mid-gray font-mono">ID:${c.id}</span>
-    `;
-    container.appendChild(div);
+    card.addEventListener("click", triggerCardFilter);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        triggerCardFilter();
+      }
+    });
   });
 }
 
@@ -931,12 +1159,10 @@ function initDrawer() {
     }, 300);
   }
 
-  // Bind close buttons
   drawer.querySelectorAll("[data-drawer-close]").forEach((btn) => {
     btn.addEventListener("click", closeDrawer);
   });
 
-  // Drawer tabs switching
   const drawerTabs = document.querySelectorAll("[data-drawer-tab]");
   drawerTabs.forEach((tabBtn) => {
     tabBtn.addEventListener("click", () => {
@@ -950,7 +1176,6 @@ function initDrawer() {
         }
       });
 
-      // Show tab content
       document.querySelectorAll("[data-drawer-tab-content]").forEach((contentEl) => {
         if (contentEl.getAttribute("data-drawer-tab-content") === targetTab) {
           contentEl.classList.remove("hidden");
@@ -973,17 +1198,15 @@ async function openOrderDrawer(orderId) {
 
   if (!drawer || !panel || !backdrop || !body) return;
 
-  state.open_order_id = orderId;
+  state.open_order_id = String(orderId);
   updateUrlParams();
 
-  // Show drawer container
   drawer.classList.remove("hidden");
   setTimeout(() => {
     backdrop.classList.remove("opacity-0");
     panel.classList.remove("translate-x-full");
   }, 10);
 
-  // Drawer Loading state
   document.getElementById("drawer-order-code").textContent = "Đang tải...";
   document.getElementById("drawer-subtitle").textContent = "Đang truy vấn dữ liệu chi tiết...";
   body.innerHTML = `
@@ -1007,7 +1230,6 @@ async function openOrderDrawer(orderId) {
       title: "Không tìm thấy đơn hàng",
       message: "Đơn hàng không tồn tại hoặc đã bị xóa."
     });
-    // Đóng drawer sau khi báo lỗi
     panel.classList.add("translate-x-full");
     backdrop.classList.add("opacity-0");
     setTimeout(() => {
@@ -1260,7 +1482,6 @@ function renderDrawerContent(order) {
  * Đăng ký Event Listeners khởi tạo trang
  */
 function initEventListeners() {
-  // Filter form submit (Áp dụng bộ lọc)
   const filterForm = document.getElementById("order-filter-form");
   const applyBtn = document.getElementById("btn-apply-filters");
   const resetBtn = document.getElementById("btn-reset-filters");
@@ -1284,7 +1505,7 @@ function initEventListeners() {
   resetEmptyBtn?.addEventListener("click", resetAllFilters);
   retryBtn?.addEventListener("click", fetchAndRenderOrders);
 
-  // Search input debounce (300-500ms)
+  // Search input debounce (400ms) cho mã đơn hàng
   let searchTimer = null;
   const searchInput = document.getElementById("filter-order-code");
   searchInput?.addEventListener("input", (e) => {
@@ -1354,7 +1575,7 @@ function initEventListeners() {
   // Event Delegation trên Table Body: Row Click & Action Menu
   const tbody = document.getElementById("orders-tbody");
   tbody?.addEventListener("click", (e) => {
-    // 1. Kiểm tra 3 dots menu toggle
+    // 1. Menu 3 chấm toggle
     const menuTrigger = e.target.closest("[data-menu-trigger]");
     if (menuTrigger) {
       e.stopPropagation();
@@ -1364,13 +1585,11 @@ function initEventListeners() {
       return;
     }
 
-    // 2. Kiểm tra Menu Actions
+    // 2. Menu Actions
     const actionBtn = e.target.closest("[data-action]");
     if (actionBtn) {
       e.stopPropagation();
       const actionType = actionBtn.getAttribute("data-action");
-
-      // Close dropdown
       actionBtn.closest("[data-menu-dropdown]")?.classList.add("hidden");
 
       if (actionType === "view-detail") {
@@ -1391,11 +1610,11 @@ function initEventListeners() {
       return;
     }
 
-    // 3. Đang chọn text -> không mở drawer
+    // 3. Đang chọn bôi đen text -> bỏ qua
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
-    // 4. Nếu bấm vào các phần tử no-row-click hoặc link -> bỏ qua
+    // 4. Bỏ qua các phần tử no-row-click / links
     if (e.target.closest("[data-no-row-click]") || e.target.closest("a") || e.target.closest("button")) {
       return;
     }
@@ -1427,8 +1646,12 @@ function initEventListeners() {
  * Hàm khởi tạo trang khi DOM sẵn sàng
  */
 document.addEventListener("DOMContentLoaded", () => {
+  initializeLayout();
   parseUrlParams();
+  initBuyerAutocomplete();
+  initCourseAutocomplete();
   initCustomSelects();
+  initSummaryCardEvents();
   syncFilterInputsUI();
   initDrawer();
   initEventListeners();

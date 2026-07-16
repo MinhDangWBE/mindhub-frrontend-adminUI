@@ -40,13 +40,15 @@ export async function getOrders(params = {}) {
       if (st === "paid" || pst === "paid") {
         paidCount++;
         totalPaidSum += Number(o.amount) || 0;
-      } else if (st === "pending" || pst === "pending" || pst === "unpaid" || pst === "processing") {
+      }
+      
+      if (st === "pending") {
         pendingCount++;
-      } else if (st === "failed" || pst === "failed") {
+      } else if (st === "failed") {
         failedCount++;
-      } else if (st === "cancelled" || pst === "cancelled") {
+      } else if (st === "cancelled") {
         cancelledCount++;
-      } else if (st === "expired" || pst === "expired") {
+      } else if (st === "expired") {
         expiredCount++;
       }
 
@@ -74,10 +76,10 @@ export async function getOrders(params = {}) {
       anomaly_count: anomalyCount
     };
 
-    // 2. Lọc danh sách theo tham số API contract
+    // 2. Lọc danh sách theo tham số API contract trên clone dataset mới
     let filtered = [...allPopulatedOrders];
 
-    // Lọc theo mã đơn
+    // Lọc theo mã đơn (order_code)
     if (params.order_code && params.order_code.trim() !== "") {
       const codeKeyword = params.order_code.toLowerCase().trim();
       filtered = filtered.filter(
@@ -125,11 +127,15 @@ export async function getOrders(params = {}) {
     // Sắp xếp đơn hàng mới nhất lên đầu
     filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    // 3. Phân trang
-    const page = Number(params.page) || 1;
-    const perPage = Number(params.per_page) || 20;
+    // 3. Phân trang an toàn (reset page = 1 nếu page hiện tại > lastPage)
     const total = filtered.length;
-    const lastPage = Math.ceil(total / perPage) || 1;
+    const perPage = Number(params.per_page) || 20;
+    const lastPage = Math.max(1, Math.ceil(total / perPage));
+    let page = Number(params.page) || 1;
+    if (page > lastPage) {
+      page = 1;
+    }
+
     const startIndex = (page - 1) * perPage;
     const items = filtered.slice(startIndex, startIndex + perPage);
 
