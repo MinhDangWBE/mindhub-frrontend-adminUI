@@ -70,6 +70,9 @@ function initCustomSelect(select) {
     // Label hiển thị
     const labelSpan = document.createElement("span");
     labelSpan.className = "custom-select-label truncate";
+    if (select.hasAttribute("data-text-center") || select.classList.contains("text-center")) {
+        labelSpan.classList.add("w-full", "text-center", "flex", "items-center", "justify-center");
+    }
     
     // Icon chevron nét mảnh
     const chevronSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -325,11 +328,18 @@ function buildOptionsList(select, listWrapper) {
             const dot = document.createElement("span");
             dot.className = `status-dot status-dot-${statusType}`;
             textWrapper.appendChild(dot);
+            item.setAttribute("data-status-type", statusType);
         }
 
         const labelSpan = document.createElement("span");
         labelSpan.className = "truncate text-xs";
         labelSpan.textContent = opt.textContent;
+
+        if (statusType === "success") labelSpan.classList.add("text-emerald-700", "font-semibold");
+        else if (statusType === "info") labelSpan.classList.add("text-blue-700", "font-semibold");
+        else if (statusType === "pending") labelSpan.classList.add("text-amber-700", "font-semibold");
+        else if (statusType === "danger") labelSpan.classList.add("text-rose-700", "font-semibold");
+
         textWrapper.appendChild(labelSpan);
 
         item.appendChild(textWrapper);

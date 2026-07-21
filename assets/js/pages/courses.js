@@ -2039,6 +2039,10 @@ async function showDetailDrawer(courseId) {
   loadedContent.classList.add("hidden");
   document.body.classList.add("overflow-hidden");
 
+  const url = new URL(window.location.href);
+  url.searchParams.set("open_course_id", courseId);
+  history.replaceState({}, "", url);
+
   // Animation vào
   setTimeout(() => {
     backdrop.classList.remove("opacity-0");

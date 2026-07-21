@@ -495,7 +495,7 @@
         <main
           data-page="revenues"
           data-source="mock"
-          class="flex-grow overflow-y-auto p-3 md:p-4 lg:p-5 space-y-4 max-w-[1280px] w-full mx-auto custom-scrollbar"
+          class="flex-grow overflow-y-auto px-4 md:px-6 lg:px-8 py-4 space-y-4 max-w-[1536px] w-full mx-auto custom-scrollbar"
         >
           <!-- Page Header & Actions -->
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between shrink-0">
@@ -534,7 +534,7 @@
           <!-- SUMMARY CARDS -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <!-- Tổng doanh thu -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/40 transition-colors min-h-[96px]">
+            <div id="card-total-gross" tabindex="0" role="button" aria-label="Xem biểu đồ doanh thu" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Tổng doanh thu</span>
                 <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -543,11 +543,12 @@
               </div>
               <div class="mt-2">
                 <span id="kpi-total-gross" class="text-xl lg:text-2xl font-bold text-ink">0 đ</span>
-                <p class="text-[9px] text-mid-gray mt-1">Từ các bản ghi doanh thu hợp lệ</p>
+                <p id="kpi-gross-percent" class="text-[11px] font-medium text-emerald-600 mt-1">100% tổng doanh thu trong kỳ</p>
+                <p class="text-[9px] text-mid-gray mt-0.5">Từ các bản ghi doanh thu hợp lệ</p>
               </div>
             </div>
             <!-- Thu nhập giảng viên -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/40 transition-colors min-h-[96px]">
+            <div id="card-total-instructor" tabindex="0" role="button" aria-label="Xem danh sách rút tiền" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Thu nhập giảng viên</span>
                 <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -556,11 +557,12 @@
               </div>
               <div class="mt-2">
                 <span id="kpi-total-instructor" class="text-xl lg:text-2xl font-bold text-ink">0 đ</span>
-                <p class="text-[9px] text-mid-gray mt-1">Phần tiền thuộc về giảng viên</p>
+                <p id="kpi-instructor-percent" class="text-[11px] font-medium text-blue-600 mt-1">0% tổng doanh thu</p>
+                <p class="text-[9px] text-mid-gray mt-0.5">Phần tiền thuộc về giảng viên</p>
               </div>
             </div>
             <!-- Phí nền tảng -->
-            <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/40 transition-colors min-h-[96px]">
+            <div id="card-total-platform" tabindex="0" role="button" aria-label="Xem biểu đồ phí nền tảng" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Phí nền tảng</span>
                 <svg class="w-4 h-4 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -569,11 +571,12 @@
               </div>
               <div class="mt-2">
                 <span id="kpi-total-platform" class="text-xl lg:text-2xl font-bold text-ink">0 đ</span>
-                <p class="text-[9px] text-mid-gray mt-1">Chi phí vận hành nền tảng</p>
+                <p id="kpi-platform-percent" class="text-[11px] font-medium text-amber-600 mt-1">0% tổng doanh thu</p>
+                <p class="text-[9px] text-mid-gray mt-0.5">Chi phí vận hành nền tảng</p>
               </div>
             </div>
             <!-- Số tiền khả dụng -->
-            <div class="rounded-[6px] border border-hairline border-t-2 border-t-emerald-500 bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/40 transition-colors min-h-[96px]">
+            <div id="card-available" tabindex="0" role="button" aria-label="Đến trang yêu cầu rút tiền" class="rounded-[6px] border border-hairline border-t-2 border-t-emerald-500 bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">Số tiền khả dụng</span>
                 <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -582,7 +585,8 @@
               </div>
               <div class="mt-2">
                 <span id="kpi-available" class="text-xl lg:text-2xl font-bold text-emerald-600">0 đ</span>
-                <p class="text-[9px] text-mid-gray mt-1">Sẵn sàng đối soát và rút tiền</p>
+                <p id="kpi-available-percent" class="text-[11px] font-medium text-emerald-600 mt-1">0% tổng doanh thu</p>
+                <p class="text-[9px] text-mid-gray mt-0.5">Sẵn sàng đối soát và rút tiền</p>
               </div>
             </div>
           </div>
@@ -603,15 +607,16 @@
 
           <!-- CHART SECTION (BỘ LỌC THỜI GIAN NẰM TRONG HEADER BIỂU ĐỒ - SINGLE SOURCE OF TIME TRUTH) -->
           <div class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle space-y-3">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-3">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-hairline pb-3">
               <div>
                 <h3 class="text-xs font-bold uppercase tracking-wider text-mid-gray">Biểu đồ biến động doanh thu</h3>
                 <p id="chart-subtext" class="text-[10px] text-mid-gray mt-0.5 font-medium">Doanh thu theo thời gian được nhóm theo khung thời gian đã chọn</p>
               </div>
 
-              <div class="flex flex-wrap items-center gap-2">
+              <!-- Thao tác lọc thời gian: Nằm ngang hoàn toàn hướng bên phải, nút Tùy chọn cách ô ngày 22px -->
+              <div class="flex flex-nowrap items-center justify-end gap-[22px] shrink-0">
                 <!-- Custom Dropdown Bộ Lọc Thời Gian trên Biểu đồ -->
-                <div class="relative custom-select-wrapper" id="chart-time-select-wrapper">
+                <div class="relative custom-select-wrapper !w-auto shrink-0" id="chart-time-select-wrapper">
                   <button
                     type="button"
                     id="btn-chart-time-trigger"
@@ -635,12 +640,12 @@
                   </div>
                 </div>
 
-                <!-- Ô Chọn Ngày Tùy Chọn + Nút Áp Dụng (Hiển thị khi chọn 'custom') -->
-                <div id="chart-custom-date-group" class="hidden items-center gap-1.5">
-                  <input type="date" id="filter-date-from" class="h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink" />
-                  <span class="text-mid-gray text-xs">-</span>
-                  <input type="date" id="filter-date-to" class="h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink" />
-                  <button type="button" id="btn-apply-custom-date" class="h-8 px-3 text-xs font-semibold bg-ink text-white rounded-[6px] hover:opacity-90 transition-opacity cursor-pointer shrink-0">
+                <!-- Ô Chọn Ngày Tùy Chọn + Nút Áp Dụng (Hiển thị khi chọn 'custom', luôn nằm ngang 1 hàng) -->
+                <div id="chart-custom-date-group" class="hidden flex-nowrap items-center gap-2 shrink-0 whitespace-nowrap">
+                  <input type="date" id="filter-date-from" class="h-8 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
+                  <span class="text-mid-gray text-xs font-medium">-</span>
+                  <input type="date" id="filter-date-to" class="h-8 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
+                  <button type="button" id="btn-apply-custom-date" class="h-8 px-3.5 text-xs font-semibold bg-ink text-white rounded-[6px] hover:opacity-90 transition-opacity cursor-pointer shrink-0 whitespace-nowrap">
                     Áp dụng
                   </button>
                 </div>
@@ -661,59 +666,54 @@
             
             <!-- FORM BỘ LỌC TÌM KIẾM & TRẠNG THÁI -->
             <form id="filter-form" class="space-y-3" onsubmit="event.preventDefault();">
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-3">
+              <div class="flex flex-col sm:flex-row sm:items-end gap-3 lg:gap-4 w-full">
                 
-                <!-- 1. Ô TÌM KIẾM CHUNG (Unified Search - Chiếm 8/12 cột desktop) -->
-                <div class="lg:col-span-8 flex flex-col justify-between">
-                  <div>
-                    <label for="filter-search" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">
-                      TÌM KIẾM
-                    </label>
-                    <div class="relative">
-                      <input
-                        type="text"
-                        id="filter-search"
-                        placeholder="Nhập tên khóa học, tên giảng viên hoặc mã đơn hàng..."
-                        autocomplete="off"
-                        class="w-full h-9 pl-8 pr-8 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60"
-                      />
-                      <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                <!-- 1. Ô TÌM KIẾM CHUNG (Unified Search - Chiếm 30% width trên desktop) -->
+                <div class="w-full lg:w-[30%] lg:min-w-[320px]">
+                  <label for="filter-search" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">
+                    TÌM KIẾM
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="filter-search"
+                      placeholder="Nhập tên khóa học, giảng viên hoặc mã đơn..."
+                      autocomplete="off"
+                      class="w-full h-9 pl-8 pr-8 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60"
+                    />
+                    <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                    </svg>
+                    <button
+                      type="button"
+                      id="btn-clear-search"
+                      class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-mid-gray hover:text-ink cursor-pointer p-0.5"
+                      aria-label="Xóa từ khóa"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                       </svg>
-                      <button
-                        type="button"
-                        id="btn-clear-search"
-                        class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-mid-gray hover:text-ink cursor-pointer p-0.5"
-                        aria-label="Xóa từ khóa"
-                      >
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                      </button>
-                    </div>
+                    </button>
                   </div>
-                  <p class="text-[10px] text-mid-gray/70 mt-1 leading-tight">
-                    Có thể tìm theo tên khóa học, tên hoặc email giảng viên, mã đơn hàng.
-                  </p>
                 </div>
 
-                <!-- 2. TRẠNG THÁI (Chiếm 2/12 cột) -->
-                <div class="lg:col-span-2">
+                <!-- 2. TRẠNG THÁI (Gọn ~220px, text căn giữa trên control) -->
+                <div class="w-full sm:w-[220px] shrink-0">
                   <label for="filter-status" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1">
                     TRẠNG THÁI
                   </label>
-                  <select id="filter-status" class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink transition-colors cursor-pointer">
+                  <select id="filter-status" data-custom-select data-text-center class="w-full h-9 px-3 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink transition-colors cursor-pointer text-center">
                     <option value="all">Tất cả trạng thái</option>
-                    <option value="available">Khả dụng</option>
-                    <option value="pending">Đang chờ</option>
-                    <option value="withdrawn">Đã rút</option>
-                    <option value="cancelled">Đã hủy</option>
+                    <option value="available" data-status-color="success">Khả dụng</option>
+                    <option value="withdrawn" data-status-color="info">Đã rút</option>
+                    <option value="pending" data-status-color="pending">Đang chờ</option>
+                    <option value="cancelled" data-status-color="danger">Đã hủy</option>
                   </select>
                 </div>
 
-                <!-- 3. NÚT ĐẶT LẠI (Chiếm 2/12 cột) -->
-                <div class="lg:col-span-2 flex flex-col justify-end">
-                  <button type="button" id="btn-reset-filters" class="w-full h-9 px-3 text-xs font-semibold bg-canvas hover:bg-paper border border-hairline rounded-[6px] text-ink transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                <!-- 3. NÚT ĐẶT LẠI (Sát bên phải margin-left: auto) -->
+                <div class="w-full sm:w-auto sm:ml-auto shrink-0">
+                  <button type="button" id="btn-reset-filters" class="w-full sm:w-auto h-9 px-5 text-xs font-semibold bg-canvas hover:bg-paper border border-hairline rounded-[6px] text-ink transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap min-w-[96px]">
                     Đặt lại
                   </button>
                 </div>
@@ -728,7 +728,7 @@
 
             <!-- Table Container (Horizontal Scroll bar support) -->
             <div class="overflow-x-auto min-h-[320px] relative border border-hairline rounded-[6px]">
-              <table class="w-full text-left border-collapse min-w-[1100px]">
+              <table class="w-full text-left border-collapse min-w-[1000px]">
                 <thead class="bg-surface-alt/70 sticky top-0 z-10 border-b border-hairline">
                   <tr>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Mã revenue</th>
@@ -741,8 +741,7 @@
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Tỷ lệ chia</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Trạng thái</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Ngày ghi nhận</th>
-                    <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap text-center">Đối chiếu</th>
-                    <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap text-center">Hành động</th>
+                    <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap text-center">Kiểm tra số tiền</th>
                   </tr>
                 </thead>
                 <tbody id="revenues-tbody" class="text-xs bg-paper divide-y divide-hairline">
@@ -761,8 +760,7 @@
                      <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-14"></div></td>
                      <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-16"></div></td>
                      <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-24"></div></td>
-                     <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-6 mx-auto"></div></td>
-                     <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-8 mx-auto"></div></td>
+                     <td class="py-3 px-3"><div class="h-4 bg-canvas rounded w-12 mx-auto"></div></td>
                   </tr>
                 </tbody>
               </table>
@@ -793,13 +791,26 @@
               </div>
             </div>
 
-            <!-- Pagination Bar -->
-            <div class="py-2 flex items-center justify-between bg-paper">
-              <div class="text-[11px] text-mid-gray hidden sm:block">
-                Đang xem <span id="pagination-showing-range" class="font-semibold text-ink">0</span> / <span id="pagination-total-count" class="font-semibold text-ink">0</span> doanh thu
+            <!-- Footer: Pagination Bar -->
+            <div id="pagination-wrapper" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 bg-surface-alt border-t border-hairline text-xs text-mid-gray select-none rounded-b-[6px]">
+              <!-- Records Info & Page Size Select -->
+              <div class="flex flex-wrap items-center gap-4">
+                <span>
+                  Đang hiển thị <span id="pag-showing-range" class="font-semibold text-ink">0-0</span> trong tổng số <span id="pag-total-records" class="font-semibold text-ink">0</span> doanh thu
+                </span>
+                <div class="flex items-center gap-1.5">
+                  <span>Mỗi trang:</span>
+                  <select id="pag-per-page" data-custom-select class="bg-paper border border-hairline rounded-[6px] px-2 py-0.5 text-xs text-ink outline-none cursor-pointer">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
               </div>
-              <div class="flex items-center gap-1.5 ml-auto sm:ml-0" id="pagination-buttons">
-                <!-- JS Render -->
+              <!-- Navigation Buttons -->
+              <div class="flex items-center gap-1.5" id="pagination-buttons">
+                <!-- Nạp động bằng Javascript -->
               </div>
             </div>
           </section>
@@ -812,108 +823,87 @@
       <!-- Drawer Content -->
       <div id="revenue-drawer" class="fixed inset-y-0 right-0 z-[100] w-full md:w-[480px] bg-paper shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col" aria-modal="true" role="dialog" tabindex="-1">
         
-        <!-- Header -->
-        <div class="flex items-center justify-between px-5 py-4 border-b border-hairline bg-surface-alt/50 shrink-0">
+        <!-- Header (Sticky) -->
+        <div class="sticky top-0 bg-paper z-10 flex items-center justify-between px-5 py-4 border-b border-hairline shrink-0">
           <div>
             <h2 class="text-base font-bold text-ink">Chi tiết doanh thu</h2>
             <p id="drawer-header-id" class="text-xs text-mid-gray font-mono mt-0.5">---</p>
           </div>
-          <button type="button" id="btn-close-drawer" class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer outline-none">
+          <button type="button" id="btn-close-drawer" class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-canvas text-mid-gray hover:text-ink transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ink">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
 
         <!-- Scrollable Body -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-6" id="drawer-body">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-5" id="drawer-body">
           <div id="drawer-loading" class="hidden flex flex-col items-center justify-center py-20">
              <div class="w-6 h-6 border-2 border-mid-gray border-t-ink rounded-full animate-spin"></div>
              <p class="text-xs text-mid-gray mt-3">Đang tải chi tiết...</p>
           </div>
 
-          <div id="drawer-content" class="hidden space-y-6">
+          <div id="drawer-content" class="hidden space-y-5">
             
-            <!-- Trạng thái chung -->
-            <div class="flex items-center justify-between pb-4 border-b border-hairline">
+            <!-- Trạng thái chung & Ngày ghi nhận -->
+            <div class="flex items-center justify-between pb-3.5 border-b border-hairline">
               <div class="flex flex-col gap-1">
-                 <span class="text-[10px] uppercase font-semibold text-mid-gray tracking-wider">Trạng thái</span>
-                 <div id="drawer-status" class="flex">---</div>
+                 <span class="text-[10px] uppercase font-bold text-mid-gray tracking-wider">Trạng thái</span>
+                 <div id="drawer-status" class="flex items-center">---</div>
               </div>
               <div class="flex flex-col gap-1 text-right">
-                 <span class="text-[10px] uppercase font-semibold text-mid-gray tracking-wider">Ngày ghi nhận</span>
-                 <div id="drawer-earned-at" class="text-sm font-medium text-ink">---</div>
+                 <span class="text-[10px] uppercase font-bold text-mid-gray tracking-wider">Ngày ghi nhận</span>
+                 <div id="drawer-earned-at" class="text-xs font-semibold text-ink">---</div>
               </div>
             </div>
 
-            <!-- Khối Tài chính & Đối chiếu -->
-            <div class="rounded-[6px] border border-hairline bg-canvas/50 p-4">
-              <h3 class="text-xs font-semibold text-ink mb-3 uppercase tracking-wider">Phân bổ doanh thu</h3>
+            <!-- Khối Phân bổ doanh thu & Đối chiếu -->
+            <div class="rounded-[6px] border border-hairline bg-surface-alt/60 p-4 space-y-3">
+              <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray">Phân bổ doanh thu</h3>
               
-              <div class="flex items-center justify-between mb-2">
-                 <span class="text-sm text-mid-gray">Tổng doanh thu:</span>
+              <div class="flex items-center justify-between">
+                 <span class="text-xs text-mid-gray">Tổng doanh thu:</span>
                  <span id="drawer-gross-amount" class="text-base font-bold text-ink">0 đ</span>
               </div>
               
-              <div class="h-px bg-hairline my-3"></div>
+              <div class="h-px bg-hairline my-2"></div>
 
-              <div class="space-y-3">
+              <div class="space-y-2 text-xs">
                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-mid-gray">Thu nhập giảng viên (<span id="drawer-instructor-rate">0</span>%):</span>
-                    <span id="drawer-instructor-amount" class="text-sm font-semibold text-ink">0 đ</span>
+                    <span class="text-mid-gray">Thu nhập giảng viên (<span id="drawer-instructor-rate" class="font-semibold text-ink">0</span>%):</span>
+                    <span id="drawer-instructor-amount" class="font-semibold text-emerald-600">0 đ</span>
                  </div>
                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-mid-gray">Phí nền tảng (<span id="drawer-platform-rate">0</span>%):</span>
-                    <span id="drawer-platform-amount" class="text-sm font-semibold text-ink">0 đ</span>
+                    <span class="text-mid-gray">Phí nền tảng (<span id="drawer-platform-rate" class="font-semibold text-ink">0</span>%):</span>
+                    <span id="drawer-platform-amount" class="font-semibold text-blue-600">0 đ</span>
                  </div>
               </div>
 
               <!-- Cảnh báo đối chiếu -->
-              <div id="drawer-consistency-warning" class="hidden mt-4 p-3 rounded bg-rose-50 border border-rose-200">
-                <div class="flex gap-2">
-                  <svg class="w-4 h-4 text-rose-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                  <div>
-                    <p class="text-xs font-semibold text-rose-700">Số tiền bị sai lệch đối soát</p>
-                    <p class="text-[10px] text-rose-600 mt-0.5">Tổng doanh thu và tỷ lệ phân chia không khớp với thu nhập ghi nhận thực tế.</p>
-                  </div>
-                </div>
+              <div id="drawer-consistency-section" class="mt-3 p-3 rounded-[6px]">
+                 <!-- JS Render -->
               </div>
             </div>
 
-            <!-- Liên kết Đơn hàng -->
+            <!-- Section 1: Khóa học -->
             <div>
-               <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Đơn hàng gốc</h3>
-               <div class="p-3 border border-hairline rounded-[6px] hover:bg-canvas transition-colors">
-                  <div class="flex items-start justify-between">
-                     <div>
-                        <div id="drawer-order-code" class="text-sm font-mono font-bold text-ink">---</div>
-                        <div class="text-xs text-mid-gray mt-1">Giá trị đơn: <span id="drawer-order-amount" class="font-medium text-ink">0 đ</span></div>
-                     </div>
-                     <div class="text-right flex flex-col gap-1 items-end">
-                        <div id="drawer-order-status">---</div>
-                        <div id="drawer-payment-status">---</div>
-                     </div>
-                  </div>
-                  <div class="mt-3 pt-3 border-t border-hairline">
-                     <a id="drawer-order-link" href="#" class="text-xs font-medium text-blue-600 hover:underline">Xem chi tiết đơn hàng &rarr;</a>
-                  </div>
+               <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Khóa học</h3>
+               <div id="drawer-course-card" class="p-3.5 border border-hairline rounded-[6px] bg-paper flex items-center gap-3.5">
+                  <!-- JS Render Image & Title -->
                </div>
             </div>
 
-            <!-- Liên kết Khóa học & Giảng viên -->
-            <div class="grid grid-cols-2 gap-3">
-               <div>
-                  <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Khóa học</h3>
-                  <div class="p-3 border border-hairline rounded-[6px]">
-                     <div id="drawer-course-title" class="text-xs font-semibold text-ink line-clamp-2" title="">---</div>
-                     <a id="drawer-course-link" href="#" class="block text-[10px] font-medium text-blue-600 hover:underline mt-2">Xem khóa học &rarr;</a>
-                  </div>
+            <!-- Section 2: Giảng viên -->
+            <div>
+               <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Giảng viên</h3>
+               <div id="drawer-instructor-card" class="p-3.5 border border-hairline rounded-[6px] bg-paper flex items-center gap-3.5">
+                  <!-- JS Render Avatar & Info -->
                </div>
-               <div>
-                  <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Giảng viên</h3>
-                  <div class="p-3 border border-hairline rounded-[6px]">
-                     <div id="drawer-instructor-name" class="text-xs font-semibold text-ink line-clamp-1" title="">---</div>
-                     <div id="drawer-instructor-email" class="text-[10px] text-mid-gray truncate" title="">---</div>
-                     <a id="drawer-instructor-link" href="#" class="block text-[10px] font-medium text-blue-600 hover:underline mt-2">Xem thông tin &rarr;</a>
-                  </div>
+            </div>
+
+            <!-- Section 3: Đơn hàng gốc -->
+            <div>
+               <h3 class="text-[10px] font-bold uppercase tracking-wider text-mid-gray mb-2">Đơn hàng liên quan</h3>
+               <div id="drawer-order-card" class="p-3.5 border border-hairline rounded-[6px] bg-paper space-y-3">
+                  <!-- JS Render Order Details -->
                </div>
             </div>
 

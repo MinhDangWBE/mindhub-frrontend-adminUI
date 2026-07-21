@@ -578,6 +578,7 @@ function populateRevenue(revenue, db) {
           status: order.status,
           payment_status: order.payment_status,
           paid_at: order.paid_at,
+          course_id: order.course_id,
         }
       : null,
     course: course
@@ -585,6 +586,8 @@ function populateRevenue(revenue, db) {
           id: course.id,
           title: course.title,
           slug: course.slug,
+          thumbnail_url: course.thumbnail_url || null,
+          status: course.status,
         }
       : null,
     instructor: instructor
@@ -592,6 +595,8 @@ function populateRevenue(revenue, db) {
           id: instructor.id,
           full_name: instructor.full_name,
           email: instructor.email,
+          avatar_url: instructor.avatar_url || null,
+          status: instructor.status,
         }
       : null,
   };

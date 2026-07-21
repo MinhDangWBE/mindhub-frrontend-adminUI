@@ -1438,6 +1438,8 @@ async function openDetailDrawer(userId) {
 
         const user = response.data;
         activeTargetUser = user;
+        pageState.open_user_id = user.id;
+        writeStateToUrl();
 
         document.getElementById("drawer-name").textContent = user.full_name;
         document.getElementById("drawer-email").textContent = user.email;
