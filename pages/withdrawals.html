@@ -531,9 +531,9 @@
           </div>
 
           <!-- SUMMARY CARDS -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <!-- Card 1: Tổng yêu cầu -->
-            <div id="card-total-requests" tabindex="0" role="button" aria-label="Tất cả yêu cầu rút tiền" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
+            <div id="card-total-requests" tabindex="0" role="button" aria-label="Tất cả yêu cầu rút tiền" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider">Tổng yêu cầu</span>
                 <svg class="w-4 h-4 text-ink shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -541,14 +541,17 @@
                 </svg>
               </div>
               <div class="mt-2">
-                <span id="kpi-total-requests" class="text-xl lg:text-2xl font-bold text-ink">0</span>
-                <p id="kpi-pending-subtext" class="text-[11px] font-medium text-amber-600 mt-1">Đang chờ: 0 đ</p>
-                <p class="text-[9px] text-mid-gray mt-0.5">Tổng số lượng yêu cầu trong kỳ</p>
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-total-requests" class="text-xl lg:text-2xl font-bold text-ink">0</span>
+                  <span class="text-xs text-mid-gray">yêu cầu</span>
+                </div>
+                <span id="kpi-total-amount" class="text-xs font-bold text-ink block mt-0.5">0 đ tổng giá trị</span>
+                <p id="kpi-total-subtext" class="text-[11px] font-medium text-rose-600 mt-1">0 yêu cầu bị từ chối</p>
               </div>
             </div>
 
             <!-- Card 2: Chờ duyệt -->
-            <div id="card-pending" tabindex="0" role="button" aria-label="Lọc yêu cầu chờ duyệt" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
+            <div id="card-pending" tabindex="0" role="button" aria-label="Lọc yêu cầu chờ duyệt" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-600">Chờ duyệt</span>
                 <svg class="w-4 h-4 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -560,13 +563,16 @@
                   <span id="kpi-pending-count" class="text-xl lg:text-2xl font-bold text-amber-600">0</span>
                   <span class="text-xs text-mid-gray">yêu cầu</span>
                 </div>
-                <p id="kpi-pending-amount" class="text-[11px] font-bold text-ink mt-1">0 đ</p>
-                <p class="text-[9px] text-mid-gray mt-0.5">Cần phê duyệt từ Admin</p>
+                <p id="kpi-pending-amount" class="text-[11px] font-bold text-ink mt-0.5">0 đ</p>
+                <div class="w-full bg-canvas h-1 rounded-full mt-2 overflow-hidden">
+                  <div id="kpi-pending-bar" class="bg-amber-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="kpi-pending-percent" class="text-[10px] text-mid-gray mt-1 font-medium">0% tổng yêu cầu</p>
               </div>
             </div>
 
             <!-- Card 3: Đã duyệt -->
-            <div id="card-approved" tabindex="0" role="button" aria-label="Lọc yêu cầu đã duyệt" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
+            <div id="card-approved" tabindex="0" role="button" aria-label="Lọc yêu cầu đã duyệt" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-blue-600">Đã duyệt</span>
                 <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -578,13 +584,16 @@
                   <span id="kpi-approved-count" class="text-xl lg:text-2xl font-bold text-blue-600">0</span>
                   <span class="text-xs text-mid-gray">yêu cầu</span>
                 </div>
-                <p id="kpi-approved-amount" class="text-[11px] font-bold text-ink mt-1">0 đ</p>
-                <p class="text-[9px] text-mid-gray mt-0.5">Chờ hoàn tất chuyển khoản</p>
+                <p id="kpi-approved-amount" class="text-[11px] font-bold text-ink mt-0.5">0 đ</p>
+                <div class="w-full bg-canvas h-1 rounded-full mt-2 overflow-hidden">
+                  <div id="kpi-approved-bar" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="kpi-approved-percent" class="text-[10px] text-mid-gray mt-1 font-medium">0% tổng yêu cầu</p>
               </div>
             </div>
 
             <!-- Card 4: Đã thanh toán -->
-            <div id="card-paid" tabindex="0" role="button" aria-label="Lọc yêu cầu đã thanh toán" class="rounded-[6px] border border-hairline border-t-2 border-t-emerald-500 bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[110px]">
+            <div id="card-paid" tabindex="0" role="button" aria-label="Lọc yêu cầu đã thanh toán" class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
               <div class="flex items-center justify-between text-mid-gray">
                 <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">Đã thanh toán</span>
                 <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -596,8 +605,11 @@
                   <span id="kpi-paid-count" class="text-xl lg:text-2xl font-bold text-emerald-600">0</span>
                   <span class="text-xs text-mid-gray">yêu cầu</span>
                 </div>
-                <p id="kpi-paid-amount" class="text-[11px] font-bold text-emerald-600 mt-1">0 đ</p>
-                <p class="text-[9px] text-mid-gray mt-0.5">Đã chi trả thành công cho GV</p>
+                <p id="kpi-paid-amount" class="text-[11px] font-bold text-emerald-600 mt-0.5">0 đ</p>
+                <div class="w-full bg-canvas h-1 rounded-full mt-2 overflow-hidden">
+                  <div id="kpi-paid-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <p id="kpi-paid-percent" class="text-[10px] text-mid-gray mt-1 font-medium">0% tổng yêu cầu</p>
               </div>
             </div>
           </div>
@@ -619,19 +631,19 @@
               <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12v-.008z"/>
               </svg>
-              <span>Thống kê theo toàn bộ bộ lọc hiện tại</span>
+              <span>Thống kê theo các điều kiện lọc (Search, Thời gian, Số tiền)</span>
             </div>
           </div>
 
           <!-- FILTERS & TABLE SECTION -->
-          <section id="withdrawals-list-section" class="rounded-[6px] border border-hairline bg-paper shadow-subtle space-y-3 p-3.5 lg:p-4">
+          <section id="withdrawals-results-section" class="rounded-[6px] border border-hairline bg-paper shadow-subtle space-y-3 p-3.5 lg:p-4 scroll-mt-20">
             
             <!-- FORM BỘ LỌC TÌM KIẾM & TRẠNG THÁI -->
             <form id="filter-form" class="space-y-3" onsubmit="event.preventDefault();">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(340px,460px)_minmax(160px,190px)_minmax(160px,190px)_minmax(250px,290px)_auto] gap-3 items-end">
                 
-                <!-- 1. Ô TÌM KIẾM CHUNG (lg:col-span-4) -->
-                <div class="lg:col-span-4 min-w-0">
+                <!-- 1. Ô TÌM KIẾM CHUNG -->
+                <div class="min-w-0">
                   <label for="filter-search" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1 whitespace-nowrap">
                     TÌM KIẾM
                   </label>
@@ -641,7 +653,7 @@
                       id="filter-search"
                       placeholder="Mã WD, tên/email GV, mã payout, STK..."
                       autocomplete="off"
-                      class="w-full h-9 pl-8 pr-8 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60"
+                      class="w-full h-9 pl-8 pr-8 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink transition-colors placeholder:text-mid-gray/60 whitespace-nowrap text-ellipsis overflow-hidden"
                     />
                     <svg class="w-3.5 h-3.5 text-mid-gray/80 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
@@ -659,8 +671,8 @@
                   </div>
                 </div>
 
-                <!-- 2. TRẠNG THÁI (lg:col-span-3) -->
-                <div class="lg:col-span-3 min-w-0">
+                <!-- 2. TRẠNG THÁI -->
+                <div class="min-w-0">
                   <label for="filter-status" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1 whitespace-nowrap">
                     TRẠNG THÁI
                   </label>
@@ -673,8 +685,8 @@
                   </select>
                 </div>
 
-                <!-- 3. KHOẢNG THỜI GIAN (lg:col-span-3) -->
-                <div class="lg:col-span-3 min-w-0">
+                <!-- 3. KHOẢNG THỜI GIAN -->
+                <div class="min-w-0">
                   <label for="filter-time-preset" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1 whitespace-nowrap">
                     THỜI GIAN
                   </label>
@@ -688,38 +700,37 @@
                   </select>
                 </div>
 
-                <!-- 4. NÚT ĐẶT LẠI (lg:col-span-2) -->
-                <div class="lg:col-span-2 min-w-0 flex justify-end">
-                  <button type="button" id="btn-reset-filters" class="w-full h-9 px-4 text-xs font-semibold bg-canvas hover:bg-paper border border-hairline rounded-[6px] text-ink transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 min-w-0">
-                    Đặt lại
+                <!-- 4. KHOẢNG TIỀN -->
+                <div class="min-w-0">
+                  <label for="filter-amount-min" class="block text-[11px] font-semibold uppercase tracking-wider text-mid-gray mb-1 whitespace-nowrap">
+                    KHOẢNG TIỀN
+                  </label>
+                  <div class="flex items-center gap-1.5 h-9">
+                    <input type="number" id="filter-amount-min" min="0" placeholder="Min đ" aria-label="Số tiền tối thiểu" class="w-full h-9 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
+                    <span class="text-mid-gray text-xs font-medium shrink-0">-</span>
+                    <input type="number" id="filter-amount-max" min="0" placeholder="Max đ" aria-label="Số tiền tối đa" class="w-full h-9 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
+                  </div>
+                </div>
+
+                <!-- 5. NÚT XÓA BỘ LỌC DẠNG DẤU X ĐỎ -->
+                <div class="min-w-0 flex justify-end">
+                  <button type="button" id="btn-reset-filters" title="Xóa bộ lọc" aria-label="Xóa toàn bộ bộ lọc" class="h-9 w-9 rounded-[6px] border border-hairline bg-canvas text-mid-gray/40 flex items-center justify-center shrink-0 opacity-40 cursor-not-allowed pointer-events-none transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
                   </button>
                 </div>
               </div>
 
-              <!-- Hàng phụ: Date range picker khi chọn custom + Lọc theo Số tiền -->
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 pt-1 border-t border-hairline/60">
-                <!-- Chọn ngày từ-đến -->
-                <div id="custom-date-group" class="hidden lg:col-span-6 flex-wrap items-center gap-2">
-                  <div class="flex items-center gap-1.5 flex-1 min-w-[130px]">
-                    <span class="text-[11px] font-semibold text-mid-gray whitespace-nowrap">Từ:</span>
-                    <input type="date" id="filter-date-from" class="w-full h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
-                  </div>
-                  <div class="flex items-center gap-1.5 flex-1 min-w-[130px]">
-                    <span class="text-[11px] font-semibold text-mid-gray whitespace-nowrap">Đến:</span>
-                    <input type="date" id="filter-date-to" class="w-full h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
-                  </div>
+              <!-- Hàng phụ: Custom date picker khi chọn time_preset === 'custom' -->
+              <div id="custom-date-group" class="hidden flex-wrap items-center gap-2 pt-2 border-t border-hairline/60">
+                <div class="flex items-center gap-1.5 min-w-[130px]">
+                  <span class="text-[11px] font-semibold text-mid-gray whitespace-nowrap">Từ:</span>
+                  <input type="date" id="filter-date-from" class="w-full h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
                 </div>
-
-                <!-- Lọc số tiền tối thiểu - tối đa -->
-                <div class="lg:col-span-6 flex flex-wrap items-center gap-2 ml-auto">
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-[11px] font-semibold text-mid-gray whitespace-nowrap">Tiền từ:</span>
-                    <input type="number" id="filter-amount-min" min="0" placeholder="Min đ" class="w-28 h-8 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink" />
-                  </div>
-                  <span class="text-mid-gray text-xs font-medium">-</span>
-                  <div class="flex items-center gap-1.5">
-                    <input type="number" id="filter-amount-max" min="0" placeholder="Max đ" class="w-28 h-8 px-2.5 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink" />
-                  </div>
+                <div class="flex items-center gap-1.5 min-w-[130px]">
+                  <span class="text-[11px] font-semibold text-mid-gray whitespace-nowrap">Đến:</span>
+                  <input type="date" id="filter-date-to" class="w-full h-8 px-2 text-xs bg-canvas border border-hairline rounded-[6px] focus:outline-none focus:border-ink text-ink font-mono" />
                 </div>
               </div>
             </form>
@@ -737,7 +748,7 @@
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Mã yêu cầu</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Giảng viên</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Tài khoản nhận tiền</th>
-                    <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap text-right">Số tiền</th>
+                    <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap text-center">Số tiền</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Trạng thái</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Ngày gửi</th>
                     <th class="py-3 px-3 text-[10px] font-bold uppercase tracking-wider text-mid-gray whitespace-nowrap">Cập nhật gần nhất</th>

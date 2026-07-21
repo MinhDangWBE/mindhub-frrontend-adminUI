@@ -150,8 +150,14 @@ function filterWithdrawalDataset(withdrawals, params = {}) {
 export async function fetchWithdrawals(params = {}) {
   if (USE_MOCK_DATA) {
     const allWithdrawals = getWithdrawals();
+    
+    // Summary data tính trên tập đã lọc theo search, thời gian, số tiền nhưng KHÔNG bị ảnh hưởng bởi lọc status
+    const summaryParams = { ...params, status: "all" };
+    const summaryFiltered = filterWithdrawalDataset(allWithdrawals, summaryParams);
+    const summary = calculateWithdrawalsSummary(summaryFiltered);
+
+    // Bảng dữ liệu lọc toàn bộ điều kiện (bao gồm cả status)
     const filtered = filterWithdrawalDataset(allWithdrawals, params);
-    const summary = calculateWithdrawalsSummary(filtered);
 
     const page = Math.max(1, Number(params.page) || 1);
     const perPage = Math.max(1, Number(params.per_page) || 20);

@@ -11,23 +11,27 @@ import {
 } from "../api/withdrawals-api.js";
 import { showToast } from "../toast.js";
 
-// Mapping trạng thái sang nhãn và màu badge
+// Mapping trạng thái sang nhãn và màu chấm tròn
 const withdrawalStatusMap = {
   pending: {
     label: "Chờ duyệt",
-    colorClass: "bg-amber-50 text-amber-700 border-amber-200",
+    colorClass: "text-amber-700 font-semibold",
+    dotClass: "bg-amber-500",
   },
   approved: {
     label: "Đã duyệt",
-    colorClass: "bg-blue-50 text-blue-700 border-blue-200",
+    colorClass: "text-blue-700 font-semibold",
+    dotClass: "bg-blue-500",
   },
   rejected: {
     label: "Đã từ chối",
-    colorClass: "bg-rose-50 text-rose-700 border-rose-200",
+    colorClass: "text-rose-700 font-semibold",
+    dotClass: "bg-rose-500",
   },
   paid: {
     label: "Đã thanh toán",
-    colorClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    colorClass: "text-emerald-700 font-semibold",
+    dotClass: "bg-emerald-500",
   },
 };
 
@@ -195,7 +199,7 @@ function updateUrlState() {
 /**
  * Tải danh sách yêu cầu rút tiền
  */
-async function loadWithdrawals() {
+async function loadWithdrawals(options = {}) {
   const tbody = document.getElementById("withdrawals-tbody");
   const skeleton = document.getElementById("withdrawals-tbody-skeleton");
   const emptyState = document.getElementById("withdrawals-empty-state");
@@ -232,8 +236,9 @@ async function loadWithdrawals() {
     // Render Summary Cards
     renderSummaryCards(summary);
 
-    // Filter Chips
+    // Filter Chips & Reset Button state
     renderFilterChips();
+    updateResetButtonState();
 
     // Check dataset empty vs filter empty
     if (meta.total === 0) {
@@ -252,14 +257,21 @@ async function loadWithdrawals() {
         emptyState.classList.remove("hidden");
       }
       renderPagination(meta);
-      return;
+    } else {
+      renderTableRows(items);
+      renderPagination(meta);
     }
 
-    // Render Rows
-    renderTableRows(items);
-
-    // Render Pagination
-    renderPagination(meta);
+    // Tự động cuộn đến bảng nếu người dùng chủ động click card
+    if (options.autoScroll) {
+      const resultsSection = document.getElementById("withdrawals-results-section");
+      resultsSection?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+    }
   } catch (err) {
     if (skeleton) skeleton.classList.add("hidden");
     console.error("Lỗi loadWithdrawals:", err);
@@ -282,24 +294,59 @@ function showErrorState(msg) {
  */
 function renderSummaryCards(summary) {
   const elTotalReq = document.getElementById("kpi-total-requests");
-  const elPendingSubtext = document.getElementById("kpi-pending-subtext");
+  const elTotalAmount = document.getElementById("kpi-total-amount");
+  const elTotalSubtext = document.getElementById("kpi-total-subtext");
+
   const elPendingCount = document.getElementById("kpi-pending-count");
   const elPendingAmt = document.getElementById("kpi-pending-amount");
+  const elPendingPercent = document.getElementById("kpi-pending-percent");
+  const elPendingBar = document.getElementById("kpi-pending-bar");
+
   const elApprovedCount = document.getElementById("kpi-approved-count");
   const elApprovedAmt = document.getElementById("kpi-approved-amount");
+  const elApprovedPercent = document.getElementById("kpi-approved-percent");
+  const elApprovedBar = document.getElementById("kpi-approved-bar");
+
   const elPaidCount = document.getElementById("kpi-paid-count");
   const elPaidAmt = document.getElementById("kpi-paid-amount");
+  const elPaidPercent = document.getElementById("kpi-paid-percent");
+  const elPaidBar = document.getElementById("kpi-paid-bar");
+
   const elRejectedCount = document.getElementById("kpi-rejected-count");
   const elRejectedAmt = document.getElementById("kpi-rejected-amount");
 
-  if (elTotalReq) elTotalReq.textContent = summary.total_requests || 0;
-  if (elPendingSubtext) elPendingSubtext.textContent = `Đang chờ: ${formatVND(summary.pending_amount)}`;
-  if (elPendingCount) elPendingCount.textContent = summary.pending_count || 0;
+  const totalReq = summary.total_requests || 0;
+  const totalMoney =
+    Number(summary.pending_amount || 0) +
+    Number(summary.approved_amount || 0) +
+    Number(summary.paid_amount || 0) +
+    Number(summary.rejected_amount || 0);
+
+  if (elTotalReq) elTotalReq.textContent = totalReq;
+  if (elTotalAmount) elTotalAmount.textContent = `${formatVND(totalMoney)} tổng giá trị`;
+  if (elTotalSubtext) elTotalSubtext.textContent = `${summary.rejected_count || 0} yêu cầu bị từ chối`;
+
+  const pendingCount = summary.pending_count || 0;
+  const pendingPct = totalReq > 0 ? (pendingCount / totalReq) * 100 : 0;
+  if (elPendingCount) elPendingCount.textContent = pendingCount;
   if (elPendingAmt) elPendingAmt.textContent = formatVND(summary.pending_amount);
-  if (elApprovedCount) elApprovedCount.textContent = summary.approved_count || 0;
+  if (elPendingPercent) elPendingPercent.textContent = `${Math.round(pendingPct)}% tổng yêu cầu`;
+  if (elPendingBar) elPendingBar.style.width = `${pendingPct.toFixed(1)}%`;
+
+  const approvedCount = summary.approved_count || 0;
+  const approvedPct = totalReq > 0 ? (approvedCount / totalReq) * 100 : 0;
+  if (elApprovedCount) elApprovedCount.textContent = approvedCount;
   if (elApprovedAmt) elApprovedAmt.textContent = formatVND(summary.approved_amount);
-  if (elPaidCount) elPaidCount.textContent = summary.paid_count || 0;
+  if (elApprovedPercent) elApprovedPercent.textContent = `${Math.round(approvedPct)}% tổng yêu cầu`;
+  if (elApprovedBar) elApprovedBar.style.width = `${approvedPct.toFixed(1)}%`;
+
+  const paidCount = summary.paid_count || 0;
+  const paidPct = totalReq > 0 ? (paidCount / totalReq) * 100 : 0;
+  if (elPaidCount) elPaidCount.textContent = paidCount;
   if (elPaidAmt) elPaidAmt.textContent = formatVND(summary.paid_amount);
+  if (elPaidPercent) elPaidPercent.textContent = `${Math.round(paidPct)}% tổng yêu cầu`;
+  if (elPaidBar) elPaidBar.style.width = `${paidPct.toFixed(1)}%`;
+
   if (elRejectedCount) elRejectedCount.textContent = summary.rejected_count || 0;
   if (elRejectedAmt) elRejectedAmt.textContent = formatVND(summary.rejected_amount);
 
@@ -310,17 +357,91 @@ function renderSummaryCards(summary) {
   const cardPaid = document.getElementById("card-paid");
 
   [cardTotal, cardPending, cardApproved, cardPaid].forEach((c) => {
-    if (c) c.classList.remove("ring-2", "ring-ink", "bg-canvas/50");
+    if (c) {
+      c.classList.remove(
+        "ring-2",
+        "ring-ink",
+        "ring-amber-500",
+        "ring-blue-500",
+        "ring-emerald-500",
+        "bg-amber-50/10",
+        "bg-blue-50/10",
+        "bg-emerald-50/10"
+      );
+    }
   });
 
   if (pageState.status === "pending" && cardPending) {
-    cardPending.classList.add("ring-2", "ring-amber-500", "bg-amber-50/20");
+    cardPending.classList.add("ring-2", "ring-amber-500", "bg-amber-50/10");
   } else if (pageState.status === "approved" && cardApproved) {
-    cardApproved.classList.add("ring-2", "ring-blue-500", "bg-blue-50/20");
+    cardApproved.classList.add("ring-2", "ring-blue-500", "bg-blue-50/10");
   } else if (pageState.status === "paid" && cardPaid) {
-    cardPaid.classList.add("ring-2", "ring-emerald-500", "bg-emerald-50/20");
+    cardPaid.classList.add("ring-2", "ring-emerald-500", "bg-emerald-50/10");
   } else if (pageState.status === "all" && cardTotal) {
-    cardTotal.classList.add("ring-2", "ring-ink/20");
+    cardTotal.classList.add("ring-2", "ring-ink");
+  }
+}
+
+/**
+ * Kiểm tra xem có bất kỳ bộ lọc nào khác mặc định đang active hay không
+ */
+function isFilterActive() {
+  return (
+    Boolean(pageState.search && pageState.search.trim()) ||
+    pageState.status !== "all" ||
+    pageState.time_preset !== "all" ||
+    Boolean(pageState.date_from) ||
+    Boolean(pageState.date_to) ||
+    Boolean(pageState.amount_min) ||
+    Boolean(pageState.amount_max)
+  );
+}
+
+/**
+ * Cập nhật trạng thái hiển thị màu sắc và bấm cho nút X đỏ xóa bộ lọc
+ */
+function updateResetButtonState() {
+  const btnReset = document.getElementById("btn-reset-filters");
+  if (!btnReset) return;
+
+  if (isFilterActive()) {
+    btnReset.disabled = false;
+    btnReset.classList.remove(
+      "opacity-40",
+      "text-mid-gray/40",
+      "pointer-events-none",
+      "cursor-not-allowed",
+      "bg-canvas",
+      "border-hairline"
+    );
+    btnReset.classList.add(
+      "text-rose-600",
+      "hover:text-rose-700",
+      "bg-paper",
+      "hover:bg-rose-50",
+      "border-rose-200",
+      "shadow-sm",
+      "cursor-pointer"
+    );
+  } else {
+    btnReset.disabled = true;
+    btnReset.classList.remove(
+      "text-rose-600",
+      "hover:text-rose-700",
+      "bg-paper",
+      "hover:bg-rose-50",
+      "border-rose-200",
+      "shadow-sm",
+      "cursor-pointer"
+    );
+    btnReset.classList.add(
+      "opacity-40",
+      "text-mid-gray/40",
+      "pointer-events-none",
+      "cursor-not-allowed",
+      "bg-canvas",
+      "border-hairline"
+    );
   }
 }
 
@@ -406,7 +527,8 @@ function renderTableRows(items) {
 
     const badge = withdrawalStatusMap[item.status] || {
       label: item.status,
-      colorClass: "bg-canvas text-mid-gray border-hairline",
+      colorClass: "text-mid-gray",
+      dotClass: "bg-mid-gray",
     };
 
     const user = item.user || {};
@@ -444,12 +566,13 @@ function renderTableRows(items) {
           <span class="text-[11px] text-mid-gray truncate font-medium max-w-[180px]">${payoutAcc.account_name || '---'}</span>
         </div>
       </td>
-      <td class="py-3 px-3 text-right font-bold text-ink whitespace-nowrap">
+      <td class="py-3 px-3 text-center font-bold text-ink whitespace-nowrap tabular-nums">
         ${formatVND(item.amount)}
       </td>
       <td class="py-3 px-3 whitespace-nowrap">
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border ${badge.colorClass}">
-          ${badge.label}
+        <span class="inline-flex items-center gap-1.5 text-xs font-semibold ${badge.colorClass}">
+          <span class="h-2 w-2 rounded-full ${badge.dotClass} shrink-0" aria-hidden="true"></span>
+          <span>${badge.label}</span>
         </span>
       </td>
       <td class="py-3 px-3 text-mid-gray whitespace-nowrap">
@@ -1050,7 +1173,7 @@ function bindEvents() {
     updateUrlState();
     syncStateFromUrl();
     loadWithdrawals();
-    showToast("Đã đặt lại toàn bộ bộ lọc.", "info");
+    showToast("Đã xóa toàn bộ bộ lọc.", "info");
   };
 
   if (btnReset) btnReset.addEventListener("click", resetAllFilters);
@@ -1071,51 +1194,46 @@ function bindEvents() {
     });
   }
 
-  // Card clicks filter status
+  // Card clicks filter status & auto scroll to table
   const cardTotal = document.getElementById("card-total-requests");
   const cardPending = document.getElementById("card-pending");
   const cardApproved = document.getElementById("card-approved");
   const cardPaid = document.getElementById("card-paid");
 
-  if (cardTotal) {
-    cardTotal.addEventListener("click", () => {
+  const handleCardClick = (targetStatus) => {
+    if (targetStatus === "all") {
       pageState.status = "all";
-      pageState.page = 1;
-      updateUrlState();
-      syncStateFromUrl();
-      loadWithdrawals();
-    });
-  }
+    } else {
+      pageState.status = pageState.status === targetStatus ? "all" : targetStatus;
+    }
+    pageState.page = 1;
 
-  if (cardPending) {
-    cardPending.addEventListener("click", () => {
-      pageState.status = "pending";
-      pageState.page = 1;
-      updateUrlState();
-      syncStateFromUrl();
-      loadWithdrawals();
-    });
-  }
+    // Đồng bộ giá trị với custom select UI
+    const statusSelect = document.getElementById("filter-status");
+    if (statusSelect) statusSelect.value = pageState.status;
+    if (typeof window.initAllCustomSelects === "function") {
+      window.initAllCustomSelects();
+    }
 
-  if (cardApproved) {
-    cardApproved.addEventListener("click", () => {
-      pageState.status = "approved";
-      pageState.page = 1;
-      updateUrlState();
-      syncStateFromUrl();
-      loadWithdrawals();
-    });
-  }
+    updateUrlState();
+    loadWithdrawals({ autoScroll: true });
+  };
 
-  if (cardPaid) {
-    cardPaid.addEventListener("click", () => {
-      pageState.status = "paid";
-      pageState.page = 1;
-      updateUrlState();
-      syncStateFromUrl();
-      loadWithdrawals();
+  const setupCardKeyAndClick = (cardEl, targetStatus) => {
+    if (!cardEl) return;
+    cardEl.addEventListener("click", () => handleCardClick(targetStatus));
+    cardEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleCardClick(targetStatus);
+      }
     });
-  }
+  };
+
+  setupCardKeyAndClick(cardTotal, "all");
+  setupCardKeyAndClick(cardPending, "pending");
+  setupCardKeyAndClick(cardApproved, "approved");
+  setupCardKeyAndClick(cardPaid, "paid");
 
   // Drawer Close Button & Overlay
   const btnCloseDrawer = document.getElementById("btn-close-drawer");
