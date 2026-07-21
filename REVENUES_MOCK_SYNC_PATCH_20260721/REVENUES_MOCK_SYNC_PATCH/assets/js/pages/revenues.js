@@ -9,7 +9,7 @@ const state = {
   per_page: 20,
   filters: {
     search: "",
-    time_preset: "last_30_days",
+    date_preset: "last_30_days",
     date_from: "",
     date_to: "",
     status: "all"
@@ -19,14 +19,6 @@ const state = {
 
 let debounceTimer = null;
 let revenueChartInstance = null;
-
-const timePresetLabels = {
-  "1_day": "1 ngày",
-  "last_7_days": "7 ngày",
-  "last_30_days": "1 tháng",
-  "last_3_months": "3 tháng",
-  "custom": "Tùy chọn"
-};
 
 function formatMoney(value) {
   const number = Number(value);
@@ -73,30 +65,30 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function applyPresetDates() {
-  const preset = state.filters.time_preset;
+  const preset = state.filters.date_preset;
   if (preset === "custom") return;
 
   const now = new Date("2026-07-21T23:59:59Z");
   const from = new Date(now.getTime());
 
-  if (preset === "1_day") {
-    from.setHours(0, 0, 0, 0);
-  } else if (preset === "last_7_days") {
+  if (preset === "last_7_days") {
     from.setDate(now.getDate() - 6);
-    from.setHours(0, 0, 0, 0);
   } else if (preset === "last_30_days") {
     from.setDate(now.getDate() - 29);
-    from.setHours(0, 0, 0, 0);
   } else if (preset === "last_3_months") {
     from.setDate(now.getDate() - 89);
-    from.setHours(0, 0, 0, 0);
   }
 
   state.filters.date_from = from.toISOString().split('T')[0];
   state.filters.date_to = now.toISOString().split('T')[0];
 
-  const labelSpan = document.getElementById("chart-time-label");
-  if (labelSpan) labelSpan.textContent = timePresetLabels[preset] || "1 tháng";
+  const presetLabels = {
+    last_7_days: "7 ngày qua",
+    last_30_days: "1 tháng qua",
+    last_3_months: "3 tháng qua"
+  };
+  const labelEl = document.getElementById("chart-preset-label");
+  if (labelEl) labelEl.textContent = presetLabels[preset] || "";
 }
 
 function initURLParams() {
@@ -107,34 +99,30 @@ function initURLParams() {
   if (params.has("status")) state.filters.status = params.get("status");
 
   if (params.has("date_from") || params.has("date_to")) {
-    state.filters.time_preset = "custom";
+    state.filters.date_preset = "custom";
     state.filters.date_from = params.get("date_from") || "";
     state.filters.date_to = params.get("date_to") || "";
-    document.getElementById("chart-custom-date-group")?.classList.remove("hidden");
-    document.getElementById("chart-custom-date-group")?.classList.add("flex");
-    const labelSpan = document.getElementById("chart-time-label");
-    if (labelSpan) labelSpan.textContent = "Tùy chọn";
-  } else if (params.has("time_preset")) {
-    state.filters.time_preset = params.get("time_preset");
+    document.getElementById("filter-date-preset").value = "custom";
+    document.getElementById("custom-date-group").classList.remove("hidden");
+    document.getElementById("custom-date-group").classList.add("flex");
+    const labelEl = document.getElementById("chart-preset-label");
+    if (labelEl) labelEl.textContent = "Tùy chọn ngày";
+  } else if (params.has("date_preset")) {
+    state.filters.date_preset = params.get("date_preset");
+    document.getElementById("filter-date-preset").value = state.filters.date_preset;
     applyPresetDates();
   } else {
     applyPresetDates();
   }
 
-  // Bind UI inputs
+  // Bind values to UI elements
   const searchInput = document.getElementById("filter-search");
-  if (searchInput) {
-    searchInput.value = state.filters.search;
-    toggleClearSearchButton(state.filters.search);
-  }
+  searchInput.value = state.filters.search;
+  toggleClearSearchButton(state.filters.search);
 
-  const statusSelect = document.getElementById("filter-status");
-  if (statusSelect) statusSelect.value = state.filters.status;
-
-  const dateFromEl = document.getElementById("filter-date-from");
-  const dateToEl = document.getElementById("filter-date-to");
-  if (dateFromEl) dateFromEl.value = state.filters.date_from;
-  if (dateToEl) dateToEl.value = state.filters.date_to;
+  document.getElementById("filter-status").value = state.filters.status;
+  document.getElementById("filter-date-from").value = state.filters.date_from;
+  document.getElementById("filter-date-to").value = state.filters.date_to;
 
   if (params.has("open_revenue_id")) {
     openDrawer(params.get("open_revenue_id"));
@@ -148,11 +136,11 @@ function updateURL() {
   if (state.filters.search) params.set("search", state.filters.search);
   if (state.filters.status !== "all") params.set("status", state.filters.status);
 
-  if (state.filters.time_preset === "custom") {
+  if (state.filters.date_preset === "custom") {
     if (state.filters.date_from) params.set("date_from", state.filters.date_from);
     if (state.filters.date_to) params.set("date_to", state.filters.date_to);
   } else {
-    params.set("time_preset", state.filters.time_preset);
+    params.set("date_preset", state.filters.date_preset);
   }
 
   const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -179,7 +167,6 @@ async function loadData() {
     per_page: state.per_page,
     search: state.filters.search,
     status: state.filters.status,
-    time_preset: state.filters.time_preset,
     date_from: state.filters.date_from,
     date_to: state.filters.date_to
   };
@@ -229,7 +216,6 @@ async function loadTableOnly() {
     per_page: state.per_page,
     search: state.filters.search,
     status: state.filters.status,
-    time_preset: state.filters.time_preset,
     date_from: state.filters.date_from,
     date_to: state.filters.date_to
   };
@@ -394,9 +380,8 @@ function renderPagination(meta) {
 
 function renderChart(reportData) {
   const emptyStateEl = document.getElementById("chart-empty-state");
-  const totalOrders = reportData.reduce((sum, d) => sum + (d.order_count || 0), 0);
 
-  if (!reportData || reportData.length === 0 || totalOrders === 0) {
+  if (!reportData || reportData.length === 0) {
     if (revenueChartInstance) {
       revenueChartInstance.destroy();
       revenueChartInstance = null;
@@ -411,17 +396,15 @@ function renderChart(reportData) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Hủy chart instance cũ trước khi render lại
+  // Hủy chart instance cũ trước khi render mới
   if (revenueChartInstance) {
     revenueChartInstance.destroy();
     revenueChartInstance = null;
   }
 
   const labels = reportData.map(d => {
-    if (d.period.includes(':')) return d.period; // 00:00
     const parts = d.period.split('-');
     if (parts.length === 3) return `${parts[2]}/${parts[1]}`;
-    if (parts.length === 2) return `T${parts[1]}/${parts[0]}`;
     return d.period;
   });
 
@@ -494,15 +477,15 @@ function renderChart(reportData) {
           callbacks: {
             title: function(context) {
               const index = context[0].dataIndex;
-              const item = reportData[index];
-              if (!item) return '';
-              return `Thời gian: ${item.period} (${item.order_count} đơn hàng)`;
+              const rawDate = reportData[index]?.period || '';
+              const orderCount = reportData[index]?.order_count || 0;
+              return `Ngày ${rawDate} (${orderCount} đơn hàng)`;
             },
             label: function(context) {
               let label = context.dataset.label || '';
               if (label) label += ': ';
               if (context.parsed.y !== null) {
-                label += formatMoney(context.parsed.y);
+                label += new Intl.NumberFormat('vi-VN').format(context.parsed.y) + ' đ';
               }
               return label;
             }
@@ -541,75 +524,6 @@ function setupEventListeners() {
     loadData();
   });
 
-  // Custom Dropdown Bộ Lọc Thời Gian trên Chart
-  const triggerBtn = document.getElementById("btn-chart-time-trigger");
-  const dropdownMenu = document.getElementById("chart-time-dropdown");
-
-  if (triggerBtn && dropdownMenu) {
-    triggerBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!dropdownMenu.contains(e.target) && !triggerBtn.contains(e.target)) {
-        dropdownMenu.classList.add("hidden");
-      }
-    });
-
-    dropdownMenu.querySelectorAll("[data-preset]").forEach((item) => {
-      item.addEventListener("click", () => {
-        const preset = item.getAttribute("data-preset");
-        dropdownMenu.classList.add("hidden");
-
-        dropdownMenu.querySelectorAll("[data-preset]").forEach((el) => {
-          el.classList.remove("font-semibold", "bg-canvas");
-        });
-        item.classList.add("font-semibold", "bg-canvas");
-
-        state.filters.time_preset = preset;
-        const customGroup = document.getElementById("chart-custom-date-group");
-
-        if (preset === "custom") {
-          customGroup?.classList.remove("hidden");
-          customGroup?.classList.add("flex");
-          const labelSpan = document.getElementById("chart-time-label");
-          if (labelSpan) labelSpan.textContent = "Tùy chọn";
-        } else {
-          customGroup?.classList.add("hidden");
-          customGroup?.classList.remove("flex");
-          applyPresetDates();
-          state.page = 1;
-          loadData();
-        }
-      });
-    });
-  }
-
-  // Nút Áp Dụng Khoảng Ngày Tùy Chọn
-  const applyCustomBtn = document.getElementById("btn-apply-custom-date");
-  if (applyCustomBtn) {
-    applyCustomBtn.addEventListener("click", () => {
-      const fromVal = document.getElementById("filter-date-from").value;
-      const toVal = document.getElementById("filter-date-to").value;
-      const errEl = document.getElementById("date-validation-error");
-
-      if (fromVal && toVal && new Date(fromVal) > new Date(toVal)) {
-        if (errEl) {
-          errEl.textContent = "Ngày bắt đầu không được lớn hơn ngày kết thúc.";
-          errEl.classList.remove("hidden");
-        }
-        return;
-      }
-      if (errEl) errEl.classList.add("hidden");
-
-      state.filters.date_from = fromVal;
-      state.filters.date_to = toVal;
-      state.page = 1;
-      loadData();
-    });
-  }
-
   // 1. Ô Tìm kiếm chung (Unified Search + Debounce 350ms)
   const searchInput = document.getElementById("filter-search");
   if (searchInput) {
@@ -638,7 +552,58 @@ function setupEventListeners() {
     });
   }
 
-  // Select Trạng thái
+  // 2. Select thời gian
+  const presetSelect = document.getElementById("filter-date-preset");
+  if (presetSelect) {
+    presetSelect.addEventListener("change", (e) => {
+      const val = e.target.value;
+      state.filters.date_preset = val;
+
+      const customGroup = document.getElementById("custom-date-group");
+      if (val === "custom") {
+        customGroup?.classList.remove("hidden");
+        customGroup?.classList.add("flex");
+        const labelEl = document.getElementById("chart-preset-label");
+        if (labelEl) labelEl.textContent = "Tùy chọn ngày";
+      } else {
+        customGroup?.classList.add("hidden");
+        customGroup?.classList.remove("flex");
+        applyPresetDates();
+        state.page = 1;
+        loadData();
+      }
+    });
+  }
+
+  // 3. Inputs từ ngày / đến ngày
+  const dateFromEl = document.getElementById("filter-date-from");
+  const dateToEl = document.getElementById("filter-date-to");
+
+  [dateFromEl, dateToEl].forEach((el) => {
+    if (el) {
+      el.addEventListener("change", () => {
+        if (state.filters.date_preset === "custom") {
+          state.filters.date_from = dateFromEl.value;
+          state.filters.date_to = dateToEl.value;
+
+          const errEl = document.getElementById("date-validation-error");
+          if (dateFromEl.value && dateToEl.value && new Date(dateFromEl.value) > new Date(dateToEl.value)) {
+            if (errEl) {
+              errEl.textContent = "Ngày bắt đầu không được lớn hơn ngày kết thúc.";
+              errEl.classList.remove("hidden");
+            }
+            return;
+          }
+          if (errEl) errEl.classList.add("hidden");
+
+          state.page = 1;
+          loadData();
+        }
+      });
+    }
+  });
+
+  // 4. Select Trạng thái
   const statusSelect = document.getElementById("filter-status");
   if (statusSelect) {
     statusSelect.addEventListener("change", (e) => {
@@ -648,12 +613,12 @@ function setupEventListeners() {
     });
   }
 
-  // Nút Đặt lại bộ lọc
+  // 5. Nút Đặt lại bộ lọc
   document.getElementById("btn-reset-filters")?.addEventListener("click", resetFilters);
   document.getElementById("btn-clear-empty-filter")?.addEventListener("click", resetFilters);
   document.getElementById("btn-retry-error")?.addEventListener("click", () => loadData());
 
-  // Drawer Events
+  // 6. Drawer Events
   document.getElementById("btn-close-drawer")?.addEventListener("click", closeDrawer);
   document.getElementById("drawer-overlay")?.addEventListener("click", closeDrawer);
   document.addEventListener("keydown", (e) => {
@@ -664,7 +629,7 @@ function setupEventListeners() {
 function resetFilters() {
   state.filters = {
     search: "",
-    time_preset: "last_30_days",
+    date_preset: "last_30_days",
     date_from: "",
     date_to: "",
     status: "all"
@@ -674,7 +639,10 @@ function resetFilters() {
   if (searchInput) searchInput.value = "";
   toggleClearSearchButton("");
 
-  const customGroup = document.getElementById("chart-custom-date-group");
+  const presetSelect = document.getElementById("filter-date-preset");
+  if (presetSelect) presetSelect.value = "last_30_days";
+
+  const customGroup = document.getElementById("custom-date-group");
   if (customGroup) {
     customGroup.classList.add("hidden");
     customGroup.classList.remove("flex");
@@ -795,8 +763,8 @@ function populateDrawer(data) {
   document.getElementById("drawer-gross-amount").textContent = formatMoney(data.gross_amount);
   document.getElementById("drawer-instructor-amount").textContent = formatMoney(data.instructor_amount);
   document.getElementById("drawer-platform-amount").textContent = formatMoney(data.platform_fee_amount);
-  document.getElementById("drawer-instructor-rate").textContent = data.instructor_rate;
-  document.getElementById("drawer-platform-rate").textContent = data.platform_rate;
+  document.getElementById("drawer-instructor-rate").textContent = Number.isFinite(Number(data.instructor_rate)) ? Number(data.instructor_rate).toLocaleString("vi-VN") : "0";
+  document.getElementById("drawer-platform-rate").textContent = Number.isFinite(Number(data.platform_rate)) ? Number(data.platform_rate).toLocaleString("vi-VN") : "0";
 
   if (data.amount_consistent === false) {
     document.getElementById("drawer-consistency-warning").classList.remove("hidden");
@@ -817,6 +785,10 @@ function populateDrawer(data) {
     document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
   } else {
     document.getElementById("drawer-order-code").textContent = "---";
+    document.getElementById("drawer-order-amount").textContent = "0 đ";
+    document.getElementById("drawer-order-status").textContent = "---";
+    document.getElementById("drawer-payment-status").textContent = "---";
+    document.getElementById("drawer-order-link").removeAttribute("href");
   }
 
   if (data.course) {
@@ -824,6 +796,7 @@ function populateDrawer(data) {
     document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
   } else {
     document.getElementById("drawer-course-title").textContent = "---";
+    document.getElementById("drawer-course-link").removeAttribute("href");
   }
 
   if (data.instructor) {
@@ -833,5 +806,6 @@ function populateDrawer(data) {
   } else {
     document.getElementById("drawer-instructor-name").textContent = "---";
     document.getElementById("drawer-instructor-email").textContent = "---";
+    document.getElementById("drawer-instructor-link").removeAttribute("href");
   }
 }

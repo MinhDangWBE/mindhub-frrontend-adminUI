@@ -1,0 +1,1088 @@
+AUDIT ĐỒNG BỘ DỮ LIỆU MOCK MINDHUB
+Thời gian: 2026-07-21 10:56:32
+Project: D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin
+
+=== 1. DANH SÁCH FILE DỮ LIỆU ===
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\_setup-input\tokens.json | 10098 bytes | 7/13/2026 10:46:12 PM
+
+Tổng số file dữ liệu tìm thấy: 20
+
+=== 2. FILE NGHIỆP VỤ QUAN TRỌNG ===
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js
+
+=== 3. FIELD VÀ LIÊN KẾT ĐANG ĐƯỢC DÙNG ===
+
+--- Revenue ID ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\instructor-upgrades-api.js:39 | id: 6000 + app.user_id,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:8 | id: 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:23 | id: 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:32 | id: 10101,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:38 | { id: 1, title: "1.1 Giới thiệu kiến trúc VPC & Subnets", order: 1, type: "video", duration_seconds: 3600, is_preview: true },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:39 | { id: 2, title: "1.2 Cấu hình Route Tables & Internet Gateways", order: 2, type: "video", duration_seconds: 3600, is_preview: false },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:40 | { id: 3, title: "1.3 Lab thực hành tạo VPC tùy chỉnh", order: 3, type: "document", duration_seconds: 3600, is_preview: false }
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:58 | id: 101,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:76 | id: 12,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:86 | id: 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:93 | id: 1,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:101 | id: 2,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:109 | id: 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:117 | id: 4,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:127 | id: 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:134 | id: 5,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:142 | id: 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:150 | id: 7,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:158 | id: 8,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:166 | id: 9,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:176 | id: 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:183 | id: 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:191 | id: 11,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:199 | id: 12,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:207 | id: 13,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:215 | id: 14,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:268 | id: 102,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:286 | id: 18,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:296 | id: 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:303 | id: 15,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:311 | id: 16,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:319 | id: 17,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:329 | id: 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:336 | id: 18,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:344 | id: 19,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:352 | id: 20,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:360 | id: 21,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:410 | id: 103,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:428 | id: 25,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:438 | id: 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:445 | id: 22,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:453 | id: 23,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:461 | id: 24,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:517 | id: 104,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:535 | id: 31,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:545 | id: 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:552 | id: 25,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:560 | id: 26,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:568 | id: 27,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:576 | id: 28,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:586 | id: 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:593 | id: 29,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:601 | id: 30,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:609 | id: 31,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:617 | id: 32,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:667 | id: 105,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:685 | id: 42,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:695 | id: 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:702 | id: 33,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:710 | id: 34,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:718 | id: 35,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:728 | id: 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:735 | id: 36,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:743 | id: 37,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:751 | id: 38,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:803 | id: 106,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:821 | id: 55,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:831 | id: 1011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:838 | id: 39,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:846 | id: 40,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:854 | id: 41,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:862 | id: 42,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:915 | id: 107,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:933 | id: 61,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:943 | id: 1012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:950 | id: 43,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:958 | id: 44,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:966 | id: 45,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:974 | id: 46,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:982 | id: 47,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1032 | id: 108,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1050 | id: 72,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1060 | id: 1013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1067 | id: 48,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1075 | id: 49,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1083 | id: 50,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1093 | id: 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1100 | id: 51,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1108 | id: 52,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1116 | id: 53,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1168 | id: 109,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1186 | id: 84,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1196 | id: 1015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1203 | id: 54,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1211 | id: 55,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1219 | id: 56,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1227 | id: 57,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1235 | id: 58,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1288 | id: 110,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1306 | id: 91,
+... còn 780 kết quả khác
+
+--- Order ID ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3565 | "order_id": 3001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3575 | "order_id": 3002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3585 | "order_id": 3003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3595 | "order_id": 3004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3605 | "order_id": 3005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3615 | "order_id": 3006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3625 | "order_id": 3010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3635 | "order_id": 3011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3645 | "order_id": 3012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3655 | "order_id": 3013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3665 | "order_id": 3014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3675 | "order_id": 3015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3685 | "order_id": 3019,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3695 | "order_id": 3020,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3705 | "order_id": 3021,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3715 | "order_id": 3022,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3725 | "order_id": 3023,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3735 | "order_id": 3028,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3745 | "order_id": 3001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3756 | "order_id": 3002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3767 | "order_id": 3003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3778 | "order_id": 3004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3789 | "order_id": 3005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3800 | "order_id": 3006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3811 | "order_id": 3010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3822 | "order_id": 3011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3833 | "order_id": 3012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3844 | "order_id": 3013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3855 | "order_id": 3014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3866 | "order_id": 3015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3877 | "order_id": 3019,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3888 | "order_id": 3020,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3899 | "order_id": 3021,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3910 | "order_id": 3022,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3921 | "order_id": 3023,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3932 | "order_id": 3028,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:312 | return getEnrollments().find((e) => e.order_id === parsedId) || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:50 | order: { id: 101, order_code: "ORD-20260720-001", amount: "500000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-20T14:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:64 | order: { id: 102, order_code: "ORD-20260719-002", amount: "1200000.00", status: "pending", payment_status: "processing", paid_at: null },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:78 | order: { id: 103, order_code: "ORD-20260705-003", amount: "800000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-05T11:00:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:105 | order: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:139 | order: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:173 | order: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3565 | "order_id": 3001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3575 | "order_id": 3002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3585 | "order_id": 3003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3595 | "order_id": 3004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3605 | "order_id": 3005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3615 | "order_id": 3006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3625 | "order_id": 3010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3635 | "order_id": 3011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3645 | "order_id": 3012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3655 | "order_id": 3013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3665 | "order_id": 3014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3675 | "order_id": 3015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3685 | "order_id": 3019,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3695 | "order_id": 3020,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3705 | "order_id": 3021,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3715 | "order_id": 3022,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3725 | "order_id": 3023,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3735 | "order_id": 3028,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3745 | "order_id": 3001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3756 | "order_id": 3002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3767 | "order_id": 3003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3778 | "order_id": 3004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3789 | "order_id": 3005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3800 | "order_id": 3006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3811 | "order_id": 3010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3822 | "order_id": 3011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3833 | "order_id": 3012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3844 | "order_id": 3013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3855 | "order_id": 3014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3866 | "order_id": 3015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3877 | "order_id": 3019,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3888 | "order_id": 3020,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3899 | "order_id": 3021,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3910 | "order_id": 3022,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3921 | "order_id": 3023,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3932 | "order_id": 3028,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-repository.js:312 | return getEnrollments().find((e) => e.order_id === parsedId) || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:50 | order: { id: 101, order_code: "ORD-20260720-001", amount: "500000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-20T14:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:64 | order: { id: 102, order_code: "ORD-20260719-002", amount: "1200000.00", status: "pending", payment_status: "processing", paid_at: null },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:78 | order: { id: 103, order_code: "ORD-20260705-003", amount: "800000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-05T11:00:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:105 | order: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:139 | order: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:173 | order: {
+
+--- Order code ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:93 | * API Contract Query List: page, per_page, status, payment_status, user_id, course_id, order_code, date_from, date_to
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:118 | // Lọc theo tìm kiếm tổng hợp (Unified Search) hoặc order_code
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:119 | const searchKeyword = normalizeSearchText(params.search || params.order_code);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:123 | o.order_code,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:71 | const orderCode = (r.order?.order_code || "").toLowerCase();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2898 | "order_code": "ORD-2026-0001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2915 | "order_code": "ORD-2026-0002",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2932 | "order_code": "ORD-2026-0003",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2949 | "order_code": "ORD-2026-0004",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2966 | "order_code": "ORD-2026-0005",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2983 | "order_code": "ORD-2026-0006",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3000 | "order_code": "ORD-2026-0007",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3017 | "order_code": "ORD-2026-0008",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3034 | "order_code": "ORD-2026-0009",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3051 | "order_code": "ORD-2026-0010",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3068 | "order_code": "ORD-2026-0011",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3085 | "order_code": "ORD-2026-0012",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3102 | "order_code": "ORD-2026-0013",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3119 | "order_code": "ORD-2026-0014",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3136 | "order_code": "ORD-2026-0015",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3153 | "order_code": "ORD-2026-0016",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3170 | "order_code": "ORD-2026-0017",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3187 | "order_code": "ORD-2026-0018",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3204 | "order_code": "ORD-2026-0019",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3221 | "order_code": "ORD-2026-0020",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3238 | "order_code": "ORD-2026-0021",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3255 | "order_code": "ORD-2026-0022",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3272 | "order_code": "ORD-2026-0023",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3289 | "order_code": "ORD-2026-0024",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3306 | "order_code": "ORD-2026-0025",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3323 | "order_code": "ORD-2026-0026",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3340 | "order_code": "ORD-2026-0027",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3357 | "order_code": "ORD-2026-0028",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3374 | "order_code": "ORD-2026-0029",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3391 | "order_code": "ORD-2026-0030",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3408 | "order_code": "ORD-2026-0031",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3425 | "order_code": "ORD-2026-0032",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3442 | "order_code": "ORD-2026-0033",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3459 | "order_code": "ORD-2026-0034",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3476 | "order_code": "ORD-2026-0035",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3493 | "order_code": "ORD-2025-0036",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3510 | "order_code": "ORD-2026-0037",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3527 | "order_code": "ORD-2025-0038",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3544 | "order_code": "ORD-2025-0039",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:359 | description: `Đơn hàng ${order.order_code} khởi tạo bởi ${user ? user.full_name : "Người dùng"}.`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:545 | return revenues.find(r => r.order?.id === pId || String(r.order?.order_code).toLowerCase() === String(orderId).toLowerCase()) || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:50 | order: { id: 101, order_code: "ORD-20260720-001", amount: "500000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-20T14:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:64 | order: { id: 102, order_code: "ORD-20260719-002", amount: "1200000.00", status: "pending", payment_status: "processing", paid_at: null },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:78 | order: { id: 103, order_code: "ORD-20260705-003", amount: "800000.00", status: "paid", payment_status: "paid", paid_at: "2026-07-05T11:00:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:107 | order_code: `ORD-202607${String(21 - (i % 6)).padStart(2, '0')}-${String(i).padStart(3, '0')}`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:141 | order_code: `ORD-202606${String(30 - (i % 25)).padStart(2, '0')}-${String(i).padStart(3, '0')}`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:175 | order_code: `ORD-202605${String(30 - (i % 25)).padStart(2, '0')}-${String(i).padStart(3, '0')}`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:14 | order_code: "",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:108 | state.order_code = urlParams.get("order_code") || "";
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:129 | if (state.order_code.trim())
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:130 | urlParams.set("order_code", state.order_code.trim());
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:131 | if (state.search_text.trim() && !state.order_code.trim())
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:227 | if (state.order_code.trim()) apiParams.order_code = state.order_code.trim();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:228 | if (state.search_text.trim() && !state.order_code.trim())
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:424 | state.order_code.trim() !== "" ||
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:450 | tr.setAttribute("aria-label", `Xem chi tiết đơn hàng ${item.order_code}`);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:538 | <div class="font-mono font-bold text-ink leading-tight">${item.order_code}</div>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:628 | <button type="button" data-action="copy-code" data-code="${item.order_code}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:733 | if (state.order_code.trim()) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:735 | key: "order_code",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:736 | label: `Mã đơn: ${state.order_code.trim()}`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:835 | if (filterKey === "search" || filterKey === "order_code") {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:865 | state.order_code = "";
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:894 | state.order_code = "";
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:919 | } else if (state.order_code.trim()) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:920 | searchInput.value = state.order_code;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1125 | state.order_code = String(value);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1150 | state.order_code = "";
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1388 | document.getElementById("drawer-order-code").textContent = order.order_code;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1406 | <span class="font-mono font-bold text-ink text-sm">${order.order_code}</span>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:315 | <td class="py-3 px-3 font-mono text-mid-gray">${item.order?.order_code || "---"}</td>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:808 | document.getElementById("drawer-order-code").textContent = data.order.order_code;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:67 | order_code: "ORD1001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:76 | order_code: "ORD1002",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:85 | order_code: "ORD1003",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:94 | order_code: "ORD1004",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:103 | order_code: "ORD1005",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:213 | order_code: "ORD1001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:222 | order_code: "ORD1002",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:327 | order_code: "ORD1001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:430 | order_code: "ORD1001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:542 | order_code: "ORD1001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\api\revenues-api.js:71 | const orderCode = (r.order?.order_code || "").toLowerCase();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2898 | "order_code": "ORD-2026-0001",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2915 | "order_code": "ORD-2026-0002",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2932 | "order_code": "ORD-2026-0003",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2949 | "order_code": "ORD-2026-0004",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2966 | "order_code": "ORD-2026-0005",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:2983 | "order_code": "ORD-2026-0006",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3000 | "order_code": "ORD-2026-0007",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3017 | "order_code": "ORD-2026-0008",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3034 | "order_code": "ORD-2026-0009",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3051 | "order_code": "ORD-2026-0010",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3068 | "order_code": "ORD-2026-0011",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\mock-database.js:3085 | "order_code": "ORD-2026-0012",
+... còn 60 kết quả khác
+
+--- Course ID ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:93 | * API Contract Query List: page, per_page, status, payment_status, user_id, course_id, order_code, date_from, date_to
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:151 | // Lọc theo course_id
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:152 | if (params.course_id && params.course_id !== "" && params.course_id !== "all") {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:153 | const targetCourseId = Number(params.course_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:154 | filtered = filtered.filter((o) => Number(o.course_id) === targetCourseId);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1860 | course: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1392 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1459 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1644 | "course_id": 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1762 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1844 | "course_id": 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1970 | "course_id": 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2084 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2174 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2267 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2365 | "course_id": 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2477 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2572 | "course_id": 1016,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2901 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2918 | "course_id": 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2935 | "course_id": 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2952 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2969 | "course_id": 1011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2986 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3003 | "course_id": 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3020 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3037 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3054 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3071 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3088 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3105 | "course_id": 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3122 | "course_id": 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3139 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3156 | "course_id": 1012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3173 | "course_id": 1013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3190 | "course_id": 1015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3207 | "course_id": 1016,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3224 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3241 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3258 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3275 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3292 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3309 | "course_id": 1011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3326 | "course_id": 1012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3343 | "course_id": 1013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3360 | "course_id": 1015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3377 | "course_id": 1016,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3394 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3411 | "course_id": 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3428 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3445 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3462 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3479 | "course_id": 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3496 | "course_id": 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3513 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3530 | "course_id": 1012,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3547 | "course_id": 1013,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3564 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3574 | "course_id": 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3584 | "course_id": 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3594 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3604 | "course_id": 1011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3614 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3624 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3634 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3644 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3654 | "course_id": 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3664 | "course_id": 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3674 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3684 | "course_id": 1016,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3694 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3704 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3714 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3724 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3734 | "course_id": 1015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3746 | "course_id": 1001,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3757 | "course_id": 1002,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3768 | "course_id": 1004,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3779 | "course_id": 1006,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3790 | "course_id": 1011,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3801 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3812 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3823 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3834 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3845 | "course_id": 1008,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3856 | "course_id": 1009,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3867 | "course_id": 1010,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3878 | "course_id": 1016,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3889 | "course_id": 1007,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3900 | "course_id": 1014,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3911 | "course_id": 1003,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3922 | "course_id": 1005,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3933 | "course_id": 1015,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:236 | return getCourseReviews().find((r) => r.course_id === parsedId) || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:336 | const rawCourse = getCourseById(order.course_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:886 | window.location.href = `orders.html?course_id=${c.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:898 | window.location.href = `revenues.html?course_id=${c.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1928 | window.location.href = `orders.html?course_id=${course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1940 | window.location.href = `revenues.html?course_id=${course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:685 | <a href="courses.html?id=${course.course_id}" class="hover:underline block truncate max-w-[130px] font-medium" title="${course.title}">${course.title}</a>
+... còn 153 kết quả khác
+
+--- Instructor ID ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\courses-api.js:103 | // Lọc theo giảng viên (instructor_id)
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\courses-api.js:104 | if (params.instructor_id && params.instructor_id !== "") {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\courses-api.js:105 | filtered = filtered.filter(c => c.instructor && c.instructor.id === parseInt(params.instructor_id));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:22 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:75 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:285 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:427 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:534 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:684 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:820 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:932 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1049 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1185 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1305 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1441 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1558 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:1927 | instructor_id: item.instructor.id,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js:2014 | instructor_id: item.instructor.id,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:38 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:89 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:143 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:196 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:247 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:300 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:352 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:404 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:455 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:506 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:557 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:610 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:661 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:712 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:760 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:810 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:858 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js:909 | instructor: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1008 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1030 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1053 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1075 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1097 | "instructor_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1119 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1141 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1163 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1185 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1207 | "instructor_id": 32,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1229 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1251 | "instructor_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1274 | "instructor_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1296 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1318 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1340 | "instructor_id": 105,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1362 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:1384 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3747 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3758 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3769 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3780 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3791 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3802 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3813 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3824 | "instructor_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3835 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3846 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3857 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3868 | "instructor_id": 32,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3879 | "instructor_id": 105,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3890 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3901 | "instructor_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3912 | "instructor_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3923 | "instructor_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3934 | "instructor_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:204 | const instructorUser = getUserById(course.instructor_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:10 | instructor_id: "",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:118 | pageState.instructor_id = params.get("instructor_id") || "";
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:132 | document.getElementById("filter-instructor").value = pageState.instructor_id;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:340 | if (pageState.instructor_id == ins.id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1128 | if (pageState.instructor_id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1131 | `option[value="${pageState.instructor_id}"]`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1135 | : `ID ${pageState.instructor_id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1136 | chips.push({ key: "instructor_id", label: `Giảng viên: ${name}` });
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1296 | pageState.instructor_id =
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1387 | instructor_id: "",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:155 | { instructor_id: 501, full_name: "Trần Văn Hoàng", email: "hoang.tv@mindhub.edu.vn", total_courses: 3, published_courses: 2, sales_count: 250, enrollment_count: 1950, completed_enrollments: 585, completion_rate: 30.0, gross_revenue: "75000000.00", instructor_amount: "52500000.00", last_active_at: "2026-07-12T20:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:156 | { instructor_id: 502, full_name: "Nguyễn Anh Hồng", email: "hong.na@mindhub.edu.vn", total_courses: 2, published_courses: 2, sales_count: 180, enrollment_count: 1200, completed_enrollments: 360, completion_rate: 30.0, gross_revenue: "54000000.00", instructor_amount: "37800000.00", last_active_at: "2026-07-12T19:15:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:157 | { instructor_id: 503, full_name: "Phạm Minh Đức", email: "duc.pm@mindhub.edu.vn", total_courses: 5, published_courses: 4, sales_count: 140, enrollment_count: 1050, completed_enrollments: 262, completion_rate: 25.0, gross_revenue: "49000000.00", instructor_amount: "34300000.00", last_active_at: "2026-07-12T15:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:158 | { instructor_id: 504, full_name: "Lê Thị Nga", email: "nga.lt@mindhub.edu.vn", total_courses: 1, published_courses: 1, sales_count: 88, enrollment_count: 1100, completed_enrollments: 440, completion_rate: 40.0, gross_revenue: "17600000.00", instructor_amount: "12320000.00", last_active_at: "2026-07-11T16:45:00Z" }
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:269 | { instructor_id: 502, full_name: "Nguyễn Anh Hồng", email: "hong.na@mindhub.edu.vn", total_courses: 2, published_courses: 2, sales_count: 180, enrollment_count: 1200, completed_enrollments: 360, completion_rate: 30.0, gross_revenue: "54000000.00", instructor_amount: "37800000.00", last_active_at: "2026-07-12T19:15:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:270 | { instructor_id: 501, full_name: "Trần Văn Hoàng", email: "hoang.tv@mindhub.edu.vn", total_courses: 3, published_courses: 2, sales_count: 250, enrollment_count: 1950, completed_enrollments: 585, completion_rate: 30.0, gross_revenue: "75000000.00", instructor_amount: "52500000.00", last_active_at: "2026-07-12T20:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:271 | { instructor_id: 503, full_name: "Phạm Minh Đức", email: "duc.pm@mindhub.edu.vn", total_courses: 5, published_courses: 4, sales_count: 140, enrollment_count: 1050, completed_enrollments: 262, completion_rate: 25.0, gross_revenue: "49000000.00", instructor_amount: "34300000.00", last_active_at: "2026-07-12T15:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:272 | { instructor_id: 504, full_name: "Lê Thị Nga", email: "nga.lt@mindhub.edu.vn", total_courses: 1, published_courses: 1, sales_count: 88, enrollment_count: 1100, completed_enrollments: 440, completion_rate: 40.0, gross_revenue: "17600000.00", instructor_amount: "12320000.00", last_active_at: "2026-07-11T16:45:00Z" }
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:372 | { instructor_id: 501, full_name: "Trần Văn Hoàng", email: "hoang.tv@mindhub.edu.vn", total_courses: 3, published_courses: 2, sales_count: 250, enrollment_count: 1950, completed_enrollments: 585, completion_rate: 30.0, gross_revenue: "75000000.00", instructor_amount: "52500000.00", last_active_at: "2026-07-12T20:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:373 | { instructor_id: 502, full_name: "Nguyễn Anh Hồng", email: "hong.na@mindhub.edu.vn", total_courses: 2, published_courses: 2, sales_count: 180, enrollment_count: 1200, completed_enrollments: 360, completion_rate: 30.0, gross_revenue: "54000000.00", instructor_amount: "37800000.00", last_active_at: "2026-07-12T19:15:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:374 | { instructor_id: 503, full_name: "Phạm Minh Đức", email: "duc.pm@mindhub.edu.vn", total_courses: 5, published_courses: 4, sales_count: 140, enrollment_count: 1050, completed_enrollments: 262, completion_rate: 25.0, gross_revenue: "49000000.00", instructor_amount: "34300000.00", last_active_at: "2026-07-12T15:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:375 | { instructor_id: 504, full_name: "Lê Thị Nga", email: "nga.lt@mindhub.edu.vn", total_courses: 1, published_courses: 1, sales_count: 88, enrollment_count: 1100, completed_enrollments: 440, completion_rate: 40.0, gross_revenue: "17600000.00", instructor_amount: "12320000.00", last_active_at: "2026-07-11T16:45:00Z" }
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:483 | { instructor_id: 501, full_name: "Trần Văn Hoàng", email: "hoang.tv@mindhub.edu.vn", total_courses: 5, published_courses: 4, sales_count: 1250, enrollment_count: 5420, completed_enrollments: 2168, completion_rate: 40.0, gross_revenue: "375000000.00", instructor_amount: "262500000.00", last_active_at: "2026-07-12T20:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:484 | { instructor_id: 502, full_name: "Nguyễn Anh Hồng", email: "hong.na@mindhub.edu.vn", total_courses: 4, published_courses: 3, sales_count: 980, enrollment_count: 4110, completed_enrollments: 1233, completion_rate: 30.0, gross_revenue: "343000000.00", instructor_amount: "240100000.00", last_active_at: "2026-07-12T19:15:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:485 | { instructor_id: 503, full_name: "Phạm Minh Đức", email: "duc.pm@mindhub.edu.vn", total_courses: 8, published_courses: 6, sales_count: 840, enrollment_count: 3120, completed_enrollments: 936, completion_rate: 30.0, gross_revenue: "252000000.00", instructor_amount: "176400000.00", last_active_at: "2026-07-12T15:30:00Z" },
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:486 | { instructor_id: 504, full_name: "Lê Thị Nga", email: "nga.lt@mindhub.edu.vn", total_courses: 2, published_courses: 2, sales_count: 790, enrollment_count: 2980, completed_enrollments: 1490, completion_rate: 50.0, gross_revenue: "158000000.00", instructor_amount: "110600000.00", last_active_at: "2026-07-11T16:45:00Z" }
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\data\dashboard.js:582 | { instructor_id: 501, full_name: "Trần Văn Hoàng", email: "hoang.tv@mindhub.edu.vn", total_courses: 3, published_courses: 2, sales_count: 250, enrollment_count: 1950, completed_enrollments: 585, completion_rate: 30.0, gross_revenue: "75000000.00", instructor_amount: "52500000.00", last_active_at: "2026-07-12T20:30:00Z" }
+... còn 38 kết quả khác
+
+--- User ID ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\instructor-upgrades-api.js:17 | const user = getUserById(app.user_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\instructor-upgrades-api.js:39 | id: 6000 + app.user_id,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\instructor-upgrades-api.js:57 | user_id: app.user.id,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:93 | * API Contract Query List: page, per_page, status, payment_status, user_id, course_id, order_code, date_from, date_to
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:145 | // Lọc theo user_id
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:146 | if (params.user_id && params.user_id !== "" && params.user_id !== "all") {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:147 | const targetUserId = Number(params.user_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:148 | filtered = filtered.filter((o) => Number(o.user_id) === targetUserId);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:11 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:41 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:63 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:93 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:123 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:153 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:183 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:213 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:243 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:273 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:303 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\instructor-upgrades-mock.js:333 | user: {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2662 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2679 | "user_id": 202,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2691 | "user_id": 203,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2708 | "user_id": 204,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2725 | "user_id": 215,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2742 | "user_id": 216,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2759 | "user_id": 207,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2776 | "user_id": 208,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2793 | "user_id": 209,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2810 | "user_id": 210,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2827 | "user_id": 211,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2844 | "user_id": 212,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2900 | "user_id": 2,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2917 | "user_id": 4,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2934 | "user_id": 8,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2951 | "user_id": 11,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2968 | "user_id": 13,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:2985 | "user_id": 17,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3002 | "user_id": 2,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3019 | "user_id": 4,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3036 | "user_id": 19,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3053 | "user_id": 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3070 | "user_id": 14,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3087 | "user_id": 16,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3104 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3121 | "user_id": 202,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3138 | "user_id": 203,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3155 | "user_id": 204,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3172 | "user_id": 215,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3189 | "user_id": 2,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3206 | "user_id": 5,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3223 | "user_id": 8,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3240 | "user_id": 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3257 | "user_id": 11,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3274 | "user_id": 13,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3291 | "user_id": 14,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3308 | "user_id": 16,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3325 | "user_id": 17,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3342 | "user_id": 19,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3359 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3376 | "user_id": 202,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3393 | "user_id": 203,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3410 | "user_id": 210,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3427 | "user_id": 211,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3444 | "user_id": 212,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3461 | "user_id": 215,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3478 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3495 | "user_id": 202,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3512 | "user_id": 203,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3529 | "user_id": 204,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3546 | "user_id": 210,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3563 | "user_id": 2,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3573 | "user_id": 4,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3583 | "user_id": 8,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3593 | "user_id": 11,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3603 | "user_id": 13,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3613 | "user_id": 17,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3623 | "user_id": 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3633 | "user_id": 14,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3643 | "user_id": 16,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3653 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3663 | "user_id": 202,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3673 | "user_id": 203,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3683 | "user_id": 5,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3693 | "user_id": 8,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3703 | "user_id": 10,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3713 | "user_id": 11,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3723 | "user_id": 13,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3733 | "user_id": 201,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3945 | "user_id": 3,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3955 | "user_id": 6,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3965 | "user_id": 9,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3975 | "user_id": 12,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3985 | "user_id": 15,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3995 | "user_id": 18,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:4005 | "user_id": 206,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:4015 | "user_id": 205,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:4025 | "user_id": 216,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:4035 | "user_id": 207,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:4045 | "user_id": 208,
+... còn 169 kết quả khác
+
+--- Revenue rate ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:48 | instructor_rate: 70,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:49 | platform_rate: 30,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:62 | instructor_rate: 60,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:63 | platform_rate: 40,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:76 | instructor_rate: 70,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:77 | platform_rate: 30,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:103 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:104 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:137 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:138 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:171 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:172 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:331 | GV: <span class="font-bold text-ink">${item.instructor_rate}%</span> / NT: <span class="font-bold text-ink">${item.platform_rate}%</span>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:798 | document.getElementById("drawer-instructor-rate").textContent = data.instructor_rate;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:799 | document.getElementById("drawer-platform-rate").textContent = data.platform_rate;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:48 | instructor_rate: 70,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:49 | platform_rate: 30,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:62 | instructor_rate: 60,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:63 | platform_rate: 40,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:76 | instructor_rate: 70,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:77 | platform_rate: 30,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:103 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:104 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:137 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:138 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:171 | instructor_rate: rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\mocks\revenues-mock.js:172 | platform_rate: 100 - rate,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:317 | GV: <span class="font-bold text-ink">${item.instructor_rate}%</span> / NT: <span class="font-bold text-ink">${item.platform_rate}%</span>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:766 | document.getElementById("drawer-instructor-rate").textContent = data.instructor_rate;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:767 | document.getElementById("drawer-platform-rate").textContent = data.platform_rate;
+
+--- Revenue amounts ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:30 | const gross = parseMoney(r.gross_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:31 | const instr = parseMoney(r.instructor_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:32 | const plat = parseMoney(r.platform_fee_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:130 | } else if (['gross_amount', 'instructor_amount', 'platform_fee_amount'].includes(sortBy)) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:197 | reportMap[key] = { period: key, gross_amount: 0, instructor_amount: 0, platform_fee_amount: 0, order_count: 0 };
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:204 | reportMap[key] = { period: key, gross_amount: 0, instructor_amount: 0, platform_fee_amount: 0, order_count: 0 };
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:212 | reportMap[key] = { period: key, gross_amount: 0, instructor_amount: 0, platform_fee_amount: 0, order_count: 0 };
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:233 | reportMap[key].gross_amount += parseMoney(r.gross_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:234 | reportMap[key].instructor_amount += parseMoney(r.instructor_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:235 | reportMap[key].platform_fee_amount += parseMoney(r.platform_fee_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:242 | gross_amount: formatDecimalSource(row.gross_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:243 | instructor_amount: formatDecimalSource(row.instructor_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:244 | platform_fee_amount: formatDecimalSource(row.platform_fee_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3748 | "gross_amount": 499000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3749 | "instructor_amount": 349300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3750 | "platform_fee_amount": 149700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3759 | "gross_amount": 899000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3760 | "instructor_amount": 629300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3761 | "platform_fee_amount": 269700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3770 | "gross_amount": 1199000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3771 | "instructor_amount": 839300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3772 | "platform_fee_amount": 359700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3781 | "gross_amount": 531000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3782 | "instructor_amount": 371700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3783 | "platform_fee_amount": 159300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3792 | "gross_amount": 1400000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3793 | "instructor_amount": 980000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3794 | "platform_fee_amount": 420000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3803 | "gross_amount": 490000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3804 | "instructor_amount": 343000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3805 | "platform_fee_amount": 147000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3814 | "gross_amount": 649000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3815 | "instructor_amount": 454300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3816 | "platform_fee_amount": 194700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3825 | "gross_amount": 1032000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3826 | "instructor_amount": 722400,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3827 | "platform_fee_amount": 309600,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3836 | "gross_amount": 890000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3837 | "instructor_amount": 623000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3838 | "platform_fee_amount": 267000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3847 | "gross_amount": 0,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3848 | "instructor_amount": 0,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3849 | "platform_fee_amount": 0,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3858 | "gross_amount": 1500000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3859 | "instructor_amount": 1050000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3860 | "platform_fee_amount": 450000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3869 | "gross_amount": 990000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3870 | "instructor_amount": 693000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3871 | "platform_fee_amount": 297000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3880 | "gross_amount": 450000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3881 | "instructor_amount": 315000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3882 | "platform_fee_amount": 135000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3891 | "gross_amount": 801000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3892 | "instructor_amount": 560700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3893 | "platform_fee_amount": 240300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3902 | "gross_amount": 490000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3903 | "instructor_amount": 343000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3904 | "platform_fee_amount": 147000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3913 | "gross_amount": 699000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3914 | "instructor_amount": 489300,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3915 | "platform_fee_amount": 209700,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3924 | "gross_amount": 1290000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3925 | "instructor_amount": 903000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3926 | "platform_fee_amount": 387000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3935 | "gross_amount": 315000,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3936 | "instructor_amount": 220500,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js:3937 | "platform_fee_amount": 94500,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:352 | ? Number(revenue.gross_amount) === Number(order.amount)
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:391 | description: `Ghi nhận ${Number(revenue.gross_amount).toLocaleString("vi-VN")}đ (Giảng viên: ${Number(revenue.instructor_amount).toLocaleString("vi-VN")}đ, Nền tảng: ${Number(revenue.platform_fee_amount).toLocaleString("vi-VN")}đ).`,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:471 | gross_amount: String(revenue.gross_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:472 | instructor_amount: String(revenue.instructor_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js:473 | platform_fee_amount: String(revenue.platform_fee_amount),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:42 | gross_amount: "500000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:43 | instructor_amount: "300000.00", // Lệch 50k so với 70% (350k)
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:44 | platform_fee_amount: "150000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:56 | gross_amount: "1200000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:57 | instructor_amount: "800000.00", // Lệch tiền so với 60%
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:58 | platform_fee_amount: "480000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:70 | gross_amount: "800000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:71 | instructor_amount: "500000.00", // Lệch tiền
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:72 | platform_fee_amount: "240000.00",
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:97 | gross_amount: grossNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:98 | instructor_amount: instrNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:99 | platform_fee_amount: platNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:131 | gross_amount: grossNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:132 | instructor_amount: instrNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:133 | platform_fee_amount: platNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:165 | gross_amount: grossNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:166 | instructor_amount: instrNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js:167 | platform_fee_amount: platNum.toFixed(2),
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:531 | if (kpiGrossRevenue) kpiGrossRevenue.textContent = formatVND(revenue.gross_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:532 | if (kpiInstructorEarnings) kpiInstructorEarnings.textContent = formatVND(revenue.instructor_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:533 | if (kpiPlatformFee) kpiPlatformFee.textContent = formatVND(revenue.platform_fee_amount);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:730 | <td class="py-2.5 text-right font-semibold text-success font-sans">${formatVND(inst.instructor_amount)}</td>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:882 | const grossData = items.map(item => parseFloat(item.gross_amount));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:883 | const instructorData = items.map(item => parseFloat(item.instructor_amount));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:884 | const platformData = items.map(item => parseFloat(item.platform_fee_amount));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1588 | <div><span class="text-mid-gray">Gross Amount:</span> <span class="font-bold text-ink">${formatVND(order.revenue.gross_amount)}</span></div>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1589 | <div><span class="text-mid-gray">Thu nhập Giảng viên (70%):</span> <span class="font-semibold text-emerald-600">${formatVND(order.revenue.instructor_amount)}</span></div>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1590 | <div><span class="text-mid-gray">Phí nền tảng MindHub (30%):</span> <span class="font-semibold text-ink">${formatVND(order.revenue.platform_fee_amount)}</span></div>
+... còn 178 kết quả khác
+
+--- Open revenue ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:139 | if (params.has("open_revenue_id")) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:140 | openDrawer(params.get("open_revenue_id"));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:748 | url.searchParams.set("open_revenue_id", id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:782 | url.searchParams.delete("open_revenue_id");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:127 | if (params.has("open_revenue_id")) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:128 | openDrawer(params.get("open_revenue_id"));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:716 | url.searchParams.set("open_revenue_id", id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:750 | url.searchParams.delete("open_revenue_id");
+
+--- Open order ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:20 | open_order_id: null,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:114 | state.open_order_id = urlParams.get("open_order_id") || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:137 | if (state.open_order_id) urlParams.set("open_order_id", state.open_order_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1294 | state.open_order_id = null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1342 | state.open_order_id = String(orderId);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1378 | state.open_order_id = null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1827 | // Nếu URL có deep link open_order_id
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1828 | if (state.open_order_id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1829 | openOrderDrawer(state.open_order_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:817 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:20 | open_order_id: null,
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:114 | state.open_order_id = urlParams.get("open_order_id") || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:137 | if (state.open_order_id) urlParams.set("open_order_id", state.open_order_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1294 | state.open_order_id = null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1342 | state.open_order_id = String(orderId);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1378 | state.open_order_id = null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1827 | // Nếu URL có deep link open_order_id
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1828 | if (state.open_order_id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1829 | openOrderDrawer(state.open_order_id);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:785 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+
+--- Open course ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:55 | // Đọc open_course_id từ URL và tự động mở drawer
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:57 | const rawOpenCourseId = params.get("open_course_id");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1213 | // Xóa query open_course_id nhưng giữ các query UI/filter khác
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1215 | if (url.searchParams.has("open_course_id")) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1216 | url.searchParams.delete("open_course_id");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:46 | const openCourseId = Number(params.get("open_course_id"));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:951 | url.searchParams.set("open_course_id", String(id));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:2006 | if (url.searchParams.has("open_course_id")) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:2007 | url.searchParams.delete("open_course_id");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1453 | <!-- 3. Khóa học (Course - Truyền chuẩn open_course_id={order.course.id}) -->
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:824 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1453 | <!-- 3. Khóa học (Course - Truyền chuẩn open_course_id={order.course.id}) -->
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:792 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+
+--- Open user ---
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:832 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:50 | if (pageState.open_user_id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:51 | openDetailDrawer(Number(pageState.open_user_id));
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:105 | pageState.open_user_id = params.get("open_user_id") || null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:1577 | if (pageState.open_user_id) {
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:1578 | pageState.open_user_id = null;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:800 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+
+=== 4. FIELD TRONG MODULE REVENUE ===
+id: 246 lần
+order_id: 0 lần
+course_id: 0 lần
+instructor_id: 0 lần
+order: 42 lần
+course: 38 lần
+instructor: 60 lần
+gross_amount: 30 lần
+instructor_amount: 30 lần
+platform_fee_amount: 30 lần
+instructor_rate: 16 lần
+platform_rate: 16 lần
+amount_consistent: 24 lần
+earned_at: 26 lần
+status: 115 lần
+
+=== 5. ĐIỀU HƯỚNG GIỮA CÁC TRANG ===
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\layout.js:7 | const path = window.location.pathname;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\categories-api.js:55 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\courses-api.js:31 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\instructor-upgrades-api.js:83 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js:97 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:109 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js:166 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\users-api.js:27 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\categories.js:44 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\categories.js:67 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\categories.js:301 | <a href="courses.html?category_id=${c.id}" class="hover:text-ink font-bold text-mid-gray hover:underline">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\categories.js:1419 | ? `<a href="courses.html?category_id=${cat.id}" class="underline text-success hover:font-bold font-semibold transition-all font-sans">${cat.course_count} khóa học</a>`
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:56 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:198 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:249 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1214 | const url = new URL(window.location.href);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:45 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:114 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:156 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:886 | window.location.href = `orders.html?course_id=${c.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:898 | window.location.href = `revenues.html?course_id=${c.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:950 | const url = new URL("course-reviews.html", window.location.href);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:952 | window.location.assign(url.toString());
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1928 | window.location.href = `orders.html?course_id=${course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:1940 | window.location.href = `revenues.html?course_id=${course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:2005 | const url = new URL(window.location.href);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:65 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:79 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:685 | <a href="courses.html?id=${course.course_id}" class="hover:underline block truncate max-w-[130px] font-medium" title="${course.title}">${course.title}</a>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:787 | <a href="orders.html?id=${orderId}" class="font-bold text-ink hover:underline">Đơn hàng #${orderId}</a>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:794 | Khóa học: ${courseId ? `<a href="courses.html?id=${courseId}" class="font-semibold text-ink hover:underline inline-block truncate max-w-[170px]" title="${courseTitle}">${courseTitle}</a>` : `<span class="font-semibold text-ink truncate max-w-[170px] inline-block" title="${courseTitle}">${courseTitle}</span>`}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:849 | <a href="courses.html?id=${course.id}" class="font-bold text-ink text-xs hover:underline truncate max-w-[170px]" title="${course.title}">${course.title}</a>
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1064 | link: "courses.html?status=draft"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1086 | link: "courses.html?status=approved"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1097 | link: "courses.html?status=rejected"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1108 | link: "courses.html?status=published"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1119 | link: "courses.html?status=hidden"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1202 | link: "users.html?status=active"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1213 | link: "users.html?status=inactive"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\dashboard.js:1224 | link: "users.html?status=locked"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\instructor-upgrades.js:180 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\instructor-upgrades.js:203 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:101 | const urlParams = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:121 | const urlParams = new URLSearchParams();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:141 | window.location.pathname + (queryString ? `?${queryString}` : "");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:103 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:145 | const params = new URLSearchParams();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:158 | const newUrl = `${window.location.pathname}?${params.toString()}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:747 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:781 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:817 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:824 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:832 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:95 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:124 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\components\sidebar.html:47 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border border-transparent transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\components\sidebar.html:75 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border border-transparent transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\components\sidebar.html:127 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border border-transparent transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\components\sidebar.html:136 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border border-transparent transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\banners.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\banners.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\banners.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\banners.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\categories.html:55 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\categories.html:80 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\categories.html:109 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\categories.html:117 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\course-reviews.html:69 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\course-reviews.html:94 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\course-reviews.html:123 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\course-reviews.html:131 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\courses.html:84 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\courses.html:109 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="courses" aria-current="page">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\courses.html:138 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\courses.html:146 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:62 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:87 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:116 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:124 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:341 | href="users.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:381 | href="courses.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:465 | href="orders.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\dashboard.html:1029 | onclick="window.location.reload()"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\faqs.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\faqs.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\faqs.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\faqs.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\instructor-upgrades.html:80 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\instructor-upgrades.html:105 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\instructor-upgrades.html:134 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\instructor-upgrades.html:142 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\moderation.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\moderation.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\moderation.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\moderation.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\notifications.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\notifications.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\notifications.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\notifications.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\orders.html:141 | href="users.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\orders.html:193 | href="courses.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\orders.html:298 | href="orders.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\orders.html:317 | href="revenues.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\payout-accounts.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\payout-accounts.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\payout-accounts.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\payout-accounts.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\reports.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\reports.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\reports.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\reports.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\revenues.html:124 | href="users.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\revenues.html:176 | href="courses.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\revenues.html:281 | href="orders.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\revenues.html:299 | href="revenues.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\users.html:80 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="users" aria-current="page">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\users.html:105 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\users.html:134 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\users.html:142 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\withdrawals.html:60 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\withdrawals.html:85 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\withdrawals.html:114 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\pages\withdrawals.html:122 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\api\revenues-api.js:109 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\api\revenues-api.js:166 | const query = new URLSearchParams(params).toString();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\categories.js:44 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\categories.js:67 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\categories.js:301 | <a href="courses.html?category_id=${c.id}" class="hover:text-ink font-bold text-mid-gray hover:underline">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\categories.js:1419 | ? `<a href="courses.html?category_id=${cat.id}" class="underline text-success hover:font-bold font-semibold transition-all font-sans">${cat.course_count} khóa học</a>`
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:101 | const urlParams = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:121 | const urlParams = new URLSearchParams();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:141 | window.location.pathname + (queryString ? `?${queryString}` : "");
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:95 | const params = new URLSearchParams(window.location.search);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:133 | const params = new URLSearchParams();
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:146 | const newUrl = `${window.location.pathname}?${params.toString()}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:715 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:749 | const url = new URL(window.location);
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:785 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:792 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:800 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\categories.html:55 | <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\categories.html:80 | <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\categories.html:109 | <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\categories.html:117 | <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\orders.html:141 | href="users.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\orders.html:193 | href="courses.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\orders.html:298 | href="orders.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\orders.html:317 | href="revenues.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\revenues.html:124 | href="users.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\revenues.html:176 | href="courses.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\revenues.html:281 | href="orders.html"
+D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\pages\revenues.html:299 | href="revenues.html"
+
+=== 6. QUERY STRING MỞ DRAWER ===
+
+open_order_id: 20 vị trí
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:20 | open_order_id: null,
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:114 | state.open_order_id = urlParams.get("open_order_id") || null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:137 | if (state.open_order_id) urlParams.set("open_order_id", state.open_order_id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1294 | state.open_order_id = null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1342 | state.open_order_id = String(orderId);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1378 | state.open_order_id = null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1827 | // Nếu URL có deep link open_order_id
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1828 | if (state.open_order_id) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1829 | openOrderDrawer(state.open_order_id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:817 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:20 | open_order_id: null,
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:114 | state.open_order_id = urlParams.get("open_order_id") || null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:137 | if (state.open_order_id) urlParams.set("open_order_id", state.open_order_id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1294 | state.open_order_id = null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1342 | state.open_order_id = String(orderId);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1378 | state.open_order_id = null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1827 | // Nếu URL có deep link open_order_id
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1828 | if (state.open_order_id) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1829 | openOrderDrawer(state.open_order_id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:785 | document.getElementById("drawer-order-link").href = `orders.html?open_order_id=${data.order.id}`;
+
+open_course_id: 17 vị trí
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:55 | // Đọc open_course_id từ URL và tự động mở drawer
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:57 | const rawOpenCourseId = params.get("open_course_id");
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1213 | // Xóa query open_course_id nhưng giữ các query UI/filter khác
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1215 | if (url.searchParams.has("open_course_id")) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js:1216 | url.searchParams.delete("open_course_id");
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:46 | const openCourseId = Number(params.get("open_course_id"));
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:951 | url.searchParams.set("open_course_id", String(id));
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:2006 | if (url.searchParams.has("open_course_id")) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js:2007 | url.searchParams.delete("open_course_id");
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1453 | <!-- 3. Khóa học (Course - Truyền chuẩn open_course_id={order.course.id}) -->
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:824 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:620 | <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1453 | <!-- 3. Khóa học (Course - Truyền chuẩn open_course_id={order.course.id}) -->
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1460 | ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:792 | document.getElementById("drawer-course-link").href = `courses.html?open_course_id=${data.course.id}`;
+
+open_user_id: 11 vị trí
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:832 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:50 | if (pageState.open_user_id) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:51 | openDetailDrawer(Number(pageState.open_user_id));
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:105 | pageState.open_user_id = params.get("open_user_id") || null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:1577 | if (pageState.open_user_id) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js:1578 | pageState.open_user_id = null;
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:609 | <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\orders.js:1437 | ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:800 | document.getElementById("drawer-instructor-link").href = `users.html?open_user_id=${data.instructor.id}`;
+
+open_revenue_id: 8 vị trí
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:139 | if (params.has("open_revenue_id")) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:140 | openDrawer(params.get("open_revenue_id"));
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:748 | url.searchParams.set("open_revenue_id", id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js:782 | url.searchParams.delete("open_revenue_id");
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:127 | if (params.has("open_revenue_id")) {
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:128 | openDrawer(params.get("open_revenue_id"));
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:716 | url.searchParams.set("open_revenue_id", id);
+  D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\assets\js\pages\revenues.js:750 | url.searchParams.delete("open_revenue_id");
+
+open_id: 0 vị trí
+
+detail_id: 0 vị trí
+
+=== 7. KIỂM TRA FILE JSON ===
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\_setup-input\tokens.json
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\knowledge\design\tokens.json
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\package.json
+LỖI JSON | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\package-lock.json | Cannot process argument because the value of argument "name" is not valid. Change the value of the "name" argument and run the operation again.
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\revenues-chart-audit\20260721-103751\bundle\package.json
+
+=== 8. KIỂM TRA CÚ PHÁP JAVASCRIPT ===
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\course-reviews-api.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\courses-api.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\orders-api.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\revenues-api.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\api\users-api.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\course-reviews-mock.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\courses-mock.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-database.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\mock-repository.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\mocks\revenues-mock.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\course-reviews.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\courses.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\orders.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\revenues.js
+OK | D:\DỰ ÁN TỐT NGHIỆP\mô tả của Trello\gd3\fe-admin\assets\js\pages\users.js
