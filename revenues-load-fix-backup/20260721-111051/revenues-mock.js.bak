@@ -1,4 +1,6 @@
 import { MOCK_DB } from "./mock-database.js";
+
+
 const STORAGE_KEY = "mindhub_admin_mock_db";
 
 // Khởi tạo database dùng chung trong localStorage nếu chưa có
@@ -521,64 +523,43 @@ export function getNotifications() {
   return db.notifications || [];
 }
 // === REVENUES ===
-/**
- * Chuẩn hóa một revenue và lấy quan hệ từ database mock dùng chung.
- */
-function populateRevenue(revenue, db) {
-  if (!revenue) return null;
+// Revenue chỉ lưu các khóa ngoại trong database chung. Khi đọc sẽ hydrate
+// order/course/instructor từ cùng một MOCK_DB để mọi trang luôn dùng chung dữ liệu.
+function normalizeRevenueRecord(revenue, db) {
   const orderId = Number(revenue.order_id ?? revenue.order?.id);
   const courseId = Number(revenue.course_id ?? revenue.course?.id);
-  const instructorId = Number(
-    revenue.instructor_id ?? revenue.instructor?.id
-  );
-  const order =
-    (db.orders || []).find((item) => Number(item.id) === orderId) || null;
-  const course =
-    (db.courses || []).find((item) => Number(item.id) === courseId) || null;
-  const instructor =
-    (db.users || []).find(
-      (item) => Number(item.id) === instructorId
-    ) || null;
-  const grossAmount = Number(revenue.gross_amount) || 0;
+  const instructorId = Number(revenue.instructor_id ?? revenue.instructor?.id);
+
+  const order = (db.orders || []).find((item) => Number(item.id) === orderId) || null;
+  const course = (db.courses || []).find((item) => Number(item.id) === courseId) || null;
+  const instructor = (db.users || []).find((item) => Number(item.id) === instructorId) || null;
+
+  const gross = Number(revenue.gross_amount) || 0;
   const instructorAmount = Number(revenue.instructor_amount) || 0;
   const platformAmount = Number(revenue.platform_fee_amount) || 0;
-  const calculatedInstructorRate =
-    grossAmount > 0
-      ? Number(((instructorAmount / grossAmount) * 100).toFixed(2))
-      : 0;
-  const calculatedPlatformRate =
-    grossAmount > 0
-      ? Number(((platformAmount / grossAmount) * 100).toFixed(2))
-      : 0;
-  const calculatedConsistency =
-    Math.abs(
-      grossAmount - instructorAmount - platformAmount
-    ) < 0.01;
+  const instructorRate = gross > 0 ? Number(((instructorAmount / gross) * 100).toFixed(2)) : 0;
+  const platformRate = gross > 0 ? Number(((platformAmount / gross) * 100).toFixed(2)) : 0;
+  const amountConsistent = Math.abs(gross - instructorAmount - platformAmount) < 0.01;
+
   return {
     ...revenue,
     order_id: orderId || null,
     course_id: courseId || null,
     instructor_id: instructorId || null,
-    gross_amount: grossAmount.toFixed(2),
+    gross_amount: gross.toFixed(2),
     instructor_amount: instructorAmount.toFixed(2),
     platform_fee_amount: platformAmount.toFixed(2),
-    instructor_rate:
-      revenue.instructor_rate ?? calculatedInstructorRate,
-    platform_rate:
-      revenue.platform_rate ?? calculatedPlatformRate,
-    amount_consistent:
-      revenue.amount_consistent ?? calculatedConsistency,
+    instructor_rate: revenue.instructor_rate ?? instructorRate,
+    platform_rate: revenue.platform_rate ?? platformRate,
+    amount_consistent: revenue.amount_consistent ?? amountConsistent,
     order: order
       ? {
           id: order.id,
           order_code: order.order_code,
-          amount: Number(
-            order.amount ?? order.price_snapshot ?? grossAmount
-          ).toFixed(2),
+          amount: Number(order.amount ?? order.price_snapshot ?? gross).toFixed(2),
           status: order.status,
           payment_status: order.payment_status,
           paid_at: order.paid_at,
-          course_id: order.course_id,
         }
       : null,
     course: course
@@ -586,8 +567,6 @@ function populateRevenue(revenue, db) {
           id: course.id,
           title: course.title,
           slug: course.slug,
-          thumbnail_url: course.thumbnail_url || null,
-          status: course.status,
         }
       : null,
     instructor: instructor
@@ -595,64 +574,63 @@ function populateRevenue(revenue, db) {
           id: instructor.id,
           full_name: instructor.full_name,
           email: instructor.email,
-          avatar_url: instructor.avatar_url || null,
-          status: instructor.status,
         }
       : null,
   };
 }
-/**
- * Lấy toàn bộ revenue từ database mock dùng chung.
- */
+
+function revenueStorageNeedsMigration(revenues, db) {
+  if (!Array.isArray(revenues) || revenues.length === 0) return true;
+
+  // Bản mock cũ tự nhúng order/course/instructor với ID 100–140 và course 10–17.
+  // Các ID đó không tồn tại trong database chung nên phải thay bằng nguồn chuẩn.
+  return revenues.some((revenue) => {
+    const orderId = Number(revenue.order_id ?? revenue.order?.id);
+    const courseId = Number(revenue.course_id ?? revenue.course?.id);
+    const instructorId = Number(revenue.instructor_id ?? revenue.instructor?.id);
+
+    return !(db.orders || []).some((item) => Number(item.id) === orderId)
+      || !(db.courses || []).some((item) => Number(item.id) === courseId)
+      || !(db.users || []).some((item) => Number(item.id) === instructorId);
+  });
+}
+
 export function getRevenues() {
   const db = getDB();
-  if (!Array.isArray(db.revenues)) {
-    db.revenues = JSON.parse(
-      JSON.stringify(MOCK_DB.revenues || [])
-    );
+
+  if (revenueStorageNeedsMigration(db.revenues, db)) {
+    // Luôn lấy revenue chuẩn từ MOCK_DB vì nó dùng order_id/course_id/instructor_id
+    // khớp với orders, courses và users của toàn dự án.
+    db.revenues = JSON.parse(JSON.stringify(MOCK_DB.revenues || []));
     saveDB(db);
   }
-  return (db.revenues || []).map((revenue) =>
-    populateRevenue(revenue, db)
-  );
+
+  return (db.revenues || []).map((revenue) => normalizeRevenueRecord(revenue, db));
 }
+
 export function getRevenueById(id) {
   const parsedId = Number(id);
-  return (
-    getRevenues().find(
-      (revenue) => Number(revenue.id) === parsedId
-    ) || null
-  );
+  return getRevenues().find((revenue) => Number(revenue.id) === parsedId) || null;
 }
-export function getRevenueByOrderId(orderId) {
-  const parsedId = Number(orderId);
-  const normalizedCode = String(orderId)
-    .trim()
-    .toLowerCase();
-  return (
-    getRevenues().find((revenue) => {
-      return (
-        Number(revenue.order_id) === parsedId ||
-        String(revenue.order?.order_code || "")
-          .toLowerCase() === normalizedCode
-      );
-    }) || null
-  );
-}
+
 export function saveRevenues(revenues) {
   const db = getDB();
-  db.revenues = (revenues || []).map((item) => ({
-    id: Number(item.id),
-    order_id: Number(item.order_id ?? item.order?.id) || null,
-    course_id: Number(item.course_id ?? item.course?.id) || null,
-    instructor_id:
-      Number(item.instructor_id ?? item.instructor?.id) || null,
-    gross_amount: Number(item.gross_amount) || 0,
-    instructor_amount: Number(item.instructor_amount) || 0,
-    platform_fee_amount:
-      Number(item.platform_fee_amount) || 0,
-    status: item.status,
-    earned_at: item.earned_at,
+  // Chỉ lưu dữ liệu gốc và khóa ngoại, không lưu bản sao quan hệ đã hydrate.
+  db.revenues = (revenues || []).map(({ order, course, instructor, ...revenue }) => ({
+    ...revenue,
+    order_id: Number(revenue.order_id ?? order?.id) || null,
+    course_id: Number(revenue.course_id ?? course?.id) || null,
+    instructor_id: Number(revenue.instructor_id ?? instructor?.id) || null,
   }));
   saveDB(db);
 }
+
+export function getRevenueByOrderId(orderId) {
+  const normalized = String(orderId).trim().toLowerCase();
+  const parsedId = Number(orderId);
+  return getRevenues().find((revenue) =>
+    Number(revenue.order_id) === parsedId
+    || String(revenue.order?.order_code || '').toLowerCase() === normalized
+  ) || null;
+}
+

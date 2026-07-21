@@ -317,7 +317,6 @@ body {
 
 .status-dot-pending { background-color: var(--color-warning); }
 .status-dot-success { background-color: var(--color-success); }
-.status-dot-info { background-color: #2563eb; }
 .status-dot-danger { background-color: var(--color-danger-brick); }
 .status-dot-gray { background-color: rgba(115, 115, 115, 0.45); }
 .status-dot-dark-gray { background-color: var(--color-mid-gray); }
