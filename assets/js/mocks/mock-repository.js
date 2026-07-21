@@ -44,7 +44,11 @@ export function updateUser(id, updates) {
   const parsedId = Number(id);
   const index = users.findIndex((u) => u.id === parsedId);
   if (index !== -1) {
-    users[index] = { ...users[index], ...updates, updated_at: new Date().toISOString() };
+    users[index] = {
+      ...users[index],
+      ...updates,
+      updated_at: new Date().toISOString(),
+    };
     saveUsers(users);
     return users[index];
   }
@@ -76,23 +80,24 @@ export function saveCategories(categories) {
 export function createCategory(payload) {
   const db = getDB();
   const categories = db.categories || [];
-  const maxId = categories.reduce((max, c) => c.id > max ? c.id : max, 2000);
+  const maxId = categories.reduce((max, c) => (c.id > max ? c.id : max), 2000);
   const newId = maxId + 1;
   const nowStr = new Date().toISOString();
-  
+
   const newCat = {
     id: newId,
     parent_id: payload.parent_id ? Number(payload.parent_id) : null,
     name: payload.name.trim(),
     slug: payload.slug.trim(),
     description: payload.description ? payload.description.trim() : "",
-    sort_order: payload.sort_order !== undefined ? Number(payload.sort_order) : 0,
+    sort_order:
+      payload.sort_order !== undefined ? Number(payload.sort_order) : 0,
     status: payload.status || "active",
     created_at: nowStr,
     updated_at: nowStr,
-    deleted_at: null
+    deleted_at: null,
   };
-  
+
   categories.push(newCat);
   db.categories = categories;
   saveDB(db);
@@ -109,9 +114,17 @@ export function updateCategory(id, updates) {
     const updated = {
       ...original,
       ...updates,
-      parent_id: updates.parent_id !== undefined ? (updates.parent_id ? Number(updates.parent_id) : null) : original.parent_id,
-      sort_order: updates.sort_order !== undefined ? Number(updates.sort_order) : original.sort_order,
-      updated_at: new Date().toISOString()
+      parent_id:
+        updates.parent_id !== undefined
+          ? updates.parent_id
+            ? Number(updates.parent_id)
+            : null
+          : original.parent_id,
+      sort_order:
+        updates.sort_order !== undefined
+          ? Number(updates.sort_order)
+          : original.sort_order,
+      updated_at: new Date().toISOString(),
     };
     categories[index] = updated;
     db.categories = categories;
@@ -172,7 +185,11 @@ export function updateCourse(id, updates) {
   const parsedId = Number(id);
   const index = courses.findIndex((c) => c.id === parsedId);
   if (index !== -1) {
-    courses[index] = { ...courses[index], ...updates, updated_at: new Date().toISOString() };
+    courses[index] = {
+      ...courses[index],
+      ...updates,
+      updated_at: new Date().toISOString(),
+    };
     saveCourses(courses);
     return courses[index];
   }
@@ -322,7 +339,7 @@ export function isValidOrderPaymentPair(orderStatus, paymentStatus) {
     paid: ["paid"],
     failed: ["failed"],
     cancelled: ["unpaid", "failed"],
-    expired: ["unpaid"]
+    expired: ["unpaid"],
   };
   return Boolean(allowedPairs[orderStatus]?.includes(paymentStatus));
 }
@@ -337,49 +354,57 @@ export function populateOrder(order) {
   const enrollment = getEnrollmentByOrderId(order.id);
   const revenue = getRevenueByOrderId(order.id);
 
-  const isCanonicalPaid = order.status === "paid" && order.payment_status === "paid";
-  const isValidPair = isValidOrderPaymentPair(order.status, order.payment_status);
+  const isCanonicalPaid =
+    order.status === "paid" && order.payment_status === "paid";
+  const isValidPair = isValidOrderPaymentPair(
+    order.status,
+    order.payment_status,
+  );
   const paidHasEnrollment = isCanonicalPaid ? !!enrollment : true;
   const paidHasRevenue = isCanonicalPaid ? !!revenue : true;
-  const amountsMatch = isCanonicalPaid && revenue ? Number(revenue.gross_amount) === Number(order.amount) : true;
+  const amountsMatch =
+    isCanonicalPaid && revenue
+      ? Number(revenue.gross_amount) === Number(order.amount)
+      : true;
 
   const timeline = [
     {
       timestamp: order.created_at,
       title: "Đơn hàng được tạo",
-      description: `Đơn hàng ${order.order_code} khởi tạo bởi ${user ? user.full_name : 'Người dùng'}.`,
-      status: "info"
-    }
+      description: `Đơn hàng ${order.order_code} khởi tạo bởi ${user ? user.full_name : "Người dùng"}.`,
+      status: "info",
+    },
   ];
 
   if (order.status === "pending" || order.payment_status === "processing") {
     timeline.push({
       timestamp: order.created_at,
       title: "Chờ thanh toán",
-      description: "Chuyển hướng đến cổng thanh toán, đang chờ xác nhận từ phía nhà cung cấp.",
-      status: "warning"
+      description:
+        "Chuyển hướng đến cổng thanh toán, đang chờ xác nhận từ phía nhà cung cấp.",
+      status: "warning",
     });
   } else if (isCanonicalPaid) {
     timeline.push({
       timestamp: order.paid_at || order.created_at,
       title: "Thanh toán thành công",
-      description: `Xác nhận thanh toán thành công qua ${order.payment_method === 'vnpay' ? 'VNPay' : order.payment_method === 'momo' ? 'MoMo' : order.payment_method === 'bank_transfer' ? 'Chuyển khoản' : 'Hệ thống'}.${order.provider_transaction_id ? ' Mã GD: ' + order.provider_transaction_id : ''}`,
-      status: "success"
+      description: `Xác nhận thanh toán thành công qua ${order.payment_method === "vnpay" ? "VNPay" : order.payment_method === "momo" ? "MoMo" : order.payment_method === "bank_transfer" ? "Chuyển khoản" : "Hệ thống"}.${order.provider_transaction_id ? " Mã GD: " + order.provider_transaction_id : ""}`,
+      status: "success",
     });
     if (enrollment) {
       timeline.push({
         timestamp: enrollment.created_at || order.paid_at || order.created_at,
         title: "Ghi danh khóa học",
-        description: `Tạo ghi danh khóa học thành công cho ${user ? user.full_name : 'Học viên'}. Tiến độ: ${enrollment.progress_percent}%.`,
-        status: "success"
+        description: `Tạo ghi danh khóa học thành công cho ${user ? user.full_name : "Học viên"}. Tiến độ: ${enrollment.progress_percent}%.`,
+        status: "success",
       });
     }
     if (revenue) {
       timeline.push({
         timestamp: revenue.earned_at || order.paid_at || order.created_at,
         title: "Doanh thu được ghi nhận",
-        description: `Ghi nhận ${Number(revenue.gross_amount).toLocaleString('vi-VN')}đ (Giảng viên: ${Number(revenue.instructor_amount).toLocaleString('vi-VN')}đ, Nền tảng: ${Number(revenue.platform_fee_amount).toLocaleString('vi-VN')}đ).`,
-        status: "success"
+        description: `Ghi nhận ${Number(revenue.gross_amount).toLocaleString("vi-VN")}đ (Giảng viên: ${Number(revenue.instructor_amount).toLocaleString("vi-VN")}đ, Nền tảng: ${Number(revenue.platform_fee_amount).toLocaleString("vi-VN")}đ).`,
+        status: "success",
       });
     }
   } else if (order.status === "failed" || order.payment_status === "failed") {
@@ -387,73 +412,90 @@ export function populateOrder(order) {
       timestamp: order.updated_at || order.created_at,
       title: "Thanh toán thất bại",
       description: "Giao dịch không thành công hoặc bị nhà cung cấp hủy bỏ.",
-      status: "error"
+      status: "error",
     });
-  } else if (order.status === "cancelled" || order.payment_status === "cancelled") {
+  } else if (
+    order.status === "cancelled" ||
+    order.payment_status === "cancelled"
+  ) {
     timeline.push({
       timestamp: order.updated_at || order.created_at,
       title: "Đơn hàng đã hủy",
       description: "Đơn hàng đã bị hủy bởi học viên hoặc quản trị viên.",
-      status: "error"
+      status: "error",
     });
   } else if (order.status === "expired" || order.payment_status === "expired") {
     timeline.push({
       timestamp: order.updated_at || order.created_at,
       title: "Đơn hàng hết hạn",
       description: "Hết thời hạn thanh toán (quá 24 giờ).",
-      status: "error"
+      status: "error",
     });
   }
 
   return {
     ...order,
-    price_snapshot: order.price_snapshot !== undefined ? String(order.price_snapshot) : String(order.amount),
-    discount_amount: order.discount_amount !== undefined ? String(order.discount_amount) : "0",
+    price_snapshot:
+      order.price_snapshot !== undefined
+        ? String(order.price_snapshot)
+        : String(order.amount),
+    discount_amount:
+      order.discount_amount !== undefined ? String(order.discount_amount) : "0",
     amount: String(order.amount),
-    user: user ? {
-      id: user.id,
-      full_name: user.full_name,
-      email: user.email,
-      role: user.role,
-      status: user.status
-    } : null,
-    course: course ? {
-      id: course.id,
-      title: course.title,
-      slug: course.slug,
-      status: course.status,
-      price: course.price,
-      sale_price: course.sale_price
-    } : null,
-    coupon: coupon ? {
-      id: coupon.id,
-      code: coupon.code,
-      name: coupon.name,
-      discount_type: coupon.discount_type,
-      discount_value: coupon.discount_value,
-      status: coupon.status
-    } : null,
-    enrollment: enrollment ? {
-      id: enrollment.id,
-      status: enrollment.status,
-      progress_percent: enrollment.progress_percent,
-      enrolled_at: enrollment.created_at,
-      completed_at: enrollment.completed_at
-    } : null,
-    revenue: revenue ? {
-      id: revenue.id,
-      gross_amount: String(revenue.gross_amount),
-      instructor_amount: String(revenue.instructor_amount),
-      platform_fee_amount: String(revenue.platform_fee_amount),
-      status: revenue.status,
-      earned_at: revenue.earned_at
-    } : null,
+    user: user
+      ? {
+          id: user.id,
+          full_name: user.full_name,
+          email: user.email,
+          role: user.role,
+          status: user.status,
+        }
+      : null,
+    course: course
+      ? {
+          id: course.id,
+          title: course.title,
+          slug: course.slug,
+          status: course.status,
+          price: course.price,
+          sale_price: course.sale_price,
+        }
+      : null,
+    coupon: coupon
+      ? {
+          id: coupon.id,
+          code: coupon.code,
+          name: coupon.name,
+          discount_type: coupon.discount_type,
+          discount_value: coupon.discount_value,
+          status: coupon.status,
+        }
+      : null,
+    enrollment: enrollment
+      ? {
+          id: enrollment.id,
+          status: enrollment.status,
+          progress_percent: enrollment.progress_percent,
+          enrolled_at: enrollment.created_at,
+          completed_at: enrollment.completed_at,
+        }
+      : null,
+    revenue: revenue
+      ? {
+          id: revenue.id,
+          gross_amount: String(revenue.gross_amount),
+          instructor_amount: String(revenue.instructor_amount),
+          platform_fee_amount: String(revenue.platform_fee_amount),
+          status: revenue.status,
+          earned_at: revenue.earned_at,
+        }
+      : null,
     consistency: {
       paid_has_enrollment: paidHasEnrollment,
       paid_has_revenue: paidHasRevenue,
-      amounts_match: amountsMatch
+      amounts_match: amountsMatch,
     },
-    timeline
+    timeline,
   };
 }
 
