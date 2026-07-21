@@ -494,15 +494,105 @@ export function savePayoutAccounts(accounts) {
 }
 
 // === WITHDRAWALS ===
+function populateWithdrawal(withdrawal, db) {
+  if (!withdrawal) return null;
+  const user = (db.users || []).find((u) => Number(u.id) === Number(withdrawal.user_id)) || null;
+  const payoutAccount = (db.payoutAccounts || []).find((pa) => Number(pa.id) === Number(withdrawal.payout_account_id)) || null;
+
+  return {
+    ...withdrawal,
+    id: Number(withdrawal.id),
+    user_id: Number(withdrawal.user_id),
+    payout_account_id: Number(withdrawal.payout_account_id),
+    amount: Number(withdrawal.amount).toFixed(2),
+    withdrawal_code: withdrawal.withdrawal_code || `WD-${withdrawal.id}`,
+    user: user
+      ? {
+          id: user.id,
+          full_name: user.full_name,
+          email: user.email,
+          avatar_url: user.avatar_url || null,
+          status: user.status,
+        }
+      : null,
+    payout_account: payoutAccount
+      ? {
+          id: payoutAccount.id,
+          provider: payoutAccount.provider,
+          account_name: payoutAccount.account_name,
+          account_number: payoutAccount.account_number,
+          account_number_masked: payoutAccount.account_number_masked,
+          status: payoutAccount.status,
+          connected_at: payoutAccount.connected_at,
+        }
+      : null,
+    payout_snapshot:
+      withdrawal.payout_snapshot ||
+      (payoutAccount
+        ? {
+            provider: payoutAccount.provider,
+            account_name: payoutAccount.account_name,
+            account_number: payoutAccount.account_number,
+            account_number_masked: payoutAccount.account_number_masked,
+            status: payoutAccount.status,
+            connected_at: payoutAccount.connected_at,
+          }
+        : null),
+  };
+}
+
 export function getWithdrawals() {
   const db = getDB();
-  return db.withdrawals || [];
+  if (!Array.isArray(db.withdrawals)) {
+    db.withdrawals = JSON.parse(JSON.stringify(MOCK_DB.withdrawals || []));
+    saveDB(db);
+  }
+  return (db.withdrawals || []).map((w) => populateWithdrawal(w, db));
+}
+
+export function getWithdrawalById(id) {
+  const parsedId = Number(id);
+  return getWithdrawals().find((w) => Number(w.id) === parsedId) || null;
 }
 
 export function saveWithdrawals(withdrawals) {
   const db = getDB();
-  db.withdrawals = withdrawals;
+  db.withdrawals = (withdrawals || []).map((w) => ({
+    id: Number(w.id),
+    withdrawal_code: w.withdrawal_code,
+    user_id: Number(w.user_id),
+    payout_account_id: Number(w.payout_account_id),
+    amount: Number(w.amount),
+    status: w.status,
+    requested_at: w.requested_at,
+    approved_at: w.approved_at || null,
+    rejected_at: w.rejected_at || null,
+    paid_at: w.paid_at || null,
+    rejected_reason: w.rejected_reason || null,
+    provider_payout_id: w.provider_payout_id || null,
+    payout_snapshot: w.payout_snapshot || null,
+    balance_snapshot: w.balance_snapshot || null,
+    allocations: w.allocations || [],
+    timeline: w.timeline || [],
+  }));
   saveDB(db);
+}
+
+export function updateWithdrawalStatus(id, updates) {
+  const db = getDB();
+  const rawWithdrawals = db.withdrawals || [];
+  const parsedId = Number(id);
+  const index = rawWithdrawals.findIndex((w) => Number(w.id) === parsedId);
+  if (index !== -1) {
+    rawWithdrawals[index] = {
+      ...rawWithdrawals[index],
+      ...updates,
+    };
+    db.withdrawals = rawWithdrawals;
+    saveDB(db);
+    return populateWithdrawal(rawWithdrawals[index], db);
+  }
+  return null;
 }
 
 // === BANNERS, FAQS, NOTIFICATIONS ===

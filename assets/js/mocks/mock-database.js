@@ -4194,46 +4194,1197 @@ export const MOCK_DB = {
   "withdrawals": [
     {
       "id": 7001,
+      "withdrawal_code": "WD-202607-0001",
       "user_id": 3,
       "payout_account_id": 6001,
       "amount": 5000000,
       "status": "paid",
-      "requested_at": "2026-07-08T10:00:00+07:00",
-      "approved_at": "2026-07-09T09:00:00+07:00",
-      "paid_at": "2026-07-09T10:00:00+07:00",
-      "provider_payout_id": "TXN70019"
+      "requested_at": "2026-07-21T09:30:00+07:00",
+      "approved_at": "2026-07-21T10:15:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-21T11:00:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260721-7001",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "TRAN THI DAY",
+        "account_number": "190126282446",
+        "account_number_masked": "190******0",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 15000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5001, "order_id": 3001, "course_title": "Lập trình React Native thực chiến", "amount": 5000000, "earned_at": "2026-07-10T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-21T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.000.000đ từ số dư khả dụng", "status": "info" },
+        { "timestamp": "2026-07-21T10:15:00+07:00", "title": "Đã được phê duyệt", "description": "Duyệt bởi Admin (admin@mindhub.edu.vn)", "status": "success" },
+        { "timestamp": "2026-07-21T11:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch ngân hàng: TXN-20260721-7001", "status": "success" }
+      ]
     },
     {
       "id": 7002,
+      "withdrawal_code": "WD-202607-0002",
       "user_id": 6,
       "payout_account_id": 6002,
       "amount": 12000000,
-      "status": "paid",
-      "requested_at": "2026-07-10T11:00:00+07:00",
-      "approved_at": "2026-07-11T09:00:00+07:00",
-      "paid_at": "2026-07-11T11:00:00+07:00",
-      "provider_payout_id": "TXN70020"
+      "status": "pending",
+      "requested_at": "2026-07-21T14:20:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "HOANG TAM NGUNG",
+        "account_number": "190668221079",
+        "account_number_masked": "190******1",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 22000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5002, "order_id": 3002, "course_title": "Node.js Microservices Architecture", "amount": 12000000, "earned_at": "2026-07-12T14:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-21T14:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 12.000.000đ về ngân hàng Techcombank", "status": "info" }
+      ]
     },
     {
       "id": 7003,
-      "user_id": 3,
-      "payout_account_id": 6001,
-      "amount": 2500000,
-      "status": "pending",
-      "requested_at": "2026-07-14T09:00:00+07:00",
-      "approved_at": null,
-      "paid_at": null
+      "withdrawal_code": "WD-202607-0003",
+      "user_id": 9,
+      "payout_account_id": 6003,
+      "amount": 3500000,
+      "status": "approved",
+      "requested_at": "2026-07-21T08:00:00+07:00",
+      "approved_at": "2026-07-21T11:45:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "LE GIANG VIEN XIN",
+        "account_number": "190821067017",
+        "account_number_masked": "190******2",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 8500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5003, "order_id": 3003, "course_title": "Fullstack Web Development NextJS", "amount": 3500000, "earned_at": "2026-07-15T09:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-21T08:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Gửi yêu cầu rút 3.500.000đ", "status": "info" },
+        { "timestamp": "2026-07-21T11:45:00+07:00", "title": "Đã phê duyệt", "description": "Chờ chuyển khoản từ kế toán", "status": "success" }
+      ]
     },
     {
       "id": 7004,
+      "withdrawal_code": "WD-202607-0004",
       "user_id": 216,
       "payout_account_id": 6009,
       "amount": 1500000,
       "status": "rejected",
-      "requested_at": "2026-07-12T08:00:00+07:00",
-      "approved_at": "2026-07-12T14:00:00+07:00",
+      "requested_at": "2026-07-20T16:10:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-07-20T17:30:00+07:00",
       "paid_at": null,
-      "rejected_reason": "Tài khoản thụ hưởng không chính xác."
+      "rejected_reason": "Tài khoản thụ hưởng không khớp với tên giảng viên đã xác thực.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGUYEN MINH ANH",
+        "account_number": "190659835290",
+        "account_number_masked": "190******8",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 4500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 4500000
+      },
+      "allocations": [
+        { "revenue_id": 5004, "order_id": 3004, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 1500000, "earned_at": "2026-07-14T11:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-20T16:10:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 1.500.000đ", "status": "info" },
+        { "timestamp": "2026-07-20T17:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Tài khoản thụ hưởng không khớp với tên giảng viên đã xác thực.", "status": "error" }
+      ]
+    },
+    {
+      "id": 7005,
+      "withdrawal_code": "WD-202607-0005",
+      "user_id": 72,
+      "payout_account_id": 6021,
+      "amount": 8000000,
+      "status": "pending",
+      "requested_at": "2026-07-20T10:15:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGO QUANG HUY",
+        "account_number": "190862390449",
+        "account_number_masked": "190******20",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 18000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5005, "order_id": 3005, "course_title": "Python Data Science Mastery", "amount": 8000000, "earned_at": "2026-07-13T15:30:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-20T10:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.000.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7006,
+      "withdrawal_code": "WD-202607-0006",
+      "user_id": 84,
+      "payout_account_id": 6022,
+      "amount": 4200000,
+      "status": "paid",
+      "requested_at": "2026-07-19T11:00:00+07:00",
+      "approved_at": "2026-07-19T14:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-19T16:20:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260719-8401",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE MY DUYEN",
+        "account_number": "190519914089",
+        "account_number_masked": "190******21",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 9200000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5006, "order_id": 3006, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 4200000, "earned_at": "2026-07-11T09:20:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-19T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.200.000đ", "status": "info" },
+        { "timestamp": "2026-07-19T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt bởi Admin", "status": "success" },
+        { "timestamp": "2026-07-19T16:20:00+07:00", "title": "Thanh toán thành công", "description": "Mã giao dịch: TXN-20260719-8401", "status": "success" }
+      ]
+    },
+    {
+      "id": 7007,
+      "withdrawal_code": "WD-202607-0007",
+      "user_id": 91,
+      "payout_account_id": 6023,
+      "amount": 9500000,
+      "status": "approved",
+      "requested_at": "2026-07-18T13:40:00+07:00",
+      "approved_at": "2026-07-18T15:10:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "PHAN VAN ĐUC",
+        "account_number": "190582108593",
+        "account_number_masked": "190******22",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 19500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5007, "order_id": 3007, "course_title": "Java Spring Boot Microservices", "amount": 9500000, "earned_at": "2026-07-10T16:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-18T13:40:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 9.500.000đ", "status": "info" },
+        { "timestamp": "2026-07-18T15:10:00+07:00", "title": "Đã phê duyệt", "description": "Đang xếp lịch chi tiền", "status": "success" }
+      ]
+    },
+    {
+      "id": 7008,
+      "withdrawal_code": "WD-202607-0008",
+      "user_id": 98,
+      "payout_account_id": 6024,
+      "amount": 2800000,
+      "status": "pending",
+      "requested_at": "2026-07-17T09:15:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "HOANG VAN TUAN",
+        "account_number": "190393274004",
+        "account_number_masked": "190******23",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 5800000,
+        "holding_balance_before": 0,
+        "available_balance_after": 3000000
+      },
+      "allocations": [
+        { "revenue_id": 5008, "order_id": 3008, "course_title": "Flutter Cross-Platform Development", "amount": 2800000, "earned_at": "2026-07-09T14:20:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-17T09:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.800.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7009,
+      "withdrawal_code": "WD-202607-0009",
+      "user_id": 105,
+      "payout_account_id": 6025,
+      "amount": 6300000,
+      "status": "paid",
+      "requested_at": "2026-07-16T15:00:00+07:00",
+      "approved_at": "2026-07-16T16:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-17T08:45:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260717-1051",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "ĐO KIM ANH",
+        "account_number": "190356175383",
+        "account_number_masked": "190******24",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 16300000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5009, "order_id": 3009, "course_title": "DevOps Engineer Professional Course", "amount": 6300000, "earned_at": "2026-07-08T11:30:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-16T15:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 6.300.000đ", "status": "info" },
+        { "timestamp": "2026-07-16T16:30:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận tài khoản", "status": "success" },
+        { "timestamp": "2026-07-17T08:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260717-1051", "status": "success" }
+      ]
+    },
+    {
+      "id": 7010,
+      "withdrawal_code": "WD-202607-0010",
+      "user_id": 205,
+      "payout_account_id": 6008,
+      "amount": 11000000,
+      "status": "rejected",
+      "requested_at": "2026-07-15T10:00:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-07-15T11:20:00+07:00",
+      "paid_at": null,
+      "rejected_reason": "Tài khoản đang bị tạm khóa để đối soát giao dịch nghi ngờ.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "NGUYEN VAN A",
+        "account_number": "190490216364",
+        "account_number_masked": "190******7",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 11000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 11000000
+      },
+      "allocations": [
+        { "revenue_id": 5010, "order_id": 3010, "course_title": "Golang High Performance Backend", "amount": 11000000, "earned_at": "2026-07-07T10:10:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-15T10:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 11.000.000đ", "status": "info" },
+        { "timestamp": "2026-07-15T11:20:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Tài khoản đang bị tạm khóa để đối soát giao dịch nghi ngờ.", "status": "error" }
+      ]
+    },
+    {
+      "id": 7011,
+      "withdrawal_code": "WD-202607-0011",
+      "user_id": 206,
+      "payout_account_id": 6007,
+      "amount": 7500000,
+      "status": "pending",
+      "requested_at": "2026-07-14T14:45:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE THI B",
+        "account_number": "190262494525",
+        "account_number_masked": "190******6",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 12500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5011, "order_id": 3011, "course_title": "AI Prompt Engineering Masterclass", "amount": 7500000, "earned_at": "2026-07-06T09:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-14T14:45:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 7.500.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7012,
+      "withdrawal_code": "WD-202607-0012",
+      "user_id": 3,
+      "payout_account_id": 6001,
+      "amount": 15000000,
+      "status": "paid",
+      "requested_at": "2026-07-13T09:00:00+07:00",
+      "approved_at": "2026-07-13T10:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-13T14:00:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260713-301",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "TRAN THI DAY",
+        "account_number": "190126282446",
+        "account_number_masked": "190******0",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 25000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5012, "order_id": 3012, "course_title": "Lập trình React Native thực chiến", "amount": 15000000, "earned_at": "2026-07-05T08:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-13T09:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 15.000.000đ", "status": "info" },
+        { "timestamp": "2026-07-13T10:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
+        { "timestamp": "2026-07-13T14:00:00+07:00", "title": "Thanh toán thành công", "description": "Mã giao dịch: TXN-20260713-301", "status": "success" }
+      ]
+    },
+    {
+      "id": 7013,
+      "withdrawal_code": "WD-202607-0013",
+      "user_id": 6,
+      "payout_account_id": 6002,
+      "amount": 5400000,
+      "status": "approved",
+      "requested_at": "2026-07-12T16:00:00+07:00",
+      "approved_at": "2026-07-12T17:15:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "HOANG TAM NGUNG",
+        "account_number": "190668221079",
+        "account_number_masked": "190******1",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 10400000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5013, "order_id": 3013, "course_title": "Node.js Microservices Architecture", "amount": 5400000, "earned_at": "2026-07-04T12:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-12T16:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.400.000đ", "status": "info" },
+        { "timestamp": "2026-07-12T17:15:00+07:00", "title": "Đã phê duyệt", "description": "Chờ cổng thanh toán xử lý hàng loạt", "status": "success" }
+      ]
+    },
+    {
+      "id": 7014,
+      "withdrawal_code": "WD-202607-0014",
+      "user_id": 9,
+      "payout_account_id": 6003,
+      "amount": 2100000,
+      "status": "pending",
+      "requested_at": "2026-07-11T11:30:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "LE GIANG VIEN XIN",
+        "account_number": "190821067017",
+        "account_number_masked": "190******2",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 4100000,
+        "holding_balance_before": 0,
+        "available_balance_after": 2000000
+      },
+      "allocations": [
+        { "revenue_id": 5014, "order_id": 3014, "course_title": "Fullstack Web Development NextJS", "amount": 2100000, "earned_at": "2026-07-03T11:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-11T11:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.100.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7015,
+      "withdrawal_code": "WD-202607-0015",
+      "user_id": 72,
+      "payout_account_id": 6021,
+      "amount": 18500000,
+      "status": "paid",
+      "requested_at": "2026-07-10T08:15:00+07:00",
+      "approved_at": "2026-07-10T10:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-10T11:30:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260710-7201",
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGO QUANG HUY",
+        "account_number": "190862390449",
+        "account_number_masked": "190******20",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 28500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5015, "order_id": 3015, "course_title": "Python Data Science Mastery", "amount": 18500000, "earned_at": "2026-07-02T15:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-10T08:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 18.500.000đ", "status": "info" },
+        { "timestamp": "2026-07-10T10:00:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác minh số dư", "status": "success" },
+        { "timestamp": "2026-07-10T11:30:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260710-7201", "status": "success" }
+      ]
+    },
+    {
+      "id": 7016,
+      "withdrawal_code": "WD-202607-0016",
+      "user_id": 84,
+      "payout_account_id": 6022,
+      "amount": 3900000,
+      "status": "rejected",
+      "requested_at": "2026-07-09T14:10:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-07-09T15:30:00+07:00",
+      "paid_at": null,
+      "rejected_reason": "Chưa hoàn tất xác minh danh tính giảng viên.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE MY DUYEN",
+        "account_number": "190519914089",
+        "account_number_masked": "190******21",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 3900000,
+        "holding_balance_before": 0,
+        "available_balance_after": 3900000
+      },
+      "allocations": [
+        { "revenue_id": 5016, "order_id": 3016, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 3900000, "earned_at": "2026-07-01T10:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-09T14:10:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 3.900.000đ", "status": "info" },
+        { "timestamp": "2026-07-09T15:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Chưa hoàn tất xác minh danh tính giảng viên.", "status": "error" }
+      ]
+    },
+    {
+      "id": 7017,
+      "withdrawal_code": "WD-202607-0017",
+      "user_id": 91,
+      "payout_account_id": 6023,
+      "amount": 16000000,
+      "status": "paid",
+      "requested_at": "2026-07-08T09:30:00+07:00",
+      "approved_at": "2026-07-08T11:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-08T15:45:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260708-9101",
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "PHAN VAN ĐUC",
+        "account_number": "190582108593",
+        "account_number_masked": "190******22",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 26000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5017, "order_id": 3017, "course_title": "Java Spring Boot Microservices", "amount": 16000000, "earned_at": "2026-06-30T14:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-08T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 16.000.000đ", "status": "info" },
+        { "timestamp": "2026-07-08T11:00:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận với bộ phận kế toán", "status": "success" },
+        { "timestamp": "2026-07-08T15:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260708-9101", "status": "success" }
+      ]
+    },
+    {
+      "id": 7018,
+      "withdrawal_code": "WD-202607-0018",
+      "user_id": 98,
+      "payout_account_id": 6024,
+      "amount": 4700000,
+      "status": "pending",
+      "requested_at": "2026-07-07T16:20:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "HOANG VAN TUAN",
+        "account_number": "190393274004",
+        "account_number_masked": "190******23",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 8700000,
+        "holding_balance_before": 0,
+        "available_balance_after": 4000000
+      },
+      "allocations": [
+        { "revenue_id": 5018, "order_id": 3018, "course_title": "Flutter Cross-Platform Development", "amount": 4700000, "earned_at": "2026-06-29T09:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-07T16:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.700.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7019,
+      "withdrawal_code": "WD-202607-0019",
+      "user_id": 105,
+      "payout_account_id": 6025,
+      "amount": 8200000,
+      "status": "approved",
+      "requested_at": "2026-07-06T10:15:00+07:00",
+      "approved_at": "2026-07-06T14:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "ĐO KIM ANH",
+        "account_number": "190356175383",
+        "account_number_masked": "190******24",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 13200000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5001, "order_id": 3001, "course_title": "DevOps Engineer Professional Course", "amount": 8200000, "earned_at": "2026-06-28T11:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-06T10:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.200.000đ", "status": "info" },
+        { "timestamp": "2026-07-06T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ lệnh giải ngân đợt 2", "status": "success" }
+      ]
+    },
+    {
+      "id": 7020,
+      "withdrawal_code": "WD-202607-0020",
+      "user_id": 205,
+      "payout_account_id": 6008,
+      "amount": 14000000,
+      "status": "paid",
+      "requested_at": "2026-07-05T11:00:00+07:00",
+      "approved_at": "2026-07-05T13:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-05T16:00:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260705-2051",
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "NGUYEN VAN A",
+        "account_number": "190490216364",
+        "account_number_masked": "190******7",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 24000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5002, "order_id": 3002, "course_title": "Golang High Performance Backend", "amount": 14000000, "earned_at": "2026-06-27T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-05T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 14.000.000đ", "status": "info" },
+        { "timestamp": "2026-07-05T13:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
+        { "timestamp": "2026-07-05T16:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260705-2051", "status": "success" }
+      ]
+    },
+    {
+      "id": 7021,
+      "withdrawal_code": "WD-202607-0021",
+      "user_id": 206,
+      "payout_account_id": 6007,
+      "amount": 2900000,
+      "status": "pending",
+      "requested_at": "2026-07-04T09:30:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE THI B",
+        "account_number": "190262494525",
+        "account_number_masked": "190******6",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 5900000,
+        "holding_balance_before": 0,
+        "available_balance_after": 3000000
+      },
+      "allocations": [
+        { "revenue_id": 5003, "order_id": 3003, "course_title": "AI Prompt Engineering Masterclass", "amount": 2900000, "earned_at": "2026-06-26T15:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-04T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.900.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7022,
+      "withdrawal_code": "WD-202607-0022",
+      "user_id": 216,
+      "payout_account_id": 6009,
+      "amount": 9100000,
+      "status": "paid",
+      "requested_at": "2026-07-03T14:20:00+07:00",
+      "approved_at": "2026-07-03T16:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-07-04T10:15:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260704-2161",
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGUYEN MINH ANH",
+        "account_number": "190659835290",
+        "account_number_masked": "190******8",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 14100000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5004, "order_id": 3004, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 9100000, "earned_at": "2026-06-25T11:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-07-03T14:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 9.100.000đ", "status": "info" },
+        { "timestamp": "2026-07-03T16:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt bởi Admin", "status": "success" },
+        { "timestamp": "2026-07-04T10:15:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260704-2161", "status": "success" }
+      ]
+    },
+    {
+      "id": 7023,
+      "withdrawal_code": "WD-202606-0023",
+      "user_id": 3,
+      "payout_account_id": 6001,
+      "amount": 22000000,
+      "status": "paid",
+      "requested_at": "2026-06-28T09:00:00+07:00",
+      "approved_at": "2026-06-28T10:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-06-28T14:20:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260628-301",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "TRAN THI DAY",
+        "account_number": "190126282446",
+        "account_number_masked": "190******0",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 32000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5005, "order_id": 3005, "course_title": "Lập trình React Native thực chiến", "amount": 22000000, "earned_at": "2026-06-20T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-28T09:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 22.000.000đ", "status": "info" },
+        { "timestamp": "2026-06-28T10:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi đợt cuối tháng 6", "status": "success" },
+        { "timestamp": "2026-06-28T14:20:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260628-301", "status": "success" }
+      ]
+    },
+    {
+      "id": 7024,
+      "withdrawal_code": "WD-202606-0024",
+      "user_id": 6,
+      "payout_account_id": 6002,
+      "amount": 16500000,
+      "status": "approved",
+      "requested_at": "2026-06-25T15:30:00+07:00",
+      "approved_at": "2026-06-25T17:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "HOANG TAM NGUNG",
+        "account_number": "190668221079",
+        "account_number_masked": "190******1",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 21500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5006, "order_id": 3006, "course_title": "Node.js Microservices Architecture", "amount": 16500000, "earned_at": "2026-06-18T14:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-25T15:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 16.500.000đ", "status": "info" },
+        { "timestamp": "2026-06-25T17:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ xác nhận giao dịch ngân hàng", "status": "success" }
+      ]
+    },
+    {
+      "id": 7025,
+      "withdrawal_code": "WD-202606-0025",
+      "user_id": 9,
+      "payout_account_id": 6003,
+      "amount": 6800000,
+      "status": "rejected",
+      "requested_at": "2026-06-22T11:00:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-06-22T14:15:00+07:00",
+      "paid_at": null,
+      "rejected_reason": "Hệ thống phát hiện sai lệch số dư khả dụng, chờ kiểm tra lại.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "LE GIANG VIEN XIN",
+        "account_number": "190821067017",
+        "account_number_masked": "190******2",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 6800000,
+        "holding_balance_before": 0,
+        "available_balance_after": 6800000
+      },
+      "allocations": [
+        { "revenue_id": 5007, "order_id": 3007, "course_title": "Fullstack Web Development NextJS", "amount": 6800000, "earned_at": "2026-06-15T11:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-22T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 6.800.000đ", "status": "info" },
+        { "timestamp": "2026-06-22T14:15:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Hệ thống phát hiện sai lệch số dư khả dụng, chờ kiểm tra lại.", "status": "error" }
+      ]
+    },
+    {
+      "id": 7026,
+      "withdrawal_code": "WD-202606-0026",
+      "user_id": 72,
+      "payout_account_id": 6021,
+      "amount": 13500000,
+      "status": "pending",
+      "requested_at": "2026-06-20T08:45:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGO QUANG HUY",
+        "account_number": "190862390449",
+        "account_number_masked": "190******20",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 18500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5008, "order_id": 3008, "course_title": "Python Data Science Mastery", "amount": 13500000, "earned_at": "2026-06-12T09:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-20T08:45:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 13.500.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7027,
+      "withdrawal_code": "WD-202606-0027",
+      "user_id": 84,
+      "payout_account_id": 6022,
+      "amount": 5100000,
+      "status": "approved",
+      "requested_at": "2026-06-18T10:00:00+07:00",
+      "approved_at": "2026-06-18T11:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE MY DUYEN",
+        "account_number": "190519914089",
+        "account_number_masked": "190******21",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 8100000,
+        "holding_balance_before": 0,
+        "available_balance_after": 3000000
+      },
+      "allocations": [
+        { "revenue_id": 5009, "order_id": 3009, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 5100000, "earned_at": "2026-06-10T10:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-18T10:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.100.000đ", "status": "info" },
+        { "timestamp": "2026-06-18T11:30:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận", "status": "success" }
+      ]
+    },
+    {
+      "id": 7028,
+      "withdrawal_code": "WD-202606-0028",
+      "user_id": 91,
+      "payout_account_id": 6023,
+      "amount": 10500000,
+      "status": "paid",
+      "requested_at": "2026-06-15T14:00:00+07:00",
+      "approved_at": "2026-06-15T16:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-06-16T09:30:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260616-9102",
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "PHAN VAN ĐUC",
+        "account_number": "190582108593",
+        "account_number_masked": "190******22",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 15500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5010, "order_id": 3010, "course_title": "Java Spring Boot Microservices", "amount": 10500000, "earned_at": "2026-06-08T11:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-15T14:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 10.500.000đ", "status": "info" },
+        { "timestamp": "2026-06-15T16:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
+        { "timestamp": "2026-06-16T09:30:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260616-9102", "status": "success" }
+      ]
+    },
+    {
+      "id": 7029,
+      "withdrawal_code": "WD-202606-0029",
+      "user_id": 98,
+      "payout_account_id": 6024,
+      "amount": 3400000,
+      "status": "rejected",
+      "requested_at": "2026-06-12T09:15:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-06-12T10:45:00+07:00",
+      "paid_at": null,
+      "rejected_reason": "Số dư khả dụng thay đổi do học viên yêu cầu hoàn tiền đơn hàng.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "HOANG VAN TUAN",
+        "account_number": "190393274004",
+        "account_number_masked": "190******23",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 3400000,
+        "holding_balance_before": 0,
+        "available_balance_after": 3400000
+      },
+      "allocations": [
+        { "revenue_id": 5011, "order_id": 3011, "course_title": "Flutter Cross-Platform Development", "amount": 3400000, "earned_at": "2026-06-05T14:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-12T09:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 3.400.000đ", "status": "info" },
+        { "timestamp": "2026-06-12T10:45:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Số dư khả dụng thay đổi do học viên yêu cầu hoàn tiền đơn hàng.", "status": "error" }
+      ]
+    },
+    {
+      "id": 7030,
+      "withdrawal_code": "WD-202606-0030",
+      "user_id": 105,
+      "payout_account_id": 6025,
+      "amount": 17200000,
+      "status": "paid",
+      "requested_at": "2026-06-10T16:00:00+07:00",
+      "approved_at": "2026-06-10T17:30:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-06-11T11:00:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260611-1052",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "ĐO KIM ANH",
+        "account_number": "190356175383",
+        "account_number_masked": "190******24",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 27200000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5012, "order_id": 3012, "course_title": "DevOps Engineer Professional Course", "amount": 17200000, "earned_at": "2026-06-02T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-06-10T16:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 17.200.000đ", "status": "info" },
+        { "timestamp": "2026-06-10T17:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
+        { "timestamp": "2026-06-11T11:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260611-1052", "status": "success" }
+      ]
+    },
+    {
+      "id": 7031,
+      "withdrawal_code": "WD-202605-0031",
+      "user_id": 205,
+      "payout_account_id": 6008,
+      "amount": 8800000,
+      "status": "approved",
+      "requested_at": "2026-05-28T10:30:00+07:00",
+      "approved_at": "2026-05-28T14:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "NGUYEN VAN A",
+        "account_number": "190490216364",
+        "account_number_masked": "190******7",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 13800000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5013, "order_id": 3013, "course_title": "Golang High Performance Backend", "amount": 8800000, "earned_at": "2026-05-20T09:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-05-28T10:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.800.000đ", "status": "info" },
+        { "timestamp": "2026-05-28T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ thanh toán", "status": "success" }
+      ]
+    },
+    {
+      "id": 7032,
+      "withdrawal_code": "WD-202605-0032",
+      "user_id": 206,
+      "payout_account_id": 6007,
+      "amount": 19500000,
+      "status": "paid",
+      "requested_at": "2026-05-20T11:00:00+07:00",
+      "approved_at": "2026-05-20T13:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-05-20T16:45:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260520-2061",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "LE THI B",
+        "account_number": "190262494525",
+        "account_number_masked": "190******6",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 29500000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5014, "order_id": 3014, "course_title": "AI Prompt Engineering Masterclass", "amount": 19500000, "earned_at": "2026-05-12T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-05-20T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 19.500.000đ", "status": "info" },
+        { "timestamp": "2026-05-20T13:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi thành công", "status": "success" },
+        { "timestamp": "2026-05-20T16:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260520-2061", "status": "success" }
+      ]
+    },
+    {
+      "id": 7033,
+      "withdrawal_code": "WD-202605-0033",
+      "user_id": 216,
+      "payout_account_id": 6009,
+      "amount": 4100000,
+      "status": "pending",
+      "requested_at": "2026-05-15T15:20:00+07:00",
+      "approved_at": null,
+      "rejected_at": null,
+      "paid_at": null,
+      "rejected_reason": null,
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "MB Bank",
+        "account_name": "NGUYEN MINH ANH",
+        "account_number": "190659835290",
+        "account_number_masked": "190******8",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 9100000,
+        "holding_balance_before": 0,
+        "available_balance_after": 5000000
+      },
+      "allocations": [
+        { "revenue_id": 5015, "order_id": 3015, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 4100000, "earned_at": "2026-05-08T09:00:00+07:00", "status": "pending" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-05-15T15:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.100.000đ", "status": "info" }
+      ]
+    },
+    {
+      "id": 7034,
+      "withdrawal_code": "WD-202604-0034",
+      "user_id": 3,
+      "payout_account_id": 6001,
+      "amount": 13000000,
+      "status": "paid",
+      "requested_at": "2026-04-25T08:30:00+07:00",
+      "approved_at": "2026-04-25T10:00:00+07:00",
+      "rejected_at": null,
+      "paid_at": "2026-04-25T15:00:00+07:00",
+      "rejected_reason": null,
+      "provider_payout_id": "TXN-20260425-301",
+      "payout_snapshot": {
+        "provider": "Vietcombank",
+        "account_name": "TRAN THI DAY",
+        "account_number": "190126282446",
+        "account_number_masked": "190******0",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 23000000,
+        "holding_balance_before": 0,
+        "available_balance_after": 10000000
+      },
+      "allocations": [
+        { "revenue_id": 5016, "order_id": 3016, "course_title": "Lập trình React Native thực chiến", "amount": 13000000, "earned_at": "2026-04-18T10:00:00+07:00", "status": "withdrawn" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-04-25T08:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 13.000.000đ", "status": "info" },
+        { "timestamp": "2026-04-25T10:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi thành công", "status": "success" },
+        { "timestamp": "2026-04-25T15:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260425-301", "status": "success" }
+      ]
+    },
+    {
+      "id": 7035,
+      "withdrawal_code": "WD-202604-0035",
+      "user_id": 6,
+      "payout_account_id": 6002,
+      "amount": 7800000,
+      "status": "rejected",
+      "requested_at": "2026-04-10T14:00:00+07:00",
+      "approved_at": null,
+      "rejected_at": "2026-04-10T16:30:00+07:00",
+      "paid_at": null,
+      "rejected_reason": "Thông tin tài khoản nhận tiền không hợp lệ theo quy định nhà cung cấp dịch vụ thanh toán.",
+      "provider_payout_id": null,
+      "payout_snapshot": {
+        "provider": "Techcombank",
+        "account_name": "HOANG TAM NGUNG",
+        "account_number": "190668221079",
+        "account_number_masked": "190******1",
+        "status": "active",
+        "connected_at": "2026-07-05T09:00:00+07:00"
+      },
+      "balance_snapshot": {
+        "available_balance_before": 7800000,
+        "holding_balance_before": 0,
+        "available_balance_after": 7800000
+      },
+      "allocations": [
+        { "revenue_id": 5017, "order_id": 3017, "course_title": "Node.js Microservices Architecture", "amount": 7800000, "earned_at": "2026-04-02T11:00:00+07:00", "status": "available" }
+      ],
+      "timeline": [
+        { "timestamp": "2026-04-10T14:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 7.800.000đ", "status": "info" },
+        { "timestamp": "2026-04-10T16:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Thông tin tài khoản nhận tiền không hợp lệ theo quy định nhà cung cấp dịch vụ thanh toán.", "status": "error" }
+      ]
     }
   ],
   "banners": [

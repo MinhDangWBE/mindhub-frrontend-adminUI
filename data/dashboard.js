@@ -696,10 +696,15 @@ export function getDashboardMockData({ date_from, date_to, month, year } = {}) {
             : 0
     };
 
+const toMoneyNumber = (value) => {
+    const parsedValue = Number.parseFloat(value ?? "0");
+    return Number.isFinite(parsedValue) ? parsedValue : 0;
+};
+
     const revenue = {
-        gross_amount: activeRevenuesList.reduce((sum, r) => sum + r.gross_amount, 0).toFixed(2),
-        instructor_amount: activeRevenuesList.reduce((sum, r) => sum + r.instructor_amount, 0).toFixed(2),
-        platform_fee_amount: activeRevenuesList.reduce((sum, r) => sum + r.platform_fee_amount, 0).toFixed(2)
+        gross_amount: activeRevenuesList.reduce((sum, r) => sum + toMoneyNumber(r.gross_amount), 0).toFixed(2),
+        instructor_amount: activeRevenuesList.reduce((sum, r) => sum + toMoneyNumber(r.instructor_amount), 0).toFixed(2),
+        platform_fee_amount: activeRevenuesList.reduce((sum, r) => sum + toMoneyNumber(r.platform_fee_amount), 0).toFixed(2)
     };
 
     const course_status = {
@@ -720,9 +725,9 @@ export function getDashboardMockData({ date_from, date_to, month, year } = {}) {
     const withdrawal_summary = {
         pending_count: activeWithdrawalsList.filter(w => w.status === "pending").length,
         approved_count: activeWithdrawalsList.filter(w => w.status === "approved").length,
-        pending_amount: activeWithdrawalsList.filter(w => w.status === "pending").reduce((sum, w) => sum + w.amount, 0).toFixed(2),
-        approved_amount: activeWithdrawalsList.filter(w => w.status === "approved").reduce((sum, w) => sum + w.amount, 0).toFixed(2),
-        paid_amount: activeWithdrawalsList.filter(w => w.status === "paid").reduce((sum, w) => sum + w.amount, 0).toFixed(2)
+        pending_amount: activeWithdrawalsList.filter(w => w.status === "pending").reduce((sum, w) => sum + toMoneyNumber(w.amount), 0).toFixed(2),
+        approved_amount: activeWithdrawalsList.filter(w => w.status === "approved").reduce((sum, w) => sum + toMoneyNumber(w.amount), 0).toFixed(2),
+        paid_amount: activeWithdrawalsList.filter(w => w.status === "paid").reduce((sum, w) => sum + toMoneyNumber(w.amount), 0).toFixed(2)
     };
 
     const action_required = {
