@@ -6,7 +6,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-    <title>Tài khoản nhận tiền | MindHub Admin</title>
+    <title>Kiểm duyệt bình luận và đánh giá | MindHub Admin</title>
     <link
         rel="stylesheet"
         href="../assets/css/output.css"
@@ -137,7 +137,7 @@
                     </svg>
                     <span class="sidebar-text truncate">Yêu cầu rút tiền</span>
                 </a>
-                <a href="payout-accounts.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="payout-accounts" aria-current="page">
+                <a href="payout-accounts.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="payout-accounts">
                     <!-- Icon Landmark -->
                     <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path d="M3 21h18"/>
@@ -154,7 +154,7 @@
         <div>
             <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Nội dung</div>
             <div class="space-y-0.5">
-                <a href="moderation.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="moderation">
+                <a href="moderation.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="moderation" aria-current="page">
                     <!-- Icon Comment/Review -->
                     <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -234,7 +234,7 @@
                         MindHub Admin
                     </p>
                     <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                        Tài khoản nhận tiền
+                        Kiểm duyệt bình luận và đánh giá
                     </h1>
                 </header>
                 <section
@@ -260,7 +260,7 @@
     ></script>
     <script
         type="module"
-        src="../assets/js/pages/payout-accounts.js"
+        src="../assets/js/pages/moderation.js"
     ></script>
     <script type="module" src="../assets/js/sidebar-scroll.js"></script>
     <script src="../assets/js/sidebar-toggle.js"></script>

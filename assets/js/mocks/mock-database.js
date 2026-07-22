@@ -4353,12 +4353,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5001, "order_id": 3001, "course_title": "Lập trình React Native thực chiến", "amount": 5000000, "earned_at": "2026-07-10T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5001,
+          "order_id": 3001,
+          "course_title": "Lập trình React Native thực chiến",
+          "amount": 5000000,
+          "earned_at": "2026-07-10T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-21T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.000.000đ từ số dư khả dụng", "status": "info" },
-        { "timestamp": "2026-07-21T10:15:00+07:00", "title": "Đã được phê duyệt", "description": "Duyệt bởi Admin (admin@mindhub.edu.vn)", "status": "success" },
-        { "timestamp": "2026-07-21T11:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch ngân hàng: TXN-20260721-7001", "status": "success" }
+        {
+          "timestamp": "2026-07-21T09:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 5.000.000đ từ số dư khả dụng",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-21T10:15:00+07:00",
+          "title": "Đã được phê duyệt",
+          "description": "Duyệt bởi Admin (admin@mindhub.edu.vn)",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-21T11:00:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch ngân hàng: TXN-20260721-7001",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4388,10 +4410,22 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5002, "order_id": 3002, "course_title": "Node.js Microservices Architecture", "amount": 12000000, "earned_at": "2026-07-12T14:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5002,
+          "order_id": 3002,
+          "course_title": "Node.js Microservices Architecture",
+          "amount": 12000000,
+          "earned_at": "2026-07-12T14:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-21T14:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 12.000.000đ về ngân hàng Techcombank", "status": "info" }
+        {
+          "timestamp": "2026-07-21T14:20:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 12.000.000đ về ngân hàng Techcombank",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4421,11 +4455,28 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5003, "order_id": 3003, "course_title": "Fullstack Web Development NextJS", "amount": 3500000, "earned_at": "2026-07-15T09:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5003,
+          "order_id": 3003,
+          "course_title": "Fullstack Web Development NextJS",
+          "amount": 3500000,
+          "earned_at": "2026-07-15T09:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-21T08:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Gửi yêu cầu rút 3.500.000đ", "status": "info" },
-        { "timestamp": "2026-07-21T11:45:00+07:00", "title": "Đã phê duyệt", "description": "Chờ chuyển khoản từ kế toán", "status": "success" }
+        {
+          "timestamp": "2026-07-21T08:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Gửi yêu cầu rút 3.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-21T11:45:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Chờ chuyển khoản từ kế toán",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4455,11 +4506,28 @@ export const MOCK_DB = {
         "available_balance_after": 4500000
       },
       "allocations": [
-        { "revenue_id": 5004, "order_id": 3004, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 1500000, "earned_at": "2026-07-14T11:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5004,
+          "order_id": 3004,
+          "course_title": "Docker & Kubernetes từ Z đến A",
+          "amount": 1500000,
+          "earned_at": "2026-07-14T11:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-20T16:10:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 1.500.000đ", "status": "info" },
-        { "timestamp": "2026-07-20T17:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Tài khoản thụ hưởng không khớp với tên giảng viên đã xác thực.", "status": "error" }
+        {
+          "timestamp": "2026-07-20T16:10:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 1.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-20T17:30:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Tài khoản thụ hưởng không khớp với tên giảng viên đã xác thực.",
+          "status": "error"
+        }
       ]
     },
     {
@@ -4489,10 +4557,22 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5005, "order_id": 3005, "course_title": "Python Data Science Mastery", "amount": 8000000, "earned_at": "2026-07-13T15:30:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5005,
+          "order_id": 3005,
+          "course_title": "Python Data Science Mastery",
+          "amount": 8000000,
+          "earned_at": "2026-07-13T15:30:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-20T10:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.000.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-20T10:15:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 8.000.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4522,12 +4602,34 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5006, "order_id": 3006, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 4200000, "earned_at": "2026-07-11T09:20:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5006,
+          "order_id": 3006,
+          "course_title": "UI/UX Design chuyên nghiệp Figma",
+          "amount": 4200000,
+          "earned_at": "2026-07-11T09:20:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-19T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.200.000đ", "status": "info" },
-        { "timestamp": "2026-07-19T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt bởi Admin", "status": "success" },
-        { "timestamp": "2026-07-19T16:20:00+07:00", "title": "Thanh toán thành công", "description": "Mã giao dịch: TXN-20260719-8401", "status": "success" }
+        {
+          "timestamp": "2026-07-19T11:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 4.200.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-19T14:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt bởi Admin",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-19T16:20:00+07:00",
+          "title": "Thanh toán thành công",
+          "description": "Mã giao dịch: TXN-20260719-8401",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4557,11 +4659,28 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5007, "order_id": 3007, "course_title": "Java Spring Boot Microservices", "amount": 9500000, "earned_at": "2026-07-10T16:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5007,
+          "order_id": 3007,
+          "course_title": "Java Spring Boot Microservices",
+          "amount": 9500000,
+          "earned_at": "2026-07-10T16:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-18T13:40:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 9.500.000đ", "status": "info" },
-        { "timestamp": "2026-07-18T15:10:00+07:00", "title": "Đã phê duyệt", "description": "Đang xếp lịch chi tiền", "status": "success" }
+        {
+          "timestamp": "2026-07-18T13:40:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 9.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-18T15:10:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Đang xếp lịch chi tiền",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4591,10 +4710,22 @@ export const MOCK_DB = {
         "available_balance_after": 3000000
       },
       "allocations": [
-        { "revenue_id": 5008, "order_id": 3008, "course_title": "Flutter Cross-Platform Development", "amount": 2800000, "earned_at": "2026-07-09T14:20:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5008,
+          "order_id": 3008,
+          "course_title": "Flutter Cross-Platform Development",
+          "amount": 2800000,
+          "earned_at": "2026-07-09T14:20:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-17T09:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.800.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-17T09:15:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 2.800.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4624,12 +4755,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5009, "order_id": 3009, "course_title": "DevOps Engineer Professional Course", "amount": 6300000, "earned_at": "2026-07-08T11:30:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5009,
+          "order_id": 3009,
+          "course_title": "DevOps Engineer Professional Course",
+          "amount": 6300000,
+          "earned_at": "2026-07-08T11:30:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-16T15:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 6.300.000đ", "status": "info" },
-        { "timestamp": "2026-07-16T16:30:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận tài khoản", "status": "success" },
-        { "timestamp": "2026-07-17T08:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260717-1051", "status": "success" }
+        {
+          "timestamp": "2026-07-16T15:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 6.300.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-16T16:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Đã xác nhận tài khoản",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-17T08:45:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260717-1051",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4659,11 +4812,28 @@ export const MOCK_DB = {
         "available_balance_after": 11000000
       },
       "allocations": [
-        { "revenue_id": 5010, "order_id": 3010, "course_title": "Golang High Performance Backend", "amount": 11000000, "earned_at": "2026-07-07T10:10:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5010,
+          "order_id": 3010,
+          "course_title": "Golang High Performance Backend",
+          "amount": 11000000,
+          "earned_at": "2026-07-07T10:10:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-15T10:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 11.000.000đ", "status": "info" },
-        { "timestamp": "2026-07-15T11:20:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Tài khoản đang bị tạm khóa để đối soát giao dịch nghi ngờ.", "status": "error" }
+        {
+          "timestamp": "2026-07-15T10:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 11.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-15T11:20:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Tài khoản đang bị tạm khóa để đối soát giao dịch nghi ngờ.",
+          "status": "error"
+        }
       ]
     },
     {
@@ -4693,10 +4863,22 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5011, "order_id": 3011, "course_title": "AI Prompt Engineering Masterclass", "amount": 7500000, "earned_at": "2026-07-06T09:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5011,
+          "order_id": 3011,
+          "course_title": "AI Prompt Engineering Masterclass",
+          "amount": 7500000,
+          "earned_at": "2026-07-06T09:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-14T14:45:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 7.500.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-14T14:45:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 7.500.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4726,12 +4908,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5012, "order_id": 3012, "course_title": "Lập trình React Native thực chiến", "amount": 15000000, "earned_at": "2026-07-05T08:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5012,
+          "order_id": 3012,
+          "course_title": "Lập trình React Native thực chiến",
+          "amount": 15000000,
+          "earned_at": "2026-07-05T08:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-13T09:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 15.000.000đ", "status": "info" },
-        { "timestamp": "2026-07-13T10:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
-        { "timestamp": "2026-07-13T14:00:00+07:00", "title": "Thanh toán thành công", "description": "Mã giao dịch: TXN-20260713-301", "status": "success" }
+        {
+          "timestamp": "2026-07-13T09:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 15.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-13T10:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-13T14:00:00+07:00",
+          "title": "Thanh toán thành công",
+          "description": "Mã giao dịch: TXN-20260713-301",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4761,11 +4965,28 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5013, "order_id": 3013, "course_title": "Node.js Microservices Architecture", "amount": 5400000, "earned_at": "2026-07-04T12:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5013,
+          "order_id": 3013,
+          "course_title": "Node.js Microservices Architecture",
+          "amount": 5400000,
+          "earned_at": "2026-07-04T12:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-12T16:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.400.000đ", "status": "info" },
-        { "timestamp": "2026-07-12T17:15:00+07:00", "title": "Đã phê duyệt", "description": "Chờ cổng thanh toán xử lý hàng loạt", "status": "success" }
+        {
+          "timestamp": "2026-07-12T16:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 5.400.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-12T17:15:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Chờ cổng thanh toán xử lý hàng loạt",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4795,10 +5016,22 @@ export const MOCK_DB = {
         "available_balance_after": 2000000
       },
       "allocations": [
-        { "revenue_id": 5014, "order_id": 3014, "course_title": "Fullstack Web Development NextJS", "amount": 2100000, "earned_at": "2026-07-03T11:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5014,
+          "order_id": 3014,
+          "course_title": "Fullstack Web Development NextJS",
+          "amount": 2100000,
+          "earned_at": "2026-07-03T11:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-11T11:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.100.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-11T11:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 2.100.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4828,12 +5061,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5015, "order_id": 3015, "course_title": "Python Data Science Mastery", "amount": 18500000, "earned_at": "2026-07-02T15:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5015,
+          "order_id": 3015,
+          "course_title": "Python Data Science Mastery",
+          "amount": 18500000,
+          "earned_at": "2026-07-02T15:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-10T08:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 18.500.000đ", "status": "info" },
-        { "timestamp": "2026-07-10T10:00:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác minh số dư", "status": "success" },
-        { "timestamp": "2026-07-10T11:30:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260710-7201", "status": "success" }
+        {
+          "timestamp": "2026-07-10T08:15:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 18.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-10T10:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Đã xác minh số dư",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-10T11:30:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260710-7201",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4863,11 +5118,28 @@ export const MOCK_DB = {
         "available_balance_after": 3900000
       },
       "allocations": [
-        { "revenue_id": 5016, "order_id": 3016, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 3900000, "earned_at": "2026-07-01T10:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5016,
+          "order_id": 3016,
+          "course_title": "UI/UX Design chuyên nghiệp Figma",
+          "amount": 3900000,
+          "earned_at": "2026-07-01T10:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-09T14:10:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 3.900.000đ", "status": "info" },
-        { "timestamp": "2026-07-09T15:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Chưa hoàn tất xác minh danh tính giảng viên.", "status": "error" }
+        {
+          "timestamp": "2026-07-09T14:10:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 3.900.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-09T15:30:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Chưa hoàn tất xác minh danh tính giảng viên.",
+          "status": "error"
+        }
       ]
     },
     {
@@ -4897,12 +5169,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5017, "order_id": 3017, "course_title": "Java Spring Boot Microservices", "amount": 16000000, "earned_at": "2026-06-30T14:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5017,
+          "order_id": 3017,
+          "course_title": "Java Spring Boot Microservices",
+          "amount": 16000000,
+          "earned_at": "2026-06-30T14:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-08T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 16.000.000đ", "status": "info" },
-        { "timestamp": "2026-07-08T11:00:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận với bộ phận kế toán", "status": "success" },
-        { "timestamp": "2026-07-08T15:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260708-9101", "status": "success" }
+        {
+          "timestamp": "2026-07-08T09:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 16.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-08T11:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Đã xác nhận với bộ phận kế toán",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-08T15:45:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260708-9101",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4932,10 +5226,22 @@ export const MOCK_DB = {
         "available_balance_after": 4000000
       },
       "allocations": [
-        { "revenue_id": 5018, "order_id": 3018, "course_title": "Flutter Cross-Platform Development", "amount": 4700000, "earned_at": "2026-06-29T09:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5018,
+          "order_id": 3018,
+          "course_title": "Flutter Cross-Platform Development",
+          "amount": 4700000,
+          "earned_at": "2026-06-29T09:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-07T16:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.700.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-07T16:20:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 4.700.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -4965,11 +5271,28 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5001, "order_id": 3001, "course_title": "DevOps Engineer Professional Course", "amount": 8200000, "earned_at": "2026-06-28T11:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5001,
+          "order_id": 3001,
+          "course_title": "DevOps Engineer Professional Course",
+          "amount": 8200000,
+          "earned_at": "2026-06-28T11:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-06T10:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.200.000đ", "status": "info" },
-        { "timestamp": "2026-07-06T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ lệnh giải ngân đợt 2", "status": "success" }
+        {
+          "timestamp": "2026-07-06T10:15:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 8.200.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-06T14:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Chờ lệnh giải ngân đợt 2",
+          "status": "success"
+        }
       ]
     },
     {
@@ -4999,12 +5322,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5002, "order_id": 3002, "course_title": "Golang High Performance Backend", "amount": 14000000, "earned_at": "2026-06-27T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5002,
+          "order_id": 3002,
+          "course_title": "Golang High Performance Backend",
+          "amount": 14000000,
+          "earned_at": "2026-06-27T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-05T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 14.000.000đ", "status": "info" },
-        { "timestamp": "2026-07-05T13:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
-        { "timestamp": "2026-07-05T16:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260705-2051", "status": "success" }
+        {
+          "timestamp": "2026-07-05T11:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 14.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-05T13:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-05T16:00:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260705-2051",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5034,10 +5379,22 @@ export const MOCK_DB = {
         "available_balance_after": 3000000
       },
       "allocations": [
-        { "revenue_id": 5003, "order_id": 3003, "course_title": "AI Prompt Engineering Masterclass", "amount": 2900000, "earned_at": "2026-06-26T15:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5003,
+          "order_id": 3003,
+          "course_title": "AI Prompt Engineering Masterclass",
+          "amount": 2900000,
+          "earned_at": "2026-06-26T15:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-04T09:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 2.900.000đ", "status": "info" }
+        {
+          "timestamp": "2026-07-04T09:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 2.900.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -5067,12 +5424,34 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5004, "order_id": 3004, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 9100000, "earned_at": "2026-06-25T11:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5004,
+          "order_id": 3004,
+          "course_title": "Docker & Kubernetes từ Z đến A",
+          "amount": 9100000,
+          "earned_at": "2026-06-25T11:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-07-03T14:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 9.100.000đ", "status": "info" },
-        { "timestamp": "2026-07-03T16:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt bởi Admin", "status": "success" },
-        { "timestamp": "2026-07-04T10:15:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260704-2161", "status": "success" }
+        {
+          "timestamp": "2026-07-03T14:20:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 9.100.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-07-03T16:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt bởi Admin",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-07-04T10:15:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260704-2161",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5102,12 +5481,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5005, "order_id": 3005, "course_title": "Lập trình React Native thực chiến", "amount": 22000000, "earned_at": "2026-06-20T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5005,
+          "order_id": 3005,
+          "course_title": "Lập trình React Native thực chiến",
+          "amount": 22000000,
+          "earned_at": "2026-06-20T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-28T09:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 22.000.000đ", "status": "info" },
-        { "timestamp": "2026-06-28T10:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi đợt cuối tháng 6", "status": "success" },
-        { "timestamp": "2026-06-28T14:20:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260628-301", "status": "success" }
+        {
+          "timestamp": "2026-06-28T09:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 22.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-28T10:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi đợt cuối tháng 6",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-06-28T14:20:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260628-301",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5137,11 +5538,28 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5006, "order_id": 3006, "course_title": "Node.js Microservices Architecture", "amount": 16500000, "earned_at": "2026-06-18T14:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5006,
+          "order_id": 3006,
+          "course_title": "Node.js Microservices Architecture",
+          "amount": 16500000,
+          "earned_at": "2026-06-18T14:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-25T15:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 16.500.000đ", "status": "info" },
-        { "timestamp": "2026-06-25T17:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ xác nhận giao dịch ngân hàng", "status": "success" }
+        {
+          "timestamp": "2026-06-25T15:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 16.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-25T17:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Chờ xác nhận giao dịch ngân hàng",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5171,11 +5589,28 @@ export const MOCK_DB = {
         "available_balance_after": 6800000
       },
       "allocations": [
-        { "revenue_id": 5007, "order_id": 3007, "course_title": "Fullstack Web Development NextJS", "amount": 6800000, "earned_at": "2026-06-15T11:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5007,
+          "order_id": 3007,
+          "course_title": "Fullstack Web Development NextJS",
+          "amount": 6800000,
+          "earned_at": "2026-06-15T11:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-22T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 6.800.000đ", "status": "info" },
-        { "timestamp": "2026-06-22T14:15:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Hệ thống phát hiện sai lệch số dư khả dụng, chờ kiểm tra lại.", "status": "error" }
+        {
+          "timestamp": "2026-06-22T11:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 6.800.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-22T14:15:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Hệ thống phát hiện sai lệch số dư khả dụng, chờ kiểm tra lại.",
+          "status": "error"
+        }
       ]
     },
     {
@@ -5205,10 +5640,22 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5008, "order_id": 3008, "course_title": "Python Data Science Mastery", "amount": 13500000, "earned_at": "2026-06-12T09:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5008,
+          "order_id": 3008,
+          "course_title": "Python Data Science Mastery",
+          "amount": 13500000,
+          "earned_at": "2026-06-12T09:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-20T08:45:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 13.500.000đ", "status": "info" }
+        {
+          "timestamp": "2026-06-20T08:45:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 13.500.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -5238,11 +5685,28 @@ export const MOCK_DB = {
         "available_balance_after": 3000000
       },
       "allocations": [
-        { "revenue_id": 5009, "order_id": 3009, "course_title": "UI/UX Design chuyên nghiệp Figma", "amount": 5100000, "earned_at": "2026-06-10T10:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5009,
+          "order_id": 3009,
+          "course_title": "UI/UX Design chuyên nghiệp Figma",
+          "amount": 5100000,
+          "earned_at": "2026-06-10T10:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-18T10:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 5.100.000đ", "status": "info" },
-        { "timestamp": "2026-06-18T11:30:00+07:00", "title": "Đã phê duyệt", "description": "Đã xác nhận", "status": "success" }
+        {
+          "timestamp": "2026-06-18T10:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 5.100.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-18T11:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Đã xác nhận",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5272,12 +5736,34 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5010, "order_id": 3010, "course_title": "Java Spring Boot Microservices", "amount": 10500000, "earned_at": "2026-06-08T11:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5010,
+          "order_id": 3010,
+          "course_title": "Java Spring Boot Microservices",
+          "amount": 10500000,
+          "earned_at": "2026-06-08T11:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-15T14:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 10.500.000đ", "status": "info" },
-        { "timestamp": "2026-06-15T16:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
-        { "timestamp": "2026-06-16T09:30:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260616-9102", "status": "success" }
+        {
+          "timestamp": "2026-06-15T14:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 10.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-15T16:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-06-16T09:30:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260616-9102",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5307,11 +5793,28 @@ export const MOCK_DB = {
         "available_balance_after": 3400000
       },
       "allocations": [
-        { "revenue_id": 5011, "order_id": 3011, "course_title": "Flutter Cross-Platform Development", "amount": 3400000, "earned_at": "2026-06-05T14:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5011,
+          "order_id": 3011,
+          "course_title": "Flutter Cross-Platform Development",
+          "amount": 3400000,
+          "earned_at": "2026-06-05T14:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-12T09:15:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 3.400.000đ", "status": "info" },
-        { "timestamp": "2026-06-12T10:45:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Số dư khả dụng thay đổi do học viên yêu cầu hoàn tiền đơn hàng.", "status": "error" }
+        {
+          "timestamp": "2026-06-12T09:15:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 3.400.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-12T10:45:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Số dư khả dụng thay đổi do học viên yêu cầu hoàn tiền đơn hàng.",
+          "status": "error"
+        }
       ]
     },
     {
@@ -5341,12 +5844,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5012, "order_id": 3012, "course_title": "DevOps Engineer Professional Course", "amount": 17200000, "earned_at": "2026-06-02T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5012,
+          "order_id": 3012,
+          "course_title": "DevOps Engineer Professional Course",
+          "amount": 17200000,
+          "earned_at": "2026-06-02T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-06-10T16:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 17.200.000đ", "status": "info" },
-        { "timestamp": "2026-06-10T17:30:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi", "status": "success" },
-        { "timestamp": "2026-06-11T11:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260611-1052", "status": "success" }
+        {
+          "timestamp": "2026-06-10T16:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 17.200.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-06-10T17:30:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-06-11T11:00:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260611-1052",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5376,11 +5901,28 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5013, "order_id": 3013, "course_title": "Golang High Performance Backend", "amount": 8800000, "earned_at": "2026-05-20T09:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5013,
+          "order_id": 3013,
+          "course_title": "Golang High Performance Backend",
+          "amount": 8800000,
+          "earned_at": "2026-05-20T09:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-05-28T10:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 8.800.000đ", "status": "info" },
-        { "timestamp": "2026-05-28T14:00:00+07:00", "title": "Đã phê duyệt", "description": "Chờ thanh toán", "status": "success" }
+        {
+          "timestamp": "2026-05-28T10:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 8.800.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-05-28T14:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Chờ thanh toán",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5410,12 +5952,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5014, "order_id": 3014, "course_title": "AI Prompt Engineering Masterclass", "amount": 19500000, "earned_at": "2026-05-12T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5014,
+          "order_id": 3014,
+          "course_title": "AI Prompt Engineering Masterclass",
+          "amount": 19500000,
+          "earned_at": "2026-05-12T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-05-20T11:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 19.500.000đ", "status": "info" },
-        { "timestamp": "2026-05-20T13:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi thành công", "status": "success" },
-        { "timestamp": "2026-05-20T16:45:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260520-2061", "status": "success" }
+        {
+          "timestamp": "2026-05-20T11:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 19.500.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-05-20T13:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi thành công",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-05-20T16:45:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260520-2061",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5445,10 +6009,22 @@ export const MOCK_DB = {
         "available_balance_after": 5000000
       },
       "allocations": [
-        { "revenue_id": 5015, "order_id": 3015, "course_title": "Docker & Kubernetes từ Z đến A", "amount": 4100000, "earned_at": "2026-05-08T09:00:00+07:00", "status": "pending" }
+        {
+          "revenue_id": 5015,
+          "order_id": 3015,
+          "course_title": "Docker & Kubernetes từ Z đến A",
+          "amount": 4100000,
+          "earned_at": "2026-05-08T09:00:00+07:00",
+          "status": "pending"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-05-15T15:20:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 4.100.000đ", "status": "info" }
+        {
+          "timestamp": "2026-05-15T15:20:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 4.100.000đ",
+          "status": "info"
+        }
       ]
     },
     {
@@ -5478,12 +6054,34 @@ export const MOCK_DB = {
         "available_balance_after": 10000000
       },
       "allocations": [
-        { "revenue_id": 5016, "order_id": 3016, "course_title": "Lập trình React Native thực chiến", "amount": 13000000, "earned_at": "2026-04-18T10:00:00+07:00", "status": "withdrawn" }
+        {
+          "revenue_id": 5016,
+          "order_id": 3016,
+          "course_title": "Lập trình React Native thực chiến",
+          "amount": 13000000,
+          "earned_at": "2026-04-18T10:00:00+07:00",
+          "status": "withdrawn"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-04-25T08:30:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 13.000.000đ", "status": "info" },
-        { "timestamp": "2026-04-25T10:00:00+07:00", "title": "Đã phê duyệt", "description": "Duyệt chi thành công", "status": "success" },
-        { "timestamp": "2026-04-25T15:00:00+07:00", "title": "Hoàn tất thanh toán", "description": "Mã giao dịch: TXN-20260425-301", "status": "success" }
+        {
+          "timestamp": "2026-04-25T08:30:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 13.000.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-04-25T10:00:00+07:00",
+          "title": "Đã phê duyệt",
+          "description": "Duyệt chi thành công",
+          "status": "success"
+        },
+        {
+          "timestamp": "2026-04-25T15:00:00+07:00",
+          "title": "Hoàn tất thanh toán",
+          "description": "Mã giao dịch: TXN-20260425-301",
+          "status": "success"
+        }
       ]
     },
     {
@@ -5513,11 +6111,28 @@ export const MOCK_DB = {
         "available_balance_after": 7800000
       },
       "allocations": [
-        { "revenue_id": 5017, "order_id": 3017, "course_title": "Node.js Microservices Architecture", "amount": 7800000, "earned_at": "2026-04-02T11:00:00+07:00", "status": "available" }
+        {
+          "revenue_id": 5017,
+          "order_id": 3017,
+          "course_title": "Node.js Microservices Architecture",
+          "amount": 7800000,
+          "earned_at": "2026-04-02T11:00:00+07:00",
+          "status": "available"
+        }
       ],
       "timeline": [
-        { "timestamp": "2026-04-10T14:00:00+07:00", "title": "Gửi yêu cầu rút tiền", "description": "Tạo yêu cầu rút 7.800.000đ", "status": "info" },
-        { "timestamp": "2026-04-10T16:30:00+07:00", "title": "Từ chối yêu cầu", "description": "Lý do: Thông tin tài khoản nhận tiền không hợp lệ theo quy định nhà cung cấp dịch vụ thanh toán.", "status": "error" }
+        {
+          "timestamp": "2026-04-10T14:00:00+07:00",
+          "title": "Gửi yêu cầu rút tiền",
+          "description": "Tạo yêu cầu rút 7.800.000đ",
+          "status": "info"
+        },
+        {
+          "timestamp": "2026-04-10T16:30:00+07:00",
+          "title": "Từ chối yêu cầu",
+          "description": "Lý do: Thông tin tài khoản nhận tiền không hợp lệ theo quy định nhà cung cấp dịch vụ thanh toán.",
+          "status": "error"
+        }
       ]
     }
   ],
@@ -5571,6 +6186,756 @@ export const MOCK_DB = {
       "type": "course",
       "is_read": false,
       "created_at": "2026-07-14T09:30:00+07:00"
+    }
+  ],
+  "lessons": [
+    {
+      "id": 4001,
+      "course_id": 1001,
+      "title": "Bài 1.1: Giới thiệu Laravel REST API & Cấu trúc thư mục",
+      "duration": "15:30"
+    },
+    {
+      "id": 4002,
+      "course_id": 1001,
+      "title": "Bài 1.2: Cấu hình Sanctum Authentication & Middleware",
+      "duration": "22:15"
+    },
+    {
+      "id": 4003,
+      "course_id": 1001,
+      "title": "Bài 2.1: Tối ưu truy vấn Eloquent & Eager Loading",
+      "duration": "18:45"
+    },
+    {
+      "id": 4004,
+      "course_id": 1002,
+      "title": "Bài 1.1: Tổng quan React 18, JSX và Virtual DOM",
+      "duration": "12:00"
+    },
+    {
+      "id": 4005,
+      "course_id": 1002,
+      "title": "Bài 2.3: Quản lý State nâng cao với Redux Toolkit / Zustand",
+      "duration": "30:10"
+    },
+    {
+      "id": 4006,
+      "course_id": 1003,
+      "title": "Bài 1.2: Nguyên lý UI/UX & Thiết kế Grid System",
+      "duration": "25:00"
+    },
+    {
+      "id": 4007,
+      "course_id": 1004,
+      "title": "Bài 3.1: Kiến trúc Microservices với Node.js & RabbitMQ",
+      "duration": "40:20"
+    },
+    {
+      "id": 4008,
+      "course_id": 1005,
+      "title": "Bài 1.1: Lập kế hoạch Digital Marketing toàn diện 2026",
+      "duration": "20:00"
+    },
+    {
+      "id": 4009,
+      "course_id": 1006,
+      "title": "Bài 2.1: Xử lý dữ liệu khuyết thiếu với Pandas",
+      "duration": "16:40"
+    },
+    {
+      "id": 4010,
+      "course_id": 1007,
+      "title": "Bài 1.3: Đánh Index B-Tree & Query Execution Plan",
+      "duration": "28:15"
+    },
+    {
+      "id": 4011,
+      "course_id": 1008,
+      "title": "Bài 1.2: Vue 3 Composition API vs Options API",
+      "duration": "14:50"
+    },
+    {
+      "id": 4012,
+      "course_id": 1009,
+      "title": "Bài 2.2: Docker Compose cho môi trường Fullstack Development",
+      "duration": "35:00"
+    }
+  ],
+  "comments": [
+    {
+      "id": 5001,
+      "user_id": 2,
+      "course_id": 1001,
+      "lesson_id": 4001,
+      "parent_id": null,
+      "content": "Cho em hỏi ở Bài 1.1 nếu muốn custom HTTP response status code chuẩn RESTful thì làm thế nào ạ?",
+      "status": "visible",
+      "created_at": "2026-07-22T14:30:00Z",
+      "updated_at": "2026-07-22T14:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5002,
+      "user_id": 3,
+      "course_id": 1001,
+      "lesson_id": 4001,
+      "parent_id": 5001,
+      "content": "Chào bạn Học, bạn có thể return response()->json($data, 201) hoặc tạo API Resource class riêng nhé!",
+      "status": "visible",
+      "created_at": "2026-07-22T14:45:00Z",
+      "updated_at": "2026-07-22T14:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5003,
+      "user_id": 4,
+      "course_id": 1001,
+      "lesson_id": 4002,
+      "parent_id": null,
+      "content": "Video bài giảng rất chi tiết. Thầy giải thích cơ chế Token Bearer cực kỳ dễ hiểu!",
+      "status": "visible",
+      "created_at": "2026-07-22T11:20:00Z",
+      "updated_at": "2026-07-22T11:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5004,
+      "user_id": 5,
+      "course_id": 1002,
+      "lesson_id": 4004,
+      "parent_id": null,
+      "content": "Spam tin nhắn: Mua tài khoản giá rẻ tại website abc-test-spam.com nhận ưu đãi 90%!",
+      "status": "hidden",
+      "created_at": "2026-07-22T09:10:00Z",
+      "updated_at": "2026-07-22T09:15:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5005,
+      "user_id": 6,
+      "course_id": 1002,
+      "lesson_id": 4005,
+      "parent_id": null,
+      "content": "Nội dung xúc phạm người khác và chứa ngôn từ không phù hợp quy định cộng đồng.",
+      "status": "deleted",
+      "created_at": "2026-07-21T18:00:00Z",
+      "updated_at": "2026-07-21T18:30:00Z",
+      "deleted_at": "2026-07-21T18:30:00Z"
+    },
+    {
+      "id": 5006,
+      "user_id": 8,
+      "course_id": 1003,
+      "lesson_id": 4006,
+      "parent_id": null,
+      "content": "Cảm ơn tác giả. Grid System trong Figma được hướng dẫn chi tiết vượt mong đợi.",
+      "status": "visible",
+      "created_at": "2026-07-21T15:40:00Z",
+      "updated_at": "2026-07-21T15:40:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5007,
+      "user_id": 9,
+      "course_id": 1003,
+      "lesson_id": 4006,
+      "parent_id": 5006,
+      "content": "Chúc bạn áp dụng tốt vào dự án thực tế nhé!",
+      "status": "visible",
+      "created_at": "2026-07-21T16:00:00Z",
+      "updated_at": "2026-07-21T16:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5008,
+      "user_id": 10,
+      "course_id": 1004,
+      "lesson_id": 4007,
+      "parent_id": null,
+      "content": "Phần RabbitMQ Message Queue bị lỗi kết nối AMQP, thầy hỗ trợ check log giúp em với.",
+      "status": "visible",
+      "created_at": "2026-07-20T10:00:00Z",
+      "updated_at": "2026-07-20T10:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5009,
+      "user_id": 11,
+      "course_id": 1004,
+      "lesson_id": 4007,
+      "parent_id": 5008,
+      "content": "Bạn kiểm tra lại port 5672 và username/password trong file docker-compose.yml nhé.",
+      "status": "visible",
+      "created_at": "2026-07-20T10:25:00Z",
+      "updated_at": "2026-07-20T10:25:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5010,
+      "user_id": 12,
+      "course_id": 1005,
+      "lesson_id": 4008,
+      "parent_id": null,
+      "content": "Đã ứng dụng chạy Facebook Ads theo đúng tệp đối tượng được hướng dẫn, ROI tăng rõ rệt!",
+      "status": "visible",
+      "created_at": "2026-07-19T14:15:00Z",
+      "updated_at": "2026-07-19T14:15:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5011,
+      "user_id": 13,
+      "course_id": 1006,
+      "lesson_id": 4009,
+      "parent_id": null,
+      "content": "Hàm fillna() và dropna() trong Pandas trình bày vô cùng mạch lạc.",
+      "status": "visible",
+      "created_at": "2026-07-18T09:30:00Z",
+      "updated_at": "2026-07-18T09:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5012,
+      "user_id": 14,
+      "course_id": 1007,
+      "lesson_id": 4010,
+      "parent_id": null,
+      "content": "Quảng cáo dịch vụ kéo Telegram & Zalo group: liên hệ ngay 0999888777",
+      "status": "hidden",
+      "created_at": "2026-07-17T16:20:00Z",
+      "updated_at": "2026-07-17T16:25:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5013,
+      "user_id": 15,
+      "course_id": 1008,
+      "lesson_id": 4011,
+      "parent_id": null,
+      "content": "Bình luận chứa liên kết nguy hiểm <script>alert('test')</script> đã được ngăn chặn.",
+      "status": "hidden",
+      "created_at": "2026-07-16T11:00:00Z",
+      "updated_at": "2026-07-16T11:05:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5014,
+      "user_id": 16,
+      "course_id": 1009,
+      "lesson_id": 4012,
+      "parent_id": null,
+      "content": "Docker Compose volume mapping cho live-reload chạy rất mượt trên Windows 11 WSL2.",
+      "status": "visible",
+      "created_at": "2026-07-15T08:45:00Z",
+      "updated_at": "2026-07-15T08:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5015,
+      "user_id": 17,
+      "course_id": 1010,
+      "lesson_id": null,
+      "parent_id": null,
+      "content": "Khóa học Next.js App Router rất hiện đại, cập nhật Server Components đầy đủ.",
+      "status": "visible",
+      "created_at": "2026-07-14T19:20:00Z",
+      "updated_at": "2026-07-14T19:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5016,
+      "user_id": 18,
+      "course_id": 1001,
+      "lesson_id": 4003,
+      "parent_id": null,
+      "content": "Nội dung vi phạm quy tắc: đăng tải lời lẽ thô tục tiêu cực.",
+      "status": "deleted",
+      "created_at": "2026-07-12T13:10:00Z",
+      "updated_at": "2026-07-12T13:30:00Z",
+      "deleted_at": "2026-07-12T13:30:00Z"
+    },
+    {
+      "id": 5017,
+      "user_id": 19,
+      "course_id": 1002,
+      "lesson_id": 4005,
+      "parent_id": null,
+      "content": "Thầy hướng dẫn thêm phần TypeScript generics áp dụng vào Redux AsyncThunk với ạ!",
+      "status": "visible",
+      "created_at": "2026-07-10T10:00:00Z",
+      "updated_at": "2026-07-10T10:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5018,
+      "user_id": 20,
+      "course_id": 1003,
+      "lesson_id": 4006,
+      "parent_id": null,
+      "content": "File đính kèm thực hành rất đẹp và chất lượng.",
+      "status": "visible",
+      "created_at": "2026-07-08T15:30:00Z",
+      "updated_at": "2026-07-08T15:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5019,
+      "user_id": 206,
+      "course_id": 1004,
+      "lesson_id": 4007,
+      "parent_id": null,
+      "content": "Spam link giới thiệu casino không rõ nguồn gốc.",
+      "status": "hidden",
+      "created_at": "2026-07-05T09:00:00Z",
+      "updated_at": "2026-07-05T09:10:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5020,
+      "user_id": 205,
+      "course_id": 1005,
+      "lesson_id": 4008,
+      "parent_id": null,
+      "content": "Khóa học hay nhưng tốc độ nói ở chương 1 hơi nhanh, mong thầy nói chậm hơn chút.",
+      "status": "visible",
+      "created_at": "2026-06-28T14:00:00Z",
+      "updated_at": "2026-06-28T14:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5021,
+      "user_id": 201,
+      "course_id": 1006,
+      "lesson_id": 4009,
+      "parent_id": null,
+      "content": "Data clean up vô cùng dễ hiểu, giảng viên giải thích chi tiết từng câu lệnh.",
+      "status": "visible",
+      "created_at": "2026-06-20T11:45:00Z",
+      "updated_at": "2026-06-20T11:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5022,
+      "user_id": 202,
+      "course_id": 1007,
+      "lesson_id": 4010,
+      "parent_id": null,
+      "content": "Phần EXPLAIN ANALYZE MySQL 8 giúp mình phát hiện ra bottleneck của cty ngay lập tức!",
+      "status": "visible",
+      "created_at": "2026-06-15T16:20:00Z",
+      "updated_at": "2026-06-15T16:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5023,
+      "user_id": 203,
+      "course_id": 1008,
+      "lesson_id": 4011,
+      "parent_id": null,
+      "content": "Pinia thay thế Vuex mượt mà tuyệt đối.",
+      "status": "visible",
+      "created_at": "2026-06-01T08:30:00Z",
+      "updated_at": "2026-06-01T08:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5024,
+      "user_id": 204,
+      "course_id": 1009,
+      "lesson_id": 4012,
+      "parent_id": null,
+      "content": "Bình luận rác đã bị hệ thống xóa bỏ.",
+      "status": "deleted",
+      "created_at": "2026-05-20T10:00:00Z",
+      "updated_at": "2026-05-20T10:15:00Z",
+      "deleted_at": "2026-05-20T10:15:00Z"
+    },
+    {
+      "id": 5025,
+      "user_id": 215,
+      "course_id": 1010,
+      "lesson_id": null,
+      "parent_id": null,
+      "content": "Next.js SSR vs SSG được phân tích rất trực quan khoa học.",
+      "status": "visible",
+      "created_at": "2026-04-15T15:10:00Z",
+      "updated_at": "2026-04-15T15:10:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5026,
+      "user_id": 216,
+      "course_id": 1001,
+      "lesson_id": 4001,
+      "parent_id": null,
+      "content": "Rất cảm ơn tác giả đã tạo ra một khóa học chất lượng cao như thế này.",
+      "status": "visible",
+      "created_at": "2026-03-10T09:25:00Z",
+      "updated_at": "2026-03-10T09:25:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5027,
+      "user_id": 207,
+      "course_id": 1002,
+      "lesson_id": 4004,
+      "parent_id": null,
+      "content": "Phần demo dự án thực tế xuất sắc!",
+      "status": "visible",
+      "created_at": "2026-02-14T14:30:00Z",
+      "updated_at": "2026-02-14T14:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5028,
+      "user_id": 208,
+      "course_id": 1003,
+      "lesson_id": 4006,
+      "parent_id": null,
+      "content": "Thiết kế mượt mà, dễ hiểu cho người mới bắt đầu.",
+      "status": "visible",
+      "created_at": "2026-01-20T11:00:00Z",
+      "updated_at": "2026-01-20T11:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5029,
+      "user_id": 209,
+      "course_id": 1004,
+      "lesson_id": 4007,
+      "parent_id": null,
+      "content": "Hỏi đáp nhanh chóng, giảng viên hỗ trợ tận tâm.",
+      "status": "visible",
+      "created_at": "2026-01-10T16:45:00Z",
+      "updated_at": "2026-01-10T16:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 5030,
+      "user_id": 210,
+      "course_id": 1005,
+      "lesson_id": 4008,
+      "parent_id": null,
+      "content": "Nội dung chuẩn đét, thực chiến cao.",
+      "status": "visible",
+      "created_at": "2026-01-05T08:15:00Z",
+      "updated_at": "2026-01-05T08:15:00Z",
+      "deleted_at": null
+    }
+  ],
+  "reviews": [
+    {
+      "id": 6001,
+      "user_id": 2,
+      "course_id": 1001,
+      "order_id": 3001,
+      "rating": 5,
+      "content": "Khóa học Laravel REST API quá tuyệt vời! Bài giảng súc tích, đi thẳng vào thực tế dự án doanh nghiệp.",
+      "status": "visible",
+      "created_at": "2026-07-22T13:00:00Z",
+      "updated_at": "2026-07-22T13:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6002,
+      "user_id": 4,
+      "course_id": 1002,
+      "order_id": 3002,
+      "rating": 5,
+      "content": "React & TS hay nhất từng học. Nhờ khóa này em đã vượt qua vòng phỏng vấn Frontend Dev!",
+      "status": "visible",
+      "created_at": "2026-07-22T10:45:00Z",
+      "updated_at": "2026-07-22T10:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6003,
+      "user_id": 8,
+      "course_id": 1004,
+      "order_id": 3003,
+      "rating": 4,
+      "content": "Nội dung rất sâu về Node.js architecture. Hy vọng khóa học bổ sung thêm chủ đề K8s trong tương lai.",
+      "status": "visible",
+      "created_at": "2026-07-21T16:20:00Z",
+      "updated_at": "2026-07-21T16:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6004,
+      "user_id": 11,
+      "course_id": 1006,
+      "order_id": 3004,
+      "rating": 5,
+      "content": "Python Data Analysis cực chất. Giảng viên hỗ trợ học viên rất chu đáo trong group chat.",
+      "status": "visible",
+      "created_at": "2026-07-21T09:15:00Z",
+      "updated_at": "2026-07-21T09:15:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6005,
+      "user_id": 13,
+      "course_id": 1011,
+      "order_id": 3005,
+      "rating": 1,
+      "content": "Đánh giá ảo có dấu hiệu cạnh tranh không lành mạnh và xúc phạm giảng viên.",
+      "status": "deleted",
+      "created_at": "2026-07-20T14:00:00Z",
+      "updated_at": "2026-07-20T14:30:00Z",
+      "deleted_at": "2026-07-20T14:30:00Z"
+    },
+    {
+      "id": 6006,
+      "user_id": 17,
+      "course_id": 1014,
+      "order_id": 3006,
+      "rating": 5,
+      "content": "Kiến thức thực chiến 10/10. Đáng tiền từng xu bỏ ra!",
+      "status": "visible",
+      "created_at": "2026-07-19T11:10:00Z",
+      "updated_at": "2026-07-19T11:10:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6007,
+      "user_id": 2,
+      "course_id": 1002,
+      "order_id": 3007,
+      "rating": 5,
+      "content": "Thầy dạy mượt mà, bài tập phong phú, code mẫu chuẩn mực Clean Code.",
+      "status": "visible",
+      "created_at": "2026-07-18T15:30:00Z",
+      "updated_at": "2026-07-18T15:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6008,
+      "user_id": 4,
+      "course_id": 1001,
+      "order_id": 3008,
+      "rating": 4,
+      "content": "Chất lượng âm thanh tuyệt vời, hình ảnh Full HD rõ nét.",
+      "status": "visible",
+      "created_at": "2026-07-17T08:20:00Z",
+      "updated_at": "2026-07-17T08:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6009,
+      "user_id": 19,
+      "course_id": 1006,
+      "order_id": 3009,
+      "rating": 5,
+      "content": "Tài liệu học tập đính kèm rất phong phú, dễ dàng tự ôn luyện.",
+      "status": "visible",
+      "created_at": "2026-07-16T13:40:00Z",
+      "updated_at": "2026-07-16T13:40:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6010,
+      "user_id": 10,
+      "course_id": 1003,
+      "order_id": 3010,
+      "rating": 2,
+      "content": "Nội dung hơi cơ bản so với kỳ vọng của mình.",
+      "status": "visible",
+      "created_at": "2026-07-15T17:00:00Z",
+      "updated_at": "2026-07-15T17:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6011,
+      "user_id": 12,
+      "course_id": 1005,
+      "order_id": null,
+      "rating": 5,
+      "content": "Phương pháp giảng dạy lôi cuốn, thực tế.",
+      "status": "visible",
+      "created_at": "2026-07-14T09:00:00Z",
+      "updated_at": "2026-07-14T09:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6012,
+      "user_id": 14,
+      "course_id": 1007,
+      "order_id": null,
+      "rating": 1,
+      "content": "Đánh giá vi phạm tiêu chuẩn cộng đồng đã bị xóa bỏ.",
+      "status": "deleted",
+      "created_at": "2026-07-12T10:00:00Z",
+      "updated_at": "2026-07-12T10:20:00Z",
+      "deleted_at": "2026-07-12T10:20:00Z"
+    },
+    {
+      "id": 6013,
+      "user_id": 15,
+      "course_id": 1008,
+      "order_id": null,
+      "rating": 4,
+      "content": "Khóa học Vue 3 rất thực tế, giúp làm quen nhanh với Pinia.",
+      "status": "visible",
+      "created_at": "2026-07-10T14:15:00Z",
+      "updated_at": "2026-07-10T14:15:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6014,
+      "user_id": 16,
+      "course_id": 1009,
+      "order_id": null,
+      "rating": 5,
+      "content": "Docker hóa ứng dụng chưa bao giờ đơn giản đến thế!",
+      "status": "visible",
+      "created_at": "2026-07-05T16:30:00Z",
+      "updated_at": "2026-07-05T16:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6015,
+      "user_id": 18,
+      "course_id": 1010,
+      "order_id": null,
+      "rating": 5,
+      "content": "Next.js 14 App Router chuẩn SEO và mượt mà.",
+      "status": "visible",
+      "created_at": "2026-06-25T11:00:00Z",
+      "updated_at": "2026-06-25T11:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6016,
+      "user_id": 20,
+      "course_id": 1003,
+      "order_id": null,
+      "rating": 3,
+      "content": "Nội dung khá ổn nhưng video hơi ngắn.",
+      "status": "visible",
+      "created_at": "2026-06-18T09:45:00Z",
+      "updated_at": "2026-06-18T09:45:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6017,
+      "user_id": 206,
+      "course_id": 1004,
+      "order_id": null,
+      "rating": 5,
+      "content": "Giảng viên tâm huyết, hỗ trợ giải đáp 24/7.",
+      "status": "visible",
+      "created_at": "2026-06-10T15:20:00Z",
+      "updated_at": "2026-06-10T15:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6018,
+      "user_id": 205,
+      "course_id": 1005,
+      "order_id": null,
+      "rating": 4,
+      "content": "Học xong làm được ngay dự án cho công ty.",
+      "status": "visible",
+      "created_at": "2026-06-01T10:00:00Z",
+      "updated_at": "2026-06-01T10:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6019,
+      "user_id": 201,
+      "course_id": 1006,
+      "order_id": null,
+      "rating": 5,
+      "content": "Xử lý dữ liệu cực kỳ bài bản và chuyên nghiệp.",
+      "status": "visible",
+      "created_at": "2026-05-15T14:30:00Z",
+      "updated_at": "2026-05-15T14:30:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6020,
+      "user_id": 202,
+      "course_id": 1007,
+      "order_id": null,
+      "rating": 1,
+      "content": "Đánh giá vi phạm đã bị gỡ bỏ theo chính sách kiểm duyệt.",
+      "status": "deleted",
+      "created_at": "2026-05-01T08:00:00Z",
+      "updated_at": "2026-05-01T08:15:00Z",
+      "deleted_at": "2026-05-01T08:15:00Z"
+    },
+    {
+      "id": 6021,
+      "user_id": 203,
+      "course_id": 1008,
+      "order_id": null,
+      "rating": 5,
+      "content": "Rất đáng tiền, kiến thức chuẩn chỉnh.",
+      "status": "visible",
+      "created_at": "2026-04-10T12:00:00Z",
+      "updated_at": "2026-04-10T12:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6022,
+      "user_id": 204,
+      "course_id": 1009,
+      "order_id": null,
+      "rating": 4,
+      "content": "Docker nâng cao ứng dụng vào CI/CD tuyệt vời.",
+      "status": "visible",
+      "created_at": "2026-03-20T16:15:00Z",
+      "updated_at": "2026-03-20T16:15:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6023,
+      "user_id": 215,
+      "course_id": 1010,
+      "order_id": null,
+      "rating": 5,
+      "content": "Tuyệt vời! 5 sao không cần bàn cãi.",
+      "status": "visible",
+      "created_at": "2026-02-28T09:10:00Z",
+      "updated_at": "2026-02-28T09:10:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6024,
+      "user_id": 216,
+      "course_id": 1001,
+      "order_id": null,
+      "rating": 5,
+      "content": "Cảm ơn MindHub đã mang đến khóa học tuyệt vời này.",
+      "status": "visible",
+      "created_at": "2026-02-10T14:00:00Z",
+      "updated_at": "2026-02-10T14:00:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6025,
+      "user_id": 207,
+      "course_id": 1002,
+      "order_id": null,
+      "rating": 4,
+      "content": "React TS chất lượng cao.",
+      "status": "visible",
+      "created_at": "2026-01-15T11:20:00Z",
+      "updated_at": "2026-01-15T11:20:00Z",
+      "deleted_at": null
+    },
+    {
+      "id": 6026,
+      "user_id": 208,
+      "course_id": 1003,
+      "order_id": null,
+      "rating": 5,
+      "content": "Khóa học hay, giảng viên truyền cảm hứng tốt.",
+      "status": "visible",
+      "created_at": "2026-01-05T10:00:00Z",
+      "updated_at": "2026-01-05T10:00:00Z",
+      "deleted_at": null
     }
   ]
 };

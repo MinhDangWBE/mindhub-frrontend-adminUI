@@ -121,6 +121,11 @@ function initCustomSelect(select) {
 /**
  * Cập nhật nhãn hiển thị của trigger dựa trên option đang được chọn
  */
+function getStatusTextColor(statusType) {
+    if (!statusType || statusType === "gray" || statusType === "all") return "text-mid-gray";
+    return "text-ink";
+}
+
 function updateTriggerLabel(select) {
     const data = selectMap.get(select);
     if (!data) return;
@@ -131,7 +136,8 @@ function updateTriggerLabel(select) {
         // Kiểm tra xem option có chứa chấm trạng thái không để render chấm màu trên trigger
         const statusType = getStatusType(selectedOption);
         if (statusType) {
-            data.labelSpan.innerHTML = `<span class="status-dot status-dot-${statusType}"></span><span>${selectedOption.textContent}</span>`;
+            const colorClass = getStatusTextColor(statusType);
+            data.labelSpan.innerHTML = `<span class="inline-flex items-center gap-1.5 ${colorClass}"><span class="status-dot status-dot-${statusType}"></span><span>${selectedOption.textContent}</span></span>`;
         } else {
             data.labelSpan.textContent = selectedOption.textContent;
         }
@@ -153,11 +159,12 @@ function updateTriggerLabel(select) {
  * Trả về class hậu tố trạng thái dựa trên value hoặc attributes
  */
 function getStatusType(option) {
+    if (!option) return null;
     if (option.hasAttribute("data-status-color")) {
         return option.getAttribute("data-status-color");
     }
 
-    const val = option.value.toLowerCase();
+    const val = (option.value || "").toLowerCase();
     
     // Map các giá trị trạng thái thông dụng sang màu sắc
     if (val === "pending" || val === "pending_review") return "pending"; // cam
@@ -335,10 +342,12 @@ function buildOptionsList(select, listWrapper) {
         labelSpan.className = "truncate text-xs";
         labelSpan.textContent = opt.textContent;
 
-        if (statusType === "success") labelSpan.classList.add("text-emerald-700", "font-semibold");
-        else if (statusType === "info") labelSpan.classList.add("text-blue-700", "font-semibold");
-        else if (statusType === "pending") labelSpan.classList.add("text-amber-700", "font-semibold");
-        else if (statusType === "danger") labelSpan.classList.add("text-rose-700", "font-semibold");
+        const colorClass = getStatusTextColor(statusType);
+        if (colorClass) {
+            colorClass.split(" ").forEach(cls => {
+                if (cls) labelSpan.classList.add(cls);
+            });
+        }
 
         textWrapper.appendChild(labelSpan);
 
@@ -428,9 +437,23 @@ function filterOptions(panel, keyword) {
 function positionDropdownPanel(trigger, panel) {
     const rect = trigger.getBoundingClientRect();
     
-    // Đặt chiều rộng bằng trigger
-    panel.style.width = `${rect.width}px`;
-    panel.style.left = `${rect.left + window.scrollX}px`;
+    // Đặt chiều rộng bằng trigger hoặc tối thiểu 150px
+    const minW = Math.max(rect.width, 150);
+    panel.style.width = `max-content`;
+    panel.style.minWidth = `${minW}px`;
+    panel.style.maxWidth = `min(320px, calc(100vw - 24px))`;
+
+    // Tính vị trí trái / phải để tránh tràn viewport
+    let leftPos = rect.left + window.scrollX;
+    const estimatedWidth = Math.min(Math.max(rect.width, minW), 320);
+
+    if (rect.left + estimatedWidth > window.innerWidth - 12) {
+        // Canh mép phải về bằng mép phải trigger
+        leftPos = rect.right + window.scrollX - estimatedWidth;
+    }
+    if (leftPos < 12) leftPos = 12;
+
+    panel.style.left = `${leftPos}px`;
 
     // Tính toán chiều cao và vị trí mở lên/xuống
     const dropdownHeight = 240; // dự kiến max-height + search

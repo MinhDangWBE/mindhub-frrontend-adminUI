@@ -205,6 +205,23 @@ body {
     box-shadow: 0 0 0 1px var(--color-ink);
 }
 
+.filter-bar .custom-select-trigger {
+    height: 44px !important;
+    border-radius: 0.75rem !important; /* Soft 12px rounded-xl matching search input */
+    padding-left: 10px !important;
+    padding-right: 8px !important;
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.custom-select-label {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
 .custom-select-trigger:disabled {
     background-color: var(--color-canvas);
     color: var(--color-mid-gray);
@@ -311,7 +328,7 @@ body {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 5px;
     flex-shrink: 0;
 }
 
@@ -321,6 +338,8 @@ body {
 .status-dot-danger { background-color: var(--color-danger-brick); }
 .status-dot-gray { background-color: rgba(115, 115, 115, 0.45); }
 .status-dot-dark-gray { background-color: var(--color-mid-gray); }
+.status-dot-purple { background-color: #9333ea; }
+
 
 /* Standardized Form Control overrides to match h-10 and rounded-6px */
 .form-input-std {

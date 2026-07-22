@@ -482,16 +482,189 @@ export function populateOrder(order) {
 }
 
 // === PAYOUT ACCOUNTS ===
+function populatePayoutAccount(payoutAccount, db) {
+  if (!payoutAccount) return null;
+  const parsedId = Number(payoutAccount.id);
+  const userId = Number(payoutAccount.user_id);
+
+  const user = (db.users || []).find((u) => Number(u.id) === userId) || null;
+
+  const relatedWithdrawals = (db.withdrawals || []).filter(
+    (w) => Number(w.payout_account_id) === parsedId
+  );
+
+  const total_paid_amount = relatedWithdrawals
+    .filter((w) => w.status === "paid")
+    .reduce((sum, w) => sum + (Number(w.amount) || 0), 0);
+
+  const sortedWithdrawals = [...relatedWithdrawals].sort(
+    (a, b) => new Date(b.requested_at || 0) - new Date(a.requested_at || 0)
+  );
+
+  const latest_withdrawal_at =
+    sortedWithdrawals.length > 0
+      ? sortedWithdrawals[0].requested_at || sortedWithdrawals[0].created_at || null
+      : null;
+
+  const timeline = [
+    {
+      timestamp: payoutAccount.created_at || payoutAccount.connected_at || "2026-07-01T10:00:00+07:00",
+      title: "Tạo tài khoản nhận tiền",
+      description: `Tạo tài khoản ${payoutAccount.provider} (${payoutAccount.account_number_masked})`,
+      status: "info",
+    },
+  ];
+
+  if (payoutAccount.status === "pending_verification") {
+    timeline.push({
+      timestamp: payoutAccount.updated_at || payoutAccount.created_at,
+      title: "Gửi yêu cầu xác minh",
+      description: "Đang chờ quản trị viên duyệt thông tin tài khoản",
+      status: "warning",
+    });
+  } else if (payoutAccount.status === "active") {
+    timeline.push({
+      timestamp: payoutAccount.connected_at || payoutAccount.updated_at,
+      title: "Đã xác minh & Kích hoạt",
+      description: "Tài khoản nhận tiền đủ điều kiện nhận thanh toán",
+      status: "success",
+    });
+  } else if (payoutAccount.status === "rejected") {
+    timeline.push({
+      timestamp: payoutAccount.updated_at,
+      title: "Yêu cầu bị từ chối",
+      description: "Thông tin tài khoản chưa đạt tiêu chuẩn xác minh",
+      status: "error",
+    });
+  } else if (payoutAccount.status === "inactive") {
+    if (payoutAccount.connected_at) {
+      timeline.push({
+        timestamp: payoutAccount.connected_at,
+        title: "Đã xác minh thành công",
+        description: "Tài khoản đã từng hoạt động",
+        status: "success",
+      });
+    }
+    timeline.push({
+      timestamp: payoutAccount.updated_at,
+      title: "Đã vô hiệu hóa",
+      description: "Tài khoản tạm ngưng sử dụng cho các giao dịch mới",
+      status: "error",
+    });
+  }
+
+  return {
+    ...payoutAccount,
+    id: parsedId,
+    user_id: userId,
+    user: user
+      ? {
+          id: Number(user.id),
+          full_name: user.full_name,
+          email: user.email,
+          avatar_url: user.avatar_url || null,
+          status: user.status,
+        }
+      : null,
+    withdrawal_count: relatedWithdrawals.length,
+    total_paid_amount: Number(total_paid_amount.toFixed(2)),
+    latest_withdrawal_at,
+    related_withdrawals: sortedWithdrawals.map((w) => ({
+      id: Number(w.id),
+      withdrawal_code: w.withdrawal_code || `WD-${w.id}`,
+      amount: Number(w.amount),
+      status: w.status,
+      requested_at: w.requested_at || w.created_at || null,
+    })),
+    timeline,
+  };
+}
+
 export function getPayoutAccounts() {
   const db = getDB();
-  return db.payoutAccounts || [];
+  if (!Array.isArray(db.payoutAccounts)) {
+    db.payoutAccounts = JSON.parse(JSON.stringify(MOCK_DB.payoutAccounts || []));
+    saveDB(db);
+  }
+  return (db.payoutAccounts || []).map((pa) => populatePayoutAccount(pa, db));
+}
+
+export function getPayoutAccountById(id) {
+  const parsedId = Number(id);
+  return getPayoutAccounts().find((pa) => Number(pa.id) === parsedId) || null;
 }
 
 export function savePayoutAccounts(accounts) {
   const db = getDB();
-  db.payoutAccounts = accounts;
+  db.payoutAccounts = (accounts || []).map((pa) => ({
+    id: Number(pa.id),
+    user_id: Number(pa.user_id),
+    provider: pa.provider,
+    account_name: pa.account_name,
+    account_number: pa.account_number,
+    account_number_masked: pa.account_number_masked,
+    status: pa.status,
+    connected_at: pa.connected_at || null,
+    created_at: pa.created_at || new Date().toISOString(),
+    updated_at: pa.updated_at || new Date().toISOString(),
+  }));
   saveDB(db);
 }
+
+export function updatePayoutAccountStatus(id, newStatus) {
+  const db = getDB();
+  const rawAccounts = db.payoutAccounts || [];
+  const parsedId = Number(id);
+  const index = rawAccounts.findIndex((pa) => Number(pa.id) === parsedId);
+
+  if (index === -1) {
+    return {
+      success: false,
+      message: "Không tìm thấy tài khoản nhận tiền trong hệ thống.",
+    };
+  }
+
+  const current = rawAccounts[index];
+
+  // State transition validation:
+  // pending_verification -> active
+  // pending_verification -> rejected
+  // active -> inactive
+  let isValid = false;
+  if (
+    current.status === "pending_verification" &&
+    (newStatus === "active" || newStatus === "rejected")
+  ) {
+    isValid = true;
+  } else if (current.status === "active" && newStatus === "inactive") {
+    isValid = true;
+  }
+
+  if (!isValid) {
+    return {
+      success: false,
+      message: `Chuyển trạng thái không hợp lệ: Không thể đổi từ '${current.status}' sang '${newStatus}'.`,
+    };
+  }
+
+  const now = new Date().toISOString();
+  rawAccounts[index] = {
+    ...current,
+    status: newStatus,
+    updated_at: now,
+    connected_at: newStatus === "active" ? current.connected_at || now : current.connected_at,
+  };
+
+  db.payoutAccounts = rawAccounts;
+  saveDB(db);
+
+  return {
+    success: true,
+    message: "Cập nhật trạng thái thành công.",
+    data: populatePayoutAccount(rawAccounts[index], db),
+  };
+}
+
 
 // === WITHDRAWALS ===
 function populateWithdrawal(withdrawal, db) {
