@@ -3948,9 +3948,7 @@ export const MOCK_DB = {
       "account_number": "190126282446",
       "account_number_masked": "190******0",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6002,
@@ -3960,9 +3958,7 @@ export const MOCK_DB = {
       "account_number": "190668221079",
       "account_number_masked": "190******1",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6003,
@@ -3972,9 +3968,7 @@ export const MOCK_DB = {
       "account_number": "190821067017",
       "account_number_masked": "190******2",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6004,
@@ -3983,10 +3977,8 @@ export const MOCK_DB = {
       "account_name": "PHAM THAY GIAO TRE",
       "account_number": "190976043404",
       "account_number_masked": "190******3",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-15T08:30:00+07:00",
-      "updated_at": "2026-07-15T08:30:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6005,
@@ -3995,10 +3987,8 @@ export const MOCK_DB = {
       "account_name": "NGO GIANG VIEN HUU",
       "account_number": "190227156886",
       "account_number_masked": "190******4",
-      "status": "inactive",
-      "connected_at": "2026-07-02T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-18T14:00:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6006,
@@ -4008,57 +3998,47 @@ export const MOCK_DB = {
       "account_number": "190828412067",
       "account_number_masked": "190******5",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6007,
       "user_id": 206,
-      "provider": "BIDV",
+      "provider": "Vietcombank",
       "account_name": "LE THI B",
       "account_number": "190262494525",
       "account_number_masked": "190******6",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6008,
       "user_id": 205,
-      "provider": "VietinBank",
+      "provider": "Techcombank",
       "account_name": "NGUYEN VAN A",
       "account_number": "190490216364",
       "account_number_masked": "190******7",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6009,
       "user_id": 216,
-      "provider": "ACB",
+      "provider": "MB Bank",
       "account_name": "NGUYEN MINH ANH",
       "account_number": "190659835290",
       "account_number_masked": "190******8",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6010,
       "user_id": 207,
-      "provider": "MoMo",
+      "provider": "Vietcombank",
       "account_name": "BUI NGOC MAI",
-      "account_number": "0987654321",
-      "account_number_masked": "098******1",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-18T10:00:00+07:00",
-      "updated_at": "2026-07-18T10:00:00+07:00"
+      "account_number": "190295652821",
+      "account_number_masked": "190******9",
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6011,
@@ -4067,10 +4047,8 @@ export const MOCK_DB = {
       "account_name": "HO ĐUC LONG",
       "account_number": "190701605834",
       "account_number_masked": "190******10",
-      "status": "rejected",
-      "connected_at": null,
-      "created_at": "2026-07-10T09:00:00+07:00",
-      "updated_at": "2026-07-12T11:00:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6012,
@@ -4080,21 +4058,17 @@ export const MOCK_DB = {
       "account_number": "190179946284",
       "account_number_masked": "190******11",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6013,
       "user_id": 30,
-      "provider": "BIDV",
+      "provider": "Vietcombank",
       "account_name": "PHAM QUOC BAO",
       "account_number": "190655687955",
       "account_number_masked": "190******12",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-19T14:30:00+07:00",
-      "updated_at": "2026-07-19T14:30:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6014,
@@ -4104,33 +4078,27 @@ export const MOCK_DB = {
       "account_number": "190901031784",
       "account_number_masked": "190******13",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6015,
       "user_id": 38,
-      "provider": "VietinBank",
+      "provider": "MB Bank",
       "account_name": "TRAN MINH HOANG",
       "account_number": "190305747635",
       "account_number_masked": "190******14",
-      "status": "inactive",
-      "connected_at": "2026-07-04T10:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-16T16:20:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6016,
       "user_id": 25,
-      "provider": "MoMo",
+      "provider": "Vietcombank",
       "account_name": "LE THI THAO LINH",
-      "account_number": "0934567890",
-      "account_number_masked": "093******0",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-20T09:15:00+07:00",
-      "updated_at": "2026-07-20T09:15:00+07:00"
+      "account_number": "190192276430",
+      "account_number_masked": "190******15",
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6017,
@@ -4139,22 +4107,18 @@ export const MOCK_DB = {
       "account_name": "PHAM QUOC BAO",
       "account_number": "190406034243",
       "account_number_masked": "190******16",
-      "status": "rejected",
-      "connected_at": null,
-      "created_at": "2026-07-08T14:00:00+07:00",
-      "updated_at": "2026-07-09T16:00:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6018,
       "user_id": 42,
-      "provider": "ACB",
+      "provider": "MB Bank",
       "account_name": "ĐANG TIEN DUNG",
       "account_number": "190816355172",
       "account_number_masked": "190******17",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6019,
@@ -4164,9 +4128,7 @@ export const MOCK_DB = {
       "account_number": "190583249943",
       "account_number_masked": "190******18",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6020,
@@ -4175,10 +4137,8 @@ export const MOCK_DB = {
       "account_name": "BUI HOANG NAM",
       "account_number": "190146913812",
       "account_number_masked": "190******19",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-21T10:00:00+07:00",
-      "updated_at": "2026-07-21T10:00:00+07:00"
+      "status": "active",
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6021,
@@ -4188,9 +4148,7 @@ export const MOCK_DB = {
       "account_number": "190862390449",
       "account_number_masked": "190******20",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6022,
@@ -4200,9 +4158,7 @@ export const MOCK_DB = {
       "account_number": "190519914089",
       "account_number_masked": "190******21",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6023,
@@ -4212,9 +4168,7 @@ export const MOCK_DB = {
       "account_number": "190582108593",
       "account_number_masked": "190******22",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6024,
@@ -4224,9 +4178,7 @@ export const MOCK_DB = {
       "account_number": "190393274004",
       "account_number_masked": "190******23",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     },
     {
       "id": 6025,
@@ -4236,93 +4188,7 @@ export const MOCK_DB = {
       "account_number": "190356175383",
       "account_number_masked": "190******24",
       "status": "active",
-      "connected_at": "2026-07-05T09:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-05T09:00:00+07:00"
-    },
-    {
-      "id": 6026,
-      "user_id": 201,
-      "provider": "BIDV",
-      "account_name": "DANG TUAN KIET",
-      "account_number": "50110000123456",
-      "account_number_masked": "501******456",
-      "status": "active",
-      "connected_at": "2026-07-13T09:00:00+07:00",
-      "created_at": "2026-07-13T08:30:00+07:00",
-      "updated_at": "2026-07-13T09:00:00+07:00"
-    },
-    {
-      "id": 6027,
-      "user_id": 203,
-      "provider": "Techcombank",
-      "account_name": "LE THAO VY",
-      "account_number": "1903334445556",
-      "account_number_masked": "190******556",
-      "status": "pending_verification",
-      "connected_at": null,
-      "created_at": "2026-07-11T10:00:00+07:00",
-      "updated_at": "2026-07-11T10:00:00+07:00"
-    },
-    {
-      "id": 6028,
-      "user_id": 204,
-      "provider": "MB Bank",
-      "account_name": "PHAM HOANG NAM",
-      "account_number": "999333444555",
-      "account_number_masked": "999******555",
-      "status": "rejected",
-      "connected_at": null,
-      "created_at": "2026-07-10T16:20:00+07:00",
-      "updated_at": "2026-07-11T09:00:00+07:00"
-    },
-    {
-      "id": 6029,
-      "user_id": 215,
-      "provider": "ACB",
-      "account_name": "VO GIA HAN",
-      "account_number": "123444555",
-      "account_number_masked": "123******55",
-      "status": "inactive",
-      "connected_at": "2026-07-09T10:00:00+07:00",
-      "created_at": "2026-07-09T09:00:00+07:00",
-      "updated_at": "2026-07-14T15:00:00+07:00"
-    },
-    {
-      "id": 6030,
-      "user_id": 206,
-      "provider": "MoMo",
-      "account_name": "LE THI B",
-      "account_number": "0912999888",
-      "account_number_masked": "091******88",
-      "status": "inactive",
-      "connected_at": "2026-07-02T10:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-10T12:00:00+07:00"
-    },
-    {
-      "id": 6031,
-      "user_id": 208,
-      "provider": "VietinBank",
-      "account_name": "HO ĐUC LONG",
-      "account_number": "108877665544",
-      "account_number_masked": "108******544",
-      "status": "inactive",
-      "connected_at": "2026-07-03T10:00:00+07:00",
-      "created_at": "2026-07-01T10:00:00+07:00",
-      "updated_at": "2026-07-09T10:00:00+07:00"
-    },
-    {
-      "id": 6032,
-      "user_id": 3,
-      "provider": "ACB",
-      "account_name": "TRAN THI DAY",
-      "account_number": "445566778899",
-      "account_number_masked": "445******899",
-      "status": "rejected",
-      "connected_at": null,
-      "created_at": "2026-06-20T10:00:00+07:00",
-      "updated_at": "2026-06-21T11:00:00+07:00"
+      "connected_at": "2026-07-05T09:00:00+07:00"
     }
   ],
   "withdrawals": [

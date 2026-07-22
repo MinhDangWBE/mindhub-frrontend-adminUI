@@ -1,268 +1,1040 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tài khoản nhận tiền | MindHub Admin</title>
-    <link
-        rel="stylesheet"
-        href="../assets/css/output.css"
+    <!-- CSS Output chính -->
+    <link rel="stylesheet" href="../assets/css/output.css" />
+    <style>
+      .scrollbar-none::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-none {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      #payout-accounts-list-section {
+        scroll-margin-top: 90px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-canvas text-ink overflow-hidden">
+    <!-- Toàn bộ Admin Shell cao 100vh, cuộn độc lập -->
+    <div
+      class="flex h-screen w-screen overflow-hidden bg-canvas"
+      data-source="mock"
     >
-</head>
-<body class="min-h-screen bg-canvas text-ink">
-    <div class="flex min-h-screen">
-        <aside id="admin-sidebar" data-sidebar class="fixed inset-y-0 left-0 z-50 flex flex-col w-[248px] border-r border-hairline bg-surface-alt transition-all duration-300 ease-in-out -translate-x-full lg:sticky lg:top-0 lg:translate-x-0 lg:flex shrink-0 h-screen">
-    <!-- Sidebar Header (Logo) -->
-    <div class="flex h-16 shrink-0 items-center justify-between px-5 border-b border-hairline sidebar-logo-container">
-        <a href="dashboard.html" class="flex items-center gap-2 group">
-            <!-- MindHub Logo SVG -->
-            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-white font-semibold text-lg shadow-sm group-hover:scale-105 transition-transform duration-200 shrink-0">
-                M
+      <!-- Sidebar Admin Shell (Đồng bộ chuẩn dự án) -->
+      <aside
+        id="admin-sidebar"
+        data-sidebar
+        class="fixed inset-y-0 left-0 z-50 flex flex-col w-[248px] border-r border-hairline bg-surface-alt transition-all duration-300 ease-in-out -translate-x-full lg:sticky lg:top-0 lg:translate-x-0 lg:flex shrink-0 h-screen"
+      >
+        <!-- Sidebar Header (Logo) -->
+        <div
+          class="flex h-16 shrink-0 items-center justify-between px-5 border-b border-hairline sidebar-logo-container"
+        >
+          <a href="dashboard.html" class="flex items-center gap-2 group">
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-white font-semibold text-lg shadow-sm group-hover:scale-105 transition-transform duration-200 shrink-0"
+            >
+              M
             </div>
             <div class="flex flex-col sidebar-logo-text">
-                <span class="text-sm font-semibold tracking-tight leading-none text-ink">MindHub</span>
-                <span class="text-[10px] font-medium tracking-wider uppercase text-mid-gray mt-0.5">Admin Panel</span>
+              <span
+                class="text-sm font-semibold tracking-tight leading-none text-ink"
+                >MindHub</span
+              >
+              <span
+                class="text-[10px] font-medium tracking-wider uppercase text-mid-gray mt-0.5"
+                >Admin Panel</span
+              >
             </div>
-        </a>
-        <!-- Close Mobile Sidebar (Mobile Only) -->
-        <button type="button" data-sidebar-close class="rounded-full border border-hairline p-1.5 hover:bg-paper lg:hidden transition-colors" aria-label="Đóng Menu">
-            <svg class="w-4 h-4 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </a>
+          <button
+            type="button"
+            data-sidebar-close
+            class="rounded-full border border-hairline p-1.5 hover:bg-paper lg:hidden transition-colors"
+            aria-label="Đóng Menu"
+          >
+            <svg
+              class="w-4 h-4 text-ink"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
-        </button>
-    </div>
+          </button>
+        </div>
 
-    <!-- Sidebar Navigation (Cuộn độc lập) -->
-    <div data-sidebar-scroll class="min-h-0 flex-1 overflow-y-auto px-3 py-4 custom-scrollbar space-y-3">
-        <!-- Nhóm: Tổng quan -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Tổng quan</div>
-            <div class="space-y-0.5">
-                <a href="dashboard.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="dashboard">
-                    <!-- Icon Dashboard -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <rect width="7" height="9" x="3" y="3" rx="1.5"/>
-                        <rect width="7" height="5" x="14" y="3" rx="1.5"/>
-                        <rect width="7" height="9" x="14" y="12" rx="1.5"/>
-                        <rect width="7" height="5" x="3" y="16" rx="1.5"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Dashboard</span>
-                </a>
+        <!-- Sidebar Navigation (Cuộn độc lập) -->
+        <div
+          data-sidebar-scroll
+          class="min-h-0 flex-1 overflow-y-auto px-3 py-4 custom-scrollbar space-y-3"
+        >
+          <!-- Nhóm: Tổng quan -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Tổng quan
             </div>
-        </div>
-        <!-- Nhóm: Người dùng -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Người dùng</div>
             <div class="space-y-0.5">
-                <a href="users.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="users">
-                    <!-- Icon Users -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Quản lý người dùng</span>
-                </a>
-                <a href="instructor-upgrades.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="instructor-upgrades">
-                    <!-- Icon User Check -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="m16 11 2 2 4-4"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Yêu cầu lên giảng viên</span>
-                </a>
+              <a
+                href="dashboard.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="dashboard"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <rect width="7" height="9" x="3" y="3" rx="1.5" />
+                  <rect width="7" height="5" x="14" y="3" rx="1.5" />
+                  <rect width="7" height="9" x="14" y="12" rx="1.5" />
+                  <rect width="7" height="5" x="3" y="16" rx="1.5" />
+                </svg>
+                <span class="sidebar-text truncate">Dashboard</span>
+                <span class="sidebar-tooltip">Dashboard</span>
+              </a>
             </div>
-        </div>
-        <!-- Nhóm: Khóa học -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Khóa học</div>
-            <div class="space-y-0.5">
-                <a href="courses.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="courses">
-                    <!-- Icon Book Open -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Quản lý khóa học</span>
-                </a>
-                <a href="course-reviews.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="course-reviews">
-                    <!-- Icon Shield Alert -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="m9 12 2 2 4-4"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Kiểm duyệt khóa học</span>
-                </a>
-                <a href="categories.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="categories">
-                    <!-- Icon Folder -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Quản lý danh mục</span>
-                </a>
-            </div>
-        </div>
-        <!-- Nhóm: Đơn hàng và tài chính -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Đơn hàng và tài chính</div>
-            <div class="space-y-0.5">
-                <a href="orders.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="orders">
-                    <!-- Icon Credit Card -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <rect width="20" height="14" x="2" y="5" rx="2"/>
-                        <line x1="2" x2="22" y1="10" y2="10"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Đơn hàng / Thanh toán</span>
-                </a>
-                <a href="revenues.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="revenues">
-                    <!-- Icon Bar Chart -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <line x1="18" x2="18" y1="20" y2="10"/>
-                        <line x1="12" x2="12" y1="20" y2="4"/>
-                        <line x1="6" x2="6" y1="20" y2="14"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Doanh thu / Chia lợi nhuận</span>
-                </a>
-                <a href="withdrawals.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="withdrawals">
-                    <!-- Icon Wallet -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <rect width="20" height="14" x="2" y="5" rx="2"/>
-                        <path d="M12 17V9"/>
-                        <path d="m9 12 3-3 3 3"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Yêu cầu rút tiền</span>
-                </a>
-                <a href="payout-accounts.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200" data-menu-id="payout-accounts" aria-current="page">
-                    <!-- Icon Landmark -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M3 21h18"/>
-                        <path d="M3 10h18"/>
-                        <path d="M5 6h14"/>
-                        <path d="M4 10v11"/>
-                        <path d="M20 10v11"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Tài khoản nhận tiền</span>
-                </a>
-            </div>
-        </div>
-        <!-- Nhóm: Nội dung -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Nội dung</div>
-            <div class="space-y-0.5">
-                <a href="moderation.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="moderation">
-                    <!-- Icon Comment/Review -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        <path d="m10 8.5 2 1.5 4-4"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Kiểm duyệt bình luận / Đánh giá</span>
-                </a>
-                <a href="banners.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="banners">
-                    <!-- Icon Image -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                        <circle cx="9" cy="9" r="2"/>
-                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Banner / Trang chủ</span>
-                </a>
-                <a href="faqs.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="faqs">
-                    <!-- Icon Help Circle -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                        <line x1="12" x2="12.01" y1="17" y2="17"/>
-                    </svg>
-                    <span class="sidebar-text truncate">FAQ</span>
-                </a>
-            </div>
-        </div>
-        <!-- Nhóm: Báo cáo -->
-        <div>
-            <div class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300">Báo cáo</div>
-            <div class="space-y-0.5">
-                <a href="reports.html" class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200" data-menu-id="reports">
-                    <!-- Icon Pie Chart -->
-                    <svg class="w-4.5 h-4.5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
-                        <path d="M22 12A10 10 0 0 0 12 2v10z"/>
-                    </svg>
-                    <span class="sidebar-text truncate">Báo cáo và thống kê</span>
-                </a>
-            </div>
-        </div>
-    </div>
+          </div>
 
-    <!-- Sidebar Footer (Static) -->
-    <div class="p-4 shrink-0 border-t border-hairline sidebar-logo-text bg-surface-alt">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-canvas/60 text-[10px] font-medium text-mid-gray">
+          <!-- Nhóm: Người dùng -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Người dùng
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="users.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="users"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span class="sidebar-text truncate">Quản lý người dùng</span>
+                <span class="sidebar-tooltip">Quản lý người dùng</span>
+              </a>
+              <a
+                href="instructor-upgrades.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="instructor-upgrades"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="m16 11 2 2 4-4" />
+                </svg>
+                <span class="sidebar-text truncate">Yêu cầu lên GV</span>
+                <span class="sidebar-tooltip">Yêu cầu lên GV</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Khóa học -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Khóa học
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="courses.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="courses"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+                <span class="sidebar-text truncate">Quản lý khóa học</span>
+                <span class="sidebar-tooltip">Quản lý khóa học</span>
+              </a>
+              <a
+                href="course-reviews.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="course-reviews"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span class="sidebar-text truncate">Kiểm duyệt khóa học</span>
+                <span class="sidebar-tooltip">Kiểm duyệt khóa học</span>
+              </a>
+              <a
+                href="categories.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="categories"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"
+                  />
+                </svg>
+                <span class="sidebar-text truncate">Quản lý danh mục</span>
+                <span class="sidebar-tooltip">Quản lý danh mục</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Kinh doanh -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Kinh doanh
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="orders.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="orders"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <rect width="20" height="14" x="2" y="5" rx="2" />
+                  <line x1="2" x2="22" y1="10" y2="10" />
+                </svg>
+                <span class="sidebar-text truncate">Đơn hàng / Thanh toán</span>
+                <span class="sidebar-tooltip">Đơn hàng / Thanh toán</span>
+              </a>
+              <a
+                href="revenues.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="revenues"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <line x1="18" x2="18" y1="20" y2="10" />
+                  <line x1="12" x2="12" y1="20" y2="4" />
+                  <line x1="6" x2="6" y1="20" y2="14" />
+                </svg>
+                <span class="sidebar-text truncate">Doanh thu / Chia sẻ</span>
+                <span class="sidebar-tooltip">Doanh thu / Chia sẻ</span>
+              </a>
+              <a
+                href="withdrawals.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="withdrawals"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <rect width="20" height="14" x="2" y="5" rx="2" />
+                  <path d="M12 17V9" />
+                  <path d="m9 12 3-3 3 3" />
+                </svg>
+                <span class="sidebar-text truncate">Yêu cầu rút tiền</span>
+                <span class="sidebar-tooltip">Yêu cầu rút tiền</span>
+              </a>
+              <a
+                href="payout-accounts.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full active bg-paper text-ink font-semibold shadow-subtle border-hairline/80 border transition-all duration-200"
+                data-menu-id="payout-accounts"
+                aria-current="page"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 21h18" />
+                  <path d="M3 10h18" />
+                  <path d="M5 6h14" />
+                  <path d="M4 10v11" />
+                  <path d="M20 10v11" />
+                </svg>
+                <span class="sidebar-text truncate">Tài khoản nhận tiền</span>
+                <span class="sidebar-tooltip">Tài khoản nhận tiền</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Nội dung -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Nội dung
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="moderation.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="moderation"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  />
+                  <path d="m10 8.5 2 1.5 4-4" />
+                </svg>
+                <span class="sidebar-text truncate">Kiểm duyệt bình luận</span>
+                <span class="sidebar-tooltip">Kiểm duyệt bình luận</span>
+              </a>
+              <a
+                href="faqs.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="faqs"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" x2="12.01" y1="17" y2="17" />
+                </svg>
+                <span class="sidebar-text truncate">Quản lý FAQ</span>
+                <span class="sidebar-tooltip">Quản lý FAQ</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Báo cáo -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Báo cáo
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="reports.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="reports"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+                  <path d="M22 12A10 10 0 0 0 12 2v10z" />
+                </svg>
+                <span class="sidebar-text truncate">Báo cáo và thống kê</span>
+                <span class="sidebar-tooltip">Báo cáo và thống kê</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nhóm: Hệ thống -->
+          <div>
+            <div
+              class="sidebar-group-title px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-mid-gray transition-opacity duration-300"
+            >
+              Hệ thống
+            </div>
+            <div class="space-y-0.5">
+              <a
+                href="notifications.html"
+                class="sidebar-item relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-full text-mid-gray hover:bg-paper hover:text-ink border-transparent border transition-all duration-200"
+                data-menu-id="notifications"
+              >
+                <svg
+                  class="w-4.5 h-4.5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                </svg>
+                <span class="sidebar-text truncate">Thông báo</span>
+                <span class="sidebar-tooltip">Thông báo</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 shrink-0 border-t border-hairline sidebar-logo-text bg-surface-alt">
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-canvas/60 text-[10px] font-medium text-mid-gray">
             <span class="flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
             <span>Hệ thống ổn định (v1.0.0)</span>
+          </div>
         </div>
+
+        <!-- Nút Thu gọn Sidebar (Desktop) -->
+        <button
+          type="button"
+          id="sidebar-collapse-toggle"
+          class="absolute top-1/2 -right-4 -translate-y-1/2 z-50 h-8 w-8 rounded-full border border-hairline bg-paper text-ink shadow-sm flex items-center justify-center cursor-pointer hover:bg-canvas transition-colors hidden lg:flex"
+          aria-label="Thu gọn sidebar"
+          aria-expanded="true"
+        >
+          <svg
+            id="sidebar-toggle-icon"
+            class="w-4 h-4 text-ink transition-transform duration-300"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
+          </svg>
+        </button>
+      </aside>
+
+      <!-- Main Content Area Wrapper -->
+      <div class="min-w-0 flex-1 flex flex-col">
+        <!-- Topbar Dynamic Placeholder -->
+        <header
+          class="h-16 shrink-0 bg-paper border-b border-hairline"
+        ></header>
+
+        <!-- Page scrollable main container -->
+        <main
+          data-page="payout-accounts"
+          data-source="mock"
+          class="flex-grow overflow-y-auto px-4 md:px-6 lg:px-8 py-4 space-y-4 max-w-[1536px] w-full mx-auto custom-scrollbar"
+        >
+          <!-- Page Header & Actions -->
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between shrink-0">
+            <div>
+              <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-[10px] text-mid-gray uppercase tracking-wider mb-1 font-semibold">
+                <span>Dashboard</span>
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                </svg>
+                <span>Kinh doanh</span>
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                </svg>
+                <span class="text-ink">Tài khoản nhận tiền</span>
+              </nav>
+              <h1 class="text-[28px] lg:text-[30px] font-bold tracking-tight text-ink leading-tight">
+                Tài khoản nhận tiền
+              </h1>
+              <p class="text-xs text-mid-gray mt-0.5">
+                Theo dõi, xác minh và quản lý tài khoản nhận tiền của giảng viên.
+              </p>
+              <p class="text-[10px] text-mid-gray/80 mt-1">
+                Cập nhật lần cuối:
+                <span id="last-update-time" class="font-medium text-mid-gray">---</span>
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+              <button
+                type="button"
+                id="btn-refresh-data"
+                class="h-9 w-9 flex items-center justify-center rounded-full border border-hairline hover:bg-canvas text-ink shrink-0 transition-colors shadow-sm cursor-pointer"
+                aria-label="Làm mới dữ liệu"
+              >
+                <svg
+                  class="w-4 h-4 transition-transform duration-500"
+                  id="refresh-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SUMMARY CARDS (5 cards grid) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-4">
+            <!-- Card 1: Tổng tài khoản -->
+            <div
+              id="card-total-accounts"
+              tabindex="0"
+              role="button"
+              aria-label="Tất cả tài khoản"
+              class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-mid-gray/60 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink"
+            >
+              <div class="flex items-center justify-between text-mid-gray">
+                <span class="text-[10px] font-semibold uppercase tracking-wider">Tổng tài khoản</span>
+                <svg class="w-4 h-4 text-ink shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M3 21h18"/><path d="M3 10h18"/><path d="M5 6h14"/><path d="M4 10v11"/><path d="M20 10v11"/>
+                </svg>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-total-accounts" class="text-xl lg:text-2xl font-bold text-ink">0</span>
+                  <span class="text-xs text-mid-gray">tài khoản</span>
+                </div>
+                <p id="kpi-total-subtext" class="text-[11px] font-medium text-mid-gray mt-1">
+                  0 đã vô hiệu hóa
+                </p>
+              </div>
+            </div>
+
+            <!-- Card 2: Chờ xác minh -->
+            <div
+              id="card-pending-accounts"
+              tabindex="0"
+              role="button"
+              aria-label="Lọc tài khoản chờ xác minh"
+              class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-amber-400 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            >
+              <div class="flex items-center justify-between text-mid-gray">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-700">Chờ xác minh</span>
+                <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-pending-count" class="text-xl lg:text-2xl font-bold text-amber-600">0</span>
+                  <span id="kpi-pending-percent" class="text-xs font-semibold text-amber-600">0%</span>
+                </div>
+                <div class="w-full bg-canvas rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div id="kpi-pending-bar" class="bg-amber-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Đang hoạt động -->
+            <div
+              id="card-active-accounts"
+              tabindex="0"
+              role="button"
+              aria-label="Lọc tài khoản đang hoạt động"
+              class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            >
+              <div class="flex items-center justify-between text-mid-gray">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-700">Đang hoạt động</span>
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-active-count" class="text-xl lg:text-2xl font-bold text-emerald-600">0</span>
+                  <span id="kpi-active-percent" class="text-xs font-semibold text-emerald-600">0%</span>
+                </div>
+                <div class="w-full bg-canvas rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div id="kpi-active-bar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Đã từ chối -->
+            <div
+              id="card-rejected-accounts"
+              tabindex="0"
+              role="button"
+              aria-label="Lọc tài khoản đã từ chối"
+              class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-rose-400 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+            >
+              <div class="flex items-center justify-between text-mid-gray">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-rose-700">Đã từ chối</span>
+                <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-rejected-count" class="text-xl lg:text-2xl font-bold text-rose-600">0</span>
+                  <span id="kpi-rejected-percent" class="text-xs font-semibold text-rose-600">0%</span>
+                </div>
+                <div class="w-full bg-canvas rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div id="kpi-rejected-bar" class="bg-rose-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5: Đã vô hiệu hóa -->
+            <div
+              id="card-inactive-accounts"
+              tabindex="0"
+              role="button"
+              aria-label="Lọc tài khoản đã vô hiệu hóa"
+              class="rounded-[6px] border border-hairline bg-paper p-4 shadow-subtle flex flex-col justify-between hover:border-slate-400 hover:shadow-md transition-all cursor-pointer min-h-[115px] focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+            >
+              <div class="flex items-center justify-between text-mid-gray">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-600">Đã vô hiệu hóa</span>
+                <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              </div>
+              <div class="mt-2">
+                <div class="flex items-baseline gap-2">
+                  <span id="kpi-inactive-count" class="text-xl lg:text-2xl font-bold text-slate-600">0</span>
+                  <span id="kpi-inactive-percent" class="text-xs font-semibold text-slate-600">0%</span>
+                </div>
+                <div class="w-full bg-canvas rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div id="kpi-inactive-bar" class="bg-slate-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FILTER BAR SECTION -->
+          <div class="rounded-[6px] border border-hairline bg-paper p-3.5 shadow-subtle">
+            <form id="payout-accounts-filter-form" onsubmit="return false;" class="flex flex-col gap-3 lg:flex-row lg:items-center justify-between">
+              <div class="flex flex-wrap items-center gap-2.5 flex-1 min-w-0">
+                <!-- Ô Tìm kiếm -->
+                <div class="relative flex-1 min-w-[260px] max-w-[460px]">
+                  <input
+                    type="text"
+                    id="input-search"
+                    placeholder="Tên/email GV, ngân hàng, chủ tài khoản, STK..."
+                    class="w-full rounded-full border border-hairline bg-canvas pl-9 pr-8 py-2 text-xs text-ink placeholder:text-mid-gray/70 focus:border-ink focus:outline-none transition-colors"
+                  />
+                  <svg
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-mid-gray"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                  </svg>
+                  <button
+                    type="button"
+                    id="btn-clear-search"
+                    class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-mid-gray hover:text-ink p-0.5"
+                    aria-label="Xóa từ khóa"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Custom Select: Provider -->
+                <div class="w-[180px] shrink-0">
+                  <select id="select-provider" data-custom-select class="w-full text-xs">
+                    <option value="all">Tất cả nhà cung cấp</option>
+                    <option value="Vietcombank">Vietcombank</option>
+                    <option value="Techcombank">Techcombank</option>
+                    <option value="MB Bank">MB Bank</option>
+                    <option value="BIDV">BIDV</option>
+                    <option value="VietinBank">VietinBank</option>
+                    <option value="ACB">ACB</option>
+                    <option value="MoMo">MoMo</option>
+                  </select>
+                </div>
+
+                <!-- Custom Select: Status -->
+                <div class="w-[185px] shrink-0">
+                  <select id="select-status" data-custom-select class="w-full text-xs">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="pending_verification">Chờ xác minh</option>
+                    <option value="active">Đang hoạt động</option>
+                    <option value="rejected">Đã từ chối</option>
+                    <option value="inactive">Đã vô hiệu hóa</option>
+                  </select>
+                </div>
+
+                <!-- Nút Xóa Filter (Icon X nhỏ 40x40px chuẩn quy tắc) -->
+                <button
+                  type="button"
+                  id="btn-reset-filters"
+                  disabled
+                  class="h-9 w-9 flex items-center justify-center rounded-full border border-hairline bg-canvas text-mid-gray opacity-50 cursor-not-allowed transition-all shrink-0 hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600"
+                  aria-label="Xóa bộ lọc"
+                  title="Xóa bộ lọc"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Badge đếm bộ lọc đang áp dụng -->
+              <div id="filter-active-count-container" class="hidden shrink-0">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-paper border border-hairline text-[11px] font-medium text-ink">
+                  <span class="h-1.5 w-1.5 rounded-full bg-ink"></span>
+                  <span id="filter-active-count-text">Đang lọc</span>
+                </span>
+              </div>
+            </form>
+          </div>
+
+          <!-- TABLE LIST SECTION -->
+          <section id="payout-accounts-list-section" class="space-y-3">
+            <div class="rounded-[6px] border border-hairline bg-paper shadow-subtle overflow-hidden">
+              <!-- Loading Skeleton -->
+              <div id="payout-accounts-loading" class="p-8 space-y-4 hidden">
+                <div class="animate-pulse space-y-3">
+                  <div class="h-6 bg-canvas rounded w-1/4"></div>
+                  <div class="h-12 bg-canvas rounded"></div>
+                  <div class="h-12 bg-canvas rounded"></div>
+                  <div class="h-12 bg-canvas rounded"></div>
+                </div>
+              </div>
+
+              <!-- Error State -->
+              <div id="payout-accounts-error" class="p-8 text-center hidden">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600 mb-3">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                  </svg>
+                </div>
+                <h3 id="error-message-title" class="text-sm font-semibold text-ink">Không thể tải dữ liệu</h3>
+                <p id="error-message-desc" class="text-xs text-mid-gray mt-1 max-w-md mx-auto">Đã xảy ra lỗi khi kết nối dữ liệu. Vui lòng kiểm tra lại.</p>
+                <button type="button" id="btn-retry-fetch" class="mt-4 px-4 py-2 bg-ink text-white rounded-full text-xs font-medium hover:bg-black transition-colors">
+                  Thử lại
+                </button>
+              </div>
+
+              <!-- Empty State -->
+              <div id="payout-accounts-empty" class="p-12 text-center hidden">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-canvas text-mid-gray mb-3">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M3 10h18M5 6h14M4 10v11M20 10v11" />
+                  </svg>
+                </div>
+                <h3 class="text-sm font-semibold text-ink">Không tìm thấy tài khoản nhận tiền phù hợp</h3>
+                <p class="text-xs text-mid-gray mt-1">Vui lòng thay đổi từ khóa hoặc bộ lọc tìm kiếm của bạn.</p>
+                <button type="button" id="btn-empty-reset" class="mt-4 px-4 py-2 border border-hairline bg-paper rounded-full text-xs font-medium hover:bg-canvas text-ink transition-colors">
+                  Xóa bộ lọc
+                </button>
+              </div>
+
+              <!-- Table Content Scrollable -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="border-b border-hairline bg-surface-alt/60 text-[11px] font-semibold uppercase tracking-wider text-mid-gray">
+                      <th class="py-3 px-4 w-16">ID</th>
+                      <th class="py-3 px-4 min-w-[200px]">Giảng viên</th>
+                      <th class="py-3 px-4 min-w-[140px]">Nhà cung cấp</th>
+                      <th class="py-3 px-4 min-w-[160px]">Chủ tài khoản</th>
+                      <th class="py-3 px-4 min-w-[140px]">Số tài khoản</th>
+                      <th class="py-3 px-4 min-w-[140px]">Trạng thái</th>
+                      <th class="py-3 px-4 min-w-[140px]">Ngày kết nối</th>
+                      <th class="py-3 px-4 min-w-[140px]">Cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody id="payout-accounts-table-body" class="divide-y divide-hairline text-xs">
+                    <!-- Dynamic rows inserted by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- PAGINATION SECTION (Nằm ngoài vùng table-scroll) -->
+            <div id="pagination-container" class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+              <div class="text-xs text-mid-gray">
+                Hiển thị <span id="pag-start" class="font-semibold text-ink">0</span> -
+                <span id="pag-end" class="font-semibold text-ink">0</span> trên tổng số
+                <span id="pag-total" class="font-semibold text-ink">0</span> tài khoản
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1.5 text-xs text-mid-gray">
+                  <span>Hiển thị</span>
+                  <select id="select-per-page" class="rounded border border-hairline bg-paper px-2 py-1 text-xs text-ink focus:outline-none">
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+                <nav id="pagination-nav" class="flex items-center gap-1">
+                  <!-- Pagination buttons generated by JavaScript -->
+                </nav>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
 
-        <!-- Nút Đóng/Mở Sidebar (Nằm giữa cạnh phải Sidebar - Desktop Only) -->
-        <button type="button" id="sidebar-collapse-toggle" class="absolute top-1/2 -right-4 -translate-y-1/2 z-50 h-8 w-8 rounded-full border border-hairline bg-paper text-ink shadow-sm flex items-center justify-center cursor-pointer hover:bg-canvas transition-colors hidden lg:flex" aria-label="Thu gọn sidebar" aria-expanded="true">
-            <svg id="sidebar-toggle-icon" class="w-4 h-4 text-ink transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+    <!-- DRAWER CHI TIẾT TÀI KHOẢN NHẬN TIỀN -->
+    <div id="drawer-payout-account-detail" class="fixed inset-0 z-50 pointer-events-none hidden">
+      <!-- Backdrop Overlay -->
+      <div id="drawer-backdrop" class="fixed inset-0 bg-ink/40 backdrop-blur-xs transition-opacity opacity-0 pointer-events-auto"></div>
+
+      <!-- Drawer Content Side Panel -->
+      <div id="drawer-panel" class="fixed inset-y-0 right-0 w-full max-w-lg lg:max-w-xl bg-paper shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 pointer-events-auto border-l border-hairline">
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-hairline shrink-0">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 id="drawer-title" class="text-lg font-bold text-ink tracking-tight">Tài khoản nhận tiền #---</h2>
+              <div id="drawer-status-badge">
+                <!-- Status dot injected dynamically -->
+              </div>
+            </div>
+            <p id="drawer-subtitle" class="text-xs text-mid-gray mt-0.5">Thông tin chi tiết và lịch sử sử dụng tài khoản</p>
+          </div>
+          <button type="button" id="btn-close-drawer" class="p-1.5 rounded-full border border-hairline hover:bg-canvas text-mid-gray hover:text-ink transition-colors" aria-label="Đóng ngăn chi tiết">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-        </button>
-    </aside>
-        <div class="min-w-0 flex-1">
-            <header
-                class="flex min-h-16 items-center justify-between border-b border-hairline bg-paper px-5"
-            >
-                <button
-                    type="button"
-                    data-sidebar-toggle
-                    class="rounded-full border border-hairline px-4 py-2 text-sm lg:hidden"
-                >
-                    Menu
-                </button>
-                <span class="text-sm text-mid-gray">
-                    Admin MindHub
-                </span>
-            </header>
-            <main class="p-5 md:p-8">
-                <header class="mb-8">
-                    <p class="text-sm text-mid-gray">
-                        MindHub Admin
-                    </p>
-                    <h1 class="mt-1 text-3xl font-semibold tracking-tight">
-                        Tài khoản nhận tiền
-                    </h1>
-                </header>
-                <section
-                    class="rounded-3xl border border-hairline bg-paper p-6 shadow-sm"
-                >
-                    <h2 class="text-lg font-semibold">
-                        Khung trang đã sẵn sàng
-                    </h2>
-                    <p class="mt-2 text-sm text-mid-gray">
-                        Card thống kê, bộ lọc, bảng dữ liệu và modal sẽ được bổ sung sau.
-                    </p>
-                </section>
-            </main>
+          </button>
         </div>
+
+        <!-- Drawer Body Scrollable -->
+        <div id="drawer-body" class="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
+          <!-- 1. THÔNG TIN GIẢNG VIÊN -->
+          <div class="rounded-[6px] border border-hairline bg-surface-alt/50 p-4 space-y-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-mid-gray">Giảng viên liên kết</h3>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div id="drawer-user-avatar" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink text-white font-bold text-sm shadow-subtle">
+                  GV
+                </div>
+                <div>
+                  <p id="drawer-user-name" class="text-sm font-semibold text-ink">---</p>
+                  <p id="drawer-user-email" class="text-xs text-mid-gray">---</p>
+                </div>
+              </div>
+              <a id="drawer-link-user" href="#" class="inline-flex items-center gap-1 text-xs font-medium text-ink hover:text-blue-600 transition-colors shrink-0">
+                <span>Chi tiết GV</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. THÔNG TIN TÀI KHOẢN -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-mid-gray">Thông tin ngân hàng / Ví điện tử</h3>
+            <div class="rounded-[6px] border border-hairline bg-paper divide-y divide-hairline text-xs">
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Nhà cung cấp</span>
+                <span id="drawer-provider" class="font-semibold text-ink">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Chủ tài khoản</span>
+                <span id="drawer-account-name" class="font-semibold text-ink uppercase tracking-wide">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Số tài khoản đầy đủ</span>
+                <span id="drawer-account-number" class="font-mono font-bold text-ink text-sm bg-canvas px-2.5 py-1 rounded border border-hairline">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Trạng thái</span>
+                <span id="drawer-status-text" class="font-semibold text-ink">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Ngày tạo</span>
+                <span id="drawer-created-at" class="text-ink">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Ngày kết nối/xác minh</span>
+                <span id="drawer-connected-at" class="text-ink">---</span>
+              </div>
+              <div class="flex items-center justify-between p-3">
+                <span class="text-mid-gray">Cập nhật lần cuối</span>
+                <span id="drawer-updated-at" class="text-ink">---</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. THỐNG KÊ LIÊN QUAN -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-mid-gray">Thống kê giao dịch qua tài khoản này</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-[6px] border border-hairline bg-canvas p-3">
+                <span class="text-[10px] font-semibold text-mid-gray uppercase">Số yêu cầu rút tiền</span>
+                <p id="drawer-stat-withdrawal-count" class="text-lg font-bold text-ink mt-0.5">0</p>
+              </div>
+              <div class="rounded-[6px] border border-hairline bg-canvas p-3">
+                <span class="text-[10px] font-semibold text-mid-gray uppercase">Tổng tiền đã thanh toán</span>
+                <p id="drawer-stat-total-paid" class="text-lg font-bold text-emerald-600 mt-0.5">0 đ</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. DANH SÁCH YÊU CẦU RÚT TIỀN LIÊN QUAN -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-mid-gray">Yêu cầu rút tiền gần đây</h3>
+            </div>
+            <div id="drawer-withdrawals-list" class="space-y-2">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- 5. TIMELINE -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-mid-gray">Nhật ký trạng thái</h3>
+            <div id="drawer-timeline" class="relative pl-4 space-y-4 border-l-2 border-hairline">
+              <!-- Timeline items dynamically inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Drawer Footer (Actions) -->
+        <div id="drawer-footer" class="p-4 border-t border-hairline bg-surface-alt/50 shrink-0 flex items-center justify-end gap-3">
+          <!-- Dynamically populated action buttons -->
+        </div>
+      </div>
     </div>
-    <script
-        type="module"
-        src="../assets/js/app.js"
-    ></script>
-    <script
-        type="module"
-        src="../assets/js/sidebar.js"
-    ></script>
-    <script
-        type="module"
-        src="../assets/js/pages/payout-accounts.js"
-    ></script>
+
+    <!-- MODAL XÁC NHẬN DUYỆT -->
+    <div id="modal-approve-account" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+      <div class="fixed inset-0 bg-ink/40 backdrop-blur-xs modal-overlay"></div>
+      <div class="relative w-full max-w-md bg-paper rounded-[6px] border border-hairline shadow-2xl p-6 space-y-4 z-10">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-ink">Xác nhận duyệt tài khoản</h3>
+            <p class="text-xs text-mid-gray">Xác minh thông tin tài khoản nhận tiền</p>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-hairline bg-canvas p-3 space-y-1.5 text-xs">
+          <p><span class="text-mid-gray">Giảng viên:</span> <strong id="approve-modal-user">---</strong></p>
+          <p><span class="text-mid-gray">Ngân hàng/Ví:</span> <strong id="approve-modal-provider">---</strong></p>
+          <p><span class="text-mid-gray">Chủ tài khoản:</span> <strong id="approve-modal-name">---</strong></p>
+          <p><span class="text-mid-gray">Số tài khoản:</span> <strong id="approve-modal-number">---</strong></p>
+        </div>
+        <p class="text-xs text-mid-gray leading-relaxed">
+          Sau khi duyệt, trạng thái tài khoản sẽ chuyển sang <strong>Đang hoạt động</strong>. Giảng viên có thể sử dụng tài khoản này cho các yêu cầu rút tiền.
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" class="btn-cancel-modal px-4 py-2 border border-hairline rounded-full text-xs font-medium text-ink hover:bg-canvas transition-colors">Hủy</button>
+          <button type="button" id="btn-confirm-approve" class="px-4 py-2 bg-emerald-600 text-white rounded-full text-xs font-medium hover:bg-emerald-700 transition-colors shadow-sm">Xác nhận duyệt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN TỪ CHỐI -->
+    <div id="modal-reject-account" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+      <div class="fixed inset-0 bg-ink/40 backdrop-blur-xs modal-overlay"></div>
+      <div class="relative w-full max-w-md bg-paper rounded-[6px] border border-hairline shadow-2xl p-6 space-y-4 z-10">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-ink">Xác nhận từ chối tài khoản</h3>
+            <p class="text-xs text-mid-gray">Từ chối tài khoản chờ xác minh</p>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-hairline bg-canvas p-3 space-y-1.5 text-xs">
+          <p><span class="text-mid-gray">Giảng viên:</span> <strong id="reject-modal-user">---</strong></p>
+          <p><span class="text-mid-gray">Ngân hàng/Ví:</span> <strong id="reject-modal-provider">---</strong></p>
+          <p><span class="text-mid-gray">Chủ tài khoản:</span> <strong id="reject-modal-name">---</strong></p>
+        </div>
+        <p class="text-xs text-rose-600 leading-relaxed">
+          Sau khi từ chối, tài khoản sẽ chuyển sang trạng thái <strong>Đã từ chối</strong> và không thể dùng để nhận tiền thanh toán.
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" class="btn-cancel-modal px-4 py-2 border border-hairline rounded-full text-xs font-medium text-ink hover:bg-canvas transition-colors">Hủy</button>
+          <button type="button" id="btn-confirm-reject" class="px-4 py-2 bg-rose-600 text-white rounded-full text-xs font-medium hover:bg-rose-700 transition-colors shadow-sm">Xác nhận từ chối</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL XÁC NHẬN VÔ HIỆU HÓA -->
+    <div id="modal-disable-account" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+      <div class="fixed inset-0 bg-ink/40 backdrop-blur-xs modal-overlay"></div>
+      <div class="relative w-full max-w-md bg-paper rounded-[6px] border border-hairline shadow-2xl p-6 space-y-4 z-10">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-ink">Xác nhận vô hiệu hóa tài khoản</h3>
+            <p class="text-xs text-mid-gray">Tạm ngưng tài khoản đang hoạt động</p>
+          </div>
+        </div>
+        <div class="rounded-[6px] border border-hairline bg-canvas p-3 space-y-1.5 text-xs">
+          <p><span class="text-mid-gray">Giảng viên:</span> <strong id="disable-modal-user">---</strong></p>
+          <p><span class="text-mid-gray">Tài khoản:</span> <strong id="disable-modal-account">---</strong></p>
+        </div>
+        <p class="text-xs text-mid-gray leading-relaxed">
+          Sau khi vô hiệu hóa, tài khoản chuyển sang trạng thái <strong>Đã vô hiệu hóa</strong>. Giảng viên sẽ không thể chọn tài khoản này cho các yêu cầu rút tiền mới. Các yêu cầu rút tiền cũ vẫn được giữ nguyên lịch sử.
+        </p>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" class="btn-cancel-modal px-4 py-2 border border-hairline rounded-full text-xs font-medium text-ink hover:bg-canvas transition-colors">Hủy</button>
+          <button type="button" id="btn-confirm-disable" class="px-4 py-2 bg-slate-700 text-white rounded-full text-xs font-medium hover:bg-slate-800 transition-colors shadow-sm">Xác nhận vô hiệu hóa</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script type="module" src="../assets/js/app.js"></script>
+    <script type="module" src="../assets/js/sidebar.js"></script>
+    <script type="module" src="../assets/js/core/custom-select.js"></script>
+    <script type="module" src="../assets/js/pages/payout-accounts.js"></script>
     <script type="module" src="../assets/js/sidebar-scroll.js"></script>
     <script src="../assets/js/sidebar-toggle.js"></script>
-</body>
+  </body>
 </html>
