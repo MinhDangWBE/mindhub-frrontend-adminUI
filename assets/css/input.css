@@ -205,6 +205,14 @@ body {
     box-shadow: 0 0 0 1px var(--color-ink);
 }
 
+.filter-bar .custom-select-trigger {
+    height: 48px !important;
+    border-radius: 9999px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    font-size: 13px !important;
+}
+
 .custom-select-trigger:disabled {
     background-color: var(--color-canvas);
     color: var(--color-mid-gray);
@@ -321,6 +329,8 @@ body {
 .status-dot-danger { background-color: var(--color-danger-brick); }
 .status-dot-gray { background-color: rgba(115, 115, 115, 0.45); }
 .status-dot-dark-gray { background-color: var(--color-mid-gray); }
+.status-dot-purple { background-color: #9333ea; }
+
 
 /* Standardized Form Control overrides to match h-10 and rounded-6px */
 .form-input-std {

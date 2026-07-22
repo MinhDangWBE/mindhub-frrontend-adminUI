@@ -121,17 +121,6 @@ function initCustomSelect(select) {
 /**
  * Cập nhật nhãn hiển thị của trigger dựa trên option đang được chọn
  */
-function getStatusTextColor(statusType) {
-    if (!statusType) return "";
-    if (statusType === "success" || statusType === "visible") return "text-emerald-700 font-semibold";
-    if (statusType === "info" || statusType === "comment" || statusType === "today" || statusType === "7days" || statusType === "1month" || statusType === "3months") return "text-blue-700 font-semibold";
-    if (statusType === "pending" || statusType === "hidden" || statusType === "review") return "text-amber-700 font-semibold";
-    if (statusType === "danger" || statusType === "deleted") return "text-rose-700 font-semibold";
-    if (statusType === "purple" || statusType === "custom") return "text-purple-700 font-semibold";
-    if (statusType === "gray" || statusType === "all") return "text-mid-gray";
-    return "";
-}
-
 function updateTriggerLabel(select) {
     const data = selectMap.get(select);
     if (!data) return;
@@ -142,8 +131,7 @@ function updateTriggerLabel(select) {
         // Kiểm tra xem option có chứa chấm trạng thái không để render chấm màu trên trigger
         const statusType = getStatusType(selectedOption);
         if (statusType) {
-            const colorClass = getStatusTextColor(statusType);
-            data.labelSpan.innerHTML = `<span class="inline-flex items-center gap-1.5 ${colorClass}"><span class="status-dot status-dot-${statusType}"></span><span>${selectedOption.textContent}</span></span>`;
+            data.labelSpan.innerHTML = `<span class="status-dot status-dot-${statusType}"></span><span>${selectedOption.textContent}</span>`;
         } else {
             data.labelSpan.textContent = selectedOption.textContent;
         }
@@ -165,12 +153,11 @@ function updateTriggerLabel(select) {
  * Trả về class hậu tố trạng thái dựa trên value hoặc attributes
  */
 function getStatusType(option) {
-    if (!option) return null;
     if (option.hasAttribute("data-status-color")) {
         return option.getAttribute("data-status-color");
     }
 
-    const val = (option.value || "").toLowerCase();
+    const val = option.value.toLowerCase();
     
     // Map các giá trị trạng thái thông dụng sang màu sắc
     if (val === "pending" || val === "pending_review") return "pending"; // cam
@@ -348,12 +335,10 @@ function buildOptionsList(select, listWrapper) {
         labelSpan.className = "truncate text-xs";
         labelSpan.textContent = opt.textContent;
 
-        const colorClass = getStatusTextColor(statusType);
-        if (colorClass) {
-            colorClass.split(" ").forEach(cls => {
-                if (cls) labelSpan.classList.add(cls);
-            });
-        }
+        if (statusType === "success") labelSpan.classList.add("text-emerald-700", "font-semibold");
+        else if (statusType === "info") labelSpan.classList.add("text-blue-700", "font-semibold");
+        else if (statusType === "pending") labelSpan.classList.add("text-amber-700", "font-semibold");
+        else if (statusType === "danger") labelSpan.classList.add("text-rose-700", "font-semibold");
 
         textWrapper.appendChild(labelSpan);
 

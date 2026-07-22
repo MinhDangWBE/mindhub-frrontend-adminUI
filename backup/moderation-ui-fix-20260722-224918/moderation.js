@@ -198,16 +198,16 @@ function syncStatusSelectOptions(targetType) {
       pageState.status = "all";
     }
     selectStatus.innerHTML = `
-      <option value="all" data-status-color="gray">Tất cả trạng thái</option>
-      <option value="visible" data-status-color="success">Đang hiển thị</option>
-      <option value="deleted" data-status-color="danger">Đã xóa</option>
+      <option value="all">Tất cả trạng thái</option>
+      <option value="visible">Đang hiển thị</option>
+      <option value="deleted">Đã xóa</option>
     `;
   } else {
     selectStatus.innerHTML = `
-      <option value="all" data-status-color="gray">Tất cả trạng thái</option>
-      <option value="visible" data-status-color="success">Đang hiển thị</option>
-      <option value="hidden" data-status-color="pending">Đã ẩn</option>
-      <option value="deleted" data-status-color="danger">Đã xóa</option>
+      <option value="all">Tất cả trạng thái</option>
+      <option value="visible">Đang hiển thị</option>
+      <option value="hidden">Đã ẩn</option>
+      <option value="deleted">Đã xóa</option>
     `;
   }
 

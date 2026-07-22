@@ -78,41 +78,7 @@ export async function getModerationItems(params = {}) {
     const sortBy = params.sort_by || "created_at";
     const sortDirection = params.sort_direction || "desc";
 
-    const allNormalizedItems = getNormalizedModerationItems();
-
-    // Calculate Summary Metrics on FULL UNFILTERED dataset (independent of search, filters, pagination)
-    const totalComments = allNormalizedItems.filter((i) => i.target_type === "comment").length;
-    const totalReviews = allNormalizedItems.filter((i) => i.target_type === "review").length;
-
-    const visibleComments = allNormalizedItems.filter((i) => i.target_type === "comment" && i.status === "visible").length;
-    const hiddenComments = allNormalizedItems.filter((i) => i.target_type === "comment" && i.status === "hidden").length;
-    const deletedComments = allNormalizedItems.filter((i) => i.target_type === "comment" && i.status === "deleted").length;
-
-    const visibleReviews = allNormalizedItems.filter((i) => i.target_type === "review" && i.status === "visible");
-    const deletedReviews = allNormalizedItems.filter((i) => i.target_type === "review" && i.status === "deleted").length;
-
-    const needActionCount = hiddenComments + deletedComments + deletedReviews;
-
-    let averageRating = 0;
-    if (visibleReviews.length > 0) {
-      const sumRating = visibleReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0);
-      averageRating = Number((sumRating / visibleReviews.length).toFixed(1));
-    }
-
-    const summary = {
-      total_items: allNormalizedItems.length,
-      total_comments: totalComments,
-      total_reviews: totalReviews,
-      need_action_count: needActionCount,
-      visible_comments: visibleComments,
-      hidden_comments: hiddenComments,
-      deleted_comments: deletedComments,
-      visible_reviews: visibleReviews.length,
-      deleted_reviews: deletedReviews,
-      average_rating: averageRating,
-    };
-
-    let dataset = [...allNormalizedItems];
+    let dataset = getNormalizedModerationItems();
 
     // 1. Search Filter (content, user name, user email, course title, ID)
     if (search) {
@@ -137,6 +103,39 @@ export async function getModerationItems(params = {}) {
 
     // 3. Filter by Date
     dataset = filterByDate(dataset, timePreset, dateFrom, dateTo);
+
+    // 4. Calculate Summary Metrics (BEFORE target_type & status card filters)
+    const summaryFilteredItems = [...dataset];
+    const totalComments = summaryFilteredItems.filter((i) => i.target_type === "comment").length;
+    const totalReviews = summaryFilteredItems.filter((i) => i.target_type === "review").length;
+
+    const visibleComments = summaryFilteredItems.filter((i) => i.target_type === "comment" && i.status === "visible").length;
+    const hiddenComments = summaryFilteredItems.filter((i) => i.target_type === "comment" && i.status === "hidden").length;
+    const deletedComments = summaryFilteredItems.filter((i) => i.target_type === "comment" && i.status === "deleted").length;
+
+    const visibleReviews = summaryFilteredItems.filter((i) => i.target_type === "review" && i.status === "visible");
+    const deletedReviews = summaryFilteredItems.filter((i) => i.target_type === "review" && i.status === "deleted").length;
+
+    const needActionCount = hiddenComments + deletedComments + deletedReviews;
+
+    let averageRating = 0;
+    if (visibleReviews.length > 0) {
+      const sumRating = visibleReviews.reduce((sum, r) => sum + (Number(r.rating) || 0), 0);
+      averageRating = Number((sumRating / visibleReviews.length).toFixed(1));
+    }
+
+    const summary = {
+      total_items: summaryFilteredItems.length,
+      total_comments: totalComments,
+      total_reviews: totalReviews,
+      need_action_count: needActionCount,
+      visible_comments: visibleComments,
+      hidden_comments: hiddenComments,
+      deleted_comments: deletedComments,
+      visible_reviews: visibleReviews.length,
+      deleted_reviews: deletedReviews,
+      average_rating: averageRating,
+    };
 
     // 5. Apply target_type Filter
     if (targetType !== "all") {
