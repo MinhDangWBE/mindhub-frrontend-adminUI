@@ -9,7 +9,13 @@ function getDB() {
     return MOCK_DB;
   }
   try {
-    return JSON.parse(data);
+    const db = JSON.parse(data);
+    let mutated = false;
+    if (!Array.isArray(db.comments)) { db.comments = MOCK_DB.comments || []; mutated = true; }
+    if (!Array.isArray(db.reviews)) { db.reviews = MOCK_DB.reviews || []; mutated = true; }
+    if (!Array.isArray(db.lessons)) { db.lessons = MOCK_DB.lessons || []; mutated = true; }
+    if (mutated) saveDB(db);
+    return db;
   } catch (e) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(MOCK_DB));
     return MOCK_DB;
@@ -919,3 +925,220 @@ export function saveRevenues(revenues) {
   }));
   saveDB(db);
 }
+
+// === MODERATION (COMMENTS & REVIEWS) ===
+export function getComments() {
+  const db = getDB();
+  return db.comments || [];
+}
+
+export function getReviews() {
+  const db = getDB();
+  return db.reviews || [];
+}
+
+export function getLessons() {
+  const db = getDB();
+  return db.lessons || [];
+}
+
+export function getLessonById(id) {
+  const parsedId = Number(id);
+  return getLessons().find((l) => Number(l.id) === parsedId) || null;
+}
+
+export function getNormalizedModerationItems() {
+  const db = getDB();
+  const users = db.users || [];
+  const courses = db.courses || [];
+  const lessons = db.lessons || [];
+  const orders = db.orders || [];
+  const rawComments = db.comments || [];
+  const rawReviews = db.reviews || [];
+
+  const commentsList = rawComments.map((c) => {
+    const user = users.find((u) => Number(u.id) === Number(c.user_id)) || null;
+    const course = courses.find((cr) => Number(cr.id) === Number(c.course_id)) || null;
+    const lesson = c.lesson_id ? (lessons.find((l) => Number(l.id) === Number(c.lesson_id)) || null) : null;
+    const parent = c.parent_id ? (rawComments.find((p) => Number(p.id) === Number(c.parent_id)) || null) : null;
+
+    return {
+      id: Number(c.id),
+      target_type: "comment",
+      status: c.status || "visible",
+      content: c.content || "",
+      rating: null,
+      user_id: Number(c.user_id),
+      course_id: Number(c.course_id),
+      lesson_id: c.lesson_id ? Number(c.lesson_id) : null,
+      order_id: null,
+      parent_id: c.parent_id ? Number(c.parent_id) : null,
+      created_at: c.created_at,
+      updated_at: c.updated_at || c.created_at,
+      deleted_at: c.deleted_at || null,
+      user: user
+        ? {
+            id: Number(user.id),
+            full_name: user.full_name,
+            email: user.email,
+            avatar_url: user.avatar_url || null,
+            status: user.status,
+          }
+        : null,
+      course: course
+        ? {
+            id: Number(course.id),
+            title: course.title,
+            slug: course.slug,
+          }
+        : null,
+      lesson: lesson
+        ? {
+            id: Number(lesson.id),
+            title: lesson.title,
+          }
+        : null,
+      order: null,
+      parent: parent
+        ? {
+            id: Number(parent.id),
+            content: parent.content,
+            user_id: Number(parent.user_id),
+          }
+        : null,
+    };
+  });
+
+  const reviewsList = rawReviews.map((r) => {
+    const user = users.find((u) => Number(u.id) === Number(r.user_id)) || null;
+    const course = courses.find((cr) => Number(cr.id) === Number(r.course_id)) || null;
+    const order = r.order_id ? (orders.find((o) => Number(o.id) === Number(r.order_id)) || null) : null;
+
+    return {
+      id: Number(r.id),
+      target_type: "review",
+      status: r.status || "visible",
+      content: r.content || "",
+      rating: Number(r.rating) || 5,
+      user_id: Number(r.user_id),
+      course_id: Number(r.course_id),
+      lesson_id: null,
+      order_id: r.order_id ? Number(r.order_id) : null,
+      parent_id: null,
+      created_at: r.created_at,
+      updated_at: r.updated_at || r.created_at,
+      deleted_at: r.deleted_at || null,
+      user: user
+        ? {
+            id: Number(user.id),
+            full_name: user.full_name,
+            email: user.email,
+            avatar_url: user.avatar_url || null,
+            status: user.status,
+          }
+        : null,
+      course: course
+        ? {
+            id: Number(course.id),
+            title: course.title,
+            slug: course.slug,
+          }
+        : null,
+      lesson: null,
+      order: order
+        ? {
+            id: Number(order.id),
+            order_code: order.order_code,
+            amount: String(order.amount),
+            status: order.status,
+            payment_status: order.payment_status,
+            paid_at: order.paid_at || order.created_at,
+          }
+        : null,
+      parent: null,
+    };
+  });
+
+  return [...commentsList, ...reviewsList];
+}
+
+export function updateModerationItemStatus(targetType, id, newStatus) {
+  const db = getDB();
+  const parsedId = Number(id);
+  const now = new Date().toISOString();
+
+  if (targetType === "review" && newStatus === "hidden") {
+    return {
+      success: false,
+      message: "Đánh giá (review) không hỗ trợ trạng thái 'bị ẩn' (chỉ hỗ trợ Đang hiển thị hoặc Đã xóa).",
+      errors: { status: "Review không hỗ trợ trạng thái hidden." }
+    };
+  }
+
+  if (targetType === "comment") {
+    const comments = db.comments || [];
+    const index = comments.findIndex((c) => Number(c.id) === parsedId);
+    if (index === -1) {
+      return { success: false, message: "Không tìm thấy bình luận cần xử lý." };
+    }
+    const current = comments[index];
+    let isValid = false;
+    if (current.status === "visible" && (newStatus === "hidden" || newStatus === "deleted")) isValid = true;
+    else if (current.status === "hidden" && (newStatus === "visible" || newStatus === "deleted")) isValid = true;
+    else if (current.status === "deleted" && newStatus === "visible") isValid = true;
+
+    if (!isValid && current.status !== newStatus) {
+      return {
+        success: false,
+        message: `Chuyển trạng thái bình luận không hợp lệ từ '${current.status}' sang '${newStatus}'.`,
+      };
+    }
+
+    comments[index] = {
+      ...current,
+      status: newStatus,
+      updated_at: now,
+      deleted_at: newStatus === "deleted" ? now : (newStatus === "visible" ? null : current.deleted_at),
+    };
+    db.comments = comments;
+    saveDB(db);
+    return {
+      success: true,
+      message: "Cập nhật trạng thái bình luận thành công.",
+      data: comments[index],
+    };
+  } else if (targetType === "review") {
+    const reviews = db.reviews || [];
+    const index = reviews.findIndex((r) => Number(r.id) === parsedId);
+    if (index === -1) {
+      return { success: false, message: "Không tìm thấy đánh giá cần xử lý." };
+    }
+    const current = reviews[index];
+    let isValid = false;
+    if (current.status === "visible" && newStatus === "deleted") isValid = true;
+    else if (current.status === "deleted" && newStatus === "visible") isValid = true;
+
+    if (!isValid && current.status !== newStatus) {
+      return {
+        success: false,
+        message: `Chuyển trạng thái đánh giá không hợp lệ từ '${current.status}' sang '${newStatus}'.`,
+      };
+    }
+
+    reviews[index] = {
+      ...current,
+      status: newStatus,
+      updated_at: now,
+      deleted_at: newStatus === "deleted" ? now : null,
+    };
+    db.reviews = reviews;
+    saveDB(db);
+    return {
+      success: true,
+      message: "Cập nhật trạng thái đánh giá thành công.",
+      data: reviews[index],
+    };
+  }
+
+  return { success: false, message: "Loại nội dung không hợp lệ." };
+}
