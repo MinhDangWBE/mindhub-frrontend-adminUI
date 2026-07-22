@@ -122,14 +122,8 @@ function initCustomSelect(select) {
  * Cập nhật nhãn hiển thị của trigger dựa trên option đang được chọn
  */
 function getStatusTextColor(statusType) {
-    if (!statusType) return "";
-    if (statusType === "success" || statusType === "visible") return "text-emerald-700 font-semibold";
-    if (statusType === "info" || statusType === "comment" || statusType === "today" || statusType === "7days" || statusType === "1month" || statusType === "3months") return "text-blue-700 font-semibold";
-    if (statusType === "pending" || statusType === "hidden" || statusType === "review") return "text-amber-700 font-semibold";
-    if (statusType === "danger" || statusType === "deleted") return "text-rose-700 font-semibold";
-    if (statusType === "purple" || statusType === "custom") return "text-purple-700 font-semibold";
-    if (statusType === "gray" || statusType === "all") return "text-mid-gray";
-    return "";
+    if (!statusType || statusType === "gray" || statusType === "all") return "text-mid-gray";
+    return "text-ink";
 }
 
 function updateTriggerLabel(select) {
@@ -443,9 +437,23 @@ function filterOptions(panel, keyword) {
 function positionDropdownPanel(trigger, panel) {
     const rect = trigger.getBoundingClientRect();
     
-    // Đặt chiều rộng bằng trigger
-    panel.style.width = `${rect.width}px`;
-    panel.style.left = `${rect.left + window.scrollX}px`;
+    // Đặt chiều rộng bằng trigger hoặc tối thiểu 150px
+    const minW = Math.max(rect.width, 150);
+    panel.style.width = `max-content`;
+    panel.style.minWidth = `${minW}px`;
+    panel.style.maxWidth = `min(320px, calc(100vw - 24px))`;
+
+    // Tính vị trí trái / phải để tránh tràn viewport
+    let leftPos = rect.left + window.scrollX;
+    const estimatedWidth = Math.min(Math.max(rect.width, minW), 320);
+
+    if (rect.left + estimatedWidth > window.innerWidth - 12) {
+        // Canh mép phải về bằng mép phải trigger
+        leftPos = rect.right + window.scrollX - estimatedWidth;
+    }
+    if (leftPos < 12) leftPos = 12;
+
+    panel.style.left = `${leftPos}px`;
 
     // Tính toán chiều cao và vị trí mở lên/xuống
     const dropdownHeight = 240; // dự kiến max-height + search

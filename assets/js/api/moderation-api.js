@@ -78,6 +78,8 @@ export async function getModerationItems(params = {}) {
     const sortBy = params.sort_by || "created_at";
     const sortDirection = params.sort_direction || "desc";
 
+    const priorityFilter = params.priority_filter || params.view_mode || params.reply_status || "all";
+
     const allNormalizedItems = getNormalizedModerationItems();
 
     // Calculate Summary Metrics on FULL UNFILTERED dataset (independent of search, filters, pagination)
@@ -91,7 +93,15 @@ export async function getModerationItems(params = {}) {
     const visibleReviews = allNormalizedItems.filter((i) => i.target_type === "review" && i.status === "visible");
     const deletedReviews = allNormalizedItems.filter((i) => i.target_type === "review" && i.status === "deleted").length;
 
-    const needActionCount = hiddenComments + deletedComments + deletedReviews;
+    const answeredCount = allNormalizedItems.filter((i) => i.reply_count > 0).length;
+    const unansweredCount = allNormalizedItems.filter((i) => i.reply_count === 0).length;
+    const overdueResponseCount = allNormalizedItems.filter((i) => i.is_response_overdue).length;
+    const multipleRepliesCount = allNormalizedItems.filter((i) => i.reply_count >= 2).length;
+    const lowRatingUnansweredCount = allNormalizedItems.filter((i) => i.is_low_rating_unanswered).length;
+    const warningUnresolvedCount = allNormalizedItems.filter((i) => i.is_warning_unresolved).length;
+    const riskyVisibleCount = allNormalizedItems.filter((i) => i.is_risky_content_visible).length;
+    const hiddenUnresolvedCount = allNormalizedItems.filter((i) => i.is_hidden_unresolved).length;
+    const needActionCount = allNormalizedItems.filter((i) => i.is_needs_action).length;
 
     let averageRating = 0;
     if (visibleReviews.length > 0) {
@@ -110,6 +120,14 @@ export async function getModerationItems(params = {}) {
       visible_reviews: visibleReviews.length,
       deleted_reviews: deletedReviews,
       average_rating: averageRating,
+      answered_count: answeredCount,
+      unanswered_count: unansweredCount,
+      overdue_response_count: overdueResponseCount,
+      multiple_replies_count: multipleRepliesCount,
+      low_rating_unanswered_count: lowRatingUnansweredCount,
+      warning_unresolved_count: warningUnresolvedCount,
+      risky_visible_count: riskyVisibleCount,
+      hidden_unresolved_count: hiddenUnresolvedCount,
     };
 
     let dataset = [...allNormalizedItems];
@@ -137,6 +155,29 @@ export async function getModerationItems(params = {}) {
 
     // 3. Filter by Date
     dataset = filterByDate(dataset, timePreset, dateFrom, dateTo);
+
+    // 4. Apply priority_filter / view_mode / reply_status Filter
+    if (priorityFilter !== "all") {
+      if (priorityFilter === "needs_action") {
+        dataset = dataset.filter((i) => i.is_needs_action);
+      } else if (priorityFilter === "overdue_response" || priorityFilter === "overdue") {
+        dataset = dataset.filter((i) => i.is_response_overdue);
+      } else if (priorityFilter === "low_rating_unanswered") {
+        dataset = dataset.filter((i) => i.is_low_rating_unanswered);
+      } else if (priorityFilter === "warning_unresolved") {
+        dataset = dataset.filter((i) => i.is_warning_unresolved);
+      } else if (priorityFilter === "risky_visible") {
+        dataset = dataset.filter((i) => i.is_risky_content_visible);
+      } else if (priorityFilter === "hidden_unresolved") {
+        dataset = dataset.filter((i) => i.is_hidden_unresolved);
+      } else if (priorityFilter === "multiple_replies") {
+        dataset = dataset.filter((i) => i.reply_count >= 2);
+      } else if (priorityFilter === "answered") {
+        dataset = dataset.filter((i) => i.reply_count > 0);
+      } else if (priorityFilter === "unanswered") {
+        dataset = dataset.filter((i) => i.reply_count === 0);
+      }
+    }
 
     // 5. Apply target_type Filter
     if (targetType !== "all") {

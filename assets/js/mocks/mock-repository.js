@@ -1059,7 +1059,126 @@ export function getNormalizedModerationItems() {
     };
   });
 
-  return [...commentsList, ...reviewsList];
+  const rawNormalizedList = [...commentsList, ...reviewsList];
+
+  // Helper to evaluate content warning
+  const evaluateWarningType = (content) => {
+    if (!content) return null;
+    const text = String(content).toLowerCase();
+    if (
+      text.includes("spam") ||
+      text.includes("abc-test-spam") ||
+      text.includes("0999888777") ||
+      text.includes("telegram") ||
+      text.includes("zalo") ||
+      text.includes("casino")
+    ) {
+      return "spam";
+    }
+    if (
+      text.includes("xúc phạm") ||
+      text.includes("thô tục") ||
+      text.includes("<script>") ||
+      text.includes("vi phạm") ||
+      text.includes("không phù hợp")
+    ) {
+      return "offensive";
+    }
+    return null;
+  };
+
+  const nowMs = new Date("2026-07-22T23:55:00.000Z").getTime();
+
+  return rawNormalizedList.map((item) => {
+    const isComment = item.target_type === "comment";
+
+    // 1. Find child replies if comment
+    const replies = isComment
+      ? rawComments
+          .filter((c) => c.parent_id && Number(c.parent_id) === Number(item.id))
+          .map((r) => {
+            const rUser = users.find((u) => Number(u.id) === Number(r.user_id));
+            return {
+              id: Number(r.id),
+              content: r.content,
+              user_id: Number(r.user_id),
+              created_at: r.created_at,
+              user_name: rUser ? rUser.full_name : `Người dùng #${r.user_id}`,
+              user_email: rUser ? rUser.email : "",
+              user_role: rUser && rUser.role ? rUser.role : "Giảng viên / Admin",
+              user_avatar: rUser ? rUser.avatar_url : null,
+            };
+          })
+          .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+      : [];
+
+    const replyCount = replies.length;
+    const replyAuthorsCount = new Set(replies.map((r) => r.user_id)).size;
+    const firstReplyAt = replyCount > 0 ? replies[0].created_at : null;
+    const latestReplyAt = replyCount > 0 ? replies[replyCount - 1].created_at : null;
+    const latestReply = replyCount > 0 ? replies[replyCount - 1] : null;
+
+    const createdAtMs = new Date(item.created_at).getTime();
+    const elapsedMs = Math.max(0, nowMs - createdAtMs);
+    const slaLimitMs = isComment ? 24 * 3600 * 1000 : 48 * 3600 * 1000;
+
+    const isResponseOverdue = replyCount === 0 && item.status === "visible" && elapsedMs > slaLimitMs;
+    const overdueHours = isResponseOverdue ? Math.max(1, Math.round((elapsedMs - slaLimitMs) / 3600000)) : 0;
+    const overdueMinutes = isResponseOverdue ? Math.max(1, Math.round((elapsedMs - slaLimitMs) / 60000)) : 0;
+
+    let firstResponseHours = null;
+    let firstResponseMinutes = null;
+    if (firstReplyAt) {
+      const firstMs = new Date(firstReplyAt).getTime();
+      const firstDiff = Math.max(0, firstMs - createdAtMs);
+      firstResponseHours = Math.round(firstDiff / 3600000);
+      firstResponseMinutes = Math.round(firstDiff / 60000);
+    }
+
+    const warningType = evaluateWarningType(item.content);
+    const isWarningUnresolved = warningType !== null && item.status === "visible";
+    const isRiskyContentVisible = warningType !== null && item.status === "visible";
+    const isLowRatingUnanswered = !isComment && item.rating <= 2 && replyCount === 0 && item.status === "visible";
+    const isHiddenUnresolved = item.status === "hidden";
+
+    const isNeedsAction =
+      isResponseOverdue ||
+      isLowRatingUnanswered ||
+      isWarningUnresolved ||
+      isRiskyContentVisible ||
+      isHiddenUnresolved;
+
+    let priorityLevel = "normal";
+    if (warningType === "offensive" && item.status === "visible") {
+      priorityLevel = "critical";
+    } else if ((warningType === "spam" && item.status === "visible") || isLowRatingUnanswered || (isResponseOverdue && overdueHours > 24)) {
+      priorityLevel = "high";
+    } else if (isResponseOverdue || isHiddenUnresolved) {
+      priorityLevel = "medium";
+    }
+
+    return {
+      ...item,
+      replies,
+      reply_count: replyCount,
+      reply_authors_count: replyAuthorsCount,
+      first_reply_at: firstReplyAt,
+      latest_reply_at: latestReplyAt,
+      latest_reply: latestReply,
+      first_response_hours: firstResponseHours,
+      first_response_minutes: firstResponseMinutes,
+      is_response_overdue: isResponseOverdue,
+      overdue_hours: overdueHours,
+      overdue_minutes: overdueMinutes,
+      warning_type: warningType,
+      is_warning_unresolved: isWarningUnresolved,
+      is_risky_content_visible: isRiskyContentVisible,
+      is_low_rating_unanswered: isLowRatingUnanswered,
+      is_hidden_unresolved: isHiddenUnresolved,
+      is_needs_action: isNeedsAction,
+      priority_level: priorityLevel,
+    };
+  });
 }
 
 export function updateModerationItemStatus(targetType, id, newStatus) {
