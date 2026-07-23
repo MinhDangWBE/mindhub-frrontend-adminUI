@@ -225,7 +225,7 @@ function toggleLoading(isLoading) {
  * Cuộn mượt mà đến vùng danh sách khóa học
  */
 function scrollToCourseList() {
-  const section = document.getElementById("course-list-section");
+  const section = document.getElementById("courses-results-section");
   if (section) {
     // Hỗ trợ cấu hình prefers-reduced-motion
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -2205,7 +2205,7 @@ function renderDrawerDetails(course) {
 
   const videoUrlEl = document.getElementById("detail-video-url");
   if (course.intro_video_url) {
-    videoUrlEl.innerHTML = `<a href="${course.intro_video_url}" target="_blank" class="text-ink hover:underline font-bold flex items-center gap-1"><span>Xem video</span> <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>`;
+    videoUrlEl.innerHTML = `<a href="${course.intro_video_url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-ink hover:underline font-bold flex items-center gap-1"><span>Xem video</span> <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>`;
   } else {
     videoUrlEl.textContent = "Không có video";
   }

@@ -239,6 +239,17 @@ async function fetchAndRender() {
             openBannerDrawer(state.open_banner_id, false);
         }
 
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("scroll_to") === "results") {
+            const targetSection = document.getElementById("banners-results-section");
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                const url = new URL(window.location.href);
+                url.searchParams.delete("scroll_to");
+                window.history.replaceState({}, "", url.toString());
+            }
+        }
+
     } catch (error) {
         console.error("Lỗi fetchAndRender:", error);
         showUIState("error", error.message || "Đã xảy ra lỗi kết nối với máy chủ.");

@@ -837,7 +837,7 @@ function initAttentionEvents() {
             await fetchAndRender();
 
             // Cuộn mượt đến bảng danh sách người dùng sau khi dữ liệu render xong
-            document.getElementById("users-list-section")?.scrollIntoView({
+            document.getElementById("users-results-section")?.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
             });

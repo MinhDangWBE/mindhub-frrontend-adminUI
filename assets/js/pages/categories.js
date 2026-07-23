@@ -164,6 +164,17 @@ async function fetchAndRender() {
         renderFilterChips();
 
         toggleLoading(false);
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("scroll_to") === "results") {
+            const targetSection = document.getElementById("categories-results-section");
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                const url = new URL(window.location.href);
+                url.searchParams.delete("scroll_to");
+                window.history.replaceState({}, "", url.toString());
+            }
+        }
     } catch (error) {
         console.error("Lỗi fetch categories:", error);
         showErrorState("Không thể kết nối đến máy chủ dữ liệu.");
@@ -298,7 +309,7 @@ function renderTable(items) {
 
         // Cột Khóa học
         const coursesCol = `
-            <a href="courses.html?category_id=${c.id}" class="hover:text-ink font-bold text-mid-gray hover:underline">
+            <a href="courses.html?category_id=${c.id}" onclick="event.stopPropagation();" class="hover:text-ink font-bold text-mid-gray hover:underline">
                 ${c.course_count || 0}
             </a>
         `;
@@ -1416,7 +1427,7 @@ async function openDetailDrawer(id) {
         // Thứ tự & Số khóa học
         document.getElementById("detail-sort-order").textContent = cat.sort_order;
         document.getElementById("detail-course-count").innerHTML = cat.course_count > 0
-            ? `<a href="courses.html?category_id=${cat.id}" class="underline text-success hover:font-bold font-semibold transition-all font-sans">${cat.course_count} khóa học</a>`
+            ? `<a href="courses.html?category_id=${cat.id}" onclick="event.stopPropagation();" class="underline text-success hover:font-bold font-semibold transition-all font-sans">${cat.course_count} khóa học</a>`
             : "Chưa có khóa học";
 
         // Parent

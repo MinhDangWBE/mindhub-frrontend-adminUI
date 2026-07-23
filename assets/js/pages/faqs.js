@@ -250,6 +250,17 @@ async function fetchFaqs(isRefresh = false) {
             if (state.open_faq_id) {
                 openFaqDrawer(state.open_faq_id, false);
             }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("scroll_to") === "results") {
+                const targetSection = document.getElementById("faqs-results-section");
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete("scroll_to");
+                    window.history.replaceState({}, "", url.toString());
+                }
+            }
         } else {
             showError("Không thể nạp danh sách FAQ", response ? response.message : "");
         }
@@ -819,7 +830,7 @@ function renderDrawerContent(faq) {
         const listItems = faq.linked_courses.map(c => `
             <div class="flex items-center justify-between p-3 rounded-2xl bg-canvas border border-hairline hover:border-ink/20 transition-colors">
                 <div class="min-w-0 flex-1 pr-3">
-                    <a href="courses.html?open_course_id=${c.id}" class="text-xs font-semibold text-ink hover:text-blue-600 transition-colors truncate block">
+                    <a href="courses.html?open_course_id=${c.id}" onclick="event.stopPropagation();" class="text-xs font-semibold text-ink hover:text-blue-600 transition-colors truncate block">
                         ${escapeHtml(c.title)}
                     </a>
                     <div class="flex items-center gap-2 text-[11px] text-mid-gray mt-0.5">
@@ -827,7 +838,7 @@ function renderDrawerContent(faq) {
                         ${c.instructor ? `<span>• Giảng viên: ${escapeHtml(c.instructor.full_name)}</span>` : ""}
                     </div>
                 </div>
-                <a href="courses.html?open_course_id=${c.id}" class="shrink-0 p-1.5 text-mid-gray hover:text-ink hover:bg-paper rounded-lg border border-hairline transition-colors" title="Xem chi tiết khóa học">
+                <a href="courses.html?open_course_id=${c.id}" onclick="event.stopPropagation();" class="shrink-0 p-1.5 text-mid-gray hover:text-ink hover:bg-paper rounded-lg border border-hairline transition-colors" title="Xem chi tiết khóa học">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
                     </svg>

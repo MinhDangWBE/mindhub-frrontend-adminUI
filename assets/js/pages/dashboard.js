@@ -591,7 +591,7 @@ function renderActions(actions) {
             title: "Khóa học chờ duyệt",
             desc: `${actions.pending_course_reviews} khóa học mới cần kiểm duyệt`,
             btnText: "Duyệt ngay",
-            link: "course-reviews.html",
+            link: "course-reviews.html?status=pending_review&scroll_to=results",
             borderClass: "border-l-3 border-warning",
             badgeClass: "bg-warning-soft text-warning border border-warning/10",
             btnClass: "bg-success text-white hover:opacity-90"
@@ -601,7 +601,7 @@ function renderActions(actions) {
             title: "Yêu cầu nâng giảng viên",
             desc: `${actions.pending_instructor_upgrades} hồ sơ đăng ký cần xác minh`,
             btnText: "Xử lý",
-            link: "instructor-upgrades.html",
+            link: "instructor-upgrades.html?status=pending&scroll_to=results",
             borderClass: "border-l-3 border-warning",
             badgeClass: "bg-warning-soft text-warning border border-warning/10",
             btnClass: "bg-warning text-white hover:opacity-90"
@@ -611,7 +611,7 @@ function renderActions(actions) {
             title: "Yêu cầu rút tiền",
             desc: `${actions.pending_withdrawals} lệnh rút tiền đang chờ xử lý`,
             btnText: "Chi tiền",
-            link: "withdrawals.html",
+            link: "withdrawals.html?status=pending&scroll_to=results",
             borderClass: "border-l-3 border-danger-brick",
             badgeClass: "bg-danger-brick-soft text-danger-brick border border-danger-brick/10",
             btnClass: "bg-danger-brick text-white hover:opacity-90"
@@ -621,7 +621,7 @@ function renderActions(actions) {
             title: "Tài khoản nhận tiền",
             desc: `${actions.pending_payout_accounts} tài khoản ngân hàng chờ xác minh`,
             btnText: "Xác minh",
-            link: "payout-accounts.html",
+            link: "payout-accounts.html?status=pending_verification&scroll_to=results",
             borderClass: "border-l-3 border-success",
             badgeClass: "bg-success-soft text-success border border-success/10",
             btnClass: "bg-success text-white hover:opacity-90"
@@ -682,7 +682,7 @@ function renderTopCourses(items) {
         tr.innerHTML = `
             <td class="py-2.5 pl-2 font-semibold text-mid-gray">#${index + 1}</td>
             <td class="py-2.5 font-medium text-ink">
-                <a href="courses.html?id=${course.course_id}" class="hover:underline block truncate max-w-[130px] font-medium" title="${course.title}">${course.title}</a>
+                <a href="courses.html?open_course_id=${course.course_id}" class="hover:underline block truncate max-w-[130px] font-medium" title="${course.title}">${course.title}</a>
                 <span class="block text-[9px] text-mid-gray font-normal truncate">Giảng viên: ${course.instructor_name}</span>
             </td>
             <td class="py-2.5 text-right text-mid-gray font-sans">${formatNumber(course.sales_count)}</td>
@@ -719,7 +719,7 @@ function renderTopInstructors(items) {
             <td class="py-2.5 font-medium text-ink flex items-center gap-2 pl-2">
                 <span class="h-6.5 w-6.5 rounded-full bg-ink text-white font-semibold flex items-center justify-center text-[9px] shrink-0 select-none">${initials}</span>
                 <div>
-                    <span class="font-medium text-ink block truncate max-w-[90px]">${inst.full_name}</span>
+                    <a href="users.html?open_user_id=${inst.instructor_id || inst.id}" class="font-medium text-ink block truncate max-w-[90px] hover:underline">${inst.full_name}</a>
                     <span class="text-[9px] text-mid-gray block truncate max-w-[90px]">${inst.email || ""}</span>
                 </div>
             </td>
@@ -784,14 +784,14 @@ function renderRecentOrders(orders) {
         item.innerHTML = `
             <div class="flex items-center justify-between">
                 <div class="text-xs">
-                    <a href="orders.html?id=${orderId}" class="font-bold text-ink hover:underline">Đơn hàng #${orderId}</a>
+                    <a href="orders.html?open_order_id=${orderId}" class="font-bold text-ink hover:underline">Đơn hàng #${orderId}</a>
                     <span class="text-mid-gray font-sans mx-1">·</span>
                     <span class="font-bold ${amountColor} font-sans">${amountFormatted}</span>
                 </div>
                 <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-full ${statusClass}">${statusLabel}</span>
             </div>
             <div class="mt-1.5 text-[11px] text-ink leading-snug">
-                Khóa học: ${courseId ? `<a href="courses.html?id=${courseId}" class="font-semibold text-ink hover:underline inline-block truncate max-w-[170px]" title="${courseTitle}">${courseTitle}</a>` : `<span class="font-semibold text-ink truncate max-w-[170px] inline-block" title="${courseTitle}">${courseTitle}</span>`}
+                Khóa học: ${courseId ? `<a href="courses.html?open_course_id=${courseId}" class="font-semibold text-ink hover:underline inline-block truncate max-w-[170px]" title="${courseTitle}">${courseTitle}</a>` : `<span class="font-semibold text-ink truncate max-w-[170px] inline-block" title="${courseTitle}">${courseTitle}</span>`}
             </div>
             <div class="flex items-center justify-between mt-1 text-[10px] text-mid-gray">
                 <span>Học viên: ${learnerName}</span>
@@ -846,7 +846,7 @@ function renderRecentCourses(courses) {
         item.className = `relative pl-3.5 pr-2 py-2 border border-hairline/40 rounded-[6px] hover:bg-canvas/40 transition-colors ${borderClass}`;
         item.innerHTML = `
             <div class="flex items-center justify-between">
-                <a href="courses.html?id=${course.id}" class="font-bold text-ink text-xs hover:underline truncate max-w-[170px]" title="${course.title}">${course.title}</a>
+                <a href="courses.html?open_course_id=${course.id}" class="font-bold text-ink text-xs hover:underline truncate max-w-[170px]" title="${course.title}">${course.title}</a>
                 <span class="text-[9px] font-bold px-1.5 py-0.5 rounded-full ${statusClass}">${statusLabel}</span>
             </div>
             <div class="flex items-center justify-between mt-2 text-[10px] text-mid-gray">
@@ -1061,7 +1061,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-mid-gray",
             bgSoftClass: "bg-canvas",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>`,
-            link: "courses.html?status=draft"
+            link: "courses.html?status=draft&scroll_to=results"
         },
         {
             key: "pending_review",
@@ -1072,7 +1072,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-warning",
             bgSoftClass: "bg-warning-soft/60",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-            link: "course-reviews.html"
+            link: "course-reviews.html?status=pending_review&scroll_to=results"
         },
         {
             key: "approved",
@@ -1083,7 +1083,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-success",
             bgSoftClass: "bg-success-soft/40",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-            link: "courses.html?status=approved"
+            link: "courses.html?status=approved&scroll_to=results"
         },
         {
             key: "rejected",
@@ -1094,7 +1094,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-danger-brick",
             bgSoftClass: "bg-danger-brick-soft/40",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-            link: "courses.html?status=rejected"
+            link: "courses.html?status=rejected&scroll_to=results"
         },
         {
             key: "published",
@@ -1105,7 +1105,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-success",
             bgSoftClass: "bg-success-soft/60",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`,
-            link: "courses.html?status=published"
+            link: "courses.html?status=published&scroll_to=results"
         },
         {
             key: "hidden",
@@ -1116,7 +1116,7 @@ function renderCourseStatusPanel(courseStatus, summary, filterLabel) {
             textClass: "text-ink-soft",
             bgSoftClass: "bg-canvas",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>`,
-            link: "courses.html?status=hidden"
+            link: "courses.html?status=hidden&scroll_to=results"
         }
     ];
 
@@ -1199,7 +1199,7 @@ function renderUserStatusPanel(userStatus, summary, filterLabel) {
             textClass: "text-success",
             bgSoftClass: "bg-success-soft/40",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-            link: "users.html?status=active"
+            link: "users.html?status=active&scroll_to=results"
         },
         {
             key: "inactive",
@@ -1210,7 +1210,7 @@ function renderUserStatusPanel(userStatus, summary, filterLabel) {
             textClass: "text-mid-gray",
             bgSoftClass: "bg-canvas",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`,
-            link: "users.html?status=inactive"
+            link: "users.html?status=inactive&scroll_to=results"
         },
         {
             key: "locked",
@@ -1221,7 +1221,7 @@ function renderUserStatusPanel(userStatus, summary, filterLabel) {
             textClass: "text-danger-brick",
             bgSoftClass: "bg-danger-brick-soft/40",
             icon: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>`,
-            link: "users.html?status=locked"
+            link: "users.html?status=locked&scroll_to=results"
         }
     ];
 

@@ -83,7 +83,7 @@ function formatDateTime(isoString) {
  * Helper cuộn mượt đến danh sách đơn hàng
  */
 function scrollToOrdersList() {
-  const target = document.getElementById("orders-list-section");
+  const target = document.getElementById("orders-results-section");
   if (!target) return;
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
@@ -606,7 +606,7 @@ function renderTable(items) {
           ${
             item.user
               ? `
-          <a href="users.html?open_user_id=${item.user.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+          <a href="users.html?open_user_id=${item.user.id}" onclick="event.stopPropagation();" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
             <svg class="w-3.5 h-3.5 text-mid-gray" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
@@ -617,7 +617,7 @@ function renderTable(items) {
           ${
             item.course
               ? `
-          <a href="courses.html?open_course_id=${item.course.id}" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
+          <a href="courses.html?open_course_id=${item.course.id}" onclick="event.stopPropagation();" class="w-full px-3 py-2 text-xs hover:bg-canvas flex items-center gap-2 text-ink transition-colors cursor-pointer">
             <svg class="w-3.5 h-3.5 text-mid-gray" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
               <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
             </svg>
@@ -1434,7 +1434,7 @@ function renderDrawerContent(order) {
             <svg class="w-4 h-4 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             Thông tin người mua
           </h3>
-          ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
+          ${order.user ? `<a href="users.html?open_user_id=${order.user.id}" onclick="event.stopPropagation();" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở người dùng &rarr;</a>` : ""}
         </div>
         ${
           order.user
@@ -1457,7 +1457,7 @@ function renderDrawerContent(order) {
             <svg class="w-4 h-4 text-ink" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
             Khóa học mua
           </h3>
-          ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
+          ${order.course ? `<a href="courses.html?open_course_id=${order.course.id}" onclick="event.stopPropagation();" class="text-xs font-semibold text-ink hover:underline flex items-center gap-1">Mở khóa học &rarr;</a>` : ""}
         </div>
         ${
           order.course

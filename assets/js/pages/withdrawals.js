@@ -777,7 +777,7 @@ function renderDrawerDetails(data) {
       </div>
       ${
         user.id
-          ? `<a href="users.html?open_user_id=${user.id}" class="h-8 px-3 text-xs font-semibold text-blue-600 hover:text-blue-800 border border-hairline hover:bg-canvas rounded-[6px] transition-colors flex items-center justify-center shrink-0 whitespace-nowrap">Xem người dùng &rarr;</a>`
+          ? `<a href="users.html?open_user_id=${user.id}" onclick="event.stopPropagation()" class="h-8 px-3 text-xs font-semibold text-blue-600 hover:text-blue-800 border border-hairline hover:bg-canvas rounded-[6px] transition-colors flex items-center justify-center shrink-0 whitespace-nowrap">Xem người dùng &rarr;</a>`
           : ""
       }
     `;
@@ -845,8 +845,8 @@ function renderDrawerDetails(data) {
             <span class="font-bold text-ink whitespace-nowrap">${formatVND(alloc.amount)}</span>
           </div>
           <div class="flex flex-wrap items-center gap-3 text-[11px] text-mid-gray pt-1 border-t border-hairline/40">
-            ${alloc.revenue_id ? `<a href="revenues.html?open_revenue_id=${alloc.revenue_id}" class="text-blue-600 hover:underline">Rev #${alloc.revenue_id}</a>` : ""}
-            ${alloc.order_id ? `<a href="orders.html?open_order_id=${alloc.order_id}" class="text-blue-600 hover:underline">Đơn #${alloc.order_id}</a>` : ""}
+            ${alloc.revenue_id ? `<a href="revenues.html?open_revenue_id=${alloc.revenue_id}" onclick="event.stopPropagation()" class="text-blue-600 hover:underline">Rev #${alloc.revenue_id}</a>` : ""}
+            ${alloc.order_id ? `<a href="orders.html?open_order_id=${alloc.order_id}" onclick="event.stopPropagation()" class="text-blue-600 hover:underline">Đơn #${alloc.order_id}</a>` : ""}
             <span class="ml-auto">${formatDateVN(alloc.earned_at)}</span>
           </div>
         </div>

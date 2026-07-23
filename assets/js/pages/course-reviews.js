@@ -345,7 +345,7 @@ function updateResultCount(meta) {
 }
 
 function scrollToCourseReviewList() {
-  const section = document.getElementById("course-reviews-list-section");
+  const section = document.getElementById("course-reviews-results-section");
   if (section) {
     section.scrollIntoView({ behavior: "smooth", block: "start" });
   }

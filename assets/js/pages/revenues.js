@@ -318,7 +318,7 @@ async function loadTableOnly() {
         .classList.toggle("hidden", !isEmpty || !isFiltered);
       document.getElementById("revenues-error-state").classList.add("hidden");
 
-      const tableSection = document.getElementById("revenues-list-section");
+      const tableSection = document.getElementById("revenues-results-section");
       if (tableSection) {
         tableSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -1152,7 +1152,7 @@ function populateDrawer(data) {
         </div>
         <div class="flex-1 min-w-0">
           <div class="text-xs font-semibold text-ink line-clamp-2" title="${data.course.title}">${data.course.title}</div>
-          <a href="courses.html?open_course_id=${data.course.id}" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left mt-1">Xem khóa học &rarr;</a>
+          <a href="courses.html?open_course_id=${data.course.id}" onclick="event.stopPropagation()" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left mt-1">Xem khóa học &rarr;</a>
         </div>`;
     } else {
       courseCard.innerHTML = `<span class="text-xs text-mid-gray">Không có thông tin khóa học</span>`;
@@ -1174,7 +1174,7 @@ function populateDrawer(data) {
         <div class="flex-1 min-w-0">
           <div class="text-xs font-semibold text-ink truncate" title="${data.instructor.full_name}">${data.instructor.full_name}</div>
           <div class="text-[11px] text-mid-gray truncate" title="${data.instructor.email || ""}">${data.instructor.email || "---"}</div>
-          <a href="users.html?open_user_id=${data.instructor.id}" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left mt-1">Xem thông tin &rarr;</a>
+          <a href="users.html?open_user_id=${data.instructor.id}" onclick="event.stopPropagation()" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left mt-1">Xem thông tin &rarr;</a>
         </div>`;
     } else {
       instructorCard.innerHTML = `<span class="text-xs text-mid-gray">Không có thông tin giảng viên</span>`;
@@ -1215,7 +1215,7 @@ function populateDrawer(data) {
         </div>
         <div class="pt-2 border-t border-hairline flex items-center justify-between">
            <span class="text-[10px] text-mid-gray">Thanh toán: ${formatDate(data.order.paid_at)}</span>
-           <a href="orders.html?open_order_id=${data.order.id}" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left">Xem chi tiết đơn hàng &rarr;</a>
+           <a href="orders.html?open_order_id=${data.order.id}" onclick="event.stopPropagation()" class="inline-block text-xs font-semibold text-blue-600 hover:text-blue-800 transition-all duration-160 hover:scale-[1.02] origin-left">Xem chi tiết đơn hàng &rarr;</a>
         </div>`;
     } else {
       orderCard.innerHTML = `<span class="text-xs text-mid-gray">Không có thông tin đơn hàng</span>`;

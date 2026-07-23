@@ -529,7 +529,7 @@ export async function loadPayoutAccountsData(scrollToTable = false) {
 
     // Cuộn xuống bảng nếu người dùng tương tác card/filter
     if (scrollToTable) {
-      const section = document.getElementById("payout-accounts-list-section");
+      const section = document.getElementById("payout-accounts-results-section");
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
       }
@@ -659,6 +659,7 @@ export async function openPayoutAccountDrawer(id, updateUrl = true) {
               <div class="flex items-center gap-2">
                 <a
                   href="withdrawals.html?open_withdrawal_id=${w.id}"
+                  onclick="event.stopPropagation();"
                   class="font-mono font-bold text-ink hover:text-blue-600 transition-colors"
                 >
                   ${w.withdrawal_code}
@@ -669,6 +670,7 @@ export async function openPayoutAccountDrawer(id, updateUrl = true) {
                 <span class="font-bold text-ink">${formatVND(w.amount)}</span>
                 <a
                   href="withdrawals.html?open_withdrawal_id=${w.id}"
+                  onclick="event.stopPropagation();"
                   class="text-[11px] font-medium text-ink hover:underline"
                 >
                   Xem

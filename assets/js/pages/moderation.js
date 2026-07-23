@@ -474,7 +474,7 @@ function renderModerationItems(items = []) {
         contextSubHtml = `<p class="text-[11px] text-mid-gray truncate mt-0.5 flex items-center gap-1"><svg class="w-3 h-3 text-mid-gray/80 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg><span class="truncate">${escapeHtml(lesson.title)}</span></p>`;
       } else if (!isComment) {
         if (item.order_id) {
-          contextSubHtml = `<a href="orders.html?open_order_id=${item.order_id}" data-action="stop" class="text-[11px] text-emerald-600 hover:text-emerald-700 font-medium truncate mt-0.5 inline-flex items-center gap-1"><svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="truncate">Đã thanh toán • ORD-${item.order_id}</span></a>`;
+          contextSubHtml = `<a href="orders.html?open_order_id=${item.order_id}" onclick="event.stopPropagation();" data-action="stop" class="text-[11px] text-emerald-600 hover:text-emerald-700 font-medium truncate mt-0.5 inline-flex items-center gap-1"><svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="truncate">Đã thanh toán • ORD-${item.order_id}</span></a>`;
         } else {
           contextSubHtml = `<p class="text-[11px] text-mid-gray truncate mt-0.5">Đã mua khóa học</p>`;
         }
@@ -517,7 +517,7 @@ function renderModerationItems(items = []) {
             <div class="flex items-center gap-2.5">
               ${avatarHtml}
               <div class="min-w-0 flex-1">
-                <a href="users.html?open_user_id=${item.user_id}" data-action="stop" class="text-sm font-semibold text-ink hover:text-blue-600 transition-colors line-clamp-1 block">
+                <a href="users.html?open_user_id=${item.user_id}" onclick="event.stopPropagation();" data-action="stop" class="text-sm font-semibold text-ink hover:text-blue-600 transition-colors line-clamp-1 block">
                   ${user ? escapeHtml(user.full_name) : "Người dùng #" + item.user_id}
                 </a>
                 <p class="text-[11px] text-mid-gray truncate mt-0.5">${user ? escapeHtml(user.email) : "---"}</p>
@@ -528,7 +528,7 @@ function renderModerationItems(items = []) {
           <!-- Cột 2: BÀI HỌC / KHÓA HỌC -->
           <td class="py-3 px-3.5 w-[260px]">
             <div>
-              <a href="courses.html?open_course_id=${item.course_id}" data-action="stop" class="text-[13px] font-semibold text-ink hover:text-blue-600 transition-colors line-clamp-1 block">
+              <a href="courses.html?open_course_id=${item.course_id}" onclick="event.stopPropagation();" data-action="stop" class="text-[13px] font-semibold text-ink hover:text-blue-600 transition-colors line-clamp-1 block">
                 ${course ? escapeHtml(course.title) : "Khóa học #" + item.course_id}
               </a>
               ${contextSubHtml}
@@ -1147,7 +1147,7 @@ async function openModerationDrawer(targetType, id, shouldScroll = false) {
     }
 
     if (shouldScroll) {
-      const section = document.getElementById("moderation-table-section");
+      const section = document.getElementById("moderation-results-section");
       if (section) section.scrollIntoView({ behavior: "smooth" });
     }
   } catch (err) {
@@ -1380,7 +1380,7 @@ function handleSummaryCardClick(cardType) {
   fetchAndRender();
 
   // Smooth scroll down to table section on card click
-  const section = document.getElementById("moderation-table-section");
+  const section = document.getElementById("moderation-results-section");
   if (section) {
     section.scrollIntoView({ behavior: "smooth" });
   }

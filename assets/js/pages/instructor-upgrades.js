@@ -26,7 +26,7 @@ let shouldScrollToListAfterRender = false;
  * Cuộn mượt đến khu vực danh sách hồ sơ
  */
 function scrollToUpgradeList() {
-  const target = document.getElementById("upgrade-list-section");
+  const target = document.getElementById("instructor-upgrades-results-section");
   if (!target) return;
 
   // Blur ô tìm kiếm để ẩn bàn phím ảo trên mobile
@@ -52,6 +52,12 @@ async function initInstructorUpgradesPage() {
   bindEvents();
   restoreQueryState();
   await loadUpgradeRequests();
+
+  const params = new URLSearchParams(window.location.search);
+  const openUserId = params.get("open_user_id");
+  if (openUserId) {
+    openDetailDrawer(openUserId);
+  }
 }
 
 function bindEvents() {
@@ -1510,6 +1516,10 @@ function closeDetailDrawer() {
   const overlay = document.getElementById("drawer-overlay");
   const drawer = document.getElementById("upgrade-detail-drawer");
 
+  const url = new URL(window.location.href);
+  url.searchParams.delete("open_user_id");
+  window.history.replaceState({}, "", url.toString());
+
   if (!drawer || drawer.classList.contains("hidden") || drawer.classList.contains("translate-x-full")) {
     return Promise.resolve();
   }
@@ -1639,8 +1649,8 @@ function initActionEventsForDrawer() {
   const overlay = document.getElementById("drawer-overlay");
   const closeBtn = document.getElementById("btn-close-drawer");
 
-  overlay.addEventListener("click", closeDetailDrawer);
-  closeBtn.addEventListener("click", closeDetailDrawer);
+  if (overlay) overlay.addEventListener("click", closeDetailDrawer);
+  if (closeBtn) closeBtn.addEventListener("click", closeDetailDrawer);
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
